@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/common :: header('게시판')">
+<meta charset="UTF-8">
+<title>게시물</title>
+  <!-- 
+  /* 작성자 : 문혁
+ * 게시글 삭제 페이지. 
+ */
+   -->
+</head>
+<body>
+	<h2 class="text-center">게시물 삭제</h2> <br>
+	<form method="post">
+		<table border="2" class="table table-striped">
+			<tr>
+				<th>번호</th>
+				<td>[[${no}]]<input type="hidden" name="no" th:value="${no}" /></td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td><input type="password" name="password" required="required"
+					autofocus="autofocus" /><br /> * 처음 글 입력시 비밀번호를 재 입력하세요.</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><input class="delete btn-success" type="submit" value="완료" /></td>
+			</tr>
+		</table>
+	</form>
+	
+	<footer th:replace="fragments/common :: footer"></footer>	
+	<!-- 게시물 삭제 시 해당 게시글에 포함되어 있는 모든 첨부파일 삭제 ajax -->
+	<script th:inline="javascript">
+    $("input[type='submit']").on("click", function(e){	    
+        console.log("delete files");
+          
+        var bno = [[${no}]];
+        
+        $.ajax({ //삭제처리 호출
+          url: '/removeAll',
+          data: {bno: bno},
+          dataType:'text',
+          type: 'POST',
+          success: function(result){
+/*                alert("삭제되었습니다");             
+               targetLi.remove(); */
+               console.log("게시글에 포함된 파일이 삭제되었습니다.");
+             }
+        }); //$.ajax
+       });
+	</script>
+</body>
+</html>
+
