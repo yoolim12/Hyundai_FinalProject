@@ -11,12 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.hyundai.project.handler.ClubLoginSuccessHandler;
 
 import lombok.extern.log4j.Log4j2;
-/* 
-* 작성자 : 김승환
-* 
-* security config
-* 로그인, 로그아웃, 비밀번호 인코드 설정
-*/
+
 @Configuration
 @Log4j2
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

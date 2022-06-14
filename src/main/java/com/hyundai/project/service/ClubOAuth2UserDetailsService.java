@@ -22,12 +22,7 @@ import com.hyundai.project.dto.ClubMemberRole;
 import com.hyundai.project.dto.ClubMemberRoleSet;
 
 import lombok.extern.log4j.Log4j2;
-/* 
-* 작성자 : 김승환
-* 
-* ClubOAuth2UserDetailsService
-* 참조 코드 : 교안 (한국 오라클 교육센터 학습 가이드)
-*/
+
 @Log4j2
 @Service
 public class ClubOAuth2UserDetailsService

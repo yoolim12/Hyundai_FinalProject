@@ -3,11 +3,7 @@ package com.hyundai.project.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-/* 
- * 작성자 : 문혁
- * 
- * 페이징 정보를 저장하는 DTO 객체
- */
+
 @Getter
 @Setter
 @ToString

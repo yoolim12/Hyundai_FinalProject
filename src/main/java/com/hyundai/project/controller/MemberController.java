@@ -29,12 +29,7 @@ import com.hyundai.project.dto.ClubMemberRoleSet;
 import com.hyundai.project.service.MemberService;
 
 import lombok.extern.log4j.Log4j2;
-/* 
-* 작성자 : 김승환
-* 
-* 회원관리와 관련된 기능을 담당하는 컨트롤러
-* 회원가입, 회원정보 수정, 회원탈퇴, 관리자 페이지, 아이디 중복
-*/
+
 @Controller
 @Log4j2
 @RequestMapping("/member/")

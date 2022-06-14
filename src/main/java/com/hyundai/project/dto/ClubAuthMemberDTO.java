@@ -10,12 +10,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-/* 
-* 작성자 : 김승환
-* 
-* ClubAuthMemberDTO
-* 참조 코드 : 교안 (한국 오라클 교육센터 학습 가이드)
-*/
+
 @Getter
 @Setter
 @ToString

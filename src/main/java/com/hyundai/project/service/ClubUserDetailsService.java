@@ -17,12 +17,7 @@ import com.hyundai.project.dto.ClubAuthMemberDTO;
 import com.hyundai.project.dto.ClubMember2;
 
 import lombok.extern.log4j.Log4j2;
-/* 
-* 작성자 : 김승환
-* 
-* ClubUserDetailsService
-* 참조 코드 : 교안 (한국 오라클 교육센터 학습 가이드)
-*/
+
 @Service
 @Log4j2
 public class ClubUserDetailsService implements UserDetailsService {

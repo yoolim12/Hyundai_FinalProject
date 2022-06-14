@@ -9,12 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import com.hyundai.project.dto.ClubMember;
 import com.hyundai.project.dto.ClubMember2;
 import com.hyundai.project.dto.ClubMemberRoleSet;
-/* 
-* 작성자 : 김승환
-* 
-* 회원관리 관련 DAO (mapper)
-* 회원가입, 이메일 조회, 전체 회원 조회, 회원정보 수정, 회원탈퇴
-*/
+
 @Mapper
 public interface ClubMemberDAO {
 	public void insertClubMember(ClubMember clubMember) throws SQLException;

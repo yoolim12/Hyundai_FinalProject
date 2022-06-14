@@ -15,12 +15,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import com.hyundai.project.dto.ClubAuthMemberDTO;
 
 import lombok.extern.log4j.Log4j2;
-/* 
-* 작성자 : 김승환
-* 
-* ClubLoginSuccessHandler
-* 참조 코드 : 교안 (한국 오라클 교육센터 학습 가이드)
-*/
+
 @Log4j2
 public class ClubLoginSuccessHandler implements AuthenticationSuccessHandler {
 	// 구성자 추가 SecurityConfig 에서 사용
