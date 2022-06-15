@@ -8,7 +8,7 @@ public class HomeController {
 	
 	@GetMapping("/home")
 	public String main() {
-		return "fragments/header";
+		return "/home";
 	}// end insert
 	
 	@GetMapping("/loginForm")
