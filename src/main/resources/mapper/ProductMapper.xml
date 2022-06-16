@@ -20,4 +20,8 @@
 		(select ccolorcode, ccolorimage from color where pid = #{pid} and ccolorcode != #{ccolorcode})
 	</select>
 
+	<select id="getProductSize"
+		resultType="com.hyundai.project.dto.ProductSizeDTO">
+		select ccolorcode, ssize, samount from stock where pid = #{pid} and ccolorcode = #{ccolorcode}
+	</select>
 </mapper>

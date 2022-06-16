@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.hyundai.project.dao.ProductDAO;
 import com.hyundai.project.dto.ProductColorDTO;
 import com.hyundai.project.dto.ProductDTO;
+import com.hyundai.project.dto.ProductSizeDTO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -26,6 +27,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override 
 	public List<ProductColorDTO> getProductColorDetail(String pid, String ccolorcode) throws Exception {
 		return productDAO.getProductColorDetail(pid, ccolorcode);
+	}
+	
+	@Override 
+	public List<ProductSizeDTO> getProductSize(String pid, String ccolorcode) throws Exception {
+		return productDAO.getProductSize(pid, ccolorcode);
 	}
 
 }

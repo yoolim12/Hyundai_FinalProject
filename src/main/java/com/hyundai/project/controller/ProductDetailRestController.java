@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hyundai.project.dto.ProductColorDTO;
 import com.hyundai.project.dto.ProductDTO;
+import com.hyundai.project.dto.ProductSizeDTO;
 import com.hyundai.project.service.ProductService;
 
 import lombok.Setter;
@@ -47,6 +48,19 @@ public class ProductDetailRestController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			entry = new ResponseEntity<List<ProductColorDTO>>(HttpStatus.BAD_REQUEST);
+		} // end try
+		return entry;
+	}
+	
+	@GetMapping(value = "/size/{pid}/{ccolorcode}")
+	public ResponseEntity<List<ProductSizeDTO>> getProductSize(@PathVariable("pid") String pid, @PathVariable("ccolorcode") String ccolorcode) {
+		ResponseEntity<List<ProductSizeDTO>> entry = null;
+		try {
+			entry = new ResponseEntity<List<ProductSizeDTO>>(service.getProductSize(pid, ccolorcode), HttpStatus.OK);
+			log.info(entry);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entry = new ResponseEntity<List<ProductSizeDTO>>(HttpStatus.BAD_REQUEST);
 		} // end try
 		return entry;
 	}

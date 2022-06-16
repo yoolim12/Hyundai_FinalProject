@@ -26,6 +26,12 @@ function setColor(i) {
 	console.log($("#pcolor").val());
 }
 
+var selectSize = false;
+function setSize(i) {
+	selectSize = true;
+	console.log(i,selectSize);
+}
+
 function numWithComma(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -65,6 +71,7 @@ $(document).ready(function(){
         	document.getElementById("pprice").innerHTML = '₩' + numWithComma(result.pprice);
         	document.getElementById("pid").innerHTML = result.pid;
         	document.getElementById("pdetail").innerHTML = result.pdetail;
+        	document.getElementById("totalprice").innerHTML = '₩' + numWithComma(result.pprice);
         }
     });
    
@@ -100,6 +107,28 @@ $(document).ready(function(){
         		html += '</ul>';
         	}
         	$("#getcolor").html(html);
+        }
+    });
+    
+    // 상품 사이즈 가져오는 ajax 호출
+    $.ajax({
+        url: "/size/" + pid + "/" + ccolorcode,
+        type: "GET",
+        dataType:"json",
+        async : false,
+        error : function( request, status, error ){
+            console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
+        }, 
+        success : function( result ) { // ccolorcode, ssize, samount
+        	var html="";
+        	obj = result;
+        	if(result.length > 0){
+        		for(var i=0; i<result.length; i++) {
+        			html += '<li id="'+pid+'"><a href="javascript:void(0)" onclick="setSize('+result[i].ssize+')">'+result[i].ssize+'<span class="ko_size1901" style="display:none;">&nbsp;(55)</span></a></li>';
+        		}
+        		html += '</ul>';
+        	}
+        	$("#ssize").html(html);
         }
     });
     var testerChkCode = "IL2C5WSH942W_DN";
@@ -741,10 +770,6 @@ function fn_chkReserveSaleStockpile(qty){
 }
 
 var addToCartProcess = true;
-var selectSize = false;
-function setSize() {
-	selectSize = true;
-}
 
 
 // 기존로직
@@ -2973,15 +2998,8 @@ $(document).ready(function(){
 	</div>
 	<a href="javascript:void(0);" class="btn_close"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기" /></a>
 </div>
-<ul class="size_chip clearfix sizeChipKo1901">
-										<li id="${productInfo.pid}_FREE"><a
-											href="javascript:void(0)"
-											onclick="setSize()">FREE<span
-												class="ko_size1901" style="display:none;">&nbsp;(55)</span></a></li>
-<!-- 										<li id="IL2C5WSH942W_DN_88"><a -->
-<!-- 											href="javascript:fn_detailProductAjax('IL2C5WSH942W_DN_88')" -->
-<!-- 											onclick="GA_Event('상품_상세','사이즈','88')">88<span -->
-<!-- 												class="ko_size1901">&nbsp;(66)</span></a></li> -->
+<ul id="ssize" class="size_chip clearfix sizeChipKo1901">
+										
 									</ul>
 							</span>
 					<!-- 2021.08.10 화장품 상품인 경우 사이즈조견표 영역 미노출 -->
@@ -3013,7 +3031,7 @@ $(document).ready(function(){
 <!-- 	                </div> -->
 <!-- 	        	</div> -->
 <!-- 				</div> -->
-			<span id="sumPrice">₩<fmt:formatNumber value="${productInfo.pprice }" type="number" pattern="###,###" /></span>
+			<span id="totalprice"></span>
 			</div>
 		</div>
 		<!-- st_receipt_wrap -->
