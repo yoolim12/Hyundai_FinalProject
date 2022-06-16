@@ -14,7 +14,7 @@ import com.hyundai.project.dto.ProductListDTO;
 public interface ProductListDAO {
 
 	public List<ProductListDTO> getList(Criteria cri) throws SQLException;
-	public List<ProductListDTO> getList(String pid) throws SQLException;
 	public List<ProductListDTO> getListAll() throws SQLException;
 	public List<ProductListDTO> getListWithPaging(Criteria cri, String clarge, String cmedium, String csmall) throws SQLException;
+	public int getTotal(String clarge, String cmedium, String csmall) throws SQLException;
 }

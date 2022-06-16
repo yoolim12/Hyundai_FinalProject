@@ -30,9 +30,15 @@ public class ProductListServiceImpl implements ProductListService{
 	}
 
 	@Override
-	public List<ProductListDTO> getList(Criteria cri, String clarge, String cmedium, String csmall) throws Exception {
+	public List<ProductListDTO> getListWithPaging(Criteria cri, String clarge, String cmedium, String csmall) throws Exception {
 		log.info("get List with criteria: " + cri);
 		return mapper.getListWithPaging(cri, clarge, cmedium, csmall);
+	}
+
+	@Override
+	public int getTotal(String clarge, String cmedium, String csmall) throws Exception {
+		log.info("get Total Product");
+		return mapper.getTotal(clarge, cmedium, csmall);
 	}	
 
 }

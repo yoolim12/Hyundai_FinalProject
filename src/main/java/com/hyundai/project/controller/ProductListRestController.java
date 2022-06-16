@@ -59,8 +59,9 @@ public class ProductListRestController {
 		ResponseEntity<List<ProductListDTO>> entry = null;
 
 		try {
+			
 			entry = new ResponseEntity<List<ProductListDTO>>(
-					service.getList(cri, clarge, cmedium, csmall), HttpStatus.OK);
+					service.getListWithPaging(cri, clarge, cmedium, csmall), HttpStatus.OK);
 			log.info(entry);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,8 +70,4 @@ public class ProductListRestController {
 		} // end try
 		return entry;
 	}// end list
-
-
-
-	
 } // end class
