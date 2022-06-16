@@ -13,8 +13,7 @@ import lombok.extern.log4j.Log4j2;
 public class MainController {
 	
 	@GetMapping("/main")
-	public String main() {
+	public void main() {
 		log.info("메인페이지 요청");
-		return "/main";
 	}
 }
