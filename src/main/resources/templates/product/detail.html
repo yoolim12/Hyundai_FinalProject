@@ -21,9 +21,8 @@ var cartQuantity = {};
 var obj;
 
 function setColor(i) {
-	console.log(obj[i].ccolorcode);
-	var split_arr = obj[i].cimage1.split('_');
-	$("#pcolor").val(split_arr[1]);
+	//console.log(obj[i].ccolorcode);
+	$("#pcolor").val(obj[i].ccolorcode);
 	console.log($("#pcolor").val());
 }
 
@@ -70,8 +69,8 @@ $(document).ready(function(){
     });
    
     // 상품 컬러 리스트 가져오는 ajax 호출
-    /*$.ajax({
-        url: "/product/productColor?pid="+"${productInfo.pid}",
+    $.ajax({
+        url: "/color/" + pid + "/" + ccolorcode,
         type: "GET",
         dataType:"json",
         async : false,
@@ -84,21 +83,25 @@ $(document).ready(function(){
         	if(result.length > 0){
         		html += '<ul class="color_chip clearfix">';
         		for(var i=0; i<result.length; i++) {
-        			console.log(result);
-        			var split_arr = result[i].cimage1.split('_');
-        			html += '<li id="'+result[i].pid+'">';
-        			html += '<input type="hidden" id="pcolor" name="pcolor" class="colorNameVal" value="'+split_arr[1]+'"/>';
-        			if(i == 0) html += '<a href="#;"  onclick="setColor('+i+')" class="beige on" style="background:'+result[i].ccolorcode+' url('+result[i].cimage1+'"></a></li>';
-        			else  html += '<a href="#;" onclick="setColor('+i+')" class="beige" style="background:'+result[i].ccolorcode+' url('+result[i].cimage1+'"></a></li>';
+        			console.log(result[i].ccolorimage);
+        			if(i==0) html += '<a href="#" class="beige on" style="background:url('+result[i].ccolorimage+')" ></a>';
+        			else html += '<a href="/detail/'+pid+'_'+result[i].ccolorcode+'" class="beige" style="background:url('+result[i].ccolorimage+')" ></a>';
+        			//var split_arr = obj[i].cimage1.split('_');
+					//$("#pcolor").val(split_arr[1]);
+        			//var split_arr = result[i].cimage1.split('_');
+        			//html += '<li id="'+result[i].pid+'">';
+        			//html += '<input type="hidden" id="pcolor" name="pcolor" class="colorNameVal" value="'+split_arr[1]+'"/>';
+        			//if(i == 0) html += '<a href="#;"  onclick="setColor('+i+')" class="beige on" style="background:'+result[i].ccolorcode+' url('+result[i].ccolorimage+'"></a></li>';
+        			//else  html += '<a href="#;" onclick="setColor('+i+')" class="beige" style="background:'+result[i].ccolorcode+' url('+result[i].ccolorimage+'"></a></li>';
 
-        			$("#pcolor").val(split_arr[1]);
+        			$("#pcolor").val(ccolorcode);
         			console.log($("#pcolor").val());
         		}
         		html += '</ul>';
         	}
         	$("#getcolor").html(html);
         }
-    });*/
+    });
     var testerChkCode = "IL2C5WSH942W_DN";
     if(testerChkCode.indexOf("_") > -1) {
         testerChkCode = testerChkCode.split("_")[0];

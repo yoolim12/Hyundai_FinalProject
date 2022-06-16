@@ -1,5 +1,7 @@
 package com.hyundai.project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hyundai.project.dto.ProductColorDTO;
 import com.hyundai.project.dto.ProductDTO;
 import com.hyundai.project.service.ProductService;
 
@@ -34,5 +37,18 @@ public class ProductDetailRestController {
 		} // end try
 		return entry;
 	}// end list
+	
+	@GetMapping(value = "/color/{pid}/{ccolorcode}")
+	public ResponseEntity<List<ProductColorDTO>> getProductColorDetail(@PathVariable("pid") String pid, @PathVariable("ccolorcode") String ccolorcode) {
+		ResponseEntity<List<ProductColorDTO>> entry = null;
+		try {
+			entry = new ResponseEntity<List<ProductColorDTO>>(service.getProductColorDetail(pid, ccolorcode), HttpStatus.OK);
+			log.info(entry);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entry = new ResponseEntity<List<ProductColorDTO>>(HttpStatus.BAD_REQUEST);
+		} // end try
+		return entry;
+	}
 
 }
