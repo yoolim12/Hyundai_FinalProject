@@ -1,36 +1,41 @@
 package com.hyundai.project.dto;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
 @ToString
 public class PageDTO {
-	// 현재 페이지에서 보여줄 게시글을 구할 때 필요한 속성
-	private int curPage;
-	private int startNum;
-	private int endNum;
 	
-	// 페이지 리스트에 사용되는 속성 
-	private long total;
-	private int start;
-	private int last;
+	private int startPage;
+	private int endPage;
+	private boolean prev, next;
 	
-	public PageDTO(int total) {
-		this.total = total;
+	private int total;
+	private Criteria cri;
+	
+	
+	public PageDTO( Criteria cri,int total) {
 		
-		this.startNum = 1;
-		this.endNum = 10;
-	}
-	// 4개의 파라미터를 받는 생성자. 해당 파라미터로 start, last 페이지 구하는 로직
-	public PageDTO(int curPage, int startNum, int endNum, long total) {
-		this.curPage = curPage;
-		this.startNum = startNum;
-		this.endNum = endNum;
 		this.total = total;
-		this.start = curPage - (curPage-1)%10;
-		this.last = (int) Math.ceil((double) total/10);
-	}
-}// end class
+		this.cri = cri;
+		
+		this.endPage = (int) (Math.ceil( cri.getPageNum() /10.0)) * 10;
+		
+		this.startPage = this.endPage - 9;
+		
+		int realEnd = (int)  Math.ceil( (total * 1.0) / cri.getAmount() ) ;
+		
+		//total을 통한 endPage 재계산
+		if ( realEnd < this.endPage) {
+			this.endPage = realEnd;
+		}//end if
+		
+		
+		//페이지 기능 활성화 여부 저장
+		this.prev = (this.startPage > 1);		
+		this.next = (this.endPage < realEnd);		
+	}//end PageDTD
+	
+
+}//end class
