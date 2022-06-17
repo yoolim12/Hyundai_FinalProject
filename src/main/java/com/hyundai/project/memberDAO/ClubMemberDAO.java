@@ -1,4 +1,4 @@
-package com.hyundai.project.dao;
+package com.hyundai.project.memberDAO;
 
 import java.sql.SQLException;
 import java.util.List;

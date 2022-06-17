@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hyundai.project.dao.ProductDAO;
 import com.hyundai.project.dto.ProductColorDTO;
 import com.hyundai.project.dto.ProductDTO;
 import com.hyundai.project.dto.ProductSizeDTO;
+import com.hyundai.project.productDAO.ProductDAO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -26,6 +26,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override 
 	public List<ProductColorDTO> getProductColorDetail(String pid, String ccolorcode) throws Exception {
+		log.info("produtDAO");
 		return productDAO.getProductColorDetail(pid, ccolorcode);
 	}
 	

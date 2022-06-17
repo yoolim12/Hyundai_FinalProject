@@ -46,7 +46,8 @@ $(document).ready(function(){
         bodyReSize();
         resizeEtcImage();
         btnPosition();
-    });
+    });  
+    
     var Arr1 = location.href.split('detail/');
     var Arr2 = Arr1[1].split('_');
     var pid = Arr2[0];
@@ -93,14 +94,6 @@ $(document).ready(function(){
         			console.log(result[i].ccolorimage);
         			if(i==0) html += '<a href="#" class="beige on" style="background:url('+result[i].ccolorimage+')" ></a>';
         			else html += '<a href="/detail/'+pid+'_'+result[i].ccolorcode+'" class="beige" style="background:url('+result[i].ccolorimage+')" ></a>';
-        			//var split_arr = obj[i].cimage1.split('_');
-					//$("#pcolor").val(split_arr[1]);
-        			//var split_arr = result[i].cimage1.split('_');
-        			//html += '<li id="'+result[i].pid+'">';
-        			//html += '<input type="hidden" id="pcolor" name="pcolor" class="colorNameVal" value="'+split_arr[1]+'"/>';
-        			//if(i == 0) html += '<a href="#;"  onclick="setColor('+i+')" class="beige on" style="background:'+result[i].ccolorcode+' url('+result[i].ccolorimage+'"></a></li>';
-        			//else  html += '<a href="#;" onclick="setColor('+i+')" class="beige" style="background:'+result[i].ccolorcode+' url('+result[i].ccolorimage+'"></a></li>';
-
         			$("#pcolor").val(ccolorcode);
         			console.log($("#pcolor").val());
         		}
@@ -3098,11 +3091,12 @@ $(document).ready(function(){
             </div>
             <!--//190508 추가 -->
 			<form id="addToCartForm" name="addToCartForm" action="/shoppingbag" method="post"><input type="hidden" maxlength="3" size="1" name="qty" class="qty" />
-				<input type="hidden" name="productCodePost" value="IL2C5WSH942W_DN"/>
-				<input type="hidden" id="pid" name="pid" value="${productInfo.pid }"/>
-				<input type="hidden" id="mid" name="mid" value="${sessionScope.member.mid }"/>
-				<input type="hidden" id="psize" name="psize" value="F"/>
-				<input type="hidden" id="pamount" name="pamount" value="1"/>
+				<input type="hidden" name="productCodePost" value=""/>
+				<input type="hidden" id="pid" name="pid" value=""/>
+				<input type="hidden" id="mid" name="mid" value=""/>
+				<input type="hidden" id="ssize" name="ssize" value=""/>
+				<input type="hidden" id="pcolor" name="pcolor" value=""/>
+				<input type="hidden" id="samount" name="samount" value=""/>
 				<input type="button" value='쇼핑백 담기' class="btn cart1803 float_left ml0" id="addToCartButton" onClick="addToCart();"/>
         <div>
           <input type="hidden" name="CSRFToken" value="ec35065f-63f2-4b5d-8f20-aec5bd737cbc" />

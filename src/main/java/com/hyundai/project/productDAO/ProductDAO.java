@@ -1,4 +1,4 @@
-package com.hyundai.project.dao;
+package com.hyundai.project.productDAO;
 
 import java.util.List;
 
