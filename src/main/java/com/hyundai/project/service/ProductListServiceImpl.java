@@ -6,10 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hyundai.project.dao.ProductListDAO;
 import com.hyundai.project.dto.Criteria;
 import com.hyundai.project.dto.ProductListDTO;
-
+import com.hyundai.project.productDAO.ProductDAO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -17,7 +16,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class ProductListServiceImpl implements ProductListService{
 	@Autowired
-	private ProductListDAO mapper;
+	private ProductDAO mapper;
 	
 	@Override
 	public List<ProductListDTO> getList(Criteria cri) throws Exception {
