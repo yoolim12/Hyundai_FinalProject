@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.productDAO.ProductDAO">
+
+	<select id="getProductDetail"
+		resultType="com.hyundai.project.dto.ProductDTO">
+		select p.pid||'_'||c.ccolorcode pid, bname , c.cimage1
+		cimage1, c.cimage2 cimage2, c.cimage3 cimage3, c.ccolorcode
+		ccolorcode, clarge, cmedium, csmall, pname, pprice, pdetail from
+		product p join color c on p.pid = c.pid
+		where p.pid=#{pid} and c.ccolorcode=#{ccolorcode}
+	</select>
+	
+	<select id="getProductColorDetail"
+		resultType="com.hyundai.project.dto.ProductColorDTO">
+		select * from
+		(select ccolorcode, ccolorimage from color where pid = #{pid} and ccolorcode = #{ccolorcode}) union all
+		(select ccolorcode, ccolorimage from color where pid = #{pid} and ccolorcode != #{ccolorcode})
+	</select>
+
+	<select id="getProductSize"
+		resultType="com.hyundai.project.dto.ProductSizeDTO">
+		select ccolorcode, ssize, samount from stock where pid = #{pid} and ccolorcode = #{ccolorcode}
+	</select>
+</mapper>
