@@ -692,6 +692,7 @@
             }
         }
 
+        <!--  recoPick  START ---->
 
         try{
             // 여기 확인. 로그인시 회원 생일, 성별 정보등으로 고객 특별 추천
@@ -746,6 +747,7 @@
                 }
 
         }catch(e){console.log(e);}
+        <!--  recoPick END ---->
 
 
         function setCategoryNameInKO(targetCateCode, defaultCateName){
@@ -792,5 +794,6 @@
     <!-- 풋터 -->
     <th:block th:replace="fragments/footer :: footer"></th:block>
     
-  </body>  
+  </body>
+  
 </html>
