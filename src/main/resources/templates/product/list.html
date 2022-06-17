@@ -2,53 +2,69 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/common}">
 <div layout:fragment="content">
-
-	<script>
-		function getProductList() {
-			$.ajax({
-				type: "get",
-				url: "/list/{clarge}/{cmedium}/{csmall}",
-				dataType: "json",
-				async: true,
-				contentType: "application/json",
-				error: function (request, status, error) {
-					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-				},
-				success: function (result) {
-					var html = "";
-					if (result.length > 0) {
-						/*  window.sessionStorage.setItem('main_new_ecommerceDataList', JSON.stringify(result)); */
-						for (var i = 0; i < result.length; i++) {
-							html += '<li>';
-							html += '<div class="item_box">';
-							html += '   <a href="/detail/' + result[i].pid + '_' + result[i].colorcode + ' class="item_info1">';
-							html += '      <span class="item_img">';
-							html += '         <img src=' + result[i].cimage1 + ' id="T01_IMG_0" alt=' + result[i].pname + ' targetcode=' + result[i].pid + ' class="respon_image" onerror="this.src=' + '"http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg">';
-							html += '            <a href="/product/productDetail?pid=' + result[i].productCode + '" class="item_info1" onclick="javascript:GA_main(\'newImg\',$(this));setEcommerceData(' + i + ', \'NEW\', \'' + categoryCode + '\');">';
-							html += '               <span class="item_img">';
-							html += '                  <img src="' + result[i].t01imageUrl + '/dims/resize/234x353" alt="" name="' + result[i].productName + '" class="respon_image">';
-							html += '            </a>';
-							html += '            <a href="/product/productDetail?pid=' + result[i].productCode + '" class="item_info2" onclick="javascript:GA_main(\'new\',$(this));setEcommerceData(' + i + ', \'NEW\', \'' + categoryCode + '\');">';
-							html += '               <span class="brand">' + result[i].brandName + '</span>';
-							html += '               <span class="price">' + getExchangePrice(result[i].price) + '</span>';
-							html += '            </a>';
-							html += '         </div>';
-							html += '      </li>';
-						}
-						html += '   </ul>';
-						html += '<div class="swiper-button-next"></div>';
-						html += '<div class="swiper-button-prev"></div>';
-						html += '</div>';
-						$("#listBody").html(html);
-					} else {
-						$("#listBody").html(html);
-					}
-				}
-			});
-		}
-	</script>
-
 	<script type="text/javascript">
+	function numWithComma(num) {
+	  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	function getProductList() {
+		var url = location.pathname;
+		var arr = url.split("/");
+		var clarge = arr[2];
+		var cmedium = arr[3];
+		var csmall = arr[4];
+		$.ajax({
+			type: "get",
+			url: "/product/list/" + clarge + "/" + cmedium + "/" + csmall,
+			dataType: "json",
+			async: true,
+			contentType: "application/json",
+			error: function (request, status, error) {
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			},
+			success: function (result) {
+				var html = "";
+				if (result.length > 0) {
+					for (var i = 0; i < result.length; i++) {
+						html += '<li>';
+						html += '<div class="item_box">';
+						html += '   <a href="/detail/' + result[i].pid + '_' + result[i].ccolorcode + '"'+ ' class="item_info1">';
+						html += '      <span class="item_img">';
+						html += '         <img src=' + result[i].cimage1 + ' id="T01_IMG_0" alt=' + result[i].pname + ' targetcode=' + result[i].pid + ' class="respon_image" onerror="this.src=' + '"http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg">';
+						html += '         <img src=' + result[i].cimage2 + ' id="T02_IMG_0" alt=' + result[i].pname + ' targetcode=' + result[i].pname + ' class="respon_image on" onerror="this.src=' + '"http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg" style="display: none; opacity: 1;">';
+						html += '            <input type="hidden" id="newImage1_0" value="' + result[i].cimage1 + '">';
+						html += '            <input type="hidden" id="newImage2_0" value="' + result[i].cimage2 + '">';
+						html += '      </span>';
+						html += '      <span class="item_size" id="itemsize_0" style="display: none; height: 20px; padding-top: 15px; margin-top: 0px; padding-bottom: 15px; margin-bottom: 0px;">';
+						html += '      		<div id="' + result[i].pid + '_' + result[i].colorcode + '" style="display: none">';
+						html += '               <span>FR</span>';
+						html += '         </div>';
+						html += '         <div id="' + result[i].pid + '_' + result[i].colorcode + '">';
+						html += '               <span>FR</span>';
+						html += '         </div>';
+						html += '      </span>';
+						html += '      </a>';
+						html += '      <a href="/ko/p/' + result[i].pid + '" class="item_info2">';
+						html += '      		<span class="brand">' + result[i].bname + '</span>';
+						html += '      		<span class="title">' + result[i].pname + '</span>';
+						html += '      		<span class="price">₩' + numWithComma(result[i].pprice);
+/* 						html += '      		<span th:text="${#numbers.formatInteger(' + result[i].pprice + ', 0, '"COMMA"')}">; */
+						html += '      		</span>';
+						html += '      		<span class="flag">';
+						html += '      				<span class="product">NEW</span>';
+						html += '      		</span>';
+						html += '      </a>';
+						html += '   </div>';
+						html += '</li>';
+					}
+					console.log(html);
+					$("#listBody").html(html);
+				} else {
+					$("#listBody").html(html);
+				}
+			}
+		});
+	}
+		getProductList();
 		//<![CDATA[ 
 		var categoryListList = "";
 		var orderSizeCodeArr = {};
@@ -1069,7 +1085,7 @@
 			</form>
 			<div class="items_list cate_item4" id="listContent" style="display: block;">
 				<ul class="clearfix" id="listBody" style="display: block;">
-					<c:forEach items="${list}" var="product" varStatus="status">
+					<!-- <c:forEach items="${list}" var="product" varStatus="status">
 						<li>
 							<div class="item_box">
 								<a href="/product/productDetail?pid=${product.pid}" class="item_info1"> <span class="item_img"> <img
@@ -1102,12 +1118,12 @@
 								</a>
 								<div class="color_more_wrap">
 									<c:forEach items="${colorMap[status.index] }" var="colorList" varStatus="status2">
-										<!-- <a href="javascript:void(0)" class="cl wt" style="background:${colorList.ccolorcode} url('${colorList.cimage1 }');" onclick="GA_Event('카테고리_리스트','컬러칩','BK')"></a>-->
+										<a href="javascript:void(0)" class="cl wt" style="background:${colorList.ccolorcode} url('${colorList.cimage1 }');" onclick="GA_Event('카테고리_리스트','컬러칩','BK')"></a>
 									</c:forEach>
 								</div>
 							</div>
 						</li>
-					</c:forEach>
+					</c:forEach> -->
 				</ul>
 			</div>
 			</body>
@@ -1121,22 +1137,25 @@
 			<!--페이지 번호 처리  -->
 			<div class="paging" style="display: block;">
 				 
-				<c:if test="${pageMaker.prev}">
+				<span th:if="${pageMaker.prev}">
 					<!-- 이전 버튼 -->
-
-					<a href="?pageNum=${pageMaker.startPage - 1}" class="prev">Previous</a>
-
-				</c:if>
-
+					<a th:href="@{(pageNum=${pageMaker.startPage - 1})}" class="prev">Previous</a>
+				</span>
 				 
 				<!-- 1~10 버튼 -->
-				<span class="num">
+				<!-- <span class="num">
+					<li th:each="p" : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}>
+						<span th:if="${(pageMaker.startPage+p) <= pageMaker.endPage}">
+							<a th:href="@{}"
+						</span>
+					</li>
+					
 					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 						<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
 							<a href="/list/${clarge}/${cmedium}/${csmall}?pageNum=${num}" class="pageBtn">${num}</a>
 						</c:if>
 					</c:forEach>
-				</span>  
+				</span>   -->
 				<c:if test="${pageMaker.next}">
 					<!-- 다음 버튼 -->
 					<a href="?pageNum=${pageMaker.endPage +1}" class="next">Next</a>

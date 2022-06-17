@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.hyundai.project.dto.Criteria;
-import com.hyundai.project.dto.PageVO;
+import com.hyundai.project.dto.PageDTO;
 import com.hyundai.project.dto.ProductListDTO;
 import com.hyundai.project.service.ProductListService;
 
