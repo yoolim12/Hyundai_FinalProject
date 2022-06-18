@@ -42,8 +42,8 @@ $(document).ready(function ()
             console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
         }, 
         success : function( result ) {
-        	console.log(result);
-        	document.getElementById("totalcnt").innerText = result.size();
+        	console.log(result.length);
+        	document.getElementById("total-cnt").innerHTML = '<span class="delt_ico"></span>택배('+result.length+')';
         	
         	/*document.getElementById("image1").src=result.cimage1;
         	document.getElementById("image2").src=result.cimage2;
@@ -3660,7 +3660,7 @@ function notiAlert(){
                 <!-- 장바구니개편 -->
                 <ul class="tab3">
                     <li>
-                        <a href="#;" name="cartDivision" data-division="" onclick="GA_Event('쇼핑백', '탭', '택배');"><span class="delt_ico"></span>택배 ()</a>
+                        <a id="total-cnt" href="#;" name="cartDivision" data-division="" onclick="GA_Event('쇼핑백', '탭', '택배');"></a>
                     </li>
                     <li>
                         <a href="#;" name="cartDivision" data-division="store" onclick="GA_Event('쇼핑백', '탭', '매장수령');" ><span class="spt_ico"></span>매장수령 (0)</a>
