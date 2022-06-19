@@ -28,9 +28,32 @@
 				}
 			}
 		});
- 						console.log(chtml); 
-		chtml += '</div>'
+		chtml += '</div>';
 		return chtml;
+	}
+	
+	function getProductSize(pid, colorcode){
+		var shtml = '<div id="' + pid + '_' + colorcode + '">';
+		$.ajax({
+			type: "get",
+			url: "/product/size/" + pid + "/" + colorcode,
+			dataType: "json",
+			async: false,
+			contentType: "application/json",
+			error: function (request, status, error) {
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			},
+			success: function (result) {
+				if (result.length > 0) {
+					for (var i = 0; i < result.length; i++) {
+						shtml += '<span>'+ result[i].ssize +'</span>';
+					}
+				}
+			}
+		});
+		shtml += '</div>';
+		console.log(shtml);
+		return shtml;
 	}
 	
 	function getProductList() {
@@ -56,6 +79,7 @@
 				if (result.length > 0) {
 					for (var i = 0; i < result.length; i++) {
 						var c = getProductColor(result[i].pid,result[i].ccolorcode);
+						var s = getProductSize(result[i].pid,result[i].ccolorcode);
 						html += '<li>';
 						html += '<div class="item_box">';
 						html += '   <a href="/detail/' + result[i].pid + '_' + result[i].ccolorcode + '"'+ ' class="item_info1">';
@@ -66,19 +90,19 @@
 						html += '            <input type="hidden" id="newImage2_0" value="' + result[i].cimage2 + '">';
 						html += '      </span>';
 						html += '      <span class="item_size" id="itemsize_0" style="display: none; height: 20px; padding-top: 15px; margin-top: 0px; padding-bottom: 15px; margin-bottom: 0px;">';
-						html += '      		<div id="' + result[i].pid + '_' + result[i].colorcode + '" style="display: none">';
+						html += s
+						/* html += '      		<div id="' + result[i].pid + '_' + result[i].colorcode + '" style="display: none">';
 						html += '               <span>FR</span>';
 						html += '         </div>';
 						html += '         <div id="' + result[i].pid + '_' + result[i].colorcode + '">';
 						html += '               <span>FR</span>';
-						html += '         </div>';
+						html += '         </div>'; */
 						html += '      </span>';
 						html += '      </a>';
 						html += '      <a href="/ko/p/' + result[i].pid + '" class="item_info2">';
 						html += '      		<span class="brand">' + result[i].bname + '</span>';
 						html += '      		<span class="title">' + result[i].pname + '</span>';
 						html += '      		<span class="price">₩' + numWithComma(result[i].pprice);
-/* 						html += '      		<span th:text="${#numbers.formatInteger(' + result[i].pprice + ', 0, '"COMMA"')}">; */
 						html += '      		</span>';
 						html += '      		<span class="flag">';
 						html += '      				<span class="product">NEW</span>';
