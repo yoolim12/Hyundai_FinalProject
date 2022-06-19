@@ -34,6 +34,9 @@
 	}
 	
 	function getProductList() {
+    var params = new URL(location).searchParams;
+		var page = params.get("pageNum") ?? 1;
+		var amount = params.get("amount") ?? 12;
 		var url = location.pathname;
 		var arr = url.split("/");
 		var clarge = arr[2];
@@ -41,7 +44,7 @@
 		var csmall = arr[4];
 		$.ajax({
 			type: "get",
-			url: "/product/list/" + clarge + "/" + cmedium + "/" + csmall,
+			url: "/product/list/" + clarge + "/" + cmedium + "/" + csmall + "?pageNum=" + page + "&amount=" + amount,
 			dataType: "json",
 			async: true,
 			contentType: "application/json",
@@ -1113,45 +1116,6 @@
 			</form>
 			<div class="items_list cate_item4" id="listContent" style="display: block;">
 				<ul class="clearfix" id="listBody" style="display: block;">
-					<!-- <c:forEach items="${list}" var="product" varStatus="status">
-						<li>
-							<div class="item_box">
-								<a href="/product/productDetail?pid=${product.pid}" class="item_info1"> <span class="item_img"> <img
-											src="${product.t01_imageurl}" id="T01_IMG_0" alt="${product.pname}" targetcode="${product.pid}"
-											class="respon_image"
-											onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg'">
-										<img src="${product.t02_imageurl}" id="T02_IMG_0" alt="${product.pname}"
-											targetcode="${product.pname}" class="respon_image on"
-											onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg'"
-											style="display: none; opacity: 1;"> <input type="hidden" id="newImage1_0"
-											value="http://newmedia.thehandsome.com/SY/2C/SS/SY2C4TTO047W_BK_T01.jpg">
-										<input type="hidden" id="newImage2_0"
-											value="http://newmedia.thehandsome.com/SY/2C/SS/SY2C4TTO047W_BK_T02.jpg">
-									</span> <span class="item_size" id="itemsize_0"
-										style="display: none; height: 20px; padding-top: 15px; margin-top: 0px; padding-bottom: 15px; margin-bottom: 0px;">
-										<div id="SY2C4TTO047W_WG" style="display: none">
-											<span>90</span>
-										</div>
-										<div id="SY2C4TTO047W_BK">
-											<span>90</span>
-										</div>
-									</span>
-								</a> <a href="/ko/p/${product.pid}" class="item_info2"> <span class="brand">${product.bname}</span>
-									<span class="title">${product.pname}</span>
-									<span class="price">₩
-										<fmt:formatNumber value="${product.pprice }" type="number" pattern="###,###" />
-									</span>
-									<span class="flag"> <span class="product">NEW</span>
-									</span>
-								</a>
-								<div class="color_more_wrap">
-									<c:forEach items="${colorMap[status.index] }" var="colorList" varStatus="status2">
-										<a href="javascript:void(0)" class="cl wt" style="background:${colorList.ccolorcode} url('${colorList.cimage1 }');" onclick="GA_Event('카테고리_리스트','컬러칩','BK')"></a>
-									</c:forEach>
-								</div>
-							</div>
-						</li>
-					</c:forEach> -->
 				</ul>
 			</div>
 			</body>
@@ -1165,29 +1129,24 @@
 			<!--페이지 번호 처리  -->
 			<div class="paging" style="display: block;">
 				 
-				<span th:if="${pageMaker.prev}">
+				<span th:if="${pageMaker.prev}" class="num">
 					<!-- 이전 버튼 -->
-					<a href="#" th:href="@{(pageNum=${pageMaker.startPage - 1})}" class="prev">Previous</a>
+					<a href="#" th:href="@{?pageNum={prevPage}(prevPage=${pageMaker.startPage}-1)}" class="prev">Previous</a>
 				</span>
 				 
 				<!-- 1~10 버튼 -->
-				<!-- <span class="num">
-					<li th:each="p" : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}>
-						<span th:if="${(pageMaker.startPage+p) <= pageMaker.endPage}">
-							<a th:href="@{}"
+				<span class="num">
+					<th:block th:each="p:${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
+						<span th:if="${pageMaker.startPage}+${pStat.index} <= ${pageMaker.endPage}">
+							<a th:href="@{?pageNum={nowPage}(nowPage=${pageMaker.startPage}+${pStat.index})}" class="pageBtn">[[${pageMaker.startPage}+${pStat.index}]]</a>
 						</span>
-					</li>
-					
-					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-						<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
-							<a href="/list/${clarge}/${cmedium}/${csmall}?pageNum=${num}" class="pageBtn">${num}</a>
-						</c:if>
-					</c:forEach>
-				</span>   -->
-				<c:if test="${pageMaker.next}">
+					</th:block>
+				</span>
+				
+				<span th:if="${pageMaker.next}" class="num">
 					<!-- 다음 버튼 -->
-					<a href="?pageNum=${pageMaker.endPage +1}" class="next">Next</a>
-				</c:if>
+					<a href="#" th:href="@{?pageNum={nextPage}(nextPage=${pageMaker.endPage}+1)}" class="next">Next</a>
+				</span>
 
 			</div>
 			<!--  end Pagination -->
