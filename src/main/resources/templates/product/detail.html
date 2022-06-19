@@ -26,9 +26,10 @@ var ccolorcode = Arr2[1];
 var stock_amount = 0;
     
 var selectSize = false;
-function setSize(i) {
+function setSize(size) {
 	selectSize = true;
-	$("#ssize").val(i);
+	$("#ssize").val(size);
+	console.log($("#ssize").val());
 }
 
 function numWithComma(num) {
@@ -114,7 +115,8 @@ $(document).ready(function(){
         	obj = result;
         	if(result.length > 0){
         		for(var i=0; i<result.length; i++) {
-        			html += '<li id="'+pid+'"><a href="javascript:void(0)" onclick="setSize('+result[i].ssize+')">'+result[i].ssize+'<span class="ko_size1901" style="display:none;">&nbsp;(55)</span></a></li>';
+        			var size = "'"+ result[i].ssize + "'";
+        			html += '<li id="'+pid+'"><a href="javascript:void(0)" onclick="setSize('+size+')">'+result[i].ssize+'<span class="ko_size1901" style="display:none;">&nbsp;(55)</span></a></li>';
         		}
         		html += '</ul>';
         	}
