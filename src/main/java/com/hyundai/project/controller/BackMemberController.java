@@ -45,6 +45,7 @@ public class BackMemberController {
 	@ResponseBody
     public ResponseEntity<MemberDTO> findId(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
 		String email = map.get("email");
+		System.out.println(email);
 		
 		ResponseEntity<MemberDTO> mem = null;
 		try {
@@ -55,13 +56,9 @@ public class BackMemberController {
 			mem = new ResponseEntity<MemberDTO>(HttpStatus.BAD_REQUEST);
 		} // end try
 		return mem;
-
-//    	Gson gson = new Gson();
-//		response.setContentType("application/json; charset=utf-8");
-//		response.getWriter().print(gson.toJson(map)); 	
     } // end findid
 	
-	// 회원정보 수정 (post update)
+	// 회원정보 수정
     @PostMapping("/modify")
     @ResponseBody
     public void update(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
@@ -76,21 +73,32 @@ public class BackMemberController {
     	
     	try {
     		service.modifyMember(email, name, birth, telnum, address);
+    		
+        	Gson gson = new Gson();
+    		response.setContentType("application/json; charset=utf-8");
+    		response.getWriter().print(gson.toJson(map)); 
     	}catch(Exception e){
     		e.printStackTrace();
     	}
-    } // end update
+    } // end modify
     
-    // 회원 탈퇴 (post update)
-    @PostMapping("/modify")
+    // 회원 탈퇴
+    @PostMapping("/delete")
     @ResponseBody
-    public void delMember(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
+    public void delMember(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
     	String email = map.get("email");
+    	
+    	System.out.println(email);
     	
     	try {
     		service.delMember(email);
+    		
+    		Gson gson = new Gson();
+    		response.setContentType("application/json; charset=utf-8");
+    		response.getWriter().print(gson.toJson(map)); 
+    		
     	}catch(Exception e){
     		e.printStackTrace();
     	}
-    } // end update
+    } // end delete
 }

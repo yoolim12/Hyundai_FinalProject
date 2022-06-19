@@ -12,7 +12,7 @@ import lombok.Setter;
 public class MemberDTO {
 	private String memail;
     private String mname;
-    private String birth;
+    private Date birth;
     private String telnum;
     private String maddress;
     private String mgender;

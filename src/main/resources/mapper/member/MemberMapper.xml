@@ -9,7 +9,7 @@
 	</select>
 	
 	<select id="modifyMember">
-		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress1 = #{maddress} where memail = #{memail}
+		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
 	</select>
 	
 	<select id="delMember">
