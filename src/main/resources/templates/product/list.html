@@ -6,8 +6,35 @@
 	function numWithComma(num) {
 	  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
-	function getProductList() { 
-		var params = new URL(location).searchParams;
+	function getProductColor(pid,colorcode){
+		var chtml = '<div class="color_more_wrap">';
+		$.ajax({
+			type: "get",
+			url: "/product/color/" + pid + "/" + colorcode,
+			dataType: "json",
+			async: false,
+			contentType: "application/json",
+			error: function (request, status, error) {
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			},
+			success: function (result) {
+				if (result.length > 0) {
+					for (var i = 0; i < result.length; i++) {
+						/* chtml += '<div class="color_more_wrap">'; */
+/* 						chtml += '<a href="javascript:chgColorChip(0, '+"'"+ pid+'_'+colorcode+"'"+')" class="cl wt" style="background:#000000 url('+"'" +result[i].ccolorimage +"/dims/resize/13x14'"+');" onclick="GA_Event('+"'카테고리_리스트','컬러칩','"+result[i].ccolorcode+"')"+'"></a>';
+ */						chtml += '<img src="'+result[i].ccolorimage+'/dims/resize/13x14"';
+ 						chtml += '  <span>&nbsp;</span>';
+					}
+				}
+			}
+		});
+ 						console.log(chtml); 
+		chtml += '</div>'
+		return chtml;
+	}
+	
+	function getProductList() {
+    var params = new URL(location).searchParams;
 		var page = params.get("pageNum") ?? 1;
 		var amount = params.get("amount") ?? 12;
 		var url = location.pathname;
@@ -28,6 +55,7 @@
 				var html = "";
 				if (result.length > 0) {
 					for (var i = 0; i < result.length; i++) {
+						var c = getProductColor(result[i].pid,result[i].ccolorcode);
 						html += '<li>';
 						html += '<div class="item_box">';
 						html += '   <a href="/detail/' + result[i].pid + '_' + result[i].ccolorcode + '"'+ ' class="item_info1">';
@@ -56,10 +84,10 @@
 						html += '      				<span class="product">NEW</span>';
 						html += '      		</span>';
 						html += '      </a>';
+						html += c
 						html += '   </div>';
 						html += '</li>';
 					}
-					console.log(html);
 					$("#listBody").html(html);
 				} else {
 					$("#listBody").html(html);
