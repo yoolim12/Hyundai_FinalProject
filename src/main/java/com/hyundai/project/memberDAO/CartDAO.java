@@ -11,7 +11,7 @@ public interface CartDAO {
 
 	public List<CartDTO> getCart(String memail) throws Exception;
 
-	public void insertCart(String memail) throws Exception;
+	public void insertCart(String memail, CartDTO cart) throws Exception;
 
 	public void deleteCart(String memail) throws Exception;
 	

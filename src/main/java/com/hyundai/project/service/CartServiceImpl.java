@@ -23,8 +23,8 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public void insertCart(String memail) throws Exception {
-		cartDAO.insertCart(memail);
+	public void insertCart(String memail, CartDTO cart) throws Exception {
+		cartDAO.insertCart(memail, cart);
 	}
 
 	@Override

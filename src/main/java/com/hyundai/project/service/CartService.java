@@ -8,8 +8,8 @@ public interface CartService {
 	
 	public List<CartDTO> getCart(String memail) throws Exception;
 	
-	public void insertCart(String mid) throws Exception;
+	public void insertCart(String memail, CartDTO cart) throws Exception;
 	
-	public void deleteCart(String mid) throws Exception;
+	public void deleteCart(String memail) throws Exception;
 	
 }
