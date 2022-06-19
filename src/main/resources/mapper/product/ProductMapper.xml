@@ -40,12 +40,12 @@
 			select rownum rr, p.pid, p.bname, p.pname, p.pprice, c.ccolorcode, c.cimage1, c.cimage2
 			from product p join v_color1 c on p.pid = c.pid 
 			where clarge = #{param2} and cmedium = #{param3} and csmall = #{param4}
-			) where rr between (#{param1.pageNum} -1) * #{param1.amount} and (#{param1.pageNum} * #{param1.amount})
+			) where rr > (#{param1.pageNum} -1) * #{param1.amount} and rr <= (#{param1.pageNum} * #{param1.amount})
     	]]>
 	</select>
 	
 	<select id="getTotal" resultType="int">
-		select count(*) from product 
+		select count(distinct pname) from product 
 			where clarge = #{param1} and cmedium = #{param2} and csmall = #{param3}
 	</select>
    
