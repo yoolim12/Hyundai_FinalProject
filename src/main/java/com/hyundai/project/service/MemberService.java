@@ -1,12 +1,6 @@
 package com.hyundai.project.service;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
-import com.hyundai.project.dto.ClubMember;
-import com.hyundai.project.dto.ClubMember2;
-import com.hyundai.project.dto.ClubMemberRoleSet;
+import com.hyundai.project.dto.MemberDTO;
 
 public interface MemberService {
 //	public void insertClubMember(ClubMember clubMember) throws Exception;
@@ -24,4 +18,13 @@ public interface MemberService {
 //	public void deleteInfo(String email) throws Exception;
 //
 //	public void deleteRoleSet(String email) throws Exception;
+	
+	// 이메일로 회원 정보 가져오기
+	public MemberDTO getMemberInfo(String email) throws Exception;
+	
+	// 회원 수정
+	public void modifyMember(String memail, String mname, String birth, String telnum, String maddress) throws Exception;
+	
+	// 회원 탈퇴
+	public void delMember(String email) throws Exception;
 }

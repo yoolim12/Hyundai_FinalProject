@@ -3,6 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.project.memberDAO.MemberDAO">
-
+	<select id="getMemberInfo"
+		resultType="com.hyundai.project.dto.MemberDTO">
+		select * from member where memail = #{email}
+	</select>
+	
+	<select id="modifyMember">
+		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress1 = #{maddress} where memail = #{memail}
+	</select>
+	
+	<select id="delMember">
+		delete from member where memail = #{email}
+	</select>
 	
 </mapper>

@@ -33,10 +33,39 @@
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
     
+    <!-- jquery -->
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body class="animsition">
+	
+    
     <script>
+	 	// 회원 정보 탈퇴
+		function showAll(){
+			
+			$.ajax({
+				url : '/back/allmember',
+				type: 'POST',
+				dataType: 'JSON',
+				data : {
+					
+					'mname' : name,
+					'birth' : birth,
+					'telnum' : telnum,
+					'maddress' : maddress
+				},
+				success: function(res){
+	
+				},
+				error: function(){
+					alert("error")
+				}
+			});
+		}
+	 	
+    	// 회원 검색
     	function findUser(){
-    		//input id : input1-group2
-    		alert($('#input_email').val())
     		var email = $("#input_email").val();
     		$.ajax({
     			url : '/back/findid',
@@ -46,7 +75,66 @@
     				'email' : email
     			},
     			success: function(res){
-    				alert(res.email)
+    				$("#mname").val(res.mname);
+    				$("#birth").val(res.birth);
+    				$("#telnum").val(res.telnum);
+    				$("#maddress").val(res.maddress);
+    			},
+    			error: function(){
+    				alert("error")
+    			}
+    		});
+    	}
+    	
+    	// 회원 정보 수정
+    	function modify(){
+    		
+    		var memail = $("#input_email").val();
+    		var mname = $("#mname").val();
+    		var birth = $("#birth").val();
+    		var telnum = $("#telnum").val();
+    		var maddress = $("#maddress").val();
+    		
+    		$.ajax({
+    			url : '/back/modify',
+    			contentType : "application/json",
+    			type: 'POST',
+    			dataType: 'JSON',
+    			data : JSON.stringify({
+    				'memail' : memail,
+    				'mname' : mname,
+    				'birth' : birth,
+    				'telnum' : telnum,
+    				'maddress' : maddress
+    			}),
+    			success: function(res){
+    				
+    			},
+    			error: function(res){
+    				console.log(res)
+    			}
+    		});
+    	}
+    	
+    	// 회원 정보 탈퇴
+    	function delMember(){
+    		var email = $("#input_email").val();
+    		
+    		$.ajax({
+    			url : '/back/modify',
+    			type: 'GET',
+    			dataType: 'JSON',
+    			data : {
+    				'mname' : name,
+    				'birth' : birth,
+    				'telnum' : telnum,
+    				'maddress' : maddress
+    			},
+    			success: function(res){
+    				$("#mname").val(res.mname);
+    				$("#birth").val(res.birth);
+    				$("#telnum").val(res.telnum);
+    				$("#maddress").val(res.maddress);
     			},
     			error: function(){
     				alert("error")
@@ -54,10 +142,7 @@
     		});
     	}
     </script>
-
-</head>
-
-<body class="animsition">
+	
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -541,35 +626,31 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="company" class=" form-control-label">Company</label>
-                                            <input type="text" id="company" placeholder="Enter your company name" class="form-control">
+                                            <label for="company" class=" form-control-label">이름</label>
+                                            <input type="text" id="mname" placeholder="이름" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label for="vat" class=" form-control-label">VAT</label>
-                                            <input type="text" id="vat" placeholder="DE1234567890" class="form-control">
+                                            <label for="vat" class=" form-control-label">생년월일</label>
+                                            <input type="text" id="birth" placeholder="생년월일" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label for="street" class=" form-control-label">Street</label>
-                                            <input type="text" id="street" placeholder="Enter street name" class="form-control">
+                                            <label for="street" class=" form-control-label">전화 번호</label>
+                                            <input type="text" id="telnum" placeholder="전화 번호" class="form-control">
                                         </div>
-                                        <div class="row form-group">
-                                            <div class="col-8">
-                                                <div class="form-group">
-                                                    <label for="city" class=" form-control-label">City</label>
-                                                    <input type="text" id="city" placeholder="Enter your city" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="form-group">
-                                                    <label for="postal-code" class=" form-control-label">Postal Code</label>
-                                                    <input type="text" id="postal-code" placeholder="Postal Code" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
+                                      
                                         <div class="form-group">
-                                            <label for="country" class=" form-control-label">Country</label>
-                                            <input type="text" id="country" placeholder="Country name" class="form-control">
+                                            <label for="country" class=" form-control-label">주소</label>
+                                            <input type="text" id="maddress" placeholder="주소" class="form-control">
                                         </div>
+                                        
+                                        <div class="card-footer">
+	                                        <button class="btn btn-primary btn-sm" onclick = "modify()">
+	                                            <i class="fa fa-dot-circle-o"></i> 수정하기
+	                                        </button>
+	                                        <button type="reset" class="btn btn-danger btn-sm">
+	                                            <i class="fa fa-ban"></i> 탈퇴
+	                                        </button>
+                                    	</div>
                                     </div>
                                 </div>
                             </div>
