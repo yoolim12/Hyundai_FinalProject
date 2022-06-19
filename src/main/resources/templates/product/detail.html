@@ -19,17 +19,16 @@ var sizeArray = [];
 var fileIdx = 1;
 var cartQuantity = {};
 var obj;
-
-function setColor(i) {
-	//console.log(obj[i].ccolorcode);
-	$("#pcolor").val(obj[i].ccolorcode);
-	console.log($("#pcolor").val());
-}
-
+var Arr1 = location.href.split('detail/');
+var Arr2 = Arr1[1].split('_');
+var pid = Arr2[0];
+var ccolorcode = Arr2[1];
+var stock_amount = 0;
+    
 var selectSize = false;
 function setSize(i) {
 	selectSize = true;
-	console.log(i,selectSize);
+	$("#ssize").val(i);
 }
 
 function numWithComma(num) {
@@ -48,10 +47,7 @@ $(document).ready(function(){
         btnPosition();
     });  
     
-    var Arr1 = location.href.split('detail/');
-    var Arr2 = Arr1[1].split('_');
-    var pid = Arr2[0];
-    var ccolorcode = Arr2[1];
+    
     
     // 상품 정보 가져오는 ajax 호출
    	$.ajax({
@@ -114,6 +110,7 @@ $(document).ready(function(){
         }, 
         success : function( result ) { // ccolorcode, ssize, samount
         	var html="";
+        	stock_amount = samount;
         	obj = result;
         	if(result.length > 0){
         		for(var i=0; i<result.length; i++) {
@@ -191,27 +188,19 @@ function addToCart(buyNow)
     }
     if(addToCartProcess){
         addToCartProcess = false;
-        var pid = $('form[name=addToCartForm] input[name=pid]').val();
-        var psize = $('form[name=addToCartForm] input[name=psize]').val();
-        var pamount = $('form[name=addToCartForm] input[name=pamount]').val();
-        var pcolor = $("#pcolor").val();
-        if(pcolor == null) {
-        	var split_arr = pid.split('_');
-        	pcolor = split_arr[1];
-        }
-        console.log(pcolor);
+        var ssize = $("#ssize").val();
+        var qty  = $("#txtqty").val();
         
-        /* console.log(pid, psize, pcolor, pamount); */
         // 장바구니 등록하는 ajax 호출
-        $.ajax({
+        /*$.ajax({
             url: "/shoppingbag",
             method: "post",
             data : {
             	mid : "${sessionScope.member.mid}",
             	pid : pid,
-            	psize : psize,
-            	pcolor : pcolor,
-            	pamount : pamount
+            	ccolorcode : ccolorcode,
+            	ssize : ssize,
+            	qty : qty
             },
             success: function (data) {
                 alert("완료되었습니다.");
@@ -220,91 +209,9 @@ function addToCart(buyNow)
             error : function( request, status, error ){
                 console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
             }
-        });
+        });*/
         
     }
-}
-    
-    
-function setFourpmAthomeCode(data,selectSize,type){
-    tempSetClass();
-    $(document).find(".color_size_qty ul.color_chip > li").each(function(){
-        if(data.indexOf($(this).attr("id")) == -1){
-            $(this).find(" > a").attr("class","no_color");
-        }
-    });
-    
-    var checkSizeCode = false;
-    $(document).find(".color_size_qty .size_chip > li").each(function(){
-        if(!$(this).find(" > a").hasClass("not_stock")){
-            if(data.indexOf($(this).attr("id")) == -1){
-                $(this).find(" > a").addClass("not_stock");
-            }
-        }
-        
-        if($(this).find(" > a").hasClass("on")){
-            if(data.indexOf($(this).attr("id")) == -1){
-                checkSizeCode = true;
-            }
-        }
-    });
-    
-    if(selectSize){
-        if(checkSizeCode){
-            var msg = "";
-            if(type == "fourpm"){
-                msg = '선택한 색상,사이즈는 {0}PM 서비스</br>대상이 아닙니다.</br>옵션을 다시 선택해주세요.';
-            }else if(type == "athome"){
-                msg = '선택한 색상,사이즈는 앳홈 서비스</br>대상이 아닙니다.</br>옵션을 다시 선택해주세요.';
-            }else if(type == "pickup"){
-                msg = '선택한 사이즈는 매장수령</br>대상이 아닙니다.</br>옵션을 다시 선택해주세요.';
-            }else if(type == "quick"){
-                msg = '선택한 사이즈는 퀵배송</br>대상이 아닙니다.</br>옵션을 다시 선택해주세요.';
-            }
-            
-            var la = new layerAlert(msg);
-            la.confirmAction = function(){
-                return;
-            };
-            $('form[name=addToCartForm] input[name=productCodeType]').val("ApparelStyleVariantProduct");
-        }
-    }
-    
-    
-}
-
-function tempSetOriginClass(){
-    $(".color_size_qty ul.color_chip > li").each(function(idx){
-        $(this).find(" > a").attr("class",colorArray[idx]);
-    });
-    
-    $(".color_size_qty .size_chip > li").each(function(idx){
-        if(sizeArray[idx] == ""){
-            $(this).find(" > a").removeClass("not_stock");
-        }
-    });
-}
-
-function tempSetClass(){
-    $(".color_size_qty ul.color_chip > li").each(function(idx){
-        colorArray[idx] = $(this).find(" > a").attr("class");
-    });
-    
-    $(".color_size_qty .size_chip > li").each(function(idx){
-        if($(this).find(" > a").hasClass("not_stock")){
-            sizeArray[idx] = "not_stock";
-        }else{
-            sizeArray[idx] = "";
-        }
-    });
-}
-
-function showExchangeRate(){ 
-    var productPrice = $("#productPrice").val() == null || $("#productPrice").val() == 0 ? 0 : $("#productPrice").val();
-    var addHtml = "<p>₩"+addComma(productPrice); +"</p>";
-    $("#exchangeDiv").html(addHtml);
-    //$(".tlt_ship .delch_box").css("display","block");
-    
 }
 
 function btnPosition(){
@@ -354,69 +261,6 @@ $(document).on("keyup","#enjoySize",function(){
         }
     }
 });
-
-function qnawWriteCheck()
-{
-    var title = $("#inquiryTitle").val();
-    var content = $("#inquiryContents").val();
-    var hp2 = $("#inquiryMobileNo2").val();
-    var hp3 = $("#inquiryMobileNo3").val();
-    var emailAddress = $("#inquiryEmailAddress").val();
-    var emailDomain = $("#inquiryEmailDomain").val();
-    
-    if(title == null || title.trim() == ''){
-        var la = new layerAlert('제목을 입력해 주세요.');        
-        la.confirmAction = function(){
-            $("#productQnAWriteDiv").attr("tabindex", -1).focus();
-        };
-        return false;       
-    }
-    
-    if(content == null || content.trim() == ''){
-        var la = new layerAlert('내용을 입력해 주세요.');
-        la.confirmAction = function(){
-            $("#productQnAWriteDiv").attr("tabindex", -1).focus();
-        };
-        return false;
-        
-    }
-    
-    if(content.trim().length < 1 && content.trim().length > 200){
-        var la = new layerAlert('내용은 1 ~ 200자 사이입니다.');
-        la.confirmAction = function(){
-            $("#productQnAWriteDiv").attr("tabindex", -1).focus();
-        };
-        return false;
-    }
-    
-	if($("#inquirySmsNoticeYn").is(":checked")) {
-		if((hp2 == null || hp2.trim() == '') || (hp3 == null || hp3.trim() == '')) {
-			var la = new layerAlert('SMS를 받을 전화번호를 입력해 주세요.');
-			la.confirmAction = function() {
-				$("#productQnAWriteDiv").attr("tabindex", -1).focus();
-			};
-			return false;
-		}
-	}
-	
-	if(emailAddress == null || emailAddress.trim() == '') {
-		var la = new layerAlert('답변받을 이메일은 필수 항목입니다.');
-		la.confirmAction = function() {
-			$("#productQnAWriteDiv").attr("tabindex", -1).focus();
-		};
-		return false;
-	}
-	
-	if(emailDomain == null || emailDomain.trim() == '') {
-		var la = new layerAlert('답변받을 이메일은 필수 항목입니다.');
-		la.confirmAction = function() {
-			$("#productQnAWriteDiv").attr("tabindex", -1).focus();
-		};
-		return false;
-	}
-	
-    return true;
-}
 
 //2018.01.16 로그인 팝업
 function goLoginPopup(pageType){    
@@ -623,83 +467,25 @@ function fn_qtySubtraction()
 }
 
 function fn_qtyAdd(){
-    var productType = $('form[name=addToCartForm] input[name=productCodeType]').val();
-    if(productType != 'ApparelSizeVariantProduct'){
+	if(selectSize == false){
         var la = new layerAlert('사이즈를 선택해 주세요.');
         return;
     }
-    
-    var qty         = parseInt($("#txtqty").val());
-    var stockCnt        = ($("#storePickupCheck").is(":checked")) ? parseInt(stockOnlineStockpile[$("#productCode").val()]) : parseInt($("#stockCnt").val());
-    var reserveSaleYn = false;
-    var cartCnt = 0;
-    if(cartQuantity[$("#productCode").val()] != null && cartQuantity[$("#productCode").val()] != "undefined"){
-        cartCnt = cartQuantity[$("#productCode").val()];
+    var qty = parseInt($("#txtqty").val());
+    if(qty + 1 > 2){
+    	$("#txtqty").val("2");
+    	var la = new layerAlert('동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.');
+        return;	
     }
-    
-  	//#2610 [주문] 가상계좌 결제수단 제외 및 중복 구매 제한 처리 요청 건 20220215 hyunbae
-    var productCategory = 'WE013';
-    if(qty + 1 > 2 && productCategory){
-    	var baseCategoryCode = productCategory.substring(0,2);
-    	if('WE' === baseCategoryCode || 'ME' === baseCategoryCode){
-    		$("#txtqty").val("2");
-    		var la = new layerAlert('동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.');
-            return;	
-    	}
-    }
-    
-    if($("input[id^=reserveSalesStockpile_]").length > 0){
-        reserveSaleYn = true;
-    }
-    
-    if("ko" != "ko" && stockCnt==1){
-        layerAlert('구매가능한 재고는 1개 입니다.');
-        return;
-    }
-    
-    if(reserveSaleYn){
-//      if ( stockCnt != '' && parseInt(qty)+parseInt(1) > stockCnt ) {
-        if(!fn_chkReserveSaleStockpile(qty+1)) {
-            //  var la = new layerAlert("재고가 부족합니다.");
-            //var la = new layerAlert("예약 상품 주문 가능 수량을 초과하였습니다.<br/>예약 구매 가능한 수량은 " + stockCnt +"개 입니다.");
-            var la = new layerAlert("예약 상품 주문 가능 수량을 초과하였습니다.<br/>예약 구매 가능한 수량은 "+qty+"개 입니다.");
-            return;
-        }
-    } else {
-        /* PC의 경우 수량 선택 시 쇼핑백 담기나 바로 구매 중 어떤 것을 선택할지 모르기 때문에 주석 처리
-        if("ko" == "ko"){
-            if (qty >= stockCnt - cartCnt) {
-                if(cartCnt > 0){
-                    msgCnt = (stockCnt - cartCnt) < 0?0:stockCnt - cartCnt;
-                
-                    var la = new layerAlert("이미 쇼핑백에 담겨 있습니다.<br/>구매 가능한 재고 "+(msgCnt)+"개만 선택하실 수 있습니다.");
-                }else{
-                    var la = new layerAlert("구매 가능한 재고 "+stockCnt+"개만 선택하실 수 있습니다.");
-                }
-                return;
-            }
-        }else{
-            if (qty >= stockCnt) {
-                var la = new layerAlert("재고가 부족합니다.");            
-                return;
-            }
-        }
-        */
-        if (qty >= stockCnt) {
+        /*if (qty >= stockCnt) {
             if("ko" == "ko"){
                 var la = new layerAlert("구매 가능한 재고 "+stockCnt+"개만 선택하실 수 있습니다.");
         	}else{
         	    var la = new layerAlert("재고가 부족합니다.");
         	}
             return;
-        }
-    }
-    
-//     if(reserveSaleYn && !fn_chkReserveSaleStockpile(qty+1)) {
-//         return;
-//     }
-    
-    //GA 이벤트 태깅
+        }*/
+
     GA_Event('상품_상세','수량','+');
     
     $("#txtqty").val(qty+1);
