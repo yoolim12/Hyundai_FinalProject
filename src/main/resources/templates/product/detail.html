@@ -26,9 +26,10 @@ var ccolorcode = Arr2[1];
 var stock_amount = 0;
     
 var selectSize = false;
-function setSize(i) {
+function setSize(size) {
 	selectSize = true;
-	$("#ssize").val(i);
+	$("#ssize").val(size);
+	console.log($("#ssize").val());
 }
 
 function numWithComma(num) {
@@ -114,7 +115,8 @@ $(document).ready(function(){
         	obj = result;
         	if(result.length > 0){
         		for(var i=0; i<result.length; i++) {
-        			html += '<li id="'+pid+'"><a href="javascript:void(0)" onclick="setSize('+result[i].ssize+')">'+result[i].ssize+'<span class="ko_size1901" style="display:none;">&nbsp;(55)</span></a></li>';
+        			var size = "'"+ result[i].ssize + "'";
+        			html += '<li id="'+pid+'"><a href="javascript:void(0)" onclick="setSize('+size+')">'+result[i].ssize+'<span class="ko_size1901" style="display:none;">&nbsp;(55)</span></a></li>';
         		}
         		html += '</ul>';
         	}
@@ -174,7 +176,7 @@ $(document).ready(function(){
 });
         			
 // 장바구니에 추가하는 함수
-function addToCart(buyNow)
+function addToCart()
 {
     //2019.09.09 주문 불가능한 상품 선택시
     if(selectSize == false){
@@ -182,34 +184,37 @@ function addToCart(buyNow)
         return;
     }
     // 로그인이 안되어있을 경우 로그인페이지로 이동
+    /*
     if("${sessionScope.member.mid}" == ""){
     	location.href="/member/login";
     	return;
-    }
+    }*/
     if(addToCartProcess){
         addToCartProcess = false;
         var ssize = $("#ssize").val();
         var qty  = $("#txtqty").val();
-        
+        var mid = "jm@naver.com";
+        console.log(pid, ccolorcode, ssize, qty);
         // 장바구니 등록하는 ajax 호출
-        /*$.ajax({
-            url: "/shoppingbag",
+        $.ajax({
+            url: "/cart/" + mid,
             method: "post",
-            data : {
-            	mid : "${sessionScope.member.mid}",
+            data : JSON.stringify({
             	pid : pid,
             	ccolorcode : ccolorcode,
             	ssize : ssize,
             	qty : qty
-            },
+            }),
+            contentType : "application/json",
             success: function (data) {
                 alert("완료되었습니다.");
-                location.href='/shoppingbag';
+                console.log(data);
+                location.href='/cart';
             },
             error : function( request, status, error ){
                 console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
             }
-        });*/
+        });
         
     }
 }
