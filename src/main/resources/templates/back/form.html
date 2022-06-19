@@ -41,15 +41,14 @@
 	
     
     <script>
-	 	// 회원 정보 탈퇴
-		function showAll(){
-			
-			$.ajax({
+	 	// 회원 조회
+	 	$(function(){
+			//비밀번호 입력칸, 비밀번호 확인 입력칸 동일한지 확인
+	 		$.ajax({
 				url : '/back/allmember',
 				type: 'GET',
 				dataType: 'JSON',
 				data : {
-					
 					'mname' : name,
 					'birth' : birth,
 					'telnum' : telnum,
@@ -62,7 +61,7 @@
 					alert("error")
 				}
 			});
-		}
+		});
 	 	
     	// 회원 검색
     	function findUser(){

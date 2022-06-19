@@ -1,5 +1,7 @@
 package com.hyundai.project.memberDAO;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hyundai.project.dto.MemberDTO;
@@ -22,6 +24,7 @@ public interface MemberDAO {
 	// 회원 탈퇴
 	public void delMember(String email) throws Exception;
 	
-	
+	// 회원 전체 조회
+	public List<MemberDTO> showAllMember() throws Exception;
  	
 }
