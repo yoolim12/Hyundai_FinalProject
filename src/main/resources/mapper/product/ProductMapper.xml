@@ -35,14 +35,14 @@
    </select>
    
    <select id="getListWithPaging" resultType="com.hyundai.project.dto.ProductListDTO">
- 		<![CDATA[
-			select pid, bname, pname, pprice, ccolorcode, cimage1, cimage2 from (
-			select rownum rr, p.pid, p.bname, p.pname, p.pprice, c.ccolorcode, c.cimage1, c.cimage2
-			from product p join v_color1 c on p.pid = c.pid 
-			where clarge = #{param2} and cmedium = #{param3} and csmall = #{param4}
-			) where rr between (#{param1.pageNum} -1) * #{param1.amount} and (#{param1.pageNum} * #{param1.amount})
-    	]]>
-	</select>
+       <![CDATA[
+         select pid, bname, pname, pprice, ccolorcode, cimage1, cimage2 from (
+         select rownum rr, p.pid, p.bname, p.pname, p.pprice, c.ccolorcode, c.cimage1, c.cimage2
+         from product p join v_color1 c on p.pid = c.pid 
+         where clarge = #{param2} and cmedium = #{param3} and csmall = #{param4}
+         ) where rr > (#{param1.pageNum} -1) * #{param1.amount} and rr <= (#{param1.pageNum} * #{param1.amount})
+       ]]>
+   </select>
 	
 	<select id="getTotal" resultType="int">
 		select count(*) from product 
