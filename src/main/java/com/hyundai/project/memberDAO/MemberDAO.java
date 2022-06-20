@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.MemberJoinDTO;
+import com.hyundai.project.dto.MemberRoleDTO;
 
 @Mapper
 public interface MemberDAO {
@@ -27,4 +29,7 @@ public interface MemberDAO {
 	// 회원 전체 조회
 	public List<MemberDTO> showAllMember() throws Exception;
  	
+	public void simpleRegister(MemberDTO member);
+	public void registerRole(MemberRoleDTO member_role);
+	public MemberJoinDTO findByEmail(String memail, int from_social);
 }

@@ -22,4 +22,27 @@
 		delete from member where memail = #{email}
 	</select>
 	
+	<!-- 유림 -->
+	<insert id="simpleRegister" parameterType="com.hyundai.project.dto.MemberDTO">
+		insert into member
+		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social) 
+		values (#{memail}, #{mname}, #{birth}, #{telnum, jdbcType=NULL}
+		, #{maddress, jdbcType=NULL}, #{mgender, jdbcType=NULL}, #{mpassword}, #{memail_info, jdbcType=NULL}
+		, sysdate, sysdate, 0)
+	</insert>
+	
+	<insert id="registerRole" parameterType="com.hyundai.project.dto.MemberRoleDTO">
+		insert into memberrole
+		(memail,role_set) 
+		values (#{memail}, 'USER')
+	</insert>
+	
+	<select id="findByEmail" resultType="com.hyundai.project.dto.MemberJoinDTO">
+		select
+		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set
+		from
+		member c1 join memberrole c2
+		on c1.memail = c2.memail
+		where c1.memail = #{memail} and c1.from_social=#{from_social}
+	</select>
 </mapper>
