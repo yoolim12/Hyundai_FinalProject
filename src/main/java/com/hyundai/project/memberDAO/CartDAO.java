@@ -13,6 +13,8 @@ public interface CartDAO {
 
 	public void insertCart(String memail, CartDTO cart) throws Exception;
 
+	//public void deleteCart(String memail, String pid, String ccolorcode, String ssize) throws Exception;
+	
 	public void deleteCart(String memail, CartDTO cart) throws Exception;
 	
 	public void deleteAllCart(String memail) throws Exception;

@@ -58,6 +58,7 @@ public class CartRestController {
 	public String deleteCart(@PathVariable("memail") String memail, @RequestBody CartDTO cart) throws Exception {
 
 		try {
+			log.info(memail, cart);
 			service.deleteCart(memail, cart);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,11 +80,10 @@ public class CartRestController {
 
 	@PutMapping("/{memail}")
 	@ResponseBody
-	public String updateCart(@PathVariable("memail") String memail, @RequestBody CartDTO cart,
-			@RequestBody String newcolorcode, @RequestBody String newsize, @RequestBody int newqty) {
+	public String updateCart(@PathVariable("memail") String memail, @RequestBody String pid, @RequestBody String ccolorcode, @RequestBody int qty) {
 
 		try {
-			service.updateCart(memail, cart, newcolorcode, newsize, newqty);
+			//service.deleteCart(memail, pid, ccolorcode, qty);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

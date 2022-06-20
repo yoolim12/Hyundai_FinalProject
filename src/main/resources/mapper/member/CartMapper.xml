@@ -18,7 +18,7 @@
 	</insert>
 	
 	<delete id="deleteCart">
-		delete cart where memail=#{memail} and pid = #{param2.pid} and ssize = #{param2.ssize} and ccolorcode = #{param2.ccolorcode}
+		delete cart where memail=#{memail} and pid = #{param2.pid} and ssize = #{param2.ssize} and ccolorcode = #{param2. ccolorcode}
 	</delete>
 	
 	<delete id="deleteAllCart">
