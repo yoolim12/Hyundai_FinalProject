@@ -5,16 +5,24 @@
       layout:decorate="~{fragments/common}">
 <div layout:fragment="content"> 
 <script type="text/javascript">
+var memail = "jm@naver.com"; // 나중에 바꾸기
 
-function deleteProduct(pid) {
-        var url = "/deleteShoppingbag?pid=" + pid;
+function deleteProduct(pid, ccolorcode, ssize) {
+		console.log(pid, ccolorcode, ssize);
+        var url = "/cart/" + memail;
         if (confirm("해당 상품을 삭제하시겠습니까?") == true) {
             $.ajax({
                 url: url,
-                method: "post",
+                method: "delete", 
+                data : JSON.stringify({
+            		pid : pid,
+            		ccolorcode : ccolorcode,
+            		ssize : ssize,
+            	}),
+            	contentType : "application/json",
                 success: function (data) {
                     alert("완료되었습니다.");
-                    location.href='/shoppingbag';
+                    location.href='/cart';
                 },
                 error : function( request, status, error ){
                     console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
@@ -40,6 +48,7 @@ $(document).ready(function ()
         	document.getElementById("total-cnt").innerHTML = '<span class="delt_ico"></span>택배('+result.length+')';
         	var str = ``;
         	for(var i=0; i<result.length; i++) {
+        	var obj = result[i];
               str += `<tr name="entryProductInfo" data-pk="10687045664812" data-deliverykind=""
     data-outofstock="false" data-category="ME011">
     </tr><td class="frt">
@@ -115,12 +124,12 @@ $(document).ready(function ()
         <br>
         <span class="earn">0.1% (H.Point)</span>
     </td>
-    <td class="al_middle">
+        <td class="al_middle">
         <!-- Button size -->
         <div class="btn_wrap">
             <a href="#none" class="btn gray_ss"
                 onclick="callWishListClick('${result[i].pname}',$(this),'${result[i].pid }');" data-value="0">위시리스트</a>
-            <a href="javascript:deleteProduct('${result[i].pid}');" id="RemoveProduct_${i}" class="btn wt_ss"
+            <a href="javascript:deleteProduct('${result[i].pid}', '${result[i].ccolorcode}', '${result[i].ssize}');" id="RemoveProduct_${i}" class="btn wt_ss"
                 onclick="GA_Event('쇼핑백','삭제','${result[i].pname}');">삭제</a>
         </div> <!-- //Button size -->
     </td>
@@ -188,7 +197,7 @@ $(document).ready(function ()
         <td colspan="6" class="basket_wrap">
         </td>
     </tr>`;
-              console.log(str);
+           //console.log(str);
            }
            $("#cart-list").html(str);
         }
@@ -1022,29 +1031,10 @@ function cartListCheckPrice(entryPkList, only4pm) {
 			$("#cartDataSubtotal").text("₩"+addComma(data.subTotal));
 			$("#cartDataDeliveryCost").text("₩"+addComma(data.deliveryCost));
 			$("#cartDataTotalPrice").text("₩"+addComma(data.totalPrice));
-
-			
-			/* if($("#freeGiftPromotion").length > 0) {
-				$.ajax({
-					type: "GET",
-					url: "/ko/shoppingbag/freeGiftPromotionView",
-					dataType: "json",
-					async : false,
-			        cache : false,			
-					data: {"entryPkList" : entryPkList
-						,"cartDivision" : cartDivision},
-					success: function(data){
-						$("#freeGiftPromotion").html(data.freeGiftPromotion);
-					},
-					error: function(xhr,  Status, error) {
-						alert('sendRequest error : ' + xhr.status + " ( " + error + " ) " );
-				    }
-				});
-			} */
 			
 		},
 		error: function(xhr,  Status, error) {
-			alert('shoppingbagCalculation : ' + xhr.status + " ( " + error + " ) " );
+			//alert('shoppingbagCalculation : ' + xhr.status + " ( " + error + " ) " );
 	    }
 	});	
 }
@@ -3837,7 +3827,7 @@ function notiAlert(){
                         </dl>
                     </div>
                     <div class="total_count1807">
-                        <p>총 <span id="selectProductCount">${total}</span>개 상품</p>
+                        <p>총 <span id="selectProductCount">0</span>개 상품</p> 
                         </div>
                     <!-- //total -->
                 </div>
