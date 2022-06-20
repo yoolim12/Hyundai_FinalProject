@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Required meta tags-->
@@ -41,39 +42,49 @@
 	
     
     <script>
-	 	// 회원 조회
+	 	/* // 회원 조회
 	 	$(function(){
-			//비밀번호 입력칸, 비밀번호 확인 입력칸 동일한지 확인
+		
 	 		$.ajax({
 				url : '/back/allmember',
 				type: 'GET',
-				dataType: 'JSON',
-				data : {
-					'mname' : name,
-					'birth' : birth,
-					'telnum' : telnum,
-					'maddress' : maddress
-				},
 				success: function(res){
-	
+					alert("success")
 				},
 				error: function(){
 					alert("error")
 				}
 			});
-		});
+		}); */
 	 	
     	// 회원 검색
     	function findUser(){
     		var email = $("#input_email").val();
     		$.ajax({
-    			url : '/back/findid',
+    			url : '/back/member',
     			type: 'POST',
     			dataType: 'JSON',
     			data : {
     				'email' : email
     			},
     			success: function(res){
+    				console.log(res.gno);
+    				if (res.gno == 1){
+    					$('#SelectLm option:eq(1)').prop('selected', true);
+    				}else if (res.gno == 2){
+    					$('#SelectLm option:eq(2)').prop('selected', true);
+    				}else if (res.gno == 3){
+    					$('#SelectLm option:eq(3)').prop('selected', true);
+    				}else if (res.gno == 4){
+    					$('#SelectLm option:eq(4)').prop('selected', true);
+    				}else if (res.gno == 5){
+    					$('#SelectLm option:eq(5)').prop('selected', true);
+    				}else if (res.gno == 6){
+    					$('#SelectLm option:eq(6)').prop('selected', true);
+    				}else if (res.gno == 7){
+    					$('#SelectLm option:eq(7)').prop('selected', true);
+    				}
+    				
     				$("#mname").val(res.mname);
     				$("#birth").val(res.birth);
     				$("#telnum").val(res.telnum);
@@ -93,18 +104,21 @@
     		var birth = $("#birth").val();
     		var telnum = $("#telnum").val();
     		var maddress = $("#maddress").val();
+    		var gno = $("#SelectLm option:selected").val();
+    		console.log(gno);
     		
     		$.ajax({
-    			url : '/back/modify',
-    			type: 'POST',
+    			url : '/back/member',
+    			type: 'PUT',
     			dataType: 'JSON',
-    			contentType : "appliation/json",
+    			contentType : "application/json",
     			data : JSON.stringify({
     				'memail' : memail,
     				'mname' : mname,
     				'birth' : birth,
     				'telnum' : telnum,
-    				'maddress' : maddress
+    				'maddress' : maddress,
+    				'gno' : gno
     			}),
     			success: function(res){
     				alert("수정 성공");
@@ -123,8 +137,8 @@
     		console.log(email);
     		
     		$.ajax({
-    			url : '/back/delete',
-    			type: 'POST',
+    			url : '/back/member',
+    			type: 'DELETE',
     			dataType: 'JSON',
     			data : {
     				'email' : email
@@ -567,7 +581,7 @@
                                             			<i class="fa fa-search">Search</i> 
                                                     </button>
                                                 </div>
-                                            <input type="text" id="input_email" name="input_email" placeholder="Email" class="form-control">
+                                            <input type="text" id="input_email" name="input_email"  placeholder="Email" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -587,6 +601,20 @@
                                             <label for="country" class=" form-control-label">주소</label>
                                             <input type="text" id="maddress" placeholder="주소" class="form-control">
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="selectSm" class=" form-control-label">등급</label>
+                                                 <select name="selectSm" id="SelectLm" class="form-control-sm form-control">
+                                                     <option value="0"></option>
+                                                     <option value="1">Friend</option>
+                                                     <option value="2">Crew</option>
+                                                     <option value="3">Mania</option>
+                                                     <option value="4">Star</option>
+                                                     <option value="5">The Star</option>
+                                                     <option value="6">관리자</option>
+                                                     <option value="7">임직원</option>
+                                                 </select>
+                                       </div>
                                         
                                         <div class="card-footer">
 	                                        <button class="btn btn-primary btn-sm" onclick = "modify()">
