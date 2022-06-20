@@ -100,6 +100,11 @@ public class OrderServiceImpl implements OrderService {
 
 		// }
 		return orderDAO.getOrder(memail);
+  }
+  
+	public void deleteOrder(int oid) throws Exception {
+		orderDAO.deleteOrderList(oid);
+		orderDAO.deleteOrderItem(oid);
 	}
 
 }

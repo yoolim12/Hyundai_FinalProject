@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hyundai.project.dto.MainListVO;
 import com.hyundai.project.dto.MainMagazineListVO;
-import com.hyundai.project.productDAO.MainMapper;
+import com.hyundai.project.productDAO.MainDAO;
 
 import lombok.extern.log4j.Log4j2;
 /* 작성자 :  문혁
@@ -18,11 +18,11 @@ import lombok.extern.log4j.Log4j2;
 public class MainServiceImpl  implements MainService{
 	
 	@Autowired
-	private MainMapper mapper;
+	private MainDAO mapper;
 	
 	// 메인 페이지 상품 리스트 조회
 	@Override
-	public List<MainListVO> getProductList(String pstatus, String category){
+	public List<MainListVO> getProductList(String pstatus, String category) throws Exception{
 		log.info("get Product List");
 		log.info(pstatus + " " + category);
 		return mapper.getProductList(pstatus, category);
@@ -30,7 +30,7 @@ public class MainServiceImpl  implements MainService{
 	
 	// 메인 페이지 매거진 리스트 조회
 	@Override
-	public List<MainMagazineListVO> getMagazineList(){
+	public List<MainMagazineListVO> getMagazineList() throws Exception{
 		log.info("get Magazine List");
 		return mapper.getMagazineList();
 	}

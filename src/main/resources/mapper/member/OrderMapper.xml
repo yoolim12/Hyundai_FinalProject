@@ -26,7 +26,7 @@
 		#{ccolorcode}, #{ssize},
 		#{qty})
 	</insert>
-
+  
 	<select id="getOrder"
 		resultType="com.hyundai.project.dto.OrderResDTO">
 		select oi.oid, memail, ozipcode, oaddress1, oaddress2,
@@ -38,6 +38,12 @@
 		product.color c on oi.pid=c.pid and oi.ccolorcode = c.ccolorcode
 	</select>
 
-
+	<delete id="deleteOrderList">
+		delete orderlist where orderlist.oid=#{oid}
+	</delete>
+	
+	<delete id="deleteOrderItem">
+		delete orderitem where orderitem.oid=#{oid}
+	</delete>
 
 </mapper>

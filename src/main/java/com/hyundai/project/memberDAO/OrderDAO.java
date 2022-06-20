@@ -17,4 +17,9 @@ public interface OrderDAO {
 	
 	public List<OrderResDTO> getOrder(String memail) throws Exception;
 
+	public int getOid() throws Exception;
+	
+	public void deleteOrderList(int oid) throws Exception;
+
+	public void deleteOrderItem(int oid) throws Exception;
 }

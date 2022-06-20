@@ -14,4 +14,6 @@ public interface OrderService {
 	
 	public List<OrderResDTO> getOrder(String memail) throws Exception;
 	
+	public void deleteOrder(int oid) throws Exception;
+
 }
