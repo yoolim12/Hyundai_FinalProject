@@ -12,6 +12,8 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -37,5 +39,9 @@ public class MemberDatabaseConfig {
 	public SqlSessionTemplate memberSqlTemplate(SqlSessionFactory memberSqlSessionFactory) {
 		
 		return new SqlSessionTemplate(memberSqlSessionFactory);
+	}
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		return new DataSourceTransactionManager(memberDataSource());
 	}
 }

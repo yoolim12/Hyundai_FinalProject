@@ -15,13 +15,13 @@ import com.hyundai.project.service.OrderService;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-@RequestMapping("/order/*")
+@RequestMapping("/order")
 @RestController
 public class OrderRestController {
 	@Autowired
 	private OrderService service;
 
-	@PostMapping(value = "/list")
+	@PostMapping
 	public String insertOrderList(@RequestBody OrderListDTO olist) {
 		log.info(olist);
 		try {
