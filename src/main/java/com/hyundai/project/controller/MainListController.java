@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,9 +30,9 @@ public class MainListController {
 	// 메인페이지 내 신상품 리스트 조회.
 	// REST - get 방식을 사용하여 쿼리스트링으로 전달받은 categoryCode를 이용하여 상품 목록 조회
 	// JSON 형식으로 화면 출력에 필요한 데이터 전달
-	@GetMapping(value = "/mainNewProductList",
-			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public List<MainListVO> getNewProductList(@RequestParam("categoryCode") String cCode){		
+	@GetMapping(value = "/mainNewProductList")
+	public ResponseEntity<List<MainListVO>> getNewProductList(@RequestParam("categoryCode") String cCode){		
+		ResponseEntity<List<MainListVO>> entry = null;
 		log.info("getNewProductList..........");
 		// 기존 더한섬닷컴 홈페이지 내의 상품 코드를 활용하여 그에 맞는 데이터를 출력하도록 함.
 		// 상품코드 - 여성 WE , 남성 ME, 포인트 ACC WE03, 셀렉티드 WE01
@@ -49,18 +51,23 @@ public class MainListController {
 		// Product 테이블 pstatus 컬럼의 데이터가 'NEW'이면 신상품.  
 		String pstatus = "NEW";
 		log.info(cCode + " = " + category);
-		log.info(service.getProductList(pstatus, category).toString());
-		
-		return service.getProductList(pstatus, category);
+		try {
+			entry = new ResponseEntity<List<MainListVO>>(service.getProductList(pstatus, category), HttpStatus.OK);
+			log.info(entry);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entry = new ResponseEntity<List<MainListVO>>(HttpStatus.BAD_REQUEST);
+		}
+		return entry;
 		
 	}//end getNewProductList
 	
 	// 메인페이지 내 베스트 상품 리스트 조회.
 	// REST - get 방식을 사용하여 쿼리스트링으로 전달받은 categoryCode를 이용하여 상품 목록 조회
 	// JSON 형식으로 화면 출력에 필요한 데이터 전달
-	@GetMapping(value = "/mainBestProductList",
-			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public List<MainListVO> getBestProductList(@RequestParam("categoryCode") String cCode){		
+	@GetMapping(value = "/mainBestProductList")
+	public ResponseEntity<List<MainListVO>> getBestProductList(@RequestParam("categoryCode") String cCode){		
+		ResponseEntity<List<MainListVO>> entry = null;
 		log.info("getBestProductList..........");
 		
 		// 상품 코드를 DB에 저장된 카테고리 명으로 변환하는 작업
@@ -74,17 +81,21 @@ public class MainListController {
 		// Product 테이블 pstatus 컬럼의 데이터가 'BEST'이면 베스트 상품.  
 		String pstatus = "BEST";
 		log.info(cCode + " = " + category);
-		log.info(service.getProductList(pstatus, category).toString());
-		
-		return service.getProductList(pstatus, category);
+		try {
+			entry = new ResponseEntity<List<MainListVO>>(service.getProductList(pstatus, category), HttpStatus.OK);
+			log.info(entry);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entry = new ResponseEntity<List<MainListVO>>(HttpStatus.BAD_REQUEST);
+		}
+		return entry;
 		
 	}//end getBestProductList
 	
 	// 신상품, 베스트 상품 목록 카테고리 선택 버튼 리스트
 	// MainCategoryListVO의 displayType 값을 기준으로
 	// 신상품 리스트의 카테고리와 베스트 상품 리스트의 카테고리 구분
-	@GetMapping(value = "/mainCategoryList",
-			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@GetMapping(value = "/mainCategoryList")
 	public List<MainCategoryListVO> getCategoryList(){		
 		log.info("getCategoryList..........");		
 		List<MainCategoryListVO> list = new ArrayList<>();
@@ -102,15 +113,20 @@ public class MainListController {
 	// 메인 페이지 메거진 리스트 ajax
 	// 메인페이지 진입 시 매거진을 조회하는 함수가 실행되어 REST - get 방식으로 화면에 보여줄 매거진 정보 요청
 	// JSON 형식으로 화면 출력에 필요한 데이터 전달
-	@GetMapping(value = "/mainMagazine",
-			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public List<MainMagazineListVO> getMagazineList(){		
+	@GetMapping(value = "/mainMagazine")
+	public ResponseEntity<List<MainMagazineListVO>> getMagazineList(){		
+		ResponseEntity<List<MainMagazineListVO>> entry = null;
 		log.info("getMagazineList..........");		
 		List<MainMagazineListVO> list = new ArrayList<>();
-		
-		log.info(service.getMagazineList().toString());
+		try {
+			entry = new ResponseEntity<List<MainMagazineListVO>>(service.getMagazineList(), HttpStatus.OK);
+			log.info(entry);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		return service.getMagazineList();
+		return entry;
 	}//end mainCategoryList
 	
 	
