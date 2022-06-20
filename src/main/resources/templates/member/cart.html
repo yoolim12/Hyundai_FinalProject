@@ -188,14 +188,6 @@ $(document).ready(function ()
         <td colspan="6" class="basket_wrap">
         </td>
     </tr>`;
-    str += '<script language="javascript" type="text/javascript">';
-        _A_amt[_ace_countvar] = "${result[i].pprice}";
-        _A_nl[_ace_countvar] = "${result[i].samount}";
-        _A_pl[_ace_countvar] = "${result[i].pid}";
-        _A_pn[_ace_countvar] = "${result[i].pname}";
-        _A_ct[_ace_countvar] = "${result[i].bname}";
-        _ace_countvar++;
-    </script>';
               console.log(str);
            }
            $("#cart-list").html(str);
