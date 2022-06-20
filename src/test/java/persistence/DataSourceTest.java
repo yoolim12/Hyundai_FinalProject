@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class DataSourceTest {	
 	static {
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Class.forName("oracle.jdbc.OracleDriver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
