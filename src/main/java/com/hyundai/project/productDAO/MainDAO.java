@@ -10,11 +10,11 @@ import com.hyundai.project.dto.MainMagazineListVO;
  * 메인 페이지 상품 목록 및 매거진 조회에 관련된 SQL을 호출하는 인터페이스
  */
 @Mapper
-public interface MainMapper {
+public interface MainDAO {
 	
-	public List<MainListVO> getProductList(String pstatus, String category);
+	public List<MainListVO> getProductList(String pstatus, String category) throws Exception;
 	
-	public List<MainMagazineListVO> getMagazineList();
+	public List<MainMagazineListVO> getMagazineList() throws Exception;
 
 
 }//end inter
