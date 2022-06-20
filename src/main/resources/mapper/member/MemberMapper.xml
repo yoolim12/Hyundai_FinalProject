@@ -4,20 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.project.memberDAO.MemberDAO">
 	
+	<!-- 회원 전체 조회 -->
 	<select id="showAllMember"
 		resultType="com.hyundai.project.dto.MemberDTO">
 		select * from member
 	</select>
 	
+	<!-- 회원 정보 조회 -->
 	<select id="getMemberInfo"
 		resultType="com.hyundai.project.dto.MemberDTO">
-		select * from member where memail = #{email}
+		<!-- select * from member where memail = #{email} -->
+		select A.memail, A.mname, A.birth, A.telnum, A.maddress, B.gno from member A, grade B where A.gno = B.gno and memail = #{email}
 	</select>
 	
+	<!-- 회원 정보 수정 -->
 	<select id="modifyMember">
-		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
+		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress}, gno = #{gno} where memail = #{memail}
 	</select>
 	
+	<!-- 회원 탈퇴 -->
 	<select id="delMember">
 		delete from member where memail = #{email}
 	</select>

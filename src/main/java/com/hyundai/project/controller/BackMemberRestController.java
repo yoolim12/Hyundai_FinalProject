@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,27 +35,8 @@ public class BackMemberRestController {
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
 	
-	
-	// 회원 전체 조회
-	@GetMapping("/allmember")
-	@ResponseBody
-    public ResponseEntity<List<MemberDTO>> showAllMember(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
-		String email = map.get("email");
-		System.out.println(email);
-		
-		ResponseEntity<List<MemberDTO>> mem = null;
-		try {
-			mem = new ResponseEntity<List<MemberDTO>>(service.showAllMember(), HttpStatus.OK);
-			log.info(mem);
-		} catch (Exception e) {
-			e.printStackTrace();
-			mem = new ResponseEntity<List<MemberDTO>>(HttpStatus.BAD_REQUEST);
-		} // end try
-		return mem;
-    } // end allmember
-	
 	// 회원 찾기
-	@PostMapping("/findid")
+	@PostMapping("/member")
 	@ResponseBody
     public ResponseEntity<MemberDTO> findId(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
 		String email = map.get("email");
@@ -70,7 +54,7 @@ public class BackMemberRestController {
     } // end findid
 	
 	// 회원정보 수정
-    @PostMapping("/modify")
+    @PutMapping("/member")
     @ResponseBody
     public void update(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
     	System.out.println("modify rr");
@@ -79,11 +63,12 @@ public class BackMemberRestController {
     	String birth = map.get("birth");
     	String telnum = map.get("telnum");
     	String address = map.get("maddress");
+    	int gno = Integer.parseInt(map.get("gno"));
     	
     	System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address);
     	
     	try {
-    		service.modifyMember(email, name, birth, telnum, address);
+    		service.modifyMember(email, name, birth, telnum, address, gno);
     		
         	Gson gson = new Gson();
     		response.setContentType("application/json; charset=utf-8");
@@ -94,7 +79,7 @@ public class BackMemberRestController {
     } // end modify
     
     // 회원 탈퇴
-    @PostMapping("/delete")
+    @DeleteMapping("/member")
     @ResponseBody
     public void delMember(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
     	String email = map.get("email");
