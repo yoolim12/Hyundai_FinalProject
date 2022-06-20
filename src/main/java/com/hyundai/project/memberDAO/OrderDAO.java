@@ -13,5 +13,8 @@ public interface OrderDAO {
 	public void insertOrderItem(OrderItemDTO oitem) throws Exception;
 
 	public int getOid() throws Exception;
+	
+	public void deleteOrderList(int oid) throws Exception;
 
+	public void deleteOrderItem(int oid) throws Exception;
 }

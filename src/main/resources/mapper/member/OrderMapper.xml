@@ -24,6 +24,12 @@
 		#{qty})
 	</insert>
 
-
+	<delete id="deleteOrderList">
+		delete orderlist where orderlist.oid=#{oid}
+	</delete>
+	
+	<delete id="deleteOrderItem">
+		delete orderitem where orderitem.oid=#{oid}
+	</delete>
 
 </mapper>

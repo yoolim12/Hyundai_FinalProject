@@ -36,4 +36,10 @@ public class OrderServiceImpl implements OrderService {
 		orderDAO.insertOrderItem(oitem);
 	}
 
+	@Override
+	public void deleteOrder(int oid) throws Exception {
+		orderDAO.deleteOrderList(oid);
+		orderDAO.deleteOrderItem(oid);
+	}
+
 }
