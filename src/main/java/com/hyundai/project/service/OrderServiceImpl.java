@@ -36,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
 			log.info(e.getMessage());
 			throw e;
 		}
+		log.info("OrderItem 입력 성공");
 	}
 
 	@Override

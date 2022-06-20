@@ -41,7 +41,7 @@ public class MemberDatabaseConfig {
 
 		return new SqlSessionTemplate(memberSqlSessionFactory);
 	}
-
+	
 	@Bean
 	public PlatformTransactionManager transactionManager() {
 		return new DataSourceTransactionManager(memberDataSource());
