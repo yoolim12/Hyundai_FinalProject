@@ -11,4 +11,5 @@ public interface OrderService {
 	
 	public void insertOrderItem(OrderItemDTO oitem) throws Exception;
 	
+	public void deleteOrder(int oid) throws Exception;
 }
