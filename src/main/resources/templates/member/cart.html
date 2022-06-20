@@ -4,11 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
 <div layout:fragment="content"> 
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <script type="text/javascript">
 
 function deleteProduct(pid) {
@@ -42,18 +37,160 @@ $(document).ready(function ()
             console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
         }, 
         success : function( result ) {
-        	console.log(result.length);
         	document.getElementById("total-cnt").innerHTML = '<span class="delt_ico"></span>택배('+result.length+')';
-        	
-        	/*document.getElementById("image1").src=result.cimage1;
-        	document.getElementById("image2").src=result.cimage2;
-        	document.getElementById("image3").src=result.cimage3;
-        	document.getElementById("pname").innerHTML = result.pname;
-        	document.getElementById("bname").innerHTML = result.bname;
-        	document.getElementById("pprice").innerHTML = '₩' + numWithComma(result.pprice);
-        	document.getElementById("pid").innerHTML = result.pid;
-        	document.getElementById("pdetail").innerHTML = result.pdetail;
-        	document.getElementById("totalprice").innerHTML = '₩' + numWithComma(result.pprice);*/
+        	var str = ``;
+        	for(var i=0; i<result.length; i++) {
+              str += `<tr name="entryProductInfo" data-pk="10687045664812" data-deliverykind=""
+    data-outofstock="false" data-category="ME011">
+    </tr><td class="frt">
+        <!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
+        <input type="checkbox" name="cartlist" data-pk="10687045664812" data-division="" data-deliverykind="" value="9">
+    </td>
+    <td class="pt_list_wrap">
+        <!-- pt_list_all -->
+        <div class="pt_list_all">
+            <a href="/product/productDetail?pid=${result[i].pid}"
+                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+                <img src="${result[i].cimage1}" alt="" />
+            </a>
+            <div class="tlt_wrap">
+                <a href="/product/productDetail?pid=${result[i].pid}" class="basket_tlt"
+                    onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+                    <span class="tlt">${result[i].bname}</span>
+                    <span class="sb_tlt">
+                        ${result[i].pname}</span>
+                </a>
+
+                <p class="color_op">
+
+                    color : ${result[i].ccolorcode}<span class="and_line">/</span>
+
+                    size : ${result[i].ssize}</p>
+
+
+                <div class="option_wrap">
+                    <a href="#none" class="btn_option" id="optOpenLayer^9^TH2C3TRN644N_CR"
+                        onclick="GA_Event('쇼핑백','옵션변경', '${result[i].pname}')">옵션변경</a>
+                </div>
+            </div>
+        </div>
+        <!-- //pt_list_all-->
+    </td>
+    <td class="al_middle">
+        <form id="!!!바꾸기"
+            data-cart="{&quot;cartCode&quot; : &quot;371497467&quot;,&quot;productPostPrice&quot;:&quot;155000.0&quot;,&quot;productName&quot;:&quot;[온라인 단독] 세미 오버핏 솔리드 티셔츠&quot;}"
+            action="/ko/shoppingbag/update" method="post">
+            <input type="hidden" name="entryNumber" value="${i}" />
+            <input type="hidden" name="productCode" value="${result[i].pid}" />
+            <input type="hidden" name="initialQuantity" value="${result[i].samount}" />
+            <input type="hidden" name="chgProductCode" value="" />
+            <input type="hidden" name="curSize" value="${result[i].ssize}" />
+            <input type="hidden" name="storeId" value="" />
+            <input type="hidden" name="storePickupDate" value="" />
+            <input type="hidden" name="deliveryKind" value="" />
+            <input type="hidden" name="cartDivision" value="" />
+            <!-- qty_sel -->
+            <span class="qty_sel num">
+                <a href="#none" onMouseDown="javascript:AEC_F_D('${result[i].pid}','o',1);" class="left"
+                    onclick="GA_Event('쇼핑백', '수량', '-');">이전 버튼</a>
+                <input id="quantity${i}" name="quantity" type="text" class="mr0" value="1" size="1" maxlength="3" /><a
+                    href="#none" onMouseDown="javascript:AEC_F_D('${result[i].pid}','i',1);" class="right"
+                    onclick="GA_Event('쇼핑백', '수량', '+');">다음 버튼</a>
+            </span>
+            <!-- //qty_sel -->
+            <a href="#none" id="QuantityProduct_${i}" class="btn wt_ss qty_w mr0">변경</a>
+            <div>
+            </div>
+        </form>
+    </td>
+    <td class="al_middle">
+        <!-- Price -->
+        <div class="price_wrap">
+            <span>${result[i].pprice}</span> <input type="hidden" name="checkZeroPrice"
+                value="${result[i].pprice }.0" />
+        </div> <!-- //Price -->
+    </td>
+    <td class="al_middle">
+        <span class="earn">5% (한섬마일리지)</span>
+        <br>
+        <span class="earn">0.1% (H.Point)</span>
+    </td>
+    <td class="al_middle">
+        <!-- Button size -->
+        <div class="btn_wrap">
+            <a href="#none" class="btn gray_ss"
+                onclick="callWishListClick('${result[i].pname}',$(this),'${result[i].pid }');" data-value="0">위시리스트</a>
+            <a href="javascript:deleteProduct('${result[i].pid}');" id="RemoveProduct_${i}" class="btn wt_ss"
+                onclick="GA_Event('쇼핑백','삭제','${result[i].pname}');">삭제</a>
+        </div> <!-- //Button size -->
+    </td>
+    <tr>
+        <td colspan="6" class="basket_wrap">
+            <!-- Info -->
+            <!--  옵션변경 버튼 누를 시 나오는 상품 디테일 -->
+            <div class="basket_info">
+                <span class="btn_arr">위치아이콘</span>
+                <div class="info">
+                    <!-- Products -->
+                    <div class="pt_list" id="pt_list_${i}">
+                        <a href="/product/productDetail?pid=${result[i].pid}">
+                            <img src="${result[i].cimage1}" alt="">
+                        </a>
+                        <div class="tlt_wrap">
+                            <a href="/product/productDetail?pid=${result[i].pid}" class="basket_tlt">
+                                <span class="tlt">${result[i].bname}</span>
+                                <span class="sb_tlt">${result[i].pname}</span>
+                            </a>
+                            <!-- color_size -->
+                            <dl class="cs_wrap">
+                                <dt>COLOR</dt>
+                                <dd>
+                                    <div class="cl_select">
+                                        <a href="javascript:void(0);"
+                                            onclick="setOptions(this, '0', '${result[i].pid}', 'style');"
+                                            class="beige">${result[i].ccolorcode}</a>
+                                        <!--!!!여기 에러나서 뺌, 코드다시가져오기-->
+
+                                        /* <a href="javascript:void(0);"
+                                            onclick="setOptions(this, '0', '${result[i].pid}', 'style');"
+                                            class="beige on"
+                                            style="background:#000000 url('http://newmedia.thehandsome.com/SH/2C/SS/SH2C4TRN654M_BK_C01.jpg/dims/resize/18x18')">BLACK</a>
+                                        */
+                                        <span class="cs_sel1807">${result[i].ccolorcode}</span>
+                                    </div>
+                                </dd>
+                                <dt>SIZE</dt>
+                                <dd style="width: 90%; height: 100%">
+                                    <div class="sz_select">
+                                        <a href="javascript:void(0);"
+                                            onclick="setOptions(this, '0', '${result[i].pid}', 'size');" class="on"
+                                            style="line-height: 15px;">F</a>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!-- //color_size -->
+                        </div>
+
+                    </div>
+                    <!-- //Products -->
+                    <!-- btns -->
+                    <div class="btns">
+                        <a href="#none" class="btn wt_ss mr0" id="UpdateCart_${i}">변경</a>
+                        <a href="#none" class="btn wt_ss mt10 mr0" id="optCancelLayer_${i}">취소</a>
+                        <a href="#none" class="btn_close" id="optCloseLayer_${i}">닫기</a>
+                    </div>
+                    <!-- //btns -->
+                </div>
+            </div> <!-- //Info -->
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6" class="basket_wrap">
+        </td>
+    </tr>`;
+              console.log(str);
+           }
+           $("#cart-list").html(str);
         }
     });
        
@@ -1252,57 +1389,6 @@ function addHidden(ptag, hname, hvl) {
                         .attr('value'   , hvl)
                         .appendTo(ptag);
 }
-
-/* 주문서간편결제 : 결제 인증 후 콜백
-원클릭구매 : iframe 안에서 실행되기 때문에, target 을 _top으로 지정합니다
- */
-var checkoutPaymentAuthCallback = function (resultCode, resultMsg, result) {
-    switch(resultCode) {
-	case "2406": // 쿠키정보가 없습니다.
-		//layerWpayCookieSettingView();
-		//WPAY.close();
-		//window.parent.postMessage({layerClose:'layerClose'},'*');
-		//window.parent.postMessage({inicisPopOpen:'inicisPopOpen'},'*');
-		
-		console.log("쿠키 정보가 없음");
-		break;
-	case "0000":
-		$("body").append('<div class="layerArea" id="productLayer"><div class="layerBg"></div></div>');
-	    
-	    $(".layerArea .layerBg").css('background','none');
-	    
-	    // 토스트 팝업 추가
-		var toastPopup = '<div class="pop_loading_oneclick200210" style="background:#444;width:290px;height:120px;position:fixed;top:30%;left:50%;margin-left:-145px;margin-top:-60px;z-index:9999;">';
-		toastPopup += '<img src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/Spinner_1s_105px.png" alt="loading" style="display:block;width:32px;height:32px;margin:30px auto 15px auto;">';
-		toastPopup += '<p style="color:#fff;text-align:center;">';
-	    toastPopup += '<span style="background:url(\'http://cdn.thehandsome.com/pc/products/one_click_pay_w.png\') left 2px no-repeat;color:#fff;font-size:15px;padding-left:93px;">가 진행중입니다.</span>';
-	    toastPopup += '</p>';
-	    toastPopup += '</div>';
-	        
-		$("body").append(toastPopup);
-		
-	    //상품상세와 결제페이지 구분이 안되기 때문에 
-	    //window.parent.postMessage({loadingShow:'loadingShow'},'*');
-        
-		var $PAY_FORM = $("#PAY_FORM");
-		addHidden($PAY_FORM, 'wtid'	, result.wtid);
-		
-		$PAY_FORM.attr({
-			'method': 'POST',
-			'action': '/ko/inicis/inipaywpay/sop/response',
-			'target': '_top'
-		});
-		
-		$PAY_FORM.submit();
-		break;
-	default:
-// 		new layerAlert(resultMsg);
-		//WPAY.close();
-		//window.parent.postMessage({layerClose:'layerClose'},'*');
-		break;
-	}
-}
-
 
 function callWishListClick(prodNm, ele, prodCd){
     GA_Event('쇼핑백','위시리스트', prodNm);
@@ -3708,160 +3794,9 @@ function notiAlert(){
                                 <th scope="col">선택</th>
                             </tr>
                         </thead>
-                        <tbody>
-<!--                         여기부터 -->
-
-							<!-- c.mid, pid, psize, pcolor, pamount 
-							d.bname, pname, pprice, clarge, cmedium, csmall, t01_imageurl  -->
-						<c:forEach var="c" items="${cartList}" varStatus="statusNm">
-							<c:set var="d" value="${detailList[statusNm.index]}"></c:set>
-                            <tr name="entryProductInfo" data-pk="10687045664812" data-deliverykind="" data-outofstock="false" data-category="ME011"> 
-                       <td class="frt">
-                       	   <!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
-                           <input type="checkbox" name="cartlist" data-pk="10687045664812" data-division="" data-deliverykind="" value="9">
-                       </td>
-                       <td class="pt_list_wrap">
-                           <!-- pt_list_all -->
-                           <div class="pt_list_all">
-                                <a href="/product/productDetail?pid=${c.pid}" onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${d.pname}');">
-                                <img src="${d.t01_imageurl}" alt="" />
-                                </a>
-                               <div class="tlt_wrap">
-                                   <a href="/product/productDetail?pid=${c.pid}" class="basket_tlt" onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${d.pname}');"> 
-                                       <span class="tlt">${d.bname}</span> 
-                                       <span class="sb_tlt">
-                                            ${d.pname}</span>
-                                   </a>
-    
-                                   <p class="color_op">
-                                       
-                                               color : ${c.pcolor}<span class="and_line">/</span>
-                                               
-                                                       size : ${c.psize}</p>
-                            
-                            
-                                <div class="option_wrap">
-                                <a href="#none" class="btn_option" id="optOpenLayer^9^TH2C3TRN644N_CR" onclick="GA_Event('쇼핑백','옵션변경', '${d.pname}')">옵션변경</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- //pt_list_all-->
-                            </td>
-                            <td class="al_middle">
-                                <form id="updateCartForm${statusNm.index}" data-cart="{&quot;cartCode&quot; : &quot;371497467&quot;,&quot;productPostPrice&quot;:&quot;155000.0&quot;,&quot;productName&quot;:&quot;[온라인 단독] 세미 오버핏 솔리드 티셔츠&quot;}" action="/ko/shoppingbag/update" method="post">
-                                	<input type="hidden" name="entryNumber" value="${statusNm.index}" />
-                                    <input type="hidden" name="productCode" value="${c.pid}" />
-                                    <input type="hidden" name="initialQuantity" value="${c.pamount}" />
-                                    <input type="hidden" name="chgProductCode" value="" />
-                                    <input type="hidden" name="curSize" value="${c.psize}" />
-                                    <input type="hidden" name="storeId" value="" />
-                                    <input type="hidden" name="storePickupDate" value="" />
-                                    <input type="hidden" name="deliveryKind" value="" />
-                                    <input type="hidden" name="cartDivision" value="" />
-                                    <!-- qty_sel -->
-                                    <span class="qty_sel num">
-                                        <a href="#none" onMouseDown="javascript:AEC_F_D('${c.pid}','o',1);" class="left" onclick="GA_Event('쇼핑백', '수량', '-');">이전 버튼</a> 
-                                            <input id="quantity${statusNm.index}" name="quantity" type="text" class="mr0" value="1" size="1" maxlength="3"/><a href="#none" onMouseDown="javascript:AEC_F_D('${c.pid}','i',1);" class="right" onclick="GA_Event('쇼핑백', '수량', '+');">다음 버튼</a>
-                                        </span>
-                                    <!-- //qty_sel -->
-                                    <a href="#none" id="QuantityProduct_${statusNm.index}" class="btn wt_ss qty_w mr0">변경</a>
-                                        <div>
-<!-- <input type="hidden" name="CSRFToken" value="2e4f730b-79fa-408e-b072-425a73f94a7c" /> -->
-</div></form></td>
-                            <td class="al_middle">
-                                <!-- Price -->
-                                <div class="price_wrap">
-                                	<span>₩<fmt:formatNumber value="${d.pprice }" type="number" pattern="###,###" /></span> <input type="hidden" name="checkZeroPrice" value="${d.pprice }.0" />
-                                </div> <!-- //Price -->
-                            </td>
-                            <td class="al_middle">
-                                    <span class="earn">5% (한섬마일리지)</span>
-                                    <br>            
-                                    <span class="earn">0.1% (H.Point)</span>            
-                                </td>
-                            <td class="al_middle">
-                                <!-- Button size -->
-                                <div class="btn_wrap">
-                                    <a href="#none" class="btn gray_ss" onclick="callWishListClick('${d.pname}',$(this),'${c.pid }');" data-value="0">위시리스트</a>
-                                        <a href="javascript:deleteProduct('${c.pid}');" id="RemoveProduct_${statusNm.index}" class="btn wt_ss" onclick="GA_Event('쇼핑백','삭제','${d.pname}');">삭제</a>
-                                    </div> <!-- //Button size -->
-                            </td>
-                            </tr>
-                            <!-- Info wrap -->
-                            <tr>
-                                <td colspan="6" class="basket_wrap">
-                                    <!-- Info -->
-									<!--  옵션변경 버튼 누를 시 나오는 상품 디테일 -->
-                                    <div class="basket_info">
-                                        <span class="btn_arr">위치아이콘</span>
-                                        <div class="info">
-                                            <!-- Products -->
-                                            <div class="pt_list" id="pt_list_${statusNm.index}">
-											<a href="/product/productDetail?pid=${c.pid}">
-											<img src="${d.t01_imageurl}" alt="">
-												</a>
-											<div class="tlt_wrap">
-												<a href="/product/productDetail?pid=${c.pid}" class="basket_tlt">
-											        <span class="tlt">${d.bname}</span>
-											        <span class="sb_tlt">${d.pname}</span>
-											    </a>
-												<!-- color_size -->
-												<dl class="cs_wrap">
-													<dt>COLOR</dt>
-													<dd>
-														<div class="cl_select">
-														<c:forEach var ="f" items="${colorMap[statusNm.index]}" varStatus="status">
-														<a href="javascript:void(0);" onclick="setOptions(this, '0', '${c.pid}', 'style');" class="beige">${c.pcolor}</a> <!--!!!여기 에러나서 뺌, 코드다시가져오기-->
-														</c:forEach>
-														
-<%-- 																		<a href="javascript:void(0);" onclick="setOptions(this, '0', '${c.pid}', 'style');" class="beige on" style="background:#000000 url('http://newmedia.thehandsome.com/SH/2C/SS/SH2C4TRN654M_BK_C01.jpg/dims/resize/18x18')">BLACK</a> --%>
-																		<span class="cs_sel1807">${c.pcolor}</span>
-														</div>
-													</dd>
-													<dt>SIZE</dt>
-													<dd style="width: 90%; height: 100%">
-														<div class="sz_select">
-														<a href="javascript:void(0);" onclick="setOptions(this, '0', '${c.pid}', 'size');" class="on" style="line-height: 15px;">F</a>
-																	</div>
-														</dd>
-												</dl>
-												<!-- //color_size -->
-											</div>
-											
-											</div>
-                                            <!-- //Products -->
-                                            <!-- btns -->
-                                            <div class="btns">
-                                                <a href="#none" class="btn wt_ss mr0" id="UpdateCart_${statusNm.index}">변경</a>
-                                                <a href="#none" class="btn wt_ss mt10 mr0" id="optCancelLayer_${statusNm.index}">취소</a>
-                                                <a href="#none" class="btn_close" id="optCloseLayer_${statusNm.index}">닫기</a>
-                                            </div>
-                                            <!-- //btns -->
-                                        </div>
-                                    </div> <!-- //Info -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="6" class="basket_wrap">
-                                    </td>
-                            </tr>
-                            
-                            
-                            <!-- AceCounter eCommerce (Product_Detail) v7.5 Start -->
-                            <!-- Data Allocation (Product_Detail) -->
-                            <script language='javascript' type="text/javascript">
-                                _A_amt[_ace_countvar]="${d.pprice}"; 
-                                _A_nl[_ace_countvar]="${c.pamount}";   
-                                _A_pl[_ace_countvar]="${c.pid}";       
-                                _A_pn[_ace_countvar]="${d.pname}"; 
-                                _A_ct[_ace_countvar]="${d.bname}";  
-                                _ace_countvar++;
-                            </script>
-                            <!-- AceCounter eCommerce (Cart_InOut) v7.5 End -->
-                            <!-- //Info wrap -->
-<!--                             여기까지 -->
-                            </c:forEach>     
-                                    </tbody>
+                        <tbody id="cart-list">
+							
+                        </tbody>
                     </table>
                 </div>
                 <!--// shoppingback table-->
