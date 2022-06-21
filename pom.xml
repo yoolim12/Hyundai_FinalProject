@@ -19,6 +19,12 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
+		<!-- 스프링 배치 -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-batch</artifactId>
+        </dependency>
+        
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>

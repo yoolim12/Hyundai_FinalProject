@@ -170,7 +170,7 @@ $(document).ready(function(){
     
     //통합맴버십 회원가입 요청
     $("#hpoinJoinBtn").click(function(){
-        hpoinJoin();
+        location.href = "/oauth2/authorization/google"
     });
 
     //통합맴버십 회원가입 요청    
@@ -570,7 +570,7 @@ function kakaoLogin(){
 	                    <h4>회원</h4>
 	                </div>
 	                <div id="hpIPLogin">
-	                <form id="loginForm" name="loginForm" th:action="@{/HandsomeLogin/HandsomeLoginPage}" method="post">
+	                <form id="loginForm" name="loginForm" th:action="@{/member/login}" method="post">
 	                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	                    <input type="hidden" name="inputId" id="inputId" value = "" />
 	                    <fieldset>
@@ -648,14 +648,14 @@ function kakaoLogin(){
                         <p class="txt">현대백화점 그룹의 모든 서비스를 모두 이용할 수 있는 ID를 만듭니다.</p>
                         <p class="join_txt2 mt10">한섬 온라인/오프라인 매장에서 모두 사용하실 수 있으며, 구매 시 <br/>한섬마일리지가 적립됩니다.<br/>한섬 온라인 멤버십 ‘THE 클럽’의 혜택을 받으실 수 있습니다</p>
                     </div>   
-                    <a href="javascript:void(0);" id="hpoinJoinBtn" class="btn add_ss join" style="margin-bottom:40px" onclick="GA_Event('로그인', '가입', '통합회원_가입');">통합회원 가입</a>
+                    <a href="javascript:void(0);" id="hpoinJoinBtn" class="btn add_ss join" style="margin-bottom:40px" onclick="GA_Event('로그인', '가입', '통합회원_가입');">구글 소셜 로그인</a>
 	                <div class="title_wrap">
 	                    <h4 class="tlt_typ1">더한섬닷컴 간편회원 가입</h4>
 	                    <p class="txt" style=" line-height: 1.5;">본인인증 절차 없이, 더한섬닷컴에서 제공하는 서비스만 제한적으로<br/>이용할 수 있는 ID를 만듭니다.</p>
 	                    <p class="join_txt2 mt10">더한섬닷컴에서 사용 가능하며, 오프라인 매장에서는 사용할 수 없습니다.<br/><span>한섬마일리지와 현대백화점그룹 H.Point 혜택, 한섬의 온라인 멤버십 서비스<br/>‘THE 클럽’의 혜택은 제공되지 않습니다. </span></p>
 	                </div>                      
 	                <div class="title_wrap hide" id="eg_block">
-	                    <a href="/HandsomeLogin/simpleRegister" onclick="easyMemJoin();GA_Event('로그인', '가입', '간편회원_가입');" class="btn add_ss join" style="width:366px">간편회원 가입</a>
+	                    <a href="/member/simpleRegister" onclick="easyMemJoin();GA_Event('로그인', '가입', '간편회원_가입');" class="btn add_ss join" style="width:366px">간편회원 가입</a>
 	                    <p class="join_txt2 mt20">
 	                        <span>※ 간편회원은 e-Gift Card 구매 및 등록이 불가능합니다.<br>통합회원 가입 후 이용해 주세요.</span>
 	                    </p>

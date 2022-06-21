@@ -28,7 +28,7 @@
 		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social) 
 		values (#{memail}, #{mname}, #{birth}, #{telnum, jdbcType=NULL}
 		, #{maddress, jdbcType=NULL}, #{mgender, jdbcType=NULL}, #{mpassword}, #{memail_info, jdbcType=NULL}
-		, sysdate, sysdate, 0)
+		, sysdate, sysdate, #{from_social})
 	</insert>
 	
 	<insert id="registerRole" parameterType="com.hyundai.project.dto.MemberRoleDTO">
@@ -39,7 +39,7 @@
 	
 	<select id="findByEmail" resultType="com.hyundai.project.dto.MemberJoinDTO">
 		select
-		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set
+		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno
 		from
 		member c1 join memberrole c2
 		on c1.memail = c2.memail
