@@ -93,8 +93,9 @@ public class CartRestController {
         return "success";
     }
 
-    @PostMapping("/orderstation")
+    @PostMapping("/station")
     public String orderStation(@RequestBody OrderStationDTO station) {
+        log.info(station);
         return "redirect:/order";
     }
 

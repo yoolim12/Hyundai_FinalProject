@@ -22,7 +22,7 @@
 	<script th:src="@{https://pg.cnspay.co.kr/dlp/scripts/smilepay.js}" charset="euc-kr"></script>
     <script th:src="@{/resources/_ui/handsomemobile/js/swiper.min.js}"></script>  모바일이라 추가안함
 </th:block> -->
-
+	<p>[[${station.totalPrice}]]</p>
 	<form id="customerAddress" name="customerAddress"
 		action="/ko/checkout/ordersheet" method="post">
 		<input type="hidden" name="sel_lastName" value="문혁" /> <input

@@ -281,7 +281,7 @@
                         <input type="text" id="txtqty_${i}" title='수량' value="${result[i].qty}" class="mr0" readonly="readonly">
                         <a href="javascript:fn_qtyAdd(${i});" class="right" >다음 버튼</a>
                         </span>
-                        <!-- //qty_sel -->
+                            <!-- //qty_sel -->
                         <a href="#none" onclick="qtyUpdateCart(${i})" class="btn wt_ss qty_w mr0">변경</a>
                         <div>
                         </div>
@@ -383,19 +383,19 @@
                         GA_Event('쇼핑백', '선택', '전체선택');
                         document.getElementById("cartDataSubtotal").innerText = "₩" + numWithComma(total_price);
                         document.getElementById("cartDataTotalPrice").innerText = "₩" + numWithComma(total_price);
-                        for(var i=0; i<res_obj.length; i++) check_obj[i] = true;
+                        for (var i = 0; i < res_obj.length; i++) check_obj[i] = true;
                     } else {
                         GA_Event('쇼핑백', '선택', '전체해제');
                         allchecked = false;
                         selected_price = 0;
                         document.getElementById("cartDataSubtotal").innerText = "₩ 0";
                         document.getElementById("cartDataTotalPrice").innerText = "₩ 0";
-                        for(var i=0; i<res_obj.length; i++) check_obj[i] = false;
+                        for (var i = 0; i < res_obj.length; i++) check_obj[i] = false;
                     }
 
                 } else if ($(this).attr('name') == 'cartlist') { // 개별 선택시
                     var idx = parseInt($(this).parent().next().find('.sb_tlt').attr('id'));
-                    if(allchecked) {
+                    if (allchecked) {
                         if (isChecked) {
                             check_obj[idx] = true;
                             selected_price += parseInt(res_obj[idx].pprice * res_obj[idx].qty);
@@ -416,7 +416,7 @@
                     document.getElementById("cartDataSubtotal").innerText = "₩" + numWithComma(selected_price);
                     document.getElementById("cartDataTotalPrice").innerText = "₩" + numWithComma(selected_price);
                 }
-                for(var i=0; i<res_obj.length; i++) console.log(check_obj[i]);
+                for (var i = 0; i < res_obj.length; i++) console.log(check_obj[i]);
             });
 
             $(document).on("click", '.left', function () {
@@ -527,10 +527,10 @@
                     }
 
                     /*             if($(".fourpm").length > 0){
-                        form.find('input[name=deliveryKind]').val("4PM");
-                        }else{
-                        form.find('input[name=deliveryKind]').val("");
-                        } */
+                    form.find('input[name=deliveryKind]').val("4PM");
+                    }else{
+                    form.find('input[name=deliveryKind]').val("");
+                    } */
 
                     //퀵배송 수량 3개 최대 확인
                     var checkQuickQty = false;
