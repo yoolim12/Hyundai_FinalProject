@@ -1392,48 +1392,31 @@
                     layerAlert("주문하실 상품을 선택해주세요.");
                     return false;
                 }
-
-                entryNumber = entryNumber.substring(0, entryNumber.length - 1);
-
-                //#2610 [주문] 가상계좌 결제수단 제외 및 중복 구매 제한 처리 요청 건 20220215 hyunbae
-                var hasQtyLimitProduct = false;
-                var entryNumberArray = entryNumber.split(',');
-                entryNumberArray.forEach(function (row) {
-                    var productCode = $('#updateCartForm' + row).find('[name=productCode]').val();
-                    var productQty = $('#updateCartForm' + row).find('[name=initialQuantity]').val();
-                    if (qtyLimitProductYnMap[productCode] == 'true' && parseInt(productQty) > 2) {
-                        hasQtyLimitProduct = true;
-                        return;
+                var item = [];
+                for(var i=0; i<res_obj.length; i++) {
+                    if(check_obj[i]) item.push(res_obj[i]);
+                }
+                var data = {
+                    totalPrice : selected_price,
+                    item : item
+                };
+                $.ajax({
+                    url: "/cart/station",
+                    method: "post",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert("완료되었습니다.");
+                        console.log(data);
+                        localStorage.setItem('station-item', JSON.stringify(data));
+                        location.href = "/order";
+                    },
+                    error: function (request, status, error) {
+                        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                     }
-                })
-
-                if (hasQtyLimitProduct) {
-                    layerAlert("동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.");
-                    return false;
-                }
-
-                var form = $('#ordersheetCloneForm');
-                var ordersheetEntryNumber = form.find('input[name=ordersheetEntryNumber]');
-                ordersheetEntryNumber.val(entryNumber);
-                //checkout1(바로주문) 액션은 주문서페이지에서 일괄적으로 처리
-                //setEcommerceData(entryNumber, "Checkout1(바로주문)");
-                if (cartDivision == "athome") {
-                    GA_Event('쇼핑백', '주문', '앳홈_신청하기');
-                } else {
-                    GA_Event('쇼핑백', '주문', '선택상품_주문하기');
-                }
-
-                // 넷퍼넬 쇼핑백 -> 바로주문
-                if ("false" == "true" && "ko" == "ko") {
-                    NetFunnel_Action({action_id: "buy_now"}, function (ev, ret) {
-                        form.submit();
-                    });
-                } else {
-                    form.submit();
-                }
+                });
 
 
-                //location.href="/ko/shoppingbag/checkout";
             }
 
 

@@ -21,6 +21,7 @@ import com.hyundai.project.dto.CartDTO;
 import com.hyundai.project.service.CartService;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Log4j2
 @RequestMapping("/cart/*")
@@ -94,10 +95,8 @@ public class CartRestController {
     }
 
     @PostMapping("/station")
-    public String orderStation(@RequestBody OrderStationDTO station) {
-        log.info(station);
-        return "redirect:/order";
+    public OrderStationDTO orderStation(@RequestBody OrderStationDTO station) {
+        return station;
     }
-
 
 } // end class
