@@ -9,7 +9,7 @@ public class OrderController {
 
 	@GetMapping("/order")
 	public String orderView() {
-		return "/member/order";
+		return "member/ordersheet";
 	}
 
 }
