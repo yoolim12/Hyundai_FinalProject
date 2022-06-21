@@ -28,7 +28,7 @@
 		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social) 
 		values (#{memail}, #{mname}, #{birth}, #{telnum, jdbcType=NULL}
 		, #{maddress, jdbcType=NULL}, #{mgender, jdbcType=NULL}, #{mpassword}, #{memail_info, jdbcType=NULL}
-		, sysdate, sysdate, 0)
+		, sysdate, sysdate, #{from_social})
 	</insert>
 	
 	<insert id="registerRole" parameterType="com.hyundai.project.dto.MemberRoleDTO">

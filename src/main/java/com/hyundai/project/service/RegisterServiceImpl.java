@@ -19,10 +19,12 @@ public class RegisterServiceImpl implements RegisterService {
 	@Override
 	public void simpleRegister(MemberDTO memberdto) {
 		memberDAO.simpleRegister(memberdto);
+	
 	}
 
 	@Override
-	public void registerRole(MemberRoleDTO member_role) {
+	public void registerRole(MemberRoleDTO member_role){
 		memberDAO.registerRole(member_role);
+
 	}
 }
