@@ -876,19 +876,28 @@
                 }
                 else
                 {
-                    var pwc = new passwordControll("compare", $t.find("#oldPassword").val(), "8929295794180");
-                    pwc.trueAction = function()
-                    {	
-                        $t.find("#oldPasswordCheckMsg").text("기존 비밀번호와 일치합니다.");	//다국어 : 기존 비밀번호와 일치합니다.
-                    };
-                    pwc.falseAction = function()
-                    {	
-                        $t.find("#oldPasswordCheckMsg").text("기존 비밀번호와 일치하지 않습니다.");	//다국어 : 기존 비밀번호와 일치하지 않습니다.
-                        $t.find("#oldPassword").val("");
-                        $t.find("#oldPassword").focus();
-                    };	
+					$.ajax({
+						type: 'POST',
+						url: '/mypage/passwordCompare',
+						dataType: 'JSON',
+    					contentType: "application/json",
+    					data: JSON.stringify({
+							"oldpassword": $t.find("#oldPassword").val()
+						}),
+						success:function(response){
+							if(response){
+							    $t.find("#oldPasswordCheckMsg").text("기존 비밀번호와 일치합니다.");
+							}else{
+								$t.find("#oldPasswordCheckMsg").text("기존 비밀번호와 일치하지 않습니다.");	//다국어 : 기존 비밀번호와 일치하지 않습니다.
+		                        $t.find("#oldPassword").val("");
+		                        $t.find("#oldPassword").focus();
+							}
+						},
+						error:function(e){
+							console.log(e);
+						}
+					});
                 }
-                
             });
             
             $t.find('#newPassword').change(function(){
@@ -999,19 +1008,31 @@
                         return;
                     }
                     
-                    var pwc = new passwordControll("save", $t.find("#newPasswordConfirm").val(), "8929295794180");
-                    pwc.trueAction = function()
-                    {	
-                        var la = new layerAlert("비밀번호 변경이 완료 되었습니다. ");		//다국어 : 비밀번호 변경이 완료되었습니다.
-                        la.confirmAction = function()
-                        {	
-                            $t.find('.btn_close').click();
-                        };
-                    };
-                    pwc.falseAction = function()
-                    {	
-                        layerAlert("비밀번호 변경에 실패하였습니다.");		//다국어 : 비밀번호 변경에 실패하였습니다.
-                    };
+                    $.ajax({
+						type: 'POST',
+						url:"/mypage/modifyPassword",
+						dataType: 'JSON',
+		    			contentType : "application/json",
+		    			data:JSON.stringify({
+							"mpassword": newPassword
+						}),
+						success:function(response){
+							if(response){
+							    var la = new layerAlert("비밀번호 변경이 완료 되었습니다. ");		//다국어 : 비밀번호 변경이 완료되었습니다.
+		                        la.confirmAction = function()
+		                        {	
+		                            $t.find('.btn_close').click();
+		                        };
+							}else{
+								layerAlert("비밀번호 변경에 실패하였습니다.");		//다국어 : 비밀번호 변경에 실패하였습니다.
+							}
+						},
+						error:function(e){
+							console.log(e);
+						}
+					});
+                    
+              
                 }
             });
         });

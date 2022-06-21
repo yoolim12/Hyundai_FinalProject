@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="modifyMember">
-		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
+		update member set mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum, jdbcType=NULL}, maddress = #{maddress, jdbcType=NULL} where memail = #{memail}
 	</select>
 	
 	<select id="delMember">
@@ -39,7 +39,7 @@
 	
 	<select id="findByEmail" resultType="com.hyundai.project.dto.MemberJoinDTO">
 		select
-		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno
+		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth
 		from
 		member c1 join memberrole c2
 		on c1.memail = c2.memail
