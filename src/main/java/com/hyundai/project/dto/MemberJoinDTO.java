@@ -22,4 +22,6 @@ public class MemberJoinDTO {
     private String role_set;
     
     private int gno;
+    
+    private Date birth;
 }
