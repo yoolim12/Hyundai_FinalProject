@@ -30,9 +30,6 @@ public class MypageController {
 	@Autowired
 	private MemberDAO memberDAO;
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
 	@RequestMapping("/mypage")
 	public void mypage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
 		model.addAttribute("membername", authMemberDTO.getName());
@@ -44,23 +41,23 @@ public class MypageController {
 		model.addAttribute("memail", authMemberDTO.getEmail());
 	}
 	
-	@RequestMapping(value="/passwordCheck", method=RequestMethod.POST)
-	@ResponseBody
-	public void passwordCheck(@RequestBody HashMap<String, String> map, 
-			@AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) throws IOException {
-		String mpassword = map.get("mpassword");
-
-		if(passwordEncoder.matches(mpassword, memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getMpassword())) {
-			Gson gson = new Gson();
-    		response.setContentType("application/json; charset=utf-8");
-    		response.getWriter().print(gson.toJson(map));
-			System.out.println("success!!");
-		}
-		else {
-			response.getWriter().print(false);
-			System.out.println("fail!!");
-		}
-	}
+//	@RequestMapping(value="/passwordCheck", method=RequestMethod.POST)
+//	@ResponseBody
+//	public void passwordCheck(@RequestBody HashMap<String, String> map, 
+//			@AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) throws IOException {
+//		String mpassword = map.get("mpassword");
+//
+//		if(passwordEncoder.matches(mpassword, memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getMpassword())) {
+//			Gson gson = new Gson();
+//    		response.setContentType("application/json; charset=utf-8");
+//    		response.getWriter().print(gson.toJson(map));
+//			System.out.println("success!!");
+//		}
+//		else {
+//			response.getWriter().print(false);
+//			System.out.println("fail!!");
+//		}
+//	}
 	
 	@RequestMapping("/modifyPage")
 	public void modifyPage() {
