@@ -32,23 +32,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        http.authorizeRequests()
                .antMatchers("/HandsomeLogin/HandsomeLoginPage")
                .permitAll()
-//               .antMatchers("/sample/member").hasRole("USER")
+               .antMatchers("/mypage/mypage").hasRole("USER")
                ;
 
        //인가 인증 문제시 로그인 화면
        http.formLogin()
-       .loginPage("/HandsomeLogin/HandsomeLoginPage")
+       .loginPage("/member/login")
        .usernameParameter("memail")
        .passwordParameter("mpassword")
-       .loginProcessingUrl("/HandsomeLogin/HandsomeLoginPage")
+       .loginProcessingUrl("/member/login")
        .defaultSuccessUrl("/main")
-       .failureUrl("/HandsomeLogin/loginfail")
+       .failureUrl("/member/loginfail")
 //       .permitAll()
        .and()
        .logout()
+       .logoutUrl("/member/logout")
        .logoutSuccessUrl("/main")
 //       .permitAll()
        ;
+       
+//       http.formLogin()
+//       .loginPage("/mypage/modifyPage")
+//       .usernameParameter("j_username")
+//       .passwordParameter("j_password")
+//       .loginProcessingUrl("/mypage/modifyPage")
+//       .defaultSuccessUrl("/main")
+//       .failureUrl("/mypage/modifyPage")
+//       ;
        
        //crsf 비활성화 --> csrf().disable( ) 해야 get 방식으로 로그아웃 처리
        http.csrf().disable();

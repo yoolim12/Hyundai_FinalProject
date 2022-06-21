@@ -570,7 +570,7 @@ function kakaoLogin(){
 	                    <h4>회원</h4>
 	                </div>
 	                <div id="hpIPLogin">
-	                <form id="loginForm" name="loginForm" th:action="@{/HandsomeLogin/HandsomeLoginPage}" method="post">
+	                <form id="loginForm" name="loginForm" th:action="@{/member/login}" method="post">
 	                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	                    <input type="hidden" name="inputId" id="inputId" value = "" />
 	                    <fieldset>
@@ -655,7 +655,7 @@ function kakaoLogin(){
 	                    <p class="join_txt2 mt10">더한섬닷컴에서 사용 가능하며, 오프라인 매장에서는 사용할 수 없습니다.<br/><span>한섬마일리지와 현대백화점그룹 H.Point 혜택, 한섬의 온라인 멤버십 서비스<br/>‘THE 클럽’의 혜택은 제공되지 않습니다. </span></p>
 	                </div>                      
 	                <div class="title_wrap hide" id="eg_block">
-	                    <a href="/HandsomeLogin/simpleRegister" onclick="easyMemJoin();GA_Event('로그인', '가입', '간편회원_가입');" class="btn add_ss join" style="width:366px">간편회원 가입</a>
+	                    <a href="/member/simpleRegister" onclick="easyMemJoin();GA_Event('로그인', '가입', '간편회원_가입');" class="btn add_ss join" style="width:366px">간편회원 가입</a>
 	                    <p class="join_txt2 mt20">
 	                        <span>※ 간편회원은 e-Gift Card 구매 및 등록이 불가능합니다.<br>통합회원 가입 후 이용해 주세요.</span>
 	                    </p>
