@@ -1137,14 +1137,13 @@
             type: "DELETE",
             url: "../back/member",
             dataType: "json",
-            async : false,
-            cache : false,          
+            async : false,         
             data : {
 				'email' : memail
 			},
             success: function(data){
-            	console.log(date);
-            	location.href="/main";
+            	console.log(data);
+            	location.href="../member/logout";
 
             },
             error: function(xhr,  Status, error) {
