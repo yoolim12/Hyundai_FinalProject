@@ -73,23 +73,22 @@ public class MypageRestController {
 		}
 	}
 	
-	@RequestMapping(value="/modifyPassword")
-	@ResponseBody
-	public void modifyPassword(@RequestBody HashMap<String, String> map, 
-			@AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) {
-		String mpassword = passwordEncoder.encode(map.get("mpassword"));
-		MemberJoinDTO memberJoinDTO = memberDAO.findByEmail(authMemberDTO.getEmail(), 0);
-		Date birth = memberJoinDTO.getBirth();
-		
-		try {
-    		service.modifyMember(memberJoinDTO.getMemail(), mpassword, memberJoinDTO.getMname(), birth, null, null, memberJoinDTO.getGno());
-    		
-        	Gson gson = new Gson();
-    		response.setContentType("application/json; charset=utf-8");
-    		response.getWriter().print(gson.toJson(map)); 
-    	}catch(Exception e){
-    		e.printStackTrace();
-    	}
-	}
-}
+//	@RequestMapping(value="/modifyPassword")
+//	@ResponseBody
+//	public void modifyPassword(@RequestBody HashMap<String, String> map, 
+//			@AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) {
+//		String mpassword = passwordEncoder.encode(map.get("mpassword"));
+//		MemberJoinDTO memberJoinDTO = memberDAO.findByEmail(authMemberDTO.getEmail(), 0);
+//		Date birth = memberJoinDTO.getBirth();
+//		
+//		try {
+//    		service.modifyMember(memberJoinDTO.getMemail(), mpassword, memberJoinDTO.getMname(), birth, null, null, memberJoinDTO.getGno());
+//    		
+//        	Gson gson = new Gson();
+//    		response.setContentType("application/json; charset=utf-8");
+//    		response.getWriter().print(gson.toJson(map)); 
+//    	}catch(Exception e){
+//    		e.printStackTrace();
+//    	}
+//	}
 }
