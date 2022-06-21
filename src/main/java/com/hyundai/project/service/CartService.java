@@ -3,6 +3,7 @@ package com.hyundai.project.service;
 import java.util.List;
 
 import com.hyundai.project.dto.CartDTO;
+import com.hyundai.project.dto.CartUpdateDTO;
 
 public interface CartService {
 	
@@ -15,6 +16,6 @@ public interface CartService {
 	
 	public void deleteAllCart(String memail) throws Exception;
 	
-	public void updateCart(String memail, CartDTO cart, String newcolorcode, String newsize, int newqty) throws Exception;
+	public void updateCart(String memail, CartUpdateDTO cart) throws Exception;
 	
 }

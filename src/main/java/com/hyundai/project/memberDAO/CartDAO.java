@@ -2,6 +2,7 @@ package com.hyundai.project.memberDAO;
 
 import java.util.List;
 
+import com.hyundai.project.dto.CartUpdateDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hyundai.project.dto.CartDTO;
@@ -19,6 +20,6 @@ public interface CartDAO {
 	
 	public void deleteAllCart(String memail) throws Exception;
 	
-	public void updateCart(String memail, CartDTO cart, String newcolorcode, String newsize, int newqty) throws Exception;
+	public void updateCart(String memail, CartUpdateDTO cart) throws Exception;
 	
 }
