@@ -2,6 +2,7 @@ package com.hyundai.project.controller;
 
 import java.util.List;
 
+import com.hyundai.project.dto.CartUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,10 +81,11 @@ public class CartRestController {
 
 	@PutMapping("/{memail}")
 	@ResponseBody
-	public String updateCart(@PathVariable("memail") String memail, @RequestBody String pid, @RequestBody String ccolorcode, @RequestBody int qty) {
+	public String updateCart(@PathVariable("memail") String memail, @RequestBody CartUpdateDTO cart) {
 
 		try {
-			//service.deleteCart(memail, pid, ccolorcode, qty);
+			log.info(cart);
+			service.updateCart(memail, cart);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

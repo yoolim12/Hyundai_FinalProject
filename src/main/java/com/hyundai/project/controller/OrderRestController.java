@@ -64,7 +64,7 @@ public class OrderRestController {
 		return entry;
 	}// end list
 
-	@DeleteMapping(value="/order/{oid}")
+	@DeleteMapping(value="/{oid}")
 	@ResponseBody
 	public String deleteALLCart(@PathVariable("oid") int oid) throws Exception {
 
