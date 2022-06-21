@@ -8,7 +8,7 @@
         var memail = "jm@naver.com"; // !!! 나중에 바꾸기
         var color = [];
         var size = [];
-        var res_obj;
+        var res_obj, allchecked = false;
         var selected_price = 0, total_price = 0;
 
         function numWithComma(num) {
@@ -222,6 +222,7 @@
                     var str = ``;
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
+                        var pid_ccode = result[i].pid + "_" + result[i].ccolorcode;
                         color[i] = result[i].ccolorcode;
                         size[i] = result[i].ssize;
                         total_price += parseInt(result[i].pprice) * result[i].qty;
@@ -234,12 +235,12 @@
                         <td class="pt_list_wrap">
                             <!-- pt_list_all -->
                         <div class="pt_list_all">
-                        <a href="/product/productDetail?pid=${result[i].pid}"
+                        <a href="/detail/${pid_ccode}"
                         onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
-                        <img src="${result[i].cimage1}" alt="" />
+                        <img src="${result[i].cimage1}" alt="" onclick="location.href='/detail/${pid_ccode}" />
                         </a>
                         <div class="tlt_wrap">
-                        <a href="/product/productDetail?pid=${result[i].pid}" class="basket_tlt"
+                        <a href="/detail/${pid_ccode}" class="basket_tlt"
                         onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
                         <span class="tlt">${result[i].bname}</span>
                         <span class="sb_tlt" id="${i}">
@@ -316,11 +317,11 @@
                         <div class="info">
                             <!-- Products -->
                         <div class="pt_list" id="pt_list_${i}">
-                        <a href="/product/productDetail?pid=${result[i].pid}">
+                        <a href="/detail/${pid_ccode}">
                         <img src="${result[i].cimage1}" alt="">
                         </a>
                         <div class="tlt_wrap">
-                        <a href="/product/productDetail?pid=${result[i].pid}" class="basket_tlt">
+                        <a href="/detail/${pid_ccode}" class="basket_tlt">
                         <span class="tlt">${result[i].bname}</span>
                         <span class="sb_tlt">${result[i].pname}</span>
                         </a>
@@ -377,22 +378,35 @@
 
                 if ($(this).attr('id') == 'entryCheckAll') { // 전체선택시
                     if (isChecked) {
+                        allchecked = true;
+                        selected_price = total_price;
                         GA_Event('쇼핑백', '선택', '전체선택');
                         document.getElementById("cartDataSubtotal").innerText = "₩" + numWithComma(total_price);
                         document.getElementById("cartDataTotalPrice").innerText = "₩" + numWithComma(total_price);
                     } else {
                         GA_Event('쇼핑백', '선택', '전체해제');
+                        allchecked = false;
+                        selected_price = 0;
                         document.getElementById("cartDataSubtotal").innerText = "₩ 0";
                         document.getElementById("cartDataTotalPrice").innerText = "₩ 0";
                     }
 
                 } else if ($(this).attr('name') == 'cartlist') { // 개별 선택시
                     var idx = parseInt($(this).parent().next().find('.sb_tlt').attr('id'));
-                    if (isChecked) {
-                        selected_price += parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                    if(allchecked) {
+                        if (isChecked) {
+                            selected_price += parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                        } else {
+                            selected_price -= parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                        }
                     } else {
-                        selected_price -= parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                        if (isChecked) {
+                            selected_price += parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                        } else {
+                            selected_price -= parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                        }
                     }
+
                     console.log(selected_price);
                     document.getElementById("cartDataSubtotal").innerText = "₩" + numWithComma(selected_price);
                     document.getElementById("cartDataTotalPrice").innerText = "₩" + numWithComma(selected_price);
