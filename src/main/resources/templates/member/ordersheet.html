@@ -26,7 +26,42 @@
             item_data.push(temp_data);
         }
         $(document).ready(function () {
-            // HTML 추가
+            var checktHandsomepointUsableAmount = res_data.totalPrice;
+            const final_tot = numWithComma(checktHandsomepointUsableAmount);
+            $('#totalPrice').text('₩'+final_tot);
+            $('#subTotal').text('₩'+final_tot);
+            var html = "";
+            var mprice = 1;
+            for(var i=0; i<res_data.item.length;i++){
+                mprice = numWithComma(res_data.item[i].pprice * res_data.item[i].qty);
+                html += `<tr class="al_middle">
+		        <td class="frt">
+		        <!-- pt_list_all -->
+		        <div class="pt_list_all">
+		            <a href="${res_data.item[i].pid}_${res_data.item[i].ccolorcode}">
+		                <img src="${res_data.item[i].cimage1}" alt="" />
+		            </a>
+		            <div class="tlt_wrap">
+		                <a href="/detail/${res_data.item[i].pid}_${res_data.item[i].ccolorcode}" class="basket_tlt">
+		                <span class="tlt">${res_data.item[i].bname}</span> <span class="sb_tlt">${res_data.item[i].pname}</span>
+		                </a>
+		                <p class="color_op">
+		                    color : ${res_data.item[i].ccolorcode}<span class="and_line">/</span> size : ${res_data.item[i].ssize}
+		                </p>
+		            </div>
+		        </div> <!-- //pt_list_all -->
+		    </td>
+		    <td>${res_data.item[i].qty}</td>
+		    <td>
+		        <!-- price_wrap -->
+		        <div class="price_wrap ">
+		            <span> ₩${mprice}</span>
+		        </div> <!-- //price_wrap -->
+		    </td>
+		    </tr>
+		    `;
+            }
+            $("#order-list").html(html);
         });
         function orderProcess() {
             // !!! 값 설정하기
@@ -69,7 +104,7 @@
                     alert("완료되었습니다.");
                     console.log(data);
                     localStorage.removeItem('station-item');
-                    location.href = "/order";
+                    location.href = "/order"; // !!! order-list로
                 },
                 error: function (request, status, error) {
                     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
