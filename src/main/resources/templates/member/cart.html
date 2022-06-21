@@ -9,6 +9,7 @@
         var color = [];
         var size = [];
         var res_obj, allchecked = false;
+        var check_obj = [];
         var selected_price = 0, total_price = 0;
 
         function numWithComma(num) {
@@ -200,7 +201,6 @@
 
             $("#txtqty_" + idx).val(qty + 1);
             //fn_sumPriceCal();
-
         }
 
         //<![CDATA[
@@ -383,34 +383,40 @@
                         GA_Event('쇼핑백', '선택', '전체선택');
                         document.getElementById("cartDataSubtotal").innerText = "₩" + numWithComma(total_price);
                         document.getElementById("cartDataTotalPrice").innerText = "₩" + numWithComma(total_price);
+                        for(var i=0; i<res_obj.length; i++) check_obj[i] = true;
                     } else {
                         GA_Event('쇼핑백', '선택', '전체해제');
                         allchecked = false;
                         selected_price = 0;
                         document.getElementById("cartDataSubtotal").innerText = "₩ 0";
                         document.getElementById("cartDataTotalPrice").innerText = "₩ 0";
+                        for(var i=0; i<res_obj.length; i++) check_obj[i] = false;
                     }
 
                 } else if ($(this).attr('name') == 'cartlist') { // 개별 선택시
                     var idx = parseInt($(this).parent().next().find('.sb_tlt').attr('id'));
                     if(allchecked) {
                         if (isChecked) {
+                            check_obj[idx] = true;
                             selected_price += parseInt(res_obj[idx].pprice * res_obj[idx].qty);
                         } else {
+                            check_obj[idx] = false;
                             selected_price -= parseInt(res_obj[idx].pprice * res_obj[idx].qty);
                         }
                     } else {
                         if (isChecked) {
+                            check_obj[idx] = true;
                             selected_price += parseInt(res_obj[idx].pprice * res_obj[idx].qty);
                         } else {
+                            check_obj[idx] = false;
                             selected_price -= parseInt(res_obj[idx].pprice * res_obj[idx].qty);
                         }
                     }
-
                     console.log(selected_price);
                     document.getElementById("cartDataSubtotal").innerText = "₩" + numWithComma(selected_price);
                     document.getElementById("cartDataTotalPrice").innerText = "₩" + numWithComma(selected_price);
                 }
+                for(var i=0; i<res_obj.length; i++) console.log(check_obj[i]);
             });
 
             $(document).on("click", '.left', function () {
