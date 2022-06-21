@@ -348,24 +348,7 @@
                         }
                     });
                     
-                    $("#memberSecessionBtn").click(function(){
-                        $.ajax({
-                            type: "POST",
-                            url: "/ko/mypage/setSessionAuth",
-                            dataType: "json",
-                            async : false,
-                            cache : false,          
-                            data: $("#sessionAuthForm").serialize(),
-                            success: function(data){
-                                if(data == "true") {
-                                    location.href="/ko/mypage/memberSecession";
-                                }
-                            },
-                            error: function(xhr,  Status, error) {
-                                alert('sendRequest error : ' + xhr.status + " ( " + error + " ) " );
-                            }
-                        });
-                    });
+                    
                 }//else
             
             }else{  //easyMember != Y 
@@ -860,7 +843,6 @@
         });
 
         $("#pwChangeBtn").click(function() {
-            $('#pwSearchPop').attr('display', 'block');
             $t = layerChangPopup('pwSearchPop');
             $t.find("#newPasswordDubMsg, #newPasswordConfirmDubMsg").text("비밀번호는 8~15자리 이하로 영문/숫자/특수문자를 혼합해주세요.");	//다국어 : 비밀번호는 8~15자리 이하로 영문/숫자/특수문자를 혼합해주세요.
             $t.find("#oldPassword").focus();
@@ -876,28 +858,19 @@
                 }
                 else
                 {
-					$.ajax({
-						type: 'POST',
-						url: '/mypage/passwordCompare',
-						dataType: 'JSON',
-    					contentType: "application/json",
-    					data: JSON.stringify({
-							"oldpassword": $t.find("#oldPassword").val()
-						}),
-						success:function(response){
-							if(response){
-							    $t.find("#oldPasswordCheckMsg").text("기존 비밀번호와 일치합니다.");
-							}else{
-								$t.find("#oldPasswordCheckMsg").text("기존 비밀번호와 일치하지 않습니다.");	//다국어 : 기존 비밀번호와 일치하지 않습니다.
-		                        $t.find("#oldPassword").val("");
-		                        $t.find("#oldPassword").focus();
-							}
-						},
-						error:function(e){
-							console.log(e);
-						}
-					});
+                    var pwc = new passwordControll("compare", $t.find("#oldPassword").val(), "8929295794180");
+                    pwc.trueAction = function()
+                    {	
+                        $t.find("#oldPasswordCheckMsg").text("기존 비밀번호와 일치합니다.");	//다국어 : 기존 비밀번호와 일치합니다.
+                    };
+                    pwc.falseAction = function()
+                    {	
+                        $t.find("#oldPasswordCheckMsg").text("기존 비밀번호와 일치하지 않습니다.");	//다국어 : 기존 비밀번호와 일치하지 않습니다.
+                        $t.find("#oldPassword").val("");
+                        $t.find("#oldPassword").focus();
+                    };	
                 }
+                
             });
             
             $t.find('#newPassword').change(function(){
@@ -1008,31 +981,19 @@
                         return;
                     }
                     
-                    $.ajax({
-						type: 'POST',
-						url:"/mypage/modifyPassword",
-						dataType: 'JSON',
-		    			contentType : "application/json",
-		    			data:JSON.stringify({
-							"mpassword": newPassword
-						}),
-						success:function(response){
-							if(response){
-							    var la = new layerAlert("비밀번호 변경이 완료 되었습니다. ");		//다국어 : 비밀번호 변경이 완료되었습니다.
-		                        la.confirmAction = function()
-		                        {	
-		                            $t.find('.btn_close').click();
-		                        };
-							}else{
-								layerAlert("비밀번호 변경에 실패하였습니다.");		//다국어 : 비밀번호 변경에 실패하였습니다.
-							}
-						},
-						error:function(e){
-							console.log(e);
-						}
-					});
-                    
-              
+                    var pwc = new passwordControll("save", $t.find("#newPasswordConfirm").val(), "8929295794180");
+                    pwc.trueAction = function()
+                    {	
+                        var la = new layerAlert("비밀번호 변경이 완료 되었습니다. ");		//다국어 : 비밀번호 변경이 완료되었습니다.
+                        la.confirmAction = function()
+                        {	
+                            $t.find('.btn_close').click();
+                        };
+                    };
+                    pwc.falseAction = function()
+                    {	
+                        layerAlert("비밀번호 변경에 실패하였습니다.");		//다국어 : 비밀번호 변경에 실패하였습니다.
+                    };
                 }
             });
         });
@@ -1169,6 +1130,26 @@
             }
         }
         return returnVal;
+    }
+    function delMember(email){
+    	var memail = email
+    	$.ajax({
+            type: "DELETE",
+            url: "../back/member",
+            dataType: "json",
+            async : false,         
+            data : {
+				'email' : memail
+			},
+            success: function(data){
+            	console.log(data);
+            	location.href="../member/logout";
+
+            },
+            error: function(xhr,  Status, error) {
+                alert('sendRequest error : ' + xhr.status + " ( " + error + " ) " );
+            }
+        });
     }
     //]]>
     </script>
@@ -1326,21 +1307,21 @@
                     </div>
                 </fieldset>
 
-            <!-- btn_btwrap -->
+            <!— btn_btwrap —>
             <div class="btn_btwrap">
-                <input type="button" class="btn wt_ss" value="회원탈퇴" id="memberSecessionBtn"/>
+                <input type="button" class="btn wt_ss" value="회원탈퇴" th:onclick = "delMember([[${memail}]])"/>
             </div>
             <div class="btnwrap mypage2">
                 <input type="button" class="btn wt" value="취소" id="cancleBtn" />
                 <input type="button" class="btn gray" value="변경사항 저장" id="saveBtn"/>
             </div>
-            <!-- //btn_btwrap -->
+            <!— //btn_btwrap —>
         </div>
     <div>
     <input type="hidden" name="CSRFToken" value="d421ae74-247e-4f1d-9c6a-0cb17756def3" />
-    </div></form><!-- 다국어 한국 이외의 언어에서 사용 -->
+    </div></form><!— 다국어 한국 이외의 언어에서 사용 —>
     </div>
-            <!-- //cnts -->
+            <!— //cnts —>
     </div>
     </div>
 </body>

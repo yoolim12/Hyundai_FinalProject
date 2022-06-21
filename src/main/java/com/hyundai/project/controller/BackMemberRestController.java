@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.hyundai.project.dto.AuthMemberDTO;
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.memberDAO.MemberDAO;
 import com.hyundai.project.service.MemberService;
 
 import lombok.Setter;
@@ -34,6 +37,9 @@ public class BackMemberRestController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
+	
+	@Autowired
+	private MemberDAO memberDAO;
 	
 	// 회원 찾기
 	@PostMapping("/member")
@@ -56,7 +62,7 @@ public class BackMemberRestController {
 	// 회원정보 수정
     @PutMapping("/member")
     @ResponseBody
-    public void update(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
+    public void update(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
     	System.out.println("modify rr");
     	String email = map.get("memail");
     	String name = map.get("mname");
@@ -68,7 +74,7 @@ public class BackMemberRestController {
     	System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address);
     	
     	try {
-    		service.modifyMember(email, name, birth, telnum, address, gno);
+    		service.modifyMember(email, memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getMpassword(), name, birth, telnum, address, gno);
     		
         	Gson gson = new Gson();
     		response.setContentType("application/json; charset=utf-8");

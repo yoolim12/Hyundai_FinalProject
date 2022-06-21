@@ -1,14 +1,21 @@
 package com.hyundai.project.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.hyundai.project.dto.AuthMemberDTO;
 import com.hyundai.project.memberDAO.MemberDAO;
 
@@ -23,9 +30,6 @@ public class MypageController {
 	@Autowired
 	private MemberDAO memberDAO;
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
 	@RequestMapping("/mypage")
 	public void mypage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
 		model.addAttribute("membername", authMemberDTO.getName());
@@ -33,23 +37,36 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/personInformationChange")
-	public String mypageModifyPage1(@AuthenticationPrincipal AuthMemberDTO authMemberDTO
-			, HttpServletRequest request, Model model) {
+	public void mypageModifyPage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
 		model.addAttribute("memail", authMemberDTO.getEmail());
-		System.out.println("1 > " + memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getMpassword());
-		System.out.println("2 > " + request.getParameter("j_password"));
-		if(request.getParameter("j_password") == memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getMpassword())
-			return "/main";
-		return "/mypage/modifyPage";
 	}
 	
-//	@RequestMapping("/modifyPage/done")
-//	public String mypageModifyPage2(@AuthenticationPrincipal AuthMemberDTO authMemberDTO
-//			, HttpServletRequest request) {
-//		System.out.println("1 > " + memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getMpassword());
-//		System.out.println("2 > " + request.getParameter("j_password"));
-//		if(request.getParameter("j_password") == memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getMpassword())
-//			return "/main";
-//		return "/mypage/modifyPage";
+	@RequestMapping("/memberEdit")
+	public void mypageModifyPage2(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
+		model.addAttribute("memail", authMemberDTO.getEmail());
+	}
+	
+//	@RequestMapping(value="/passwordCheck", method=RequestMethod.POST)
+//	@ResponseBody
+//	public void passwordCheck(@RequestBody HashMap<String, String> map, 
+//			@AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) throws IOException {
+//		String mpassword = map.get("mpassword");
+//
+//		if(passwordEncoder.matches(mpassword, memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getMpassword())) {
+//			Gson gson = new Gson();
+//    		response.setContentType("application/json; charset=utf-8");
+//    		response.getWriter().print(gson.toJson(map));
+//			System.out.println("success!!");
+//		}
+//		else {
+//			response.getWriter().print(false);
+//			System.out.println("fail!!");
+//		}
 //	}
+	
+	@RequestMapping("/modifyPage")
+	public void modifyPage() {
+		
+	}
+}
 }
