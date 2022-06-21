@@ -14,8 +14,47 @@
 </th:block>
 <div layout:fragment="content">
 <script>
-	var res_data = JSON.parse(localStorage.getItem("station-item"));
-	console.log(res_data);
+	$(document).ready(function() {
+		var res_data = JSON.parse(localStorage.getItem("station-item"));
+		console.log(res_data);
+		var checktHandsomepointUsableAmount = res_data.totalPrice;
+		const final_tot = numWithComma(checktHandsomepointUsableAmount);
+		$('#totalPrice').text('₩'+final_tot);
+		$('#subTotal').text('₩'+final_tot);
+		var html = "";
+		var mprice = 1;
+		for(var i=0; i<res_data.item.length;i++){
+			mprice = numWithComma(res_data.item[i].pprice * res_data.item[i].qty);
+		    html += `<tr class="al_middle">
+		        <td class="frt">
+		        <!-- pt_list_all -->
+		        <div class="pt_list_all">
+		            <a href="${res_data.item[i].pid}_${res_data.item[i].ccolorcode}">
+		                <img src="${res_data.item[i].cimage1}" alt="" />
+		            </a>
+		            <div class="tlt_wrap">
+		                <a href="/detail/${res_data.item[i].pid}_${res_data.item[i].ccolorcode}" class="basket_tlt"> 
+		                <span class="tlt">${res_data.item[i].bname}</span> <span class="sb_tlt">${res_data.item[i].pname}</span>
+		                </a>
+		                <p class="color_op">
+		                    color : ${res_data.item[i].ccolorcode}<span class="and_line">/</span> size : ${res_data.item[i].ssize}
+		                </p>
+		            </div>
+		        </div> <!-- //pt_list_all -->
+		    </td>
+		    <td>${res_data.item[i].qty}</td>
+		    <td>
+		        <!-- price_wrap -->
+		        <div class="price_wrap ">
+		            <span> ₩${mprice}</span>
+		        </div> <!-- //price_wrap -->
+		    </td>
+		    </tr>
+		    `;
+		}
+		$("#order-list").html(html);
+	})
+	
 </script>
 	<!-- <link rel="stylesheet" type="text/css" href="/resources/_ui/handsomemobile/css/handsomecss/swiper.css" media="all" /> -->
 	<!--
@@ -111,41 +150,10 @@
 									<th scope="col">판매가/쿠폰 적용가</th>
 								</tr>
 								</thead>
-								<tbody>
-								<tr class="al_middle">
-									<td class="frt">
-										<!-- pt_list_all -->
-										<div class="pt_list_all">
-											<a
-													href="/ko/HANDSOME/MEN/TOP/SHIRTS/%ED%9E%88%EB%93%A0-%ED%94%8C%EB%9E%98%ED%82%B7-%EC%85%94%EC%B8%A0/p/TH2C1WSH719MM1_SB_105">
-												<img
-														src="http://newmedia.thehandsome.com/TH/2C/SS/TH2C1WSH719MM1_SB_S01.jpg"
-														alt="" />
-											</a>
-											<div class="tlt_wrap">
-												<a
-														href="/ko/HANDSOME/MEN/TOP/SHIRTS/%ED%9E%88%EB%93%A0-%ED%94%8C%EB%9E%98%ED%82%B7-%EC%85%94%EC%B8%A0/p/TH2C1WSH719MM1_SB_105"
-														class="basket_tlt"> <span class="tlt">TIME
-                                             HOMME</span> <span class="sb_tlt">히든 플래킷 셔츠</span>
-												</a>
-												<p class="color_op">
-
-													color : SKY BLUE<span class="and_line">/</span> size : 105
-												</p>
-											</div>
-										</div> <!-- //pt_list_all -->
-									</td>
-									<td>1</td>
-									<td>
-										<!-- price_wrap -->
-										<div class="price_wrap ">
-											<span> ₩345,000</span>
-										</div> <!-- //price_wrap -->
-									</td>
-								</tr>
+								<tbody id="order-list">
 								</tbody>
 							</table>
-							<script>var checktHandsomepointUsableAmount = parseInt('345000.0');</script>
+							
 						</div>
 						<!--//table wrap1-->
 
@@ -922,7 +930,7 @@
 								<hr />
 								<dl class="clearfix">
 									<dt>상품 합계</dt>
-									<dd id="subTotal">₩345,000</dd>
+									<dd id="subTotal"></dd>
 									<dt>배송비</dt>
 									<dd id="deliveryCost">₩ 0</dd>
 								</dl>
@@ -930,7 +938,7 @@
 							<div class="total">
 								<dl class="clearfix">
 									<dt>합계</dt>
-									<dd id="totalPrice">₩345,000</dd>
+									<dd id="totalPrice"></dd>
 								</dl>
 							</div>
 							<input type="hidden" name="total" id="total" value="345000.0" />
