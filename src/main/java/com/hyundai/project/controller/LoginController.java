@@ -144,6 +144,7 @@ public class LoginController {
 			System.out.println("******************BIRTH*****************" + birth.toString());
 			
 			memberdto.setBirth(birth);
+			memberdto.setFrom_social(0);
 
 			System.out.println("yooooooooooooooooolim"+memberdto);
 			
