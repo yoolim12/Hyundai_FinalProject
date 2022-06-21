@@ -8,7 +8,8 @@
         var memail = "jm@naver.com"; // !!! 나중에 바꾸기
         var color = [];
         var size = [];
-        var res_obj;
+        var res_obj, allchecked = false;
+        var check_obj = [];
         var selected_price = 0, total_price = 0;
 
         function numWithComma(num) {
@@ -200,7 +201,6 @@
 
             $("#txtqty_" + idx).val(qty + 1);
             //fn_sumPriceCal();
-
         }
 
         //<![CDATA[
@@ -222,6 +222,7 @@
                     var str = ``;
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
+                        var pid_ccode = result[i].pid + "_" + result[i].ccolorcode;
                         color[i] = result[i].ccolorcode;
                         size[i] = result[i].ssize;
                         total_price += parseInt(result[i].pprice) * result[i].qty;
@@ -234,12 +235,12 @@
                         <td class="pt_list_wrap">
                             <!-- pt_list_all -->
                         <div class="pt_list_all">
-                        <a href="/product/productDetail?pid=${result[i].pid}"
+                        <a href="/detail/${pid_ccode}"
                         onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
-                        <img src="${result[i].cimage1}" alt="" />
+                        <img src="${result[i].cimage1}" alt="" onclick="location.href='/detail/${pid_ccode}" />
                         </a>
                         <div class="tlt_wrap">
-                        <a href="/product/productDetail?pid=${result[i].pid}" class="basket_tlt"
+                        <a href="/detail/${pid_ccode}" class="basket_tlt"
                         onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
                         <span class="tlt">${result[i].bname}</span>
                         <span class="sb_tlt" id="${i}">
@@ -280,7 +281,7 @@
                         <input type="text" id="txtqty_${i}" title='수량' value="${result[i].qty}" class="mr0" readonly="readonly">
                         <a href="javascript:fn_qtyAdd(${i});" class="right" >다음 버튼</a>
                         </span>
-                        <!-- //qty_sel -->
+                            <!-- //qty_sel -->
                         <a href="#none" onclick="qtyUpdateCart(${i})" class="btn wt_ss qty_w mr0">변경</a>
                         <div>
                         </div>
@@ -316,11 +317,11 @@
                         <div class="info">
                             <!-- Products -->
                         <div class="pt_list" id="pt_list_${i}">
-                        <a href="/product/productDetail?pid=${result[i].pid}">
+                        <a href="/detail/${pid_ccode}">
                         <img src="${result[i].cimage1}" alt="">
                         </a>
                         <div class="tlt_wrap">
-                        <a href="/product/productDetail?pid=${result[i].pid}" class="basket_tlt">
+                        <a href="/detail/${pid_ccode}" class="basket_tlt">
                         <span class="tlt">${result[i].bname}</span>
                         <span class="sb_tlt">${result[i].pname}</span>
                         </a>
@@ -377,26 +378,45 @@
 
                 if ($(this).attr('id') == 'entryCheckAll') { // 전체선택시
                     if (isChecked) {
+                        allchecked = true;
+                        selected_price = total_price;
                         GA_Event('쇼핑백', '선택', '전체선택');
                         document.getElementById("cartDataSubtotal").innerText = "₩" + numWithComma(total_price);
                         document.getElementById("cartDataTotalPrice").innerText = "₩" + numWithComma(total_price);
+                        for (var i = 0; i < res_obj.length; i++) check_obj[i] = true;
                     } else {
                         GA_Event('쇼핑백', '선택', '전체해제');
+                        allchecked = false;
+                        selected_price = 0;
                         document.getElementById("cartDataSubtotal").innerText = "₩ 0";
                         document.getElementById("cartDataTotalPrice").innerText = "₩ 0";
+                        for (var i = 0; i < res_obj.length; i++) check_obj[i] = false;
                     }
 
                 } else if ($(this).attr('name') == 'cartlist') { // 개별 선택시
                     var idx = parseInt($(this).parent().next().find('.sb_tlt').attr('id'));
-                    if (isChecked) {
-                        selected_price += parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                    if (allchecked) {
+                        if (isChecked) {
+                            check_obj[idx] = true;
+                            selected_price += parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                        } else {
+                            check_obj[idx] = false;
+                            selected_price -= parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                        }
                     } else {
-                        selected_price -= parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                        if (isChecked) {
+                            check_obj[idx] = true;
+                            selected_price += parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                        } else {
+                            check_obj[idx] = false;
+                            selected_price -= parseInt(res_obj[idx].pprice * res_obj[idx].qty);
+                        }
                     }
                     console.log(selected_price);
                     document.getElementById("cartDataSubtotal").innerText = "₩" + numWithComma(selected_price);
                     document.getElementById("cartDataTotalPrice").innerText = "₩" + numWithComma(selected_price);
                 }
+                for (var i = 0; i < res_obj.length; i++) console.log(check_obj[i]);
             });
 
             $(document).on("click", '.left', function () {
@@ -507,10 +527,10 @@
                     }
 
                     /*             if($(".fourpm").length > 0){
-                        form.find('input[name=deliveryKind]').val("4PM");
-                        }else{
-                        form.find('input[name=deliveryKind]').val("");
-                        } */
+                    form.find('input[name=deliveryKind]').val("4PM");
+                    }else{
+                    form.find('input[name=deliveryKind]').val("");
+                    } */
 
                     //퀵배송 수량 3개 최대 확인
                     var checkQuickQty = false;
@@ -1372,48 +1392,31 @@
                     layerAlert("주문하실 상품을 선택해주세요.");
                     return false;
                 }
-
-                entryNumber = entryNumber.substring(0, entryNumber.length - 1);
-
-                //#2610 [주문] 가상계좌 결제수단 제외 및 중복 구매 제한 처리 요청 건 20220215 hyunbae
-                var hasQtyLimitProduct = false;
-                var entryNumberArray = entryNumber.split(',');
-                entryNumberArray.forEach(function (row) {
-                    var productCode = $('#updateCartForm' + row).find('[name=productCode]').val();
-                    var productQty = $('#updateCartForm' + row).find('[name=initialQuantity]').val();
-                    if (qtyLimitProductYnMap[productCode] == 'true' && parseInt(productQty) > 2) {
-                        hasQtyLimitProduct = true;
-                        return;
+                var item = [];
+                for(var i=0; i<res_obj.length; i++) {
+                    if(check_obj[i]) item.push(res_obj[i]);
+                }
+                var data = {
+                    totalPrice : selected_price,
+                    item : item
+                };
+                $.ajax({
+                    url: "/cart/station",
+                    method: "post",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert("완료되었습니다.");
+                        console.log(data);
+                        localStorage.setItem('station-item', JSON.stringify(data));
+                        location.href = "/order";
+                    },
+                    error: function (request, status, error) {
+                        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                     }
-                })
-
-                if (hasQtyLimitProduct) {
-                    layerAlert("동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.");
-                    return false;
-                }
-
-                var form = $('#ordersheetCloneForm');
-                var ordersheetEntryNumber = form.find('input[name=ordersheetEntryNumber]');
-                ordersheetEntryNumber.val(entryNumber);
-                //checkout1(바로주문) 액션은 주문서페이지에서 일괄적으로 처리
-                //setEcommerceData(entryNumber, "Checkout1(바로주문)");
-                if (cartDivision == "athome") {
-                    GA_Event('쇼핑백', '주문', '앳홈_신청하기');
-                } else {
-                    GA_Event('쇼핑백', '주문', '선택상품_주문하기');
-                }
-
-                // 넷퍼넬 쇼핑백 -> 바로주문
-                if ("false" == "true" && "ko" == "ko") {
-                    NetFunnel_Action({action_id: "buy_now"}, function (ev, ret) {
-                        form.submit();
-                    });
-                } else {
-                    form.submit();
-                }
+                });
 
 
-                //location.href="/ko/shoppingbag/checkout";
             }
 
 
