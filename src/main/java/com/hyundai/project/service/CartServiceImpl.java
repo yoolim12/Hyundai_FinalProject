@@ -27,9 +27,24 @@ public class CartServiceImpl implements CartService {
 		cartDAO.insertCart(memail, cart);
 	}
 
+//	@Override
+//	public void deleteCart(String memail, String pid, String ccolorcode, String ssize) throws Exception {
+//		cartDAO.deleteCart(memail, pid, ccolorcode, ssize);
+//	}
+	
 	@Override
-	public void deleteCart(String memail) throws Exception {
-		cartDAO.deleteCart(memail);
+	public void deleteCart(String memail, CartDTO cart) throws Exception {
+		cartDAO.deleteCart(memail, cart);
+	}
+	
+	@Override
+	public void deleteAllCart(String memail) throws Exception {
+		cartDAO.deleteAllCart(memail);
+	}
+	
+	@Override
+	public void updateCart(String memail, CartDTO cart, String newcolorcode, String newsize, int newqty) throws Exception {
+		cartDAO.updateCart(memail, cart, newcolorcode, newsize, newqty);
 	}
 
 }

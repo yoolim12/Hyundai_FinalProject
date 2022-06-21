@@ -16,6 +16,19 @@
 	<insert id="insertCart">
 		insert into cart(memail, pid, ccolorcode, ssize, qty)  values(#{memail}, #{param2.pid}, #{param2.ccolorcode}, #{param2.ssize}, #{param2.qty})
 	</insert>
+	
+	<delete id="deleteCart">
+		delete cart where memail=#{memail} and pid = #{param2.pid} and ssize = #{param2.ssize} and ccolorcode = #{param2. ccolorcode}
+	</delete>
+	
+	<delete id="deleteAllCart">
+		delete cart where memail=#{memail}
+	</delete>
+	
+	<update id="updateCart">
+		update cart set ccolorcode=#{newcolorcode}, ssize=#{newsize}, qty=#{newqty} where memail=#{memail} and pid=#{pid} and ccolorcode=#{ccolorcode} and ssize=#{ssize};
+	</update>
+	
 </mapper>
 
 <!-- public List<CartDTO> getCart(String mid) throws Exception; public void 

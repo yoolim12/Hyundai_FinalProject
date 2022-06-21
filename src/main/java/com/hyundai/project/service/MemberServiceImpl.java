@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.memberDAO.MemberDAO;
@@ -25,8 +26,8 @@ public class MemberServiceImpl implements MemberService {
 	
 	// 회원 수정
 	@Override
-	public void modifyMember(String memail, String mname, String birth, String telnum, String maddress) throws Exception {
-		mapper.modifyMember(memail, mname, birth, telnum, maddress);
+	public void modifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno) throws Exception {
+		mapper.modifyMember(memail, mname, birth, telnum, maddress, gno);
 	}
 	
 	// 회원 탈퇴
