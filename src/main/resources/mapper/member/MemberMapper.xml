@@ -39,7 +39,7 @@
 	
 	<select id="findByEmail" resultType="com.hyundai.project.dto.MemberJoinDTO">
 		select
-		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set
+		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno
 		from
 		member c1 join memberrole c2
 		on c1.memail = c2.memail

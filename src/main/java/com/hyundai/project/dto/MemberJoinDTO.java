@@ -20,4 +20,6 @@ public class MemberJoinDTO {
 	private String mname;
     private String mpassword;
     private String role_set;
+    
+    private int gno;
 }

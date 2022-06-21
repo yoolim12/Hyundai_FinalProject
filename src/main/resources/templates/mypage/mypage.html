@@ -6,7 +6,13 @@
 <div layout:fragment="content"> 
 <script>
  
-
+   // 리스트에서 제목 클릭 시 내용이 펼쳐지도록
+    function showContent(i) {
+        var listTag = "";
+        if (arr[i] == false) {
+           var qcontent = obj[i].qcontent;
+           if(obj[i].qcontent == null) qcontent = "";
+           console.log(qcontent);
             listTag += '<tr><td class="qna_wrap" colspan="4"><div class="qna_box ch"><p></p><div class="qt"><span class="ico">quest</span>';
             if(obj[i].qnaimg == null) {
                 listTag += '<div class="txt"><p style="font-weight: 900; font-size:15px; word-wrap:break-word; margin-top:7px">' + obj[i].qtitle + '</p><br><br><br>';
@@ -32,7 +38,8 @@
         }
         document.getElementById("qna" + i).innerHTML = listTag;
     }
-
+   
+   // 게시물 삭제하는 ajax 호출
     function deleteContent(qid) {
         var url = "/mypage/deleteQNA?qid=" + qid;
         if (confirm("해당 게시물을 삭제하시겠습니까?") == true) {
@@ -41,7 +48,7 @@
                 method: "post",
                 success: function (data) {
                     alert("완료되었습니다.");
-
+                    location.href='/member/mypage';
                 },
                 error : function( request, status, error ){
                     console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
@@ -147,7 +154,7 @@
         <div class="sub_cnts">
             <div class="profile_info1 clearfix review_betterment1905">
                 <div class="name">
-
+                    <span th:text="${membername}" class="ico_grade">message<span style="margin-left: 10px;"></span></span> <span class="grade_txt" id="grade_txt"></span>
                 </div>
                 <div class="pointbox_cover">
                     <div class="point_wrap">
@@ -157,7 +164,7 @@
                         </div>
                         <div class="point">
                             <p class="title">H.POINT</p>
-
+                            <a th:text="${membergno}" class="count" href="https://www.h-point.co.kr/cu/myh/myPnt.shd" target="_blank" onclick="GA_Event('마이페이지','회원정보','H.POINT');">message<span>P</span></a>
                         </div>
                         <div class="point">
                             <p class="title">GIFT CARD</p>
