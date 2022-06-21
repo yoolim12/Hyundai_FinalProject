@@ -41,6 +41,11 @@ public class MypageController {
 		model.addAttribute("memail", authMemberDTO.getEmail());
 	}
 	
+	@RequestMapping("/memberEdit")
+	public void mypageModifyPage2(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
+		model.addAttribute("memail", authMemberDTO.getEmail());
+	}
+	
 //	@RequestMapping(value="/passwordCheck", method=RequestMethod.POST)
 //	@ResponseBody
 //	public void passwordCheck(@RequestBody HashMap<String, String> map, 
@@ -63,4 +68,5 @@ public class MypageController {
 	public void modifyPage() {
 		
 	}
+}
 }

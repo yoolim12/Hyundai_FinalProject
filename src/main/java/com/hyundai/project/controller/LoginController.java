@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -83,6 +84,8 @@ public class LoginController {
 			Date birth = Date.valueOf(b);
 			
 			memberdto.setBirth(birth);
+
+			memberdto.setFrom_social(0);
 			
 			service.simpleRegister(memberdto);
 			
@@ -90,4 +93,5 @@ public class LoginController {
 	       
 	       return "/member/login";
 	   }//end ex..
+	
 }//end class

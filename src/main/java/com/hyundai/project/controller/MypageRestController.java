@@ -20,6 +20,7 @@ import com.hyundai.project.dto.AuthMemberDTO;
 import com.hyundai.project.dto.MemberJoinDTO;
 import com.hyundai.project.memberDAO.MemberDAO;
 import com.hyundai.project.service.MemberService;
+import com.hyundai.project.memberDAO.MemberDAO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -33,7 +34,7 @@ public class MypageRestController {
 	
 	@Autowired
 	private MemberDAO memberDAO;
-	
+
 	@Autowired
 	private MemberService service;
 	
@@ -90,4 +91,5 @@ public class MypageRestController {
     		e.printStackTrace();
     	}
 	}
+}
 }

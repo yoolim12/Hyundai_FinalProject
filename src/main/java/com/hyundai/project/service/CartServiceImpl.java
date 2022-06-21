@@ -2,6 +2,7 @@ package com.hyundai.project.service;
 
 import java.util.List;
 
+import com.hyundai.project.dto.CartUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +44,8 @@ public class CartServiceImpl implements CartService {
 	}
 	
 	@Override
-	public void updateCart(String memail, CartDTO cart, String newcolorcode, String newsize, int newqty) throws Exception {
-		cartDAO.updateCart(memail, cart, newcolorcode, newsize, newqty);
+	public void updateCart(String memail, CartUpdateDTO cart) throws Exception {
+		cartDAO.updateCart(memail, cart);
 	}
 
 }

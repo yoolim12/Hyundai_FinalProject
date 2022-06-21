@@ -2,9 +2,9 @@ package com.hyundai.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hyundai.project.service.MemberService;
 
@@ -24,11 +24,20 @@ public class BackController {
 		log.info("회원관리 페이지 요청");
 		return "/back/form";
 	}
-		
+	
+	// 상품관리 페이지 이동
+	@GetMapping("/form2")
+	public String form2() {
+		log.info("상품관리 페이지 요청");
+		return "/back/form2";
+	}
 		
 	// 회원 전체 조회
 	@GetMapping("/allmember")
-	public void showAllMember(Model model) throws Exception {		
-		model.addAttribute("userList", service.showAllMember());
+	public ModelAndView showAllMember() throws Exception {
+		ModelAndView model = new ModelAndView();
+		model.addObject("userList", service.showAllMember());
+		model.setViewName("back/form");
+		return model;
 	} // end allmember
 }
