@@ -54,6 +54,32 @@
                 }
             });
         }
+        function qtyUpdateCart(idx) {
+            console.log(res_obj[idx]);
+            var data = {
+                pid : res_obj[idx].pid,
+                ccolorcode : res_obj[idx].ccolorcode,
+                ssize : res_obj[idx].ssize,
+                qty : res_obj[idx].qty,
+                newcolorcode : res_obj[idx].ccolorcode,
+                newsize : res_obj[idx].ssize,
+                newqty : $("#txtqty_"+idx).val()
+            }
+            $.ajax({
+                url: "/cart/" + memail,
+                method: "put",
+                data : JSON.stringify(data),
+                contentType : "application/json",
+                success: function (data) {
+                    alert("완료되었습니다.");
+                    console.log(data);
+                    location.href='/cart';
+                },
+                error : function( request, status, error ){
+                    console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
+                }
+            });
+        }
         function getProductColor(idx, pid, colorcode) {
             var chtml = '<div class="color_more_wrap">';
             $.ajax({
@@ -131,7 +157,42 @@
                 });
             }
         }
+        function fn_qtySubtraction(idx)
+        {
+            var qty  = $("#txtqty_"+idx).val();
+            if(qty < 2){
+                return;
+            }
 
+            //GA 이벤트 태깅
+            GA_Event('상품_상세','수량','-');
+
+            $("#txtqty_"+idx).val(parseInt(qty)-1);
+            //fn_sumPriceCal();
+            //fn_chkReserveSaleStockpile(parseInt($("#txtqty_"+idx).val()));
+        }
+        function fn_qtyAdd(idx){
+            var qty = parseInt($("#txtqty_" + idx).val());
+            if(qty + 1 > 2){
+                $("#txtqty_"+idx).val("2");
+                var la = new layerAlert('동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.');
+                return;
+            }
+            /*if (qty >= stockCnt) {
+                if("ko" == "ko"){
+                    var la = new layerAlert("구매 가능한 재고 "+stockCnt+"개만 선택하실 수 있습니다.");
+                }else{
+                    var la = new layerAlert("재고가 부족합니다.");
+                }
+                return;
+            }*/
+
+            GA_Event('상품_상세','수량','+');
+
+            $("#txtqty_"+idx).val(qty+1);
+            //fn_sumPriceCal();
+
+        }
         //<![CDATA[
         var qtyLimitProductYnMap = {};
         $(document).ready(function () {
@@ -204,14 +265,12 @@
                         <input type="hidden" name="cartDivision" value="" />
                             <!-- qty_sel -->
                         <span class="qty_sel num">
-                        <a href="#none" onMouseDown="javascript:AEC_F_D('${result[i].pid}','o',1);" class="left"
-                        onclick="GA_Event('쇼핑백', '수량', '-');">이전 버튼</a>
-                        <input id="quantity${i}" name="quantity" type="text" class="mr0" value="1" size="1" maxlength="3" /><a
-                        href="#none" onMouseDown="javascript:AEC_F_D('${result[i].pid}','i',1);" class="right"
-                        onclick="GA_Event('쇼핑백', '수량', '+');">다음 버튼</a>
+                        <a href="javascript:fn_qtySubtraction(${i});" class="left" >이전 버튼</a>
+                        <input type="text" id="txtqty_${i}" title='수량' value="${result[i].qty}" class="mr0" readonly="readonly">
+                        <a href="javascript:fn_qtyAdd(${i});" class="right" >다음 버튼</a>
                         </span>
                         <!-- //qty_sel -->
-                        <a href="#none" id="QuantityProduct_${i}" class="btn wt_ss qty_w mr0">변경</a>
+                        <a href="#none" onclick="qtyUpdateCart(${i})" class="btn wt_ss qty_w mr0">변경</a>
                         <div>
                         </div>
                         </form>
