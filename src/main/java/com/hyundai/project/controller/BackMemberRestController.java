@@ -1,5 +1,6 @@
 package com.hyundai.project.controller;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class BackMemberRestController {
 	// 회원정보 수정
     @PutMapping("/member")
     @ResponseBody
-    public void update(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
+    public void update(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
     	System.out.println("modify rr");
     	String email = map.get("memail");
     	String name = map.get("mname");
@@ -74,7 +75,7 @@ public class BackMemberRestController {
     	System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address);
     	
     	try {
-    		service.modifyMember(email, memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getMpassword(), name, birth, telnum, address, gno);
+    		service.modifyMember(email, name, birth, telnum, address, gno);
     		
         	Gson gson = new Gson();
     		response.setContentType("application/json; charset=utf-8");
