@@ -43,8 +43,6 @@ $(document).ready(function(){
         btnPosition();
     });  
     
-    
-    
     // 상품 정보 가져오는 ajax 호출
    	$.ajax({
    		url: "/detail/" + pid + "/" + ccolorcode,
@@ -64,7 +62,12 @@ $(document).ready(function(){
         	document.getElementById("pprice").innerHTML = '₩' + numWithComma(result.pprice);
         	document.getElementById("pid").innerHTML = result.pid;
         	document.getElementById("pdetail").innerHTML = result.pdetail;
-        	document.getElementById("totalprice").innerHTML = '₩' + numWithComma(result.pprice);
+        	document.getElementById("totalprice").innerHTML = '₩' + (numWithComma(result.pprice*$("#txtqty").val()));
+        	
+        	let rt = result.pprice*$("#txtqty").val();
+        	$("#mile").html(numWithComma(rt*0.05)+' M (5%)');
+        	$("#hp").html(numWithComma(Math.ceil(rt*0.001))+' P (0.1%)');
+        	
         }
     });
    
@@ -488,7 +491,7 @@ function fn_qtyAdd(){
 
     GA_Event('상품_상세','수량','+');
     
-    $("#txtqty").val(qty+1);
+    $("#txtqty").val(qty+1)
     fn_sumPriceCal();
     
 }
@@ -1921,9 +1924,10 @@ function fn_popupOeraMileage(){
 				<div class="brand-name">
 					<a id="bname" href="javascript:fn_goCategori('br31')" onclick="GA_Detail('brand',$(this))"></a>
 				</div>
-				<span id="pname" class="name ko_fir_spel"><input type="hidden" id="brandName" value="LÄTT"/>
+				<span id="pname" class="name ko_fir_spel">
+					<!-- <input type="hidden" id="brandName" value="LÄTT"/>
 					<input type="hidden" id="productName" value="${productInfo.pname }"/>
-					<input type="hidden" id="productCode" value="${productInfo.pid }"/>
+					<input type="hidden" id="productCode" value="${productInfo.pid }"/> -->
 				</span>
 			</h4>
 			
@@ -1931,7 +1935,7 @@ function fn_popupOeraMileage(){
 			</div>
 			
 			<p class="price" id="pprice" style="font-size:22px">
-						<input type="hidden" id="productPrice" value="${productInfo.pprice }"/>
+						<!-- <input type="hidden" id="productPrice" value="${productInfo.pprice }"/> -->
 			</p>
 			<!-- 상품추가설명 -->
 			<p class="selling_point"></p>
@@ -1948,11 +1952,11 @@ function fn_popupOeraMileage(){
 			<ul class="point_delivery">
 				<li>
 					<span class="title">한섬마일리지</span>
-					<span class="txt"><fmt:formatNumber value="${productInfo.pprice * 0.05 }" type="number" pattern="###,###" />&nbsp;M&nbsp;(5%)</span>
+					<span class="txt" id="mile"></span>
 				</li>
 				<li>
                     <span class="title">H.Point</span>
-                     <span class="txt"><fmt:formatNumber value="${productInfo.pprice * 0.001 }" type="number" pattern="###,###" />&nbsp;P&nbsp;(0.1%)</span>
+                     <span class="txt" id="hp"></span>
                         <a href="javascript:fn_cardBenefit();" id="cardbenef" class="etc_info" onclick="GA_Event('상품_상세','카드사_혜택안내','클릭');">카드사 혜택안내</a>
                     <script type="text/javascript">
 $(document).ready(function(){
