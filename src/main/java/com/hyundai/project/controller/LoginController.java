@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -41,7 +40,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/loginfail")
-	public String loginfail(Model model) {
+	public String loginfail() {
 		System.out.println("Login Fail");
 		return "/member/login";
 	}
@@ -61,15 +60,10 @@ public class LoginController {
 			@ModelAttribute MemberRoleDTO memberRoleDTO,
 			HttpServletResponse response, HttpServletRequest request) throws Exception {
 			System.out.println("Enter simpleRegister2 DONE");
-			
-			if(request.getParameter("memail1") == null || request.getParameter("memail2") == null) {
-				memberdto.setMemail(null);
-			}
-			else {
-				String memail = request.getParameter("memail1") + "@" + request.getParameter("memail2");
+
+			String memail = request.getParameter("memail1") + "@" + request.getParameter("memail2");
 				memberdto.setMemail(memail);
 				memberRoleDTO.setMemail(memail);
-			}
 			
 			memberdto.setMpassword(passwordEncoder.encode(request.getParameter("mpassword")));
 			
@@ -84,8 +78,11 @@ public class LoginController {
 			Date birth = Date.valueOf(b);
 			
 			memberdto.setBirth(birth);
-
-			memberdto.setFrom_social(0);
+			
+			memberdto.setTelnum("0");
+			memberdto.setMaddress("0");
+			memberdto.setMgender("0");
+			memberdto.setMemail_info("0");
 			
 			service.simpleRegister(memberdto);
 			
@@ -93,5 +90,4 @@ public class LoginController {
 	       
 	       return "/member/login";
 	   }//end ex..
-	
 }//end class

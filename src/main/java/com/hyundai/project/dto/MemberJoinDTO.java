@@ -15,13 +15,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MemberJoinDTO {
 	private String memail;
-	private Date regdate, moddate;
-	private int from_social;
-	private String mname;
-    private String mpassword;
-    private String role_set;
-    
-    private int gno;
-    
+    private String mname;
     private Date birth;
+    private String telnum;
+    private String maddress;
+    private String mgender;
+    private String mpassword;
+    private String memail_info;
+    private Date moddate;
+    private Date regdate;
+    private int from_social;
+    private int gno;	
+
+    private String role_set;
 }

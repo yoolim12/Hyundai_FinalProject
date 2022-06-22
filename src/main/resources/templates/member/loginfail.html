@@ -1,15 +1,17 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/common}">
+<div layout:fragment="content">
 <head>
 <script type="text/javascript">
-
+console.log('fail enter');
 alert("아이디 또는 비밀번호가 올바르지 않습니다.");
-
+console.log('fail end');
 </script>
-
- 
-
 </head>
-
 <body>
 </body>
+</div>
 </html>

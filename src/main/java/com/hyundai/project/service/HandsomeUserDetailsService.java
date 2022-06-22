@@ -49,11 +49,15 @@ public class HandsomeUserDetailsService implements UserDetailsService {
         
         // Member --> AuthMemberDTO 변환
         AuthMemberDTO authMemberDTO = new AuthMemberDTO(memberJoinDTO.getMemail(), memberJoinDTO.getMpassword(),
-        		memberJoinDTO.getFrom_social(), authorities);
+        		memberJoinDTO.getFrom_social(), authorities, memberJoinDTO.getMname(), memberJoinDTO.getBirth()
+        		,memberJoinDTO.getTelnum(), memberJoinDTO.getMaddress(), memberJoinDTO.getMgender(),
+        		memberJoinDTO.getMemail_info(), memberJoinDTO.getModdate(), memberJoinDTO.getRegdate(),
+        		memberJoinDTO.getGno());
         
         // ClubAuthMemberDTO 값 세팅
-        authMemberDTO.setName(memberJoinDTO.getMname());
-        authMemberDTO.setFromSocial(memberJoinDTO.getFrom_social());
+        authMemberDTO.setMname(memberJoinDTO.getMname());
+        authMemberDTO.setFrom_social(memberJoinDTO.getFrom_social());
+        authMemberDTO.setMpassword(username);
         
         log.info(authMemberDTO);
         log.info(authMemberDTO.getAuthorities().toString());
