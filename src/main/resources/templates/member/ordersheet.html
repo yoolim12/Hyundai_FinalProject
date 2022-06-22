@@ -30,6 +30,11 @@
 		console.log(res_data);
 		var checktHandsomepointUsableAmount = res_data.totalPrice;
 		const final_tot = numWithComma(checktHandsomepointUsableAmount);
+		const final_mile = numWithComma(checktHandsomepointUsableAmount*0.05);
+	    const final_hpoint = numWithComma(Math.ceil(checktHandsomepointUsableAmount*0.001));	  
+	  
+        $('#txtAccumulationPoint').text('한섬마일리지 ' + final_mile + ' M');
+        $('#txtAccumulationHPoint').text('H.Point ' + final_hpoint + ' P');
 		$('#totalPrice').text('₩'+final_tot);
 		$('#subTotal').text('₩'+final_tot);
 		var html = "";
