@@ -25,10 +25,10 @@
 	<!-- 유림 -->
 	<insert id="simpleRegister" parameterType="com.hyundai.project.dto.MemberDTO">
 		insert into member
-		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social) 
+		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social, gno) 
 		values (#{memail}, #{mname}, #{birth}, #{telnum}
 		, #{maddress}, #{mgender}, #{mpassword}, #{memail_info}
-		, sysdate, sysdate, 0)
+		, sysdate, sysdate, #{from_social}, #{gno})
 	</insert>
 	
 	<insert id="registerRole" parameterType="com.hyundai.project.dto.MemberRoleDTO">

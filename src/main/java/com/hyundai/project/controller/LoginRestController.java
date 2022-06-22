@@ -1,70 +1,108 @@
-//package com.hyundai.project.controller;
-//
-//import java.sql.Date;
-//
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.web.bind.annotation.ModelAttribute;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestMethod;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import com.hyundai.project.dto.MemberDTO;
-//import com.hyundai.project.dto.MemberRoleDTO;
-//import com.hyundai.project.memberDAO.MemberDAO;
-//import com.hyundai.project.service.RegisterService;
-//
-//import lombok.extern.log4j.Log4j2;
-//
-//@Log4j2
-//@RestController
-//@RequestMapping("/member")
-//public class LoginRestController {
-//	@Autowired
-//	private RegisterService service;
-//	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
-//	
-//	@Autowired
-//	private MemberDAO memberRepository;
-//	
-//	@RequestMapping(value="/simpleRegister2/done", method=RequestMethod.POST)
-//	public void simpleRegisterDone(@ModelAttribute MemberDTO memberdto,
-//			@ModelAttribute MemberRoleDTO memberRoleDTO,
-//			HttpServletResponse response, HttpServletRequest request) throws Exception {
-//			System.out.println("Enter simpleRegister2 DONE");
-//			
-//			if(request.getParameter("memail1") == null || request.getParameter("memail2") == null) {
-//				memberdto.setMemail(null);
-//			}
-//			else {
-//				String memail = request.getParameter("memail1") + "@" + request.getParameter("memail2");
-//				memberdto.setMemail(memail);
-//				memberRoleDTO.setMemail(memail);
-//			}
-//			
-//			memberdto.setMpassword(passwordEncoder.encode(request.getParameter("mpassword")));
-//			
-//			String memail_info = request.getParameter("memail_info1") + "@" + request.getParameter("memail_info2");
-//			memberdto.setMemail_info(memail_info);			
-//			
-//			memberdto.setMname(request.getParameter("mname"));
-//			
-//			String b = request.getParameter("myear") + "-" 
-//			+ request.getParameter("mmonth") + "-" + request.getParameter("mday");
-//			
-//			Date birth = Date.valueOf(b);
-//			
-//			memberdto.setBirth(birth);
-//			
-//			service.simpleRegister(memberdto);
-//			
-//			service.registerRole(memberRoleDTO);
-//	       
-////	       return "/member/login";
-//	   }//end ex..
-//}
+package com.hyundai.project.controller;
+
+import java.io.IOException;
+import java.sql.Date;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.google.gson.Gson;
+import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.MemberJoinDTO;
+import com.hyundai.project.dto.MemberRoleDTO;
+import com.hyundai.project.memberDAO.MemberDAO;
+import com.hyundai.project.service.RegisterService;
+
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
+@RestController
+@RequestMapping("/member")
+public class LoginRestController {
+	@Autowired
+	private RegisterService service;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private MemberDAO memberDAO;
+	
+	@RequestMapping("/registerPost")
+	public void registerPost(@RequestBody HashMap<String, String> map, 
+			@ModelAttribute MemberDTO memberdto, @ModelAttribute MemberRoleDTO memberRoleDTO,
+			HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("Enter registerPost!!");
+		String memail = map.get("memail"); // js로 null인 것들 걸러내
+		String mpassword = passwordEncoder.encode(map.get("mpassword"));
+		String memail_info = map.get("memail_info");
+		String mname = map.get("mname");
+		Date birth = Date.valueOf(map.get("birth"));
+		String telnum = map.get("telnum"); // js로 null인 것들 걸러내
+		
+		memberdto.setMemail(memail);
+		memberRoleDTO.setMemail(memail);
+		
+		memberdto.setMpassword(mpassword);
+		memberdto.setMemail_info(memail_info);
+		memberdto.setMname(mname);
+		memberdto.setBirth(birth);
+		memberdto.setTelnum(telnum);
+		memberdto.setFrom_social(0);
+		
+		memberdto.setMaddress("0");
+		memberdto.setMgender("0");
+		
+		memberdto.setGno(1);
+		
+		try {
+    		service.simpleRegister(memberdto);
+    		service.registerRole(memberRoleDTO);
+    		
+    		System.out.println("register success!!");
+    		
+        	Gson gson = new Gson();
+    		response.setContentType("application/json; charset=utf-8");
+    		response.getWriter().print(gson.toJson(map)); 
+    	}catch(Exception e){
+    		System.out.println("register fail.......");
+    		e.printStackTrace();
+    	}
+	}
+	
+	@RequestMapping("/duplicateCheck")
+//	@ResponseBody
+	public ResponseEntity<MemberJoinDTO> duplicateCheck(@RequestBody HashMap<String, String> map, HttpServletResponse response) throws IOException {
+		String memail = map.get("memail");
+		System.out.println(memail);
+		System.out.println("memberDAO.findByEmail(memail, 0): " + memberDAO.findByEmail(memail, 0));
+		MemberJoinDTO memberJoinDTO = new MemberJoinDTO();
+		memberJoinDTO.setMemail("0");
+		ResponseEntity<MemberJoinDTO> mem = null;
+		try {
+			MemberJoinDTO a = memberDAO.findByEmail(memail, 0);
+			if(a == null) {
+				mem = new ResponseEntity<MemberJoinDTO>(memberJoinDTO, HttpStatus.OK);
+			}
+			else {
+				mem = new ResponseEntity<MemberJoinDTO>(memberDAO.findByEmail(memail, 0), HttpStatus.OK);
+				
+			}
+			log.info(mem);
+		} catch (Exception e) {
+			e.printStackTrace();
+			mem = new ResponseEntity<MemberJoinDTO>(HttpStatus.BAD_REQUEST);
+		} // end try
+		return mem;
+	}
+}
