@@ -53,9 +53,11 @@
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success: function (data) {
-                    alert("완료되었습니다.");
-                    console.log(data);
-                    location.href = '/cart';
+                    var lc = new layerAlert('완료되었습니다.');
+                    lc.confirmAction = function(){
+                        localStorage.setItem('station-item', JSON.stringify(data));
+                        location.href = "/cart";
+                    };
                 },
                 error: function (request, status, error) {
                     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -80,9 +82,11 @@
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success: function (data) {
-                    alert("완료되었습니다.");
-                    console.log(data);
-                    location.href = '/cart';
+                    var lc = new layerAlert('완료되었습니다.');
+                    lc.confirmAction = function(){
+                        localStorage.setItem('station-item', JSON.stringify(data));
+                        location.href = "/cart";
+                    };
                 },
                 error: function (request, status, error) {
                     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -159,8 +163,11 @@
                     }),
                     contentType: "application/json",
                     success: function (data) {
-                        alert("완료되었습니다.");
-                        location.href = '/cart';
+                        var lc = new layerAlert('완료되었습니다.');
+                        lc.confirmAction = function(){
+                            localStorage.setItem('station-item', JSON.stringify(data));
+                            location.href = "/cart";
+                        };
                     },
                     error: function (request, status, error) {
                         console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1408,10 +1415,11 @@
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     success: function (data) {
-                        alert("완료되었습니다.");
-                        console.log(data);
-                        localStorage.setItem('station-item', JSON.stringify(data));
-                        location.href = "/order";
+                        var lc = new layerAlert('완료되었습니다.');
+                        lc.confirmAction = function(){
+                            localStorage.setItem('station-item', JSON.stringify(data));
+                            location.href = "/order";
+                        };
                     },
                     error: function (request, status, error) {
                         console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
