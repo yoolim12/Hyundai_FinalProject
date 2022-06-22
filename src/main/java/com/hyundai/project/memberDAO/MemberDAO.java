@@ -19,8 +19,11 @@ public interface MemberDAO {
 	// 이메일로 회원 정보 가져오기
 	public MemberDTO getMemberInfo(String email) throws Exception;
 		
-	// 회원 수정
+	// 회원 수정 (비밀번호 변경)
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception;
+	
+	// 회원 수정 (관리자)
+	public void admodifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno);
 		
 	// 회원 탈퇴
 	public void delMember(String email) throws Exception;
