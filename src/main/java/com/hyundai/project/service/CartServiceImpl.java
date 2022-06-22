@@ -35,7 +35,11 @@ public class CartServiceImpl implements CartService {
 	
 	@Override
 	public void deleteCart(String memail, CartDTO cart) throws Exception {
+		log.info("================================================");
+		log.info(memail);
+		log.info(cart);
 		cartDAO.deleteCart(memail, cart);
+		log.info("delete 완.");
 	}
 	
 	@Override

@@ -202,9 +202,10 @@ function addToCart()
             }),
             contentType : "application/json",
             success: function (data) {
-                alert("완료되었습니다.");
-                console.log(data);
-                location.href='/cart';
+				var lc = new layerConfirm('장바구니로 이동하시겠습니까?', '확인', '취소');
+				lc.confirmAction = function(){
+					location.href = "/cart";
+				};
             },
             error : function( request, status, error ){
                 console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );

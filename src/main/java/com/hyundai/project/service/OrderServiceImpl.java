@@ -2,6 +2,8 @@ package com.hyundai.project.service;
 
 import java.util.List;
 
+import com.hyundai.project.dto.CartDTO;
+import com.hyundai.project.memberDAO.CartDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,35 +19,54 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class OrderServiceImpl implements OrderService {
 
-	@Autowired
-	private OrderDAO orderDAO;
+    @Autowired
+    private OrderDAO orderDAO;
+    @Autowired
+    private CartDAO cartDAO;
 
-	@Transactional(value = "transactionManager")
-	@Override
-	public void insertOrder(OrderListDTO olist) throws Exception {
-		try {
-			orderDAO.insertOrderList(olist);
-			log.info("OrderList 입력 성공");
-			int oid = olist.getOid();
-			int oitem_sz = olist.getOitem().size();
-			for (int i = 0; i < oitem_sz; i++) {
-				olist.getOitem().get(i).setOid(oid);
-				orderDAO.insertOrderItem(olist.getOitem().get(i));
-			}
-		} catch (Exception e) {
-			log.info(e.getMessage());
-			throw e;
-		}
-		log.info("OrderItem 입력 성공");
-	}
+    @Transactional(value = "transactionManager")
+    @Override
+    public void insertOrder(OrderListDTO olist) throws Exception {
+        try {
+            orderDAO.insertOrderList(olist);
+            log.info("OrderList 입력 성공");
+            int oid = olist.getOid();
+            int oitem_sz = olist.getOitem().size();
+            String email = olist.getMemail();
+            log.info("oite_sz : " + oitem_sz);
+            for (int i = 0; i < oitem_sz; i++) {
+                olist.getOitem().get(i).setOid(oid);
+                orderDAO.insertOrderItem(olist.getOitem().get(i));
+                log.info("OrderItem 입력 성공");
 
-	@Override
-	public void insertOrderItem(OrderItemDTO oitem) throws Exception {
-		orderDAO.insertOrderItem(oitem);
-	}
+                CartDTO cart = new CartDTO();
+                cart.setBname("bname");
+                cart.setPname("pname");
+                cart.setPprice("11111");
+                cart.setCimage1("cimage1");
+                cart.setPid(olist.getOitem().get(i).getPid());
+                cart.setCcolorcode(olist.getOitem().get(i).getCcolorcode());
+                cart.setSsize(olist.getOitem().get(i).getSsize());
+                log.info("OList getMemail" + olist.getMemail());
+                log.info("CART : " + cart);
 
-	@Override
-	public List<OrderResDTO> getOrder(String memail) throws Exception {
+                cartDAO.deleteCart(email, cart);
+                log.info("Cart 삭제 성공");
+            }
+        } catch (Exception e) {
+            log.info("ERROR:" + e.getMessage());
+            throw e;
+        }
+
+    }
+
+    @Override
+    public void insertOrderItem(OrderItemDTO oitem) throws Exception {
+        orderDAO.insertOrderItem(oitem);
+    }
+
+    @Override
+    public List<OrderResDTO> getOrder(String memail) throws Exception {
 //		List<OrderResDTO> ol = orderDAO.getOrder(memail);
 //		Map<Integer, List<OrderProductDTO>> m = new HashMap<Integer, List<OrderProductDTO>>();
 //		for (int i = 0; i < ol.size(); i++) {
@@ -94,13 +115,13 @@ public class OrderServiceImpl implements OrderService {
 //			temp.setOid(ol.get(i).getOid());
 //			temp.setOid(ol.get(i).getOid());
 
-		// }
-		return orderDAO.getOrder(memail);
-  }
-  
-	public void deleteOrder(int oid) throws Exception {
-		orderDAO.deleteOrderList(oid);
-		orderDAO.deleteOrderItem(oid);
-	}
+        // }
+        return orderDAO.getOrder(memail);
+    }
+
+    public void deleteOrder(int oid) throws Exception {
+        orderDAO.deleteOrderList(oid);
+        orderDAO.deleteOrderItem(oid);
+    }
 
 }
