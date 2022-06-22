@@ -7,7 +7,7 @@
 <script type="text/javascript">
     
 //<![CDATA[
-
+const memail = "[[${memberEmail}]]";
 var intervalLoopCnt = 0;
 var colorArray = [];
 var sizeArray = [];
@@ -191,11 +191,10 @@ function addToCart()
         addToCartProcess = false;
         var ssize = $("#ssize").val();
         var qty  = $("#txtqty").val();
-        var mid = "jm@naver.com";
         console.log(pid, ccolorcode, ssize, qty);
         // 장바구니 등록하는 ajax 호출
         $.ajax({
-            url: "/cart/" + mid,
+            url: "/cart/" + memail,
             method: "post",
             data : JSON.stringify({
             	pid : pid,
