@@ -61,47 +61,47 @@ public class BackMemberRestController {
 	} // end findid
 
 	// 회원정보 수정
-	@PutMapping("/member")
-	@ResponseBody
-	public void update(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
-		System.out.println("modify rr");
-		String email = map.get("memail");
-		String name = map.get("mname");
-		String birth = map.get("birth");
-		String telnum = map.get("telnum");
-		String address = map.get("maddress");
-		int gno = Integer.parseInt(map.get("gno"));
-
-		System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address);
-
-		try {
-			service.modifyMember(email, name, birth, telnum, address, gno);
-
-			Gson gson = new Gson();
-			response.setContentType("application/json; charset=utf-8");
-			response.getWriter().print(gson.toJson(map));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	} // end modify
-
-	// 회원 탈퇴
-	@DeleteMapping("/member")
-	@ResponseBody
-	public void delMember(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
-		String email = map.get("email");
-
-		System.out.println(email);
-
-		try {
-			service.delMember(email);
-
-			Gson gson = new Gson();
-			response.setContentType("application/json; charset=utf-8");
-			response.getWriter().print(gson.toJson(map));
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	} // end delete
+    @PutMapping("/member")
+    @ResponseBody
+    public void update(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
+    	System.out.println("modify rr");
+    	String email = map.get("memail");
+    	String name = map.get("mname");
+    	String birth = map.get("birth");
+    	String telnum = map.get("telnum");
+    	String address = map.get("maddress");
+    	int gno = Integer.parseInt(map.get("gno"));
+    	
+    	System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address);
+    	
+    	try {
+    		service.modifyMember(email, name, birth, telnum, address, gno);
+    		
+        	Gson gson = new Gson();
+    		response.setContentType("application/json; charset=utf-8");
+    		response.getWriter().print(gson.toJson(map)); 
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    } // end modify
+    
+    // 회원 탈퇴
+    @DeleteMapping("/member")
+    @ResponseBody
+    public void delMember(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
+    	String email = map.get("email");
+    	
+    	System.out.println(email);
+    	
+    	try {
+    		service.delMember(email);
+    		
+    		Gson gson = new Gson();
+    		response.setContentType("application/json; charset=utf-8");
+    		response.getWriter().print(gson.toJson(map)); 
+    		
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    } // end delete
 }

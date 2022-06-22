@@ -18,9 +18,21 @@ import lombok.extern.log4j.Log4j2;
 public class MainServiceImpl  implements MainService{
 
 	@Autowired
-	private MainDAO mapper;
-
-	// 메인 페이지 상품 리스트 조회
+	private MemberDAO mapper;
+	
+	// 이메일로 회원 정보 가져오기
+	@Override
+	public MemberDTO getMemberInfo(String email) throws Exception {
+		return mapper.getMemberInfo(email);
+	}
+	
+	// 회원 수정
+	@Override
+	public void modifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno) throws Exception {
+		mapper.modifyMember(memail, mname, birth, telnum, maddress, gno);
+	}
+	
+	// 회원 탈퇴
 	@Override
 	public List<MainListVO> getProductList(String pstatus, String category) throws Exception{
 		log.info("get Product List");

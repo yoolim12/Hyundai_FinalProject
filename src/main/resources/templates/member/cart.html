@@ -15,7 +15,9 @@
         function numWithComma(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
-
+		
+        
+        
         function setOptionColor(obj, idx, c) {
             $(obj).parent().find("a").css("line-height", "18px");
             $(obj).addClass("on");
@@ -230,7 +232,7 @@
     data-outofstock="false" data-category="ME011">
     </tr><td class="frt">
         <!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
-                        <input type="checkbox" name="cartlist" data-pk="10687045664812" data-division="" data-deliverykind="" value="9">
+                        <input type="checkbox" name="cartlist" data-pk="10687045664812" data-division="" data-deliverykind="" value="9" autocomplete="off">
                         </td>
                         <td class="pt_list_wrap">
                             <!-- pt_list_all -->
@@ -3961,7 +3963,7 @@ function notiAlert() {
                             <tr>
                                 <th scope="col">
                                 	<!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
-                                	<input type="checkbox" id="entryCheckAll" value="cartlist">
+                                	<input type="checkbox" id="entryCheckAll" value="cartlist" autocomplete="off">
                                 </th>
                                 <th scope="col">상품정보</th>
                                 <th scope="col">수량</th>

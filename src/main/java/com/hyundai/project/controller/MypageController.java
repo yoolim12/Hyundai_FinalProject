@@ -63,9 +63,9 @@ public class MypageController {
 //			System.out.println("fail!!");
 //		}
 //	}
-
-    @RequestMapping("/modifyPage")
-    public void modifyPage() {
-
-    }
+	
+	@RequestMapping("/modifyPage")
+	public void modifyPage() {
+		
+	}
 }
