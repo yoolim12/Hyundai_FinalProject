@@ -25,27 +25,27 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/mypage")
 //@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
-public class MypageController {	
-	
-	@Autowired
-	private MemberDAO memberDAO;
-	
-	@RequestMapping("/mypage")
-	public void mypage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
-		model.addAttribute("membername", authMemberDTO.getName());
-		model.addAttribute("membergno", memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getGno());
-	}
-	
-	@RequestMapping("/personInformationChange")
-	public void mypageModifyPage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
-		model.addAttribute("memail", authMemberDTO.getEmail());
-	}
-	
-	@RequestMapping("/memberEdit")
-	public void mypageModifyPage2(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
-		model.addAttribute("memail", authMemberDTO.getEmail());
-	}
-	
+public class MypageController {
+
+    @Autowired
+    private MemberDAO memberDAO;
+
+    @RequestMapping("/mypage")
+    public void mypage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
+        model.addAttribute("membername", authMemberDTO.getName());
+        model.addAttribute("membergno", memberDAO.findByEmail(authMemberDTO.getEmail(), 0).getGno());
+    }
+
+    @RequestMapping("/personInformationChange")
+    public void mypageModifyPage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
+        model.addAttribute("memail", authMemberDTO.getEmail());
+    }
+
+    @RequestMapping("/memberEdit")
+    public void mypageModifyPage2(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
+        model.addAttribute("memail", authMemberDTO.getEmail());
+    }
+
 //	@RequestMapping(value="/passwordCheck", method=RequestMethod.POST)
 //	@ResponseBody
 //	public void passwordCheck(@RequestBody HashMap<String, String> map, 
@@ -63,9 +63,9 @@ public class MypageController {
 //			System.out.println("fail!!");
 //		}
 //	}
-	
-	@RequestMapping("/modifyPage")
-	public void modifyPage() {
-		
-	}
+
+    @RequestMapping("/modifyPage")
+    public void modifyPage() {
+
+    }
 }
