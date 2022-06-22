@@ -111,8 +111,8 @@
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     success: function (data) {
-                        var lc = new layerAlert('완료되었습니다.');
-                        lc.confirmAction = function () {
+                        var lc = new layerConfirm('결제하시겠습니까?', '확인', '취소');
+                        lc.confirmAction = function(){
                             localStorage.removeItem('station-item');
                             location.href = "/order"; // !!! order-list로
                         };
@@ -136,9 +136,7 @@
           action="/ko/checkout/ordersheet" method="post">
         <input type="hidden" name="sel_lastName"/> <input
             type="hidden" name="sel_postcode" value="03466"/> <input
-            type="hidden" name="sel_line1"
-            value="서울 은평구  응암동  응암로30길 16 백련산에스케이뷰아이파크"/> <input type="hidden"
-                                                                 name="sel_line2" value="(백련산에스케이뷰아이파크 응암동) 106동 402호"/>
+            type="hidden" name="sel_line1"/> <input type="hidden" name="sel_line2"/>
         <input
                 type="hidden" name="sel_phone" value=""/> <input type="hidden"
                                                                  name="sel_cellphone"/>
