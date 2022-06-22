@@ -56,7 +56,7 @@ public class OrderRestController {
 
 		try {
 			entry = new ResponseEntity<List<OrderResDTO>>(service.getOrder(memail), HttpStatus.OK);
-			log.info(entry);
+			//log.info(entry);
 		} catch (Exception e) {
 			e.printStackTrace();
 			entry = new ResponseEntity<List<OrderResDTO>>(HttpStatus.BAD_REQUEST);

@@ -5,7 +5,7 @@
       layout:decorate="~{fragments/common}">
 <div layout:fragment="content">
     <script type="text/javascript">
-        var memail = "jm@naver.com"; // !!! 나중에 바꾸기
+        const memail = "[[${memberEmail}]]";
         var color = [];
         var size = [];
         var res_obj, allchecked = false;
@@ -53,9 +53,10 @@
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success: function (data) {
-                    alert("완료되었습니다.");
-                    console.log(data);
-                    location.href = '/cart';
+                    var lc = new layerAlert('완료되었습니다.');
+                    lc.confirmAction = function(){
+                        location.href = "/cart";
+                    };
                 },
                 error: function (request, status, error) {
                     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -80,9 +81,10 @@
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success: function (data) {
-                    alert("완료되었습니다.");
-                    console.log(data);
-                    location.href = '/cart';
+                    var lc = new layerAlert('완료되었습니다.');
+                    lc.confirmAction = function(){
+                        location.href = "/cart";
+                    };
                 },
                 error: function (request, status, error) {
                     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -148,7 +150,8 @@
         function deleteProduct(pid, ccolorcode, ssize) {
             console.log(pid, ccolorcode, ssize);
             var url = "/cart/" + memail;
-            if (confirm("해당 상품을 삭제하시겠습니까?") == true) {
+            var check = new layerAlert('해당 상품을 삭제하시겠습니까?');
+            check.confirmAction = function () {
                 $.ajax({
                     url: url,
                     method: "delete",
@@ -159,8 +162,10 @@
                     }),
                     contentType: "application/json",
                     success: function (data) {
-                        alert("완료되었습니다.");
-                        location.href = '/cart';
+                        var lc = new layerAlert('완료되었습니다.');
+                        lc.confirmAction = function(){
+                            location.href = "/cart";
+                        };
                     },
                     error: function (request, status, error) {
                         console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -208,10 +213,9 @@
         //<![CDATA[
         var qtyLimitProductYnMap = {};
         $(document).ready(function () {
-            var mid = "jm@naver.com"; /// !!! 추후 수정
             // 장바구니 정보 가져오는 ajax 호출
             $.ajax({
-                url: "/cart/" + mid,
+                url: "/cart/" + memail,
                 type: "GET",
                 dataType: "json",
                 async: false,
@@ -220,6 +224,7 @@
                 },
                 success: function (result) {
                     res_obj = result;
+                    console.log(result);
                     document.getElementById("total-cnt").innerHTML = '<span class="delt_ico"></span>택배(' + result.length + ')';
                     var str = ``;
                     for (var i = 0; i < result.length; i++) {
@@ -1408,10 +1413,11 @@
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     success: function (data) {
-                        alert("완료되었습니다.");
-                        console.log(data);
-                        localStorage.setItem('station-item', JSON.stringify(data));
-                        location.href = "/order";
+                        var lc = new layerConfirm('주문하시겠습니까?', '확인', '취소');
+                        lc.confirmAction = function(){
+                            localStorage.setItem('station-item', JSON.stringify(data));
+                            location.href = "/order";
+                        };
                     },
                     error: function (request, status, error) {
                         console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
