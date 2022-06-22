@@ -83,6 +83,7 @@ public class LoginController {
 			memberdto.setMaddress("0");
 			memberdto.setMgender("0");
 			memberdto.setMemail_info("0");
+			memberdto.setFrom_social(0);
 			
 			service.simpleRegister(memberdto);
 			
