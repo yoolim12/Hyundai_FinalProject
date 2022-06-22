@@ -5,7 +5,7 @@
       layout:decorate="~{fragments/common}">
 <div layout:fragment="content">
     <script type="text/javascript">
-        var memail = "jm@naver.com"; // !!! 나중에 바꾸기
+        var memail = "[[${memberEmail}]]"; // !!! 나중에 바꾸기
         var color = [];
         var size = [];
         var res_obj, allchecked = false;
@@ -215,10 +215,9 @@
         //<![CDATA[
         var qtyLimitProductYnMap = {};
         $(document).ready(function () {
-            var mid = "jm@naver.com"; /// !!! 추후 수정
             // 장바구니 정보 가져오는 ajax 호출
             $.ajax({
-                url: "/cart/" + mid,
+                url: "/cart/" + memail,
                 type: "GET",
                 dataType: "json",
                 async: false,
