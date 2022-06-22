@@ -53,11 +53,12 @@
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success: function (data) {
-                    var lc = new layerAlert('완료되었습니다.');
-                    lc.confirmAction = function(){
-                        localStorage.setItem('station-item', JSON.stringify(data));
-                        location.href = "/cart";
-                    };
+                    alert('완료되었습니다.');
+                    location.href="/cart";
+                    // var lc = new layerAlert('완료되었습니다.');
+                    // lc.confirmAction = function(){
+                    //     location.href = "/cart";
+                    // };
                 },
                 error: function (request, status, error) {
                     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -84,7 +85,6 @@
                 success: function (data) {
                     var lc = new layerAlert('완료되었습니다.');
                     lc.confirmAction = function(){
-                        localStorage.setItem('station-item', JSON.stringify(data));
                         location.href = "/cart";
                     };
                 },
@@ -152,7 +152,8 @@
         function deleteProduct(pid, ccolorcode, ssize) {
             console.log(pid, ccolorcode, ssize);
             var url = "/cart/" + memail;
-            if (confirm("해당 상품을 삭제하시겠습니까?") == true) {
+            var check = new layerAlert('해당 상품을 삭제하시겠습니까?');
+            check.confirmAction = function () {
                 $.ajax({
                     url: url,
                     method: "delete",
@@ -165,7 +166,6 @@
                     success: function (data) {
                         var lc = new layerAlert('완료되었습니다.');
                         lc.confirmAction = function(){
-                            localStorage.setItem('station-item', JSON.stringify(data));
                             location.href = "/cart";
                         };
                     },
@@ -227,6 +227,7 @@
                 },
                 success: function (result) {
                     res_obj = result;
+                    console.log(result);
                     document.getElementById("total-cnt").innerHTML = '<span class="delt_ico"></span>택배(' + result.length + ')';
                     var str = ``;
                     for (var i = 0; i < result.length; i++) {
