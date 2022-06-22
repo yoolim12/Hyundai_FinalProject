@@ -16,15 +16,16 @@
     <script>
         var res_data = JSON.parse(localStorage.getItem("station-item"));
         var item_data = [];
-        for(var i=0; i<res_data.item.length; i++) {
+        for (var i = 0; i < res_data.item.length; i++) {
             var temp_data = {
-                pid : res_data.item[i].pid,
-                ccolorcode : res_data.item[i].ccolorcode,
-                ssize : res_data.item[i].ssize,
-                qty : res_data.item[i].qty
+                pid: res_data.item[i].pid,
+                ccolorcode: res_data.item[i].ccolorcode,
+                ssize: res_data.item[i].ssize,
+                qty: res_data.item[i].qty
             }
             item_data.push(temp_data);
         }
+
 	$(document).ready(function() {
 		var res_data = JSON.parse(localStorage.getItem("station-item"));
 		console.log(res_data);
@@ -44,81 +45,83 @@
 		    html += `<tr class="al_middle">
 		        <td class="frt">
 		        <!-- pt_list_all -->
-		        <div class="pt_list_all">
-		            <a href="${res_data.item[i].pid}_${res_data.item[i].ccolorcode}">
-		                <img src="${res_data.item[i].cimage1}" alt="" />
-		            </a>
-		            <div class="tlt_wrap">
-		                <a href="/detail/${res_data.item[i].pid}_${res_data.item[i].ccolorcode}" class="basket_tlt"> 
-		                <span class="tlt">${res_data.item[i].bname}</span> <span class="sb_tlt">${res_data.item[i].pname}</span>
-		                </a>
-		                <p class="color_op">
-		                    color : ${res_data.item[i].ccolorcode}<span class="and_line">/</span> size : ${res_data.item[i].ssize}
-		                </p>
-		            </div>
-		        </div> <!-- //pt_list_all -->
-		    </td>
-		    <td>${res_data.item[i].qty}</td>
-		    <td>
-		        <!-- price_wrap -->
-		        <div class="price_wrap ">
-		            <span> ₩${mprice}</span>
-		        </div> <!-- //price_wrap -->
-		    </td>
-		    </tr>
-		    `;
+                <div class="pt_list_all">
+                <a href="${res_data.item[i].pid}_${res_data.item[i].ccolorcode}">
+                <img src="${res_data.item[i].cimage1}" alt="" />
+                </a>
+                <div class="tlt_wrap">
+                <a href="/detail/${res_data.item[i].pid}_${res_data.item[i].ccolorcode}" class="basket_tlt">
+                <span class="tlt">${res_data.item[i].bname}</span> <span class="sb_tlt">${res_data.item[i].pname}</span>
+                </a>
+                <p class="color_op">
+                color : ${res_data.item[i].ccolorcode}<span class="and_line">/</span> size : ${res_data.item[i].ssize}
+                </p>
+                </div>
+                </div> <!-- //pt_list_all -->
+                </td>
+                <td>${res_data.item[i].qty}</td>
+                <td>
+                    <!-- price_wrap -->
+                <div class="price_wrap ">
+                <span> ₩${mprice}</span>
+                </div> <!-- //price_wrap -->
+                </td>
+                </tr>
+                `;
             }
             $("#order-list").html(html);
-        });
-        function orderProcess() {
-            // !!! 값 설정하기
-            const memail = "jm@naver.com";
-            const ozipcode = 12345;
-            const oaddress1 = "서울시 종로구 창경궁로";
-            const oaddress2 = "어쩌구저쩌구";
-            const odate = "22/06/22";
-            const oreceiver = "강아지";
-            const otel = "01000000000";
-            const ousedmileage = 1000;
-            const ousedcoupon = 1000;
-            const opayment = 1;
-            const ostatus = 1;
-            const odiscounted = 0;
-            const oitem = item_data;
+        })
+            ;
 
-            var data = {
-                memail : memail,
-                ozipcode : ozipcode,
-                oaddress1 : oaddress1,
-                oaddress2 : oaddress2,
-                odate : odate,
-                oreceiver : oreceiver,
-                otel : otel,
-                ousedmileage : ousedmileage,
-                ousedcoupon : ousedcoupon,
-                opayment : opayment,
-                ostatus : ostatus,
-                odiscounted : odiscounted,
-                oitem : oitem
-            };
-            console.log(data);
-            $.ajax({
-                url: "/order",
-                method: "post",
-                data: JSON.stringify(data),
-                contentType: "application/json",
-                success: function (data) {
-                    var lc = new layerAlert('완료되었습니다.');
-                    lc.confirmAction = function(){
-                        localStorage.removeItem('station-item');
-                        location.href = "/order"; // !!! order-list로
-                    };
-                },
-                error: function (request, status, error) {
-                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                }
-            });
-        }
+            function orderProcess() {
+                // !!! 값 설정하기
+                const memail = "jm@naver.com";
+                const ozipcode = 12345;
+                const oaddress1 = "서울시 종로구 창경궁로";
+                const oaddress2 = "어쩌구저쩌구";
+                const odate = "22/06/22";
+                const oreceiver = "강아지";
+                const otel = "01000000000";
+                const ousedmileage = 1000;
+                const ousedcoupon = 1000;
+                const opayment = 1;
+                const ostatus = 1;
+                const odiscounted = 0;
+                const oitem = item_data;
+
+                var data = {
+                    memail: memail,
+                    ozipcode: ozipcode,
+                    oaddress1: oaddress1,
+                    oaddress2: oaddress2,
+                    odate: odate,
+                    oreceiver: oreceiver,
+                    otel: otel,
+                    ousedmileage: ousedmileage,
+                    ousedcoupon: ousedcoupon,
+                    opayment: opayment,
+                    ostatus: ostatus,
+                    odiscounted: odiscounted,
+                    oitem: oitem
+                };
+                console.log(data);
+                $.ajax({
+                    url: "/order",
+                    method: "post",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (data) {
+                        var lc = new layerAlert('완료되었습니다.');
+                        lc.confirmAction = function () {
+                            localStorage.removeItem('station-item');
+                            location.href = "/order"; // !!! order-list로
+                        };
+                    },
+                    error: function (request, status, error) {
+                        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                });
+            }
     </script>
     <!-- <link rel="stylesheet" type="text/css" href="/resources/_ui/handsomemobile/css/handsomecss/swiper.css" media="all" /> -->
     <!--
@@ -131,16 +134,14 @@
 
     <form id="customerAddress" name="customerAddress"
           action="/ko/checkout/ordersheet" method="post">
-        <input type="hidden" name="sel_lastName" value="문혁"/> <input
+        <input type="hidden" name="sel_lastName"/> <input
             type="hidden" name="sel_postcode" value="03466"/> <input
             type="hidden" name="sel_line1"
             value="서울 은평구  응암동  응암로30길 16 백련산에스케이뷰아이파크"/> <input type="hidden"
                                                                  name="sel_line2" value="(백련산에스케이뷰아이파크 응암동) 106동 402호"/>
         <input
                 type="hidden" name="sel_phone" value=""/> <input type="hidden"
-                                                                 name="sel_cellphone" value="010-2802-1148"/> <input
-            type="hidden"
-            name="sel_email" value="ansgurtk@naver.com"/>
+                                                                 name="sel_cellphone"/>
         <div>
             <input type="hidden" name="CSRFToken"
                    value="fdcc9003-3927-481c-9d6d-70be0aba5887"/>
@@ -220,15 +221,15 @@
                                     <th scope="col">상품정보</th>
                                     <th scope="col">수량</th>
 
-									<th scope="col">판매가/쿠폰 적용가</th>
-								</tr>
-								</thead>
-								<tbody id="order-list">
-								</tbody>
-							</table>
-							
-						</div>
-						<!--//table wrap1-->
+                                    <th scope="col">판매가/쿠폰 적용가</th>
+                                </tr>
+                                </thead>
+                                <tbody id="order-list">
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!--//table wrap1-->
 
                         <!--title_wrap & table wrap3-->
                         <div class="title_wrap clearfix mt40">
@@ -244,15 +245,15 @@
                                 <tbody>
                                 <tr>
                                     <th scope="row" class="th_space">주문자</th>
-                                    <td>문혁</td>
+                                    <td th:text="${member.getMname()}"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="th_space">휴대폰</th>
-                                    <td>010-2802-1148</td>
+                                    <td th:text="${member.getTelnum()}"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="th_space">E-mail</th>
-                                    <td>ansgurtk@naver.com</td>
+                                    <td th:text="${member.getMemail()}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -999,87 +1000,90 @@
                                     <li>법인/선불/기프트/은행 계열 카드는 제외됩니다.</li>
                                     <!--  <li>상기 청구할인 행사는 5만원 이상 결제 시 자동 적용되며, 결제창에는 표시가 되지 않을 수
                                                      있습니다.</li>-->
-									<li>본 행사는 카드사 사정에 따라 일부 내용이 변경 또는 중단될 수 있습니다.</li>
-								</ul>
-							</div>
-							<!--//tab contents 2-->
-							<!--tab contents 3-->
-							<div>
-								<div class="title_wrap">
-									<h5>즉시할인 행사</h5>
-								</div>
-								<!--Table wrap-->
-								<table class="cnt_type1">
-									<caption>즉시할인 행사</caption>
-									<colgroup>
-										<col style="width: 155px" />
-										<col style="width: 270px" />
-										<col />
-									</colgroup>
-									<tbody>
-									</tbody>
-								</table>
-								<!--//Table wrap-->
-								<div id="nowSale1Img">
-									<img src="/resources/_ui/desktop/common/images/paynow.jpg"
-										 alt="paynow" width="100%" />
-								</div>
-								<ul class="bul_sty01_li" style="display: none" id="nowSale1">
-									<li>선착순 1,000명 대상 행사로, 조기 종료될 수 있습니다.</li>
-									<li>전액 취소될 경우에 한하여 할인 혜택이 복원됩니다.</li>
-									<li>PAYNOW로 결제하는 경우 무이자 할부는 PAYNOW 정책에 따라 진행됩니다.</li>
-									<li>결제문의 : 페이나우 고객센터 (1544-7772)</li>
-								</ul>
-								<ul class="bul_sty01_li mt40" id="nowSale2">
-									<li>법인/체크/선불/기프트/은행 계열 카드는 제외됩니다.</li>
-									<li>상기 청구할인 행사는 5만원 이상 결제 시 자동 적용되며, 결제창에는 표시가 되지 않을 수
-										있습니다.</li>
-									<li>본 행사는 카드사 사정에 따라 일부 내용이 변경 또는 중단될 수 있습니다.</li>
-								</ul>
-							</div>
-							<!--//tab contents 3-->
-						</div>
-						<!--//card event tab container-->
-					</div>
-					<!--//orderwrap left-->
-					<!--orderwrap right-->
-					<div class="float_right" style="position: absolute; left: 680px;">
-						<!--final payment sum box-->
-						<div class="sum_box">
-							<div>
-								<p class="tlt">최종 결제 금액</p>
-								<hr />
-								<dl class="clearfix">
-									<dt>상품 합계</dt>
-									<dd id="subTotal"></dd>
-									<dt>배송비</dt>
-									<dd id="deliveryCost">₩ 0</dd>
-								</dl>
-							</div>
-							<div class="total">
-								<dl class="clearfix">
-									<dt>합계</dt>
-									<dd id="totalPrice"></dd>
-								</dl>
-							</div>
-							<input type="hidden" name="total" id="total" value="345000.0" />
-							<input type="hidden" name="cartDeliveryCost"
-								   id="cartDeliveryCost" value="0.0" />
-						</div>
-						<!--//final payment sum box-->
-						<!--point & agreement box-->
-						<div class="p_a_box">
-							<div class="point">
-								<!-- 간편회원이 아닐 때 s -->
-								<p class="tlt">구매 시 지급 예정 포인트</p>
-								<p>(제품 수령 완료 후 10일 후 적립)</p>
-								<p class="txt" id="txtAccumulationPoint">한섬마일리지 17,250 M</p>
-								<p class="txt" id="txtAccumulationHPoint">H.Point 345 P</p>
-								<!-- 간편회원이 아닐 때  e -->
-								<input type="hidden" name="accumulationPoint"
-									   id="accumulationPoint" value="17250" /> <input type="hidden"
-																					  name="accumulationHPoint" id="accumulationHPoint" value="345" />
-							</div>
+                                    <li>본 행사는 카드사 사정에 따라 일부 내용이 변경 또는 중단될 수 있습니다.</li>
+                                </ul>
+                            </div>
+                            <!--//tab contents 2-->
+                            <!--tab contents 3-->
+                            <div>
+                                <div class="title_wrap">
+                                    <h5>즉시할인 행사</h5>
+                                </div>
+                                <!--Table wrap-->
+                                <table class="cnt_type1">
+                                    <caption>즉시할인 행사</caption>
+                                    <colgroup>
+                                        <col style="width: 155px"/>
+                                        <col style="width: 270px"/>
+                                        <col/>
+                                    </colgroup>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                                <!--//Table wrap-->
+                                <div id="nowSale1Img">
+                                    <img src="/resources/_ui/desktop/common/images/paynow.jpg"
+                                         alt="paynow" width="100%"/>
+                                </div>
+                                <ul class="bul_sty01_li" style="display: none" id="nowSale1">
+                                    <li>선착순 1,000명 대상 행사로, 조기 종료될 수 있습니다.</li>
+                                    <li>전액 취소될 경우에 한하여 할인 혜택이 복원됩니다.</li>
+                                    <li>PAYNOW로 결제하는 경우 무이자 할부는 PAYNOW 정책에 따라 진행됩니다.</li>
+                                    <li>결제문의 : 페이나우 고객센터 (1544-7772)</li>
+                                </ul>
+                                <ul class="bul_sty01_li mt40" id="nowSale2">
+                                    <li>법인/체크/선불/기프트/은행 계열 카드는 제외됩니다.</li>
+                                    <li>상기 청구할인 행사는 5만원 이상 결제 시 자동 적용되며, 결제창에는 표시가 되지 않을 수
+                                        있습니다.
+                                    </li>
+                                    <li>본 행사는 카드사 사정에 따라 일부 내용이 변경 또는 중단될 수 있습니다.</li>
+                                </ul>
+                            </div>
+                            <!--//tab contents 3-->
+                        </div>
+                        <!--//card event tab container-->
+                    </div>
+                    <!--//orderwrap left-->
+                    <!--orderwrap right-->
+                    <div class="float_right" style="position: absolute; left: 680px;">
+                        <!--final payment sum box-->
+                        <div class="sum_box">
+                            <div>
+                                <p class="tlt">최종 결제 금액</p>
+                                <hr/>
+                                <dl class="clearfix">
+                                    <dt>상품 합계</dt>
+                                    <dd id="subTotal"></dd>
+                                    <dt>배송비</dt>
+                                    <dd id="deliveryCost">₩ 0</dd>
+                                </dl>
+                            </div>
+                            <div class="total">
+                                <dl class="clearfix">
+                                    <dt>합계</dt>
+                                    <dd id="totalPrice"></dd>
+                                </dl>
+                            </div>
+                            <input type="hidden" name="total" id="total" value="345000.0"/>
+                            <input type="hidden" name="cartDeliveryCost"
+                                   id="cartDeliveryCost" value="0.0"/>
+                        </div>
+                        <!--//final payment sum box-->
+                        <!--point & agreement box-->
+                        <div class="p_a_box">
+                            <div class="point">
+                                <!-- 간편회원이 아닐 때 s -->
+                                <p class="tlt">구매 시 지급 예정 포인트</p>
+                                <p>(제품 수령 완료 후 10일 후 적립)</p>
+                                <p class="txt" id="txtAccumulationPoint">한섬마일리지 17,250 M</p>
+                                <p class="txt" id="txtAccumulationHPoint">H.Point 345 P</p>
+                                <!-- 간편회원이 아닐 때  e -->
+                                <input type="hidden" name="accumulationPoint"
+                                       id="accumulationPoint" value="17250"/> <input type="hidden"
+                                                                                     name="accumulationHPoint"
+                                                                                     id="accumulationHPoint"
+                                                                                     value="345"/>
+                            </div>
 
                             <div class="agree">
                                 <input type="checkbox" id="agree"/><label for="agree"

@@ -1,16 +1,17 @@
 package com.hyundai.project.controller;
 
+import com.hyundai.project.dto.AuthMemberDTO;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class CartController {
 
 	@GetMapping("/cart")
-	public String productDetail() {
+	public String productDetail(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
+		model.addAttribute("memberEmail", authMemberDTO.getMemail());
 		return "/member/cart";
 	}
 }
