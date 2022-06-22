@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.project.memberDAO.MemberDAO">
-
+	
 	<select id="showAllMember"
-			resultType="com.hyundai.project.dto.MemberDTO">
+		resultType="com.hyundai.project.dto.MemberDTO">
 		select * from member
 	</select>
-
+	
 	<select id="getMemberInfo"
-			resultType="com.hyundai.project.dto.MemberDTO">
+		resultType="com.hyundai.project.dto.MemberDTO">
 		select * from member where memail = #{email}
 	</select>
-
-	<select id="modifyMember">
-		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
+	
+	<select id="modifyMember" parameterType="com.hyundai.project.dto.AuthMemberDTO">
+		update member set mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
 	</select>
-
+	
 	<select id="delMember">
 		delete from member where memail = #{email}
 	</select>
-
+	
 	<!-- 유림 -->
 	<insert id="simpleRegister" parameterType="com.hyundai.project.dto.MemberDTO">
 		insert into member
-		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social)
-		values (#{memail}, #{mname}, #{birth}, #{telnum, jdbcType=NULL}
-			   , #{maddress, jdbcType=NULL}, #{mgender, jdbcType=NULL}, #{mpassword}, #{memail_info, jdbcType=NULL}
-			   , sysdate, sysdate, #{from_social})
+		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social) 
+		values (#{memail}, #{mname}, #{birth}, #{telnum}
+		, #{maddress}, #{mgender}, #{mpassword}, #{memail_info}
+		, sysdate, sysdate, 0)
 	</insert>
-
+	
 	<insert id="registerRole" parameterType="com.hyundai.project.dto.MemberRoleDTO">
 		insert into memberrole
-			(memail,role_set)
+		(memail,role_set) 
 		values (#{memail}, 'USER')
 	</insert>
-
+	
 	<select id="findByEmail" resultType="com.hyundai.project.dto.MemberJoinDTO">
 		select
-			c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth
+		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth, c1.telnum, c1.maddress, c1.mgender, c1.memail_info
 		from
-			member c1 join memberrole c2
-						   on c1.memail = c2.memail
+		member c1 join memberrole c2
+		on c1.memail = c2.memail
 		where c1.memail = #{memail} and c1.from_social=#{from_social}
 	</select>
 </mapper>
