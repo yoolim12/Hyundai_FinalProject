@@ -128,16 +128,14 @@
 
     <form id="customerAddress" name="customerAddress"
           action="/ko/checkout/ordersheet" method="post">
-        <input type="hidden" name="sel_lastName" value="문혁"/> <input
+        <input type="hidden" name="sel_lastName"/> <input
             type="hidden" name="sel_postcode" value="03466"/> <input
             type="hidden" name="sel_line1"
             value="서울 은평구  응암동  응암로30길 16 백련산에스케이뷰아이파크"/> <input type="hidden"
                                                                  name="sel_line2" value="(백련산에스케이뷰아이파크 응암동) 106동 402호"/>
         <input
                 type="hidden" name="sel_phone" value=""/> <input type="hidden"
-                                                                 name="sel_cellphone" value="010-2802-1148"/> <input
-            type="hidden"
-            name="sel_email" value="ansgurtk@naver.com"/>
+                                                                 name="sel_cellphone"/>
         <div>
             <input type="hidden" name="CSRFToken"
                    value="fdcc9003-3927-481c-9d6d-70be0aba5887"/>
@@ -241,15 +239,15 @@
                                 <tbody>
                                 <tr>
                                     <th scope="row" class="th_space">주문자</th>
-                                    <td>문혁</td>
+                                    <td th:text="${member.getMname()}"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="th_space">휴대폰</th>
-                                    <td>010-2802-1148</td>
+                                    <td th:text="${member.getTelnum()}"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="th_space">E-mail</th>
-                                    <td>ansgurtk@naver.com</td>
+                                    <td th:text="${member.getMemail()}"></td>
                                 </tr>
                                 </tbody>
                             </table>
