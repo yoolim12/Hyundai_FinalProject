@@ -15,11 +15,7 @@
 	</select>
 	
 	<select id="modifyMember" parameterType="com.hyundai.project.dto.AuthMemberDTO">
-		update member set mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress}, gno = #{gno} where memail = #{memail}
-	</select>
-	
-	<select id="admodifyMember">
-		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress}, gno = #{gno}, moddate = sysdate where memail = #{memail}
+		update member set mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
 	</select>
 	
 	<select id="delMember">
@@ -29,10 +25,10 @@
 	<!-- 유림 -->
 	<insert id="simpleRegister" parameterType="com.hyundai.project.dto.MemberDTO">
 		insert into member
-		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social) 
+		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social, gno) 
 		values (#{memail}, #{mname}, #{birth}, #{telnum}
 		, #{maddress}, #{mgender}, #{mpassword}, #{memail_info}
-		, sysdate, sysdate, #{from_social})
+		, sysdate, sysdate, #{from_social}, #{gno})
 	</insert>
 	
 	<insert id="registerRole" parameterType="com.hyundai.project.dto.MemberRoleDTO">
