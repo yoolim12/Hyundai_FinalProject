@@ -45,7 +45,6 @@ public class CartRestController {
     }// end list
 
     @PostMapping("/{memail}")
-    @ResponseBody
     public String insertCart(@PathVariable("memail") String memail, @RequestBody CartDTO cart) throws Exception {
 
         try {
@@ -57,7 +56,6 @@ public class CartRestController {
     } // end findid
 
     @DeleteMapping("/{memail}")
-    @ResponseBody
     public String deleteCart(@PathVariable("memail") String memail, @RequestBody CartDTO cart) throws Exception {
 
         try {
@@ -70,7 +68,6 @@ public class CartRestController {
     }
 
     @DeleteMapping("/all/{memail}")
-    @ResponseBody
     public String deleteALLCart(@PathVariable("memail") String memail) throws Exception {
 
         try {
@@ -82,7 +79,6 @@ public class CartRestController {
     }
 
     @PutMapping("/{memail}")
-    @ResponseBody
     public String updateCart(@PathVariable("memail") String memail, @RequestBody CartUpdateDTO cart) {
 
         try {

@@ -108,10 +108,11 @@
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success: function (data) {
-                    alert("완료되었습니다.");
-                    console.log(data);
-                    localStorage.removeItem('station-item');
-                    location.href = "/order"; // !!! order-list로
+                    var lc = new layerAlert('완료되었습니다.');
+                    lc.confirmAction = function(){
+                        localStorage.removeItem('station-item');
+                        location.href = "/order"; // !!! order-list로
+                    };
                 },
                 error: function (request, status, error) {
                     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
