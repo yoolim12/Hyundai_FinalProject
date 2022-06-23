@@ -62,6 +62,9 @@ public class OrderServiceImpl implements OrderService {
             log.info("point : " + olist.getOusedpoint());
             memberDAO.pointApply(olist.getMemail(), olist.getOusedpoint());
             log.info("포인트 차감");
+            int savingpoint = (int) Math.ceil((double)(olist.getOprice()-olist.getOusedpoint())*0.05);
+            log.info("포인트 적립 : " + savingpoint);
+            memberDAO.pointSaving(olist.getMemail(), savingpoint);
         } catch (Exception e) {
             log.info("ERROR:" + e.getMessage());
             throw e;

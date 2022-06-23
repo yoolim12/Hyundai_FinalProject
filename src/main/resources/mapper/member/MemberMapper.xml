@@ -62,4 +62,8 @@
 	<select id="getPoint" resultType="int">
 		select mpoint from member where memail = #{memail}
 	</select>
+
+	<update id="pointSaving">
+		update member set mpoint = mpoint + #{savingpoint} where memail = #{memail}
+	</update>
 </mapper>

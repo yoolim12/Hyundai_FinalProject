@@ -35,10 +35,8 @@
             console.log(res_data);
             var checktHandsomepointUsableAmount = res_data.totalPrice;
             const final_tot = numWithComma(checktHandsomepointUsableAmount);
-            const final_mile = numWithComma(checktHandsomepointUsableAmount*0.05);
-            const final_hpoint = numWithComma(Math.ceil(checktHandsomepointUsableAmount*0.001));
+            const final_hpoint = numWithComma(checktHandsomepointUsableAmount*0.05);
 
-            $('#txtAccumulationPoint').text('한섬마일리지 ' + final_mile + ' M');
             $('#txtAccumulationHPoint').text('H.Point ' + final_hpoint + ' P');
             $('#totalPrice').text('₩'+final_tot);
             $('#subTotal').text('₩'+final_tot);
@@ -104,6 +102,17 @@
                     $("#ousedpoint").val(res_data.totalPrice);
                     $('#userpoint').text(numWithComma(mpoint - parseInt($('#ousedpoint').val())));
                 }
+
+
+                var checktHandsomepointUsableAmount = res_data.totalPrice - parseInt($("#ousedpoint").val());
+                const final_tot = numWithComma(checktHandsomepointUsableAmount);
+                const final_hpoint = numWithComma(Math.ceil(checktHandsomepointUsableAmount*0.05));
+
+                $('#txtAccumulationHPoint').text('H.Point ' + final_hpoint + ' P');
+                $('#totalPrice').text('₩'+final_tot);
+                $('#subTotal').text('₩'+final_tot);
+
+
                 var la = new layerAlert('포인트 적용이 완료되었습니다.');
             }
             function cancelUseHPoint() {
@@ -130,6 +139,10 @@
                 const ostatus = 1;
                 const odiscounted = 0;
                 const oitem = item_data;
+                if(ozipcode == "" || oaddress1 == "" || oaddress2 == "" || oreceiver == "" || otel == "" ) {
+                    var la = new layerAlert('배송지 정보를 모두 입력해주시길 바랍니다.');
+                    return;
+                }
                 var data = {
                     memail: memail,
                     ozipcode: ozipcode,
