@@ -51,8 +51,8 @@ public class HandsomeUserDetailsService implements UserDetailsService {
         AuthMemberDTO authMemberDTO = new AuthMemberDTO(memberJoinDTO.getMemail(), memberJoinDTO.getMpassword(),
         		memberJoinDTO.getFrom_social(), authorities, memberJoinDTO.getMname(), memberJoinDTO.getBirth()
         		,memberJoinDTO.getTelnum(), memberJoinDTO.getMaddress(), memberJoinDTO.getMgender(),
-        		memberJoinDTO.getMemail_info(), memberJoinDTO.getModdate(), memberJoinDTO.getRegdate(),
-        		memberJoinDTO.getGno());
+        		memberJoinDTO.getMemail_info(), memberJoinDTO.getModdate(), memberJoinDTO.getRegdate(), memberJoinDTO.getMpoint(),
+				memberJoinDTO.getGno());
         
 //        // ClubAuthMemberDTO 값 세팅
 //        authMemberDTO.setMname(memberJoinDTO.getMname());

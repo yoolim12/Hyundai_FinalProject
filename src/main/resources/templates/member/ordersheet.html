@@ -5,7 +5,7 @@
       layout:decorate="~{fragments/common}">
 
 <th:block layout:fragment="css">
-    <link rel="stylesheet" type="text/css" th:href="@{/resources/_ui/handsomemobile/css/handsomecss/swiper.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/_ui/handsomemobile/css/handsomecss/swiper.css}"/>
 </th:block>
 <th:block layout:fragment="script">
     <script th:src="@{/resources/_ui/desktop/common/js/order.js}"></script>
@@ -14,8 +14,11 @@
 </th:block>
 <div layout:fragment="content">
     <script>
+        console.log("[[${member}]]");
         const memail = "[[${member.getMemail()}]]";
+        const mpoint = "[[${member.getMpoint()}]]";
         var res_data = JSON.parse(localStorage.getItem("station-item"));
+        console.log(res_data);
         var item_data = [];
         for (var i = 0; i < res_data.item.length; i++) {
             var temp_data = {
@@ -26,6 +29,9 @@
             }
             item_data.push(temp_data);
         }
+        function numWithComma(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
         $(document).ready(function () {
             var res_data = JSON.parse(localStorage.getItem("station-item"));
             console.log(res_data);
@@ -33,65 +39,96 @@
             const final_tot = numWithComma(checktHandsomepointUsableAmount);
             $('#totalPrice').text('₩' + final_tot);
             $('#subTotal').text('₩' + final_tot);
+            $('#userpoint').text(numWithComma(mpoint));
             var html = "";
             var mprice = 1;
             for (var i = 0; i < res_data.item.length; i++) {
                 mprice = numWithComma(res_data.item[i].pprice * res_data.item[i].qty);
                 html += `<tr class="al_middle">
-		        <td class="frt">
-		        <!-- pt_list_all -->
-                <div class="pt_list_all">
-                <a href="${res_data.item[i].pid}_${res_data.item[i].ccolorcode}">
+    <td class="frt">
+        <!-- pt_list_all -->
+        <div class="pt_list_all">
+            <a href="${res_data.item[i].pid}_${res_data.item[i].ccolorcode}">
                 <img src="${res_data.item[i].cimage1}" alt="" />
-                </a>
-                <div class="tlt_wrap">
-                <a href="/detail/${res_data.item[i].pid}_${res_data.item[i].ccolorcode}" class="basket_tlt">
-                <span class="tlt">${res_data.item[i].bname}</span> <span class="sb_tlt">${res_data.item[i].pname}</span>
-                </a>
-                <p class="color_op">
-                color : ${res_data.item[i].ccolorcode}<span class="and_line">/</span> size : ${res_data.item[i].ssize}
-                </p>
-                </div>
-                </div> <!-- //pt_list_all -->
-                </td>
-                <td>${res_data.item[i].qty}</td>
-                <td>
-                    <!-- price_wrap -->
-                <div class="price_wrap ">
-                <span> ₩${mprice}</span>
-                </div> <!-- //price_wrap -->
-                </td>
-                </tr>
-                `;
+            </a>
+            <div class="tlt_wrap">
+                <a href="/detail/${res_data.item[i].pid}_${res_data.item[i].ccolorcode}" class="basket_tlt"> <span class="tlt">${res_data.item[i].bname}</span> <span class="sb_tlt">${res_data.item[i].pname}</span> </a>
+                <p class="color_op">color : ${res_data.item[i].ccolorcode}<span class="and_line">/</span> size : ${res_data.item[i].ssize}</p>
+            </div>
+        </div>
+        <!-- //pt_list_all -->
+    </td>
+    <td>${res_data.item[i].qty}</td>
+    <td>
+        <!-- price_wrap -->
+        <div class="price_wrap">
+            <span> ₩${mprice}</span>
+        </div>
+        <!-- //price_wrap -->
+    </td>
+</tr>`;
+                }
+                $("#order-list").html(html);
+                $("#hpoint_useall").change(function(){
+                    if($(this).is(":checked")){
+                        if(mpoint < 100) {
+                            new layerAlert('100 포인트 이상부터 사용이 가능합니다.');
+                            return;
+                        }
+                        $("#ousedpoint").val(mpoint);
+                        $("#userpoint").text(0);
+                    } else {
+                        $("#ousedpoint").val(0);
+                        $('#userpoint').text(numWithComma(mpoint));
+                    }
+                });
+            });
+            function getOtel(h1, h2, h3) {
+                return h1 + h2 + h3;
             }
-            $("#order-list").html(html);
-        })
-            ;
-
+            function doUseHPoint() {
+                var up = $("#ousedpoint").val();
+                if(up < 100 || mpoint < 100) {
+                    var la = new layerAlert('100 포인트 이상부터 사용이 가능합니다.');
+                    $("#ousedpoint").val(0);
+                    return;
+                }
+                if(up > mpoint) {
+                    $("#ousedpoint").val(mpoint);
+                }
+                var remain = parseInt(mpoint) - up;
+                if(remain < 0) remain = 0;
+                $('#userpoint').text(numWithComma(remain));
+                var la = new layerAlert('포인트 적용이 완료되었습니다.');
+            }
+            function cancelUseHPoint() {
+                $("#ousedpoint").val(0);
+                $("#userpoint").text(numWithComma(mpoint));
+            }
             function orderProcess() {
                 // !!! 값 설정하기
-                const ozipcode = 12345;
-                const oaddress1 = "서울시 종로구 창경궁로";
-                const oaddress2 = "어쩌구저쩌구";
-                const odate = "22/06/22";
-                const oreceiver = "강아지";
-                const otel = "01000000000";
-                const ousedmileage = 1000;
-                const ousedcoupon = 1000;
+                const hp_num1 = $("#hp_num1").val();
+                const hp_num2 = $("#hp_num2").val();
+                const hp_num3 = $("#hp_num3").val();
+                const ozipcode = $("#ozipcode").val();
+                const oaddress1 = $("#oaddress1").val();
+                const oaddress2 = $("#oaddress2").val();
+                const oreceiver = $("#oreceiver").val();
+                const otel = getOtel(hp_num1, hp_num2, hp_num3);
+                const ousedpoint = $("#ousedpoint").val();
+                const ousedcoupon = 0;
                 const opayment = 1;
                 const ostatus = 1;
                 const odiscounted = 0;
                 const oitem = item_data;
-
                 var data = {
                     memail: memail,
                     ozipcode: ozipcode,
                     oaddress1: oaddress1,
                     oaddress2: oaddress2,
-                    odate: odate,
                     oreceiver: oreceiver,
                     otel: otel,
-                    ousedmileage: ousedmileage,
+                    ousedpoint: ousedpoint,
                     ousedcoupon: ousedcoupon,
                     opayment: opayment,
                     ostatus: ostatus,
@@ -108,6 +145,7 @@
                         var lc = new layerConfirm('결제하시겠습니까?', '확인', '취소');
                         lc.confirmAction = function(){
                             localStorage.removeItem('station-item');
+                            var la = new layerAlert('결제되었습니다.');
                             location.href = "/order"; // !!! order-list로
                         };
                     },
@@ -291,24 +329,24 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <!-- address --> <input value="" title="우편번호" id="adress"
-                                                                name="postcode" class="post" type="text" readonly/>
+                                        <!-- address --> <input value="" title="우편번호" id="ozipcode"
+                                                                name="postcode" class="post" type="text"/>
                                         <input
                                                 value="우편번호 조회" id="addrSearchBtn" class="btn add_s"
                                                 type="button"/> <br/>
                                         <div id="basis_bk_flag">
-                                            <input value="" title="주소1" name="line1" id="line1"
-                                                   class="post_wall top" type="text" readonly/>
+                                            <input value="" title="주소1" name="line1" id="oaddress1"
+                                                   class="post_wall top" type="text"/>
                                         </div>
-                                        <input value="" title="주소2" name="line2" id="line2"
+                                        <input value="" title="주소2" name="line2" id="oaddress2"
                                                class="post_wall" type="text" maxlength="110"
                                                placeholder="나머지 주소를 입력해 주세요."/> <!-- //address -->
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><strong class="reqd">*</strong><label
-                                            for="rcpt_name">수령인</label></th>
-                                    <td><input value="" title="수령인" id="rcpt_name"
+                                            for="oreceiver">수령인</label></th>
+                                    <td><input value="" title="수령인" id="oreceiver"
                                                name="lastName" maxlength="13" type="text"
                                                style="width: 118px;"/></td>
                                 </tr>
@@ -316,7 +354,7 @@
                                     <th scope="row"><strong class="reqd">*</strong><label
                                             for="hp">휴대폰 번호</label></th>
                                     <td>
-                                        <!-- hp --> <select id="hp" name="hp_num1" title="휴대폰 번호 앞자리"
+                                        <!-- hp --> <select id="hp_num1" name="hp_num1" title="휴대폰 번호 앞자리"
                                                             class="hp_num1">
                                         <option value="010">010</option>
                                         <option value="011">011</option>
@@ -333,151 +371,6 @@
                                         <input title="휴대폰 번호 뒷자리"
                                                name="hp_num3" id="hp_num3" class="hp_num2" type="text"
                                                maxlength="4" numberOnly="true"/> <!-- //hp -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="th_space"><label for="ph">연락처</label></th>
-                                    <td>
-                                        <!-- phone --> <select name="ph_num1" id="ph" title="연락처 앞자리"
-                                                               class="hp_num1">
-                                        <option value="">선택</option>
-                                        <option value="02">02</option>
-                                        <option value="031">031</option>
-                                        <option value="032">032</option>
-                                        <option value="033">033</option>
-                                        <option value="041">041</option>
-                                        <option value="042">042</option>
-                                        <option value="043">043</option>
-                                        <option value="044">044</option>
-                                        <option value="051">051</option>
-                                        <option value="052">052</option>
-                                        <option value="053">053</option>
-                                        <option value="054">054</option>
-                                        <option value="055">055</option>
-                                        <option value="061">061</option>
-                                        <option value="062">062</option>
-                                        <option value="063">063</option>
-                                        <option value="064">064</option>
-                                    </select>
-                                        <div class="form_hyphen">-</div>
-                                        <input title="연락처 가운데자리"
-                                               name="ph_num2" id="ph_num2" class="hp_num2" type="text"
-                                               maxlength="4" numberOnly="true"/>
-                                        <div class="form_hyphen">-</div>
-                                        <input title="연락처 뒷자리"
-                                               name="ph_num3" id="ph_num3" class="hp_num2" type="text"
-                                               maxlength="4" numberOnly="true"/> <!-- //phone -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="th_space"><label for="orderr">배송
-                                        메세지</label></th>
-                                    <td>
-                                        <div class="input_sumtxt">
-                                            <div class="input_sumtxt_box">
-                                                <!-- input -->
-                                                <input onkeyup="chkword('orderr','orderr_text_length',20);"
-                                                       id="orderr" name="deliveryRequestContents"
-                                                       autocomplete="off" type="text" value="" title="배송 메세지"
-                                                       maxlength="20"/>
-                                                <!-- //input -->
-                                                <div class="delivery_comt">
-                                                    <ul>
-                                                        <li><a href="#;" data-readonly="readonly"
-                                                               deliveryRequestMessage="배송 전 연락 바랍니다"> 배송 전 연락 바랍니다</a>
-                                                        </li>
-                                                        <li><a href="#;" data-readonly="readonly"
-                                                               deliveryRequestMessage="부재 시 문 앞에 놓아주세요"> 부재 시 문 앞에
-                                                            놓아주세요</a></li>
-                                                        <li><a href="#;" data-readonly="readonly"
-                                                               deliveryRequestMessage="부재 시 경비실에 맡겨주세요"> 부재 시 경비실에
-                                                            맡겨주세요</a></li>
-                                                        <li><a href="#;" data-readonly="readonly"
-                                                               deliveryRequestMessage="빠른 배송 부탁드립니다"> 빠른 배송 부탁드립니다</a>
-                                                        </li>
-                                                        <li><a href="#;" data-readonly="readonly"
-                                                               deliveryRequestMessage="부재 시 핸드폰으로 연락바랍니다"> 부재 시
-                                                            핸드폰으로 연락바랍니다</a></li>
-                                                        <li><a href="#;" data-readonly="write"
-                                                               deliveryRequestMessage="직접입력"> 직접입력</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <span id="orderr_text_length">0</span> <span>/20자</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- 211028 공동현관 출입방법 S -->
-                                <tr class="enter-door211026">
-
-                                    <th scope="row" class="tooltip191022 th_space tooltip211026-">
-                                        <label for="enter_door" class="">공동현관<br/>출입방법
-                                        </label><span class="ico_question">icon</span>
-                                        <div class="delch_box190816 ">
-                                            <span class="arr">위치아이콘</span>
-                                            <ul class="bul_sty01_li">
-                                                <li>공동현관 출입번호가 정확하지 않을 경우, 배송 기사의 판단에 따라 1층 공동현관 앞 또는
-                                                    경비실에 배송될 수 있습니다.
-                                                </li>
-                                                <li>새벽배송 시 배송 전 연락을 드리지 않습니다.</li>
-                                            </ul>
-                                        </div>
-                                    </th>
-                                    <td>
-                                        <div class="input_sumtxt">
-                                            <div class="input_sumtxt_box input_sumtxt_box2">
-                                                <!-- 211028 공동현관 출입방법 S -->
-                                                <input name="frontDoorSelectMessage" id="enter_door"
-                                                       type="text" autocomplete="off" value="공동현관 출입방법을 선택해주세요"
-                                                       title="공동현관 출입방법" readonly/>
-                                                <!-- 211028 공동현관 출입방법 E -->
-                                                <div class="delivery_comt delivery_comt2">
-                                                    <ul>
-                                                        <li></li>
-                                                        <li><a href="#;" data-default="공동현관 출입번호"
-                                                               data-input-display="block">공동현관 출입번호</a></li>
-                                                        <li><a href="#;" data-default="자유 출입 가능"
-                                                               data-input-display="none">자유 출입 가능</a></li>
-                                                        <li><a href="#;" data-default="기타"
-                                                               data-input-display="block">기타</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="input_sumtxt enter_front">
-                                            <input
-                                                    onkeyup="chkword('frontDoorMessage','front_door_text_length',15);"
-                                                    id="frontDoorMessage" name="frontDoorMessage" type="text"
-                                                    placeholder="15자 이내로 입력하세요" title="출입방법 예시" maxlength="15"/>
-                                            <div>
-                                                <span id="front_door_text_length">0</span> <span>/15자</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- 211028 공동현관 출입방법 E -->
-                                <tr>
-                                    <th scope="row" class="th_space"><label for="mail">수령인
-                                        E-mail</label></th>
-                                    <td>
-                                        <!-- email --> <input type="text" id="mail" name="mail"
-                                                              title="이메일 아이디" class="em_form"/> <span
-                                            class="andmail">@</span>
-                                        <input type="text" value="" name="emailDely" id="emailDely"
-                                               title="직접입력" class="em_form"/> <select title="이메일 계정"
-                                                                                      id="emailDelySel"
-                                                                                      class="em_select">
-                                        <option value="">직접입력</option>
-                                        <option value="naver.com">naver.com</option>
-                                        <option value="gmail.com">gmail.com</option>
-                                        <option value="daum.net">daum.net</option>
-                                        <option value="nate.com">nate.com</option>
-                                        <option value="hanmail.net">hanmail.net</option>
-                                        <option value="yahoo.com">yahoo.com</option>
-                                        <option value="dreamwiz.com">dreamwiz.com</option>
-                                    </select> <!-- //email -->
                                     </td>
                                 </tr>
                                 </tbody>
@@ -523,9 +416,9 @@
                                                 <div class="btnwrap">
                                                     <a href="#;" id="btnRedeemVoucher"
                                                        class="btn add_s min_auto" onclick="redeemVoucher(this);">
-                                                        적용</a> <a href="#;" style="display: none"
+                                                        적용</a> <a href="#;"
                                                                   id="btnReleaseVoucher" class="btn dis_s min_auto"
-                                                                  onclick="releaseVoucher(this);"> 적용취소</a>
+                                                                  onclick="releaseVoucher();"> 적용취소</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -550,47 +443,19 @@
                                     <col/>
                                 </colgroup>
                                 <tbody>
-                                <tr>
-                                    <th scope="row" class="th_space"><label for="pointpay">한섬마일리지
-                                        결제</label></th>
-                                    <td>
-                                        <!-- point wrap -->
-                                        <div class="point_wrap">
-                                            <input title="한섬마일리지 결제" class="inpput" type="text"
-                                                   id="pointpay" name="usePoint" numberOnly="true"/>
-                                            <p class="p_txt">
-                                                M 사용 (잔액 : <span>2,620</span>M)
-                                            </p>
-                                            <!-- apply -->
-                                            <div class="point_apply">
-                                                <div class="all">
-                                                    <input title="선택" value="" type="checkbox"
-                                                           id="point_useall"/> <span><label
-                                                        for="point_useall">모두사용</label></span>
-                                                </div>
-                                                <input id="btnUsePoint" class="btn add_s min_auto"
-                                                       value="적용" type="button" onclick="doUsePoint(this);"/> <input
-                                                    id="btnCancelUsePoint" class="btn dis_s min_auto"
-                                                    value="적용취소" type="button" onclick="cancelUsePoint(this);"/>
-                                            </div>
-                                            <!-- //apply -->
-                                            <p class="txt_guide">* 1마일리지 = 1원</p>
-                                        </div> <!-- point wrap -->
-                                    </td>
-                                </tr>
                                 <!-- H.Point Start NOT ANY **********************************-->
                                 <tr>
-                                    <th scope="row" class="th_space"><label for="hpointpay">H.Point
+                                    <th scope="row" class="th_space"><label for="ousedpoint">H.Point
                                         결제</label></th>
                                     <td>
                                         <!-- point wrap -->
                                         <div class="point_wrap">
 
                                             <input title="H.Point 결제" class="inpput" type="text"
-                                                   id="hpointpay" name="useHPoint" numberOnly="true" readonly/>
+                                                   id="ousedpoint" name="useHPoint" numberOnly="true"/>
 
                                             <p class="p_txt">
-                                                P 사용 (잔액 : <span>2,059</span>P)
+                                                P 사용 (잔액 : <span id="userpoint"></span>P)
                                             </p>
                                             <!-- apply -->
                                             <div class="point_apply">
@@ -600,11 +465,9 @@
                                                         for="hpoint_useall">모두사용</label></span>
                                                 </div>
                                                 <input id="btnUseHPoint" class="btn add_s min_auto"
-                                                       type="button" onclick="doUseHPoint(this);" value="적용"/>
+                                                       type="button" onclick="doUseHPoint();" value="적용"/>
 
-                                                <input id="btnCancelUseHPoint" class="btn dis_s min_auto"
-                                                       type="button" onclick="cancelUseHPoint(this);"
-                                                       value="적용취소"/>
+                                                <input id="btnCancelUseHPoint" class="btn add_s min_auto" type="button" onclick="cancelUseHPoint();" value="적용취소">
                                             </div>
                                             <!-- //apply -->
                                             <p class="txt_guide">
@@ -1067,14 +930,14 @@
                                 <!-- 간편회원이 아닐 때 s -->
                                 <p class="tlt">구매 시 지급 예정 포인트</p>
                                 <p>(제품 수령 완료 후 10일 후 적립)</p>
-                                <p class="txt" id="txtAccumulationPoint">한섬마일리지 17,250 M</p>
-                                <p class="txt" id="txtAccumulationHPoint">H.Point 345 P</p>
+                                <p class="txt" id="txtAccumulationPoint"></p>
+                                <p class="txt" id="txtAccumulationHPoint"></p>
                                 <!-- 간편회원이 아닐 때  e -->
                                 <input type="hidden" name="accumulationPoint"
-                                       id="accumulationPoint" value="17250"/> <input type="hidden"
-                                                                                     name="accumulationHPoint"
-                                                                                     id="accumulationHPoint"
-                                                                                     value="345"/>
+                                       id="accumulationPoint"/> <input type="hidden"
+                                                                       name="accumulationHPoint"
+                                                                       id="accumulationHPoint"
+                            />
                             </div>
 
                             <div class="agree">

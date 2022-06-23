@@ -16,7 +16,7 @@
 		#{oaddress1}, #{oaddress2}, sysdate,
 		#{oreceiver},
 		#{otel},
-		#{ousedmileage}, #{ousedcoupon}, #{opayment}, #{ostatus},
+		#{ousedpoint}, #{ousedcoupon}, #{opayment}, #{ostatus},
 		#{odiscounted})
 	</insert>
 
@@ -30,7 +30,7 @@
 	<select id="getOrder"
 		resultType="com.hyundai.project.dto.OrderResDTO">
 		select oi.oid, memail, ozipcode, oaddress1, oaddress2,
-		odate, oreceiver, otel, ousedmileage, ousedcoupon, opayment, ostatus,
+		odate, oreceiver, otel, ousedpoint, ousedcoupon, opayment, ostatus,
 		odiscounted, oi.pid, p.pname, p.bname, oi.ccolorcode, ssize, qty,
 		c.cimage1
 		from orderlist ol join orderitem oi on ol.oid = oi.oid and ol.memail =
