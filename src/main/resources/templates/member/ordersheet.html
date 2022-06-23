@@ -13,6 +13,46 @@
     <script th:src="@{/resources/_ui/handsomemobile/js/swiper.min.js}"></script>
 </th:block>
 <div layout:fragment="content">
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script>
+   const IMP = window.IMP; // 생략 가능
+   IMP.init("imp12649976"); // Example: imp00000000
+   
+   function payment(){
+      console.log("일단 여기로 들어오긴 함 ㅋ");
+      console.log(IMP);
+      IMP.request_pay({ 
+         pg: "html5_inicis",
+           pay_method: "card",
+           merchant_uid: "ORD20220623-00002", // 주문번호
+           name: "고동현이 입은 자켓", // 2건 이상 : _ 외 1건, 1건 : pname
+           amount: 500, // 가격 총 합
+           buyer_email: "gildong@gmail.com",
+           buyer_name: "홍길동",
+           buyer_tel: "010-4242-4242",
+           buyer_addr: "서울특별시 강남구 신사동",
+           buyer_postcode: "01181"
+      }, function(rsp){ // callback
+         if (rsp.success) {
+            // jQuery로 http 요청, 결제 승인 또는 가상계좌 발급에 성공한 경우
+            $.ajax({
+              url:"/mypage", //결제 성공시 갈 url
+              method:"POST",
+              headers:{"Content-Type":"application/json"},
+              data:{ // 가맹점 서버에 인자로 전달한 데이터, 추가할거있으면 하면 됨
+                 imp_uid:rsp.imp_uid, // 결제번호
+                 merchant_uid:rsp.merchant_uid // 주문번호
+              }
+            }).done(function (data){
+              // 결제 성공 시 로직
+              alert('결제에 성공하였습니다.');
+            })
+         }else {
+            alert('결제에 실패하였습니다.');
+         }
+      });
+   }
+   </script>
     <script>
         console.log("[[${member}]]");
         const mpoint = "[[${mpoint}]]";
@@ -999,6 +1039,7 @@
             <input type='hidden' id='totalqty' name='totalqty' value="">
             <input type='hidden' id='totalprice' name='totalprice' value="">
         </form>
+            <button onclick="payment()">KG</button>
 
         <!--layer pop-->
         <div class="popwrap w_type_3" id="popwrap" style="display: none">
