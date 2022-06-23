@@ -18,6 +18,7 @@ public class OrderListDTO {
 	private int ousedpoint;
 	private int ousedcoupon;
 	private int opayment;
+	private int oprice;
 	private int ostatus;
 	private int odiscounted;
 	private List<OrderItemDTO> oitem;
