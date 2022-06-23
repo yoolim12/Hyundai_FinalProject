@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hyundai.project.dto.CartDTO;
 import com.hyundai.project.memberDAO.CartDAO;
+import com.hyundai.project.memberDAO.MemberDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderDAO orderDAO;
     @Autowired
     private CartDAO cartDAO;
+    @Autowired
+    private MemberDAO memberDAO;
 
     @Transactional(value = "transactionManager")
     @Override
@@ -53,6 +56,9 @@ public class OrderServiceImpl implements OrderService {
                 cartDAO.deleteCart(email, cart);
                 log.info("Cart 삭제 성공");
             }
+
+            // 포인트 차감
+            memberDAO.pointApply(olist.getMemail(), olist.getOusedpoint());
         } catch (Exception e) {
             log.info("ERROR:" + e.getMessage());
             throw e;

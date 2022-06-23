@@ -45,4 +45,8 @@
 		on c1.memail = c2.memail
 		where c1.memail = #{memail} and c1.from_social=#{from_social}
 	</select>
+
+	<update id="pointApply">
+		update member set mpoint = mpoint - #{ousedpoint} where memail = #{memail};
+	</update>
 </mapper>
