@@ -59,6 +59,7 @@ extends DefaultOAuth2UserService {
         clubMember.setTelnum("1234");
         clubMember.setMaddress("1234");
         clubMember.setMemail_info(email);
+        clubMember.setMgender("m");
         clubMember.setModdate(d);
         clubMember.setRegdate(d);
         clubMember.setFrom_social(1);
@@ -73,6 +74,7 @@ extends DefaultOAuth2UserService {
         clubMemberDAO.registerRole(clubMemberRoleSet);
  
         result = clubMemberDAO.findByEmail(email, 1);
+        System.out.println(result);
        
         // 추가된 정보 반환
         return result;

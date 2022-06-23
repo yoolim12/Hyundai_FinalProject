@@ -915,13 +915,16 @@
                         <!--// 201705 search_box_wrap -->
                         <div class="util_menu" style="display: block;">
                             <ul class="clearfix">
+                            	<li><a href="" onclick="" sec:authorize="hasRole('ADMIN')">ADMIN PAGE</a></li>
                                 <li><a href="/member/login" onclick="GA_Event('공통','헤더_메뉴','로그인')" sec:authorize="!isAuthenticated()">로그인</a></li>
                                 <li><a href="/member/logout" onclick="GA_Event('공통','헤더_메뉴','로그아웃')" sec:authorize="isAuthenticated()">로그아웃</a></li>
+                                <!--<li><a href="" onclick="" sec:authorize="hasRole('ADMIN')">ADMIN PAGE</a></li>-->
                                 <li class="header_dropmemu mypage">
                                     <a href="/member/login" class="btn" onclick="GA_Event('공통','헤더_메뉴','마이페이지')" sec:authorize="!isAuthenticated()">마이페이지</a>
                                     <a href="/mypage/mypage" class="btn" onclick="GA_Event('공통','헤더_메뉴','마이페이지')" sec:authorize="isAuthenticated()">마이페이지</a>
                                     <div class="list">
                                         <ul>
+                                        	<!--<li><a href="" onclick="" sec:authorize="hasRole('ADMIN')">ADMIN PAGE</a></li>-->
                                             <li>
                                                 <a href="/ko/mypage/order/myorders" onclick="GA_Event('공통','헤더_메뉴','마이페이지_주문조회')">주문조회<!-- 주문조회 --></a>
                                             </li>

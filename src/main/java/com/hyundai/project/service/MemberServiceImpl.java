@@ -42,4 +42,10 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.showAllMember();
 	}
 
+	@Override
+	public void admodifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno) {
+		// TODO Auto-generated method stub
+		mapper.admodifyMember(memail, mname, birth, telnum, maddress, gno);
+	}
+
 }
