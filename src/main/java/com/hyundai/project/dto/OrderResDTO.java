@@ -26,5 +26,7 @@ public class OrderResDTO {
 	private String ssize;
 	private int qty;
 	private String cimage1;
+	private int pprice;
+	
 	
 }

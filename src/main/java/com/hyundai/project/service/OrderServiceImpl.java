@@ -123,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
 //			temp.setOusedmileage(ol.get(i).getOid());
 //			temp.setOid(ol.get(i).getOid());
 //			temp.setOid(ol.get(i).getOid());
-
+    	log.info("마이페이지 주문 조회");
         // }
         return orderDAO.getOrder(memail);
     }
