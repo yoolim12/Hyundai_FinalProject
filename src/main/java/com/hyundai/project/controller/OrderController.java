@@ -20,16 +20,16 @@ public class OrderController {
 	private MemberService service;
 
 	@GetMapping("/order")
-	public String orderView( @AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) throws Exception {
+	public String orderView(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) throws Exception {
 		log.info(authMemberDTO);
 		int mpoint = service.getPoint(authMemberDTO.getMemail());
 		if (oauthMemberDTO == null) {
 			model.addAttribute("member", authMemberDTO);
-			model.addAttribute("mpoint", mpoint);
+			model.addAttribute("mpoint", service.getPoint(authMemberDTO.getMemail()));
 		}
 		else {
 			model.addAttribute("member", oauthMemberDTO);
-			model.addAttribute("mpoint", mpoint);
+			model.addAttribute("mpoint", service.getPoint(oauthMemberDTO.getEmail()));
 		}
 		return "member/ordersheet";
 	}

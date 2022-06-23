@@ -12,13 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProductDetailController {
 
 	@GetMapping("/detail/{pid}")
-	public String productDetail(@PathVariable("pid") String pid, @AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) {
-		if (oauthMemberDTO == null) {
-			model.addAttribute("memberEmail", authMemberDTO.getMemail());
-		}
-		else {
-			model.addAttribute("memberEmail", oauthMemberDTO.getEmail());
-		}
+	public String productDetail(@PathVariable("pid") String pid) {
 		return "/product/detail";
 	}
 

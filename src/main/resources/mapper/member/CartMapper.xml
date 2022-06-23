@@ -29,4 +29,8 @@
 		update cart set ccolorcode=#{param2.newcolorcode}, ssize=#{param2.newsize}, qty=#{param2.newqty} where memail=#{memail} and pid=#{param2.pid} and ccolorcode=#{param2.ccolorcode} and ssize=#{param2.ssize}
 	</update>
 
+	<select id="getCartTotal" resultType="int">
+		select count(pid) from cart where memail = #{memail}
+	</select>
+
 </mapper>

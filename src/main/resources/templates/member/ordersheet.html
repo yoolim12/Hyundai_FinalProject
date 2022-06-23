@@ -15,7 +15,6 @@
 <div layout:fragment="content">
     <script>
         console.log("[[${member}]]");
-        const memail = "[[${member.getMemail()}]]";
         const mpoint = "[[${mpoint}]]";
         var res_data = JSON.parse(localStorage.getItem("station-item"));
         console.log(res_data);
@@ -144,7 +143,6 @@
                     return;
                 }
                 var data = {
-                    memail: memail,
                     ozipcode: ozipcode,
                     oaddress1: oaddress1,
                     oaddress2: oaddress2,

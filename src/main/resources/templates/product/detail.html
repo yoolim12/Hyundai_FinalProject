@@ -194,7 +194,7 @@ function addToCart()
         console.log(pid, ccolorcode, ssize, qty);
         // 장바구니 등록하는 ajax 호출
         $.ajax({
-            url: "/cart/" + memail,
+            url: "/cart",
             method: "post",
             data : JSON.stringify({
             	pid : pid,

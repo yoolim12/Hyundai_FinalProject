@@ -5,7 +5,6 @@
       layout:decorate="~{fragments/common}">
 <div layout:fragment="content">
     <script type="text/javascript">
-        const memail = "[[${memberEmail}]]";
         var color = [];
         var size = [];
         var res_obj, allchecked = false;
@@ -48,7 +47,7 @@
                 newqty: res_obj[idx].qty
             }
             $.ajax({
-                url: "/cart/" + memail,
+                url: "/cart",
                 method: "put",
                 data: JSON.stringify(data),
                 contentType: "application/json",
@@ -76,7 +75,7 @@
                 newqty: $("#txtqty_" + idx).val()
             }
             $.ajax({
-                url: "/cart/" + memail,
+                url: "/cart",
                 method: "put",
                 data: JSON.stringify(data),
                 contentType: "application/json",
@@ -149,7 +148,7 @@
 
         function deleteProduct(pid, ccolorcode, ssize) {
             console.log(pid, ccolorcode, ssize);
-            var url = "/cart/" + memail;
+            var url = "/cart";
             var check = new layerAlert('해당 상품을 삭제하시겠습니까?');
             check.confirmAction = function () {
                 $.ajax({
@@ -215,7 +214,7 @@
         $(document).ready(function () {
             // 장바구니 정보 가져오는 ajax 호출
             $.ajax({
-                url: "/cart/" + memail,
+                url: "/cart/list",
                 type: "GET",
                 dataType: "json",
                 async: false,
