@@ -21,18 +21,18 @@ public class MypageController {
 	@Autowired
 	private MemberDAO memberDAO;
 	
-	@RequestMapping("/mypage")
+	@RequestMapping("")
 	public void mypage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) throws Exception {
 		if (oauthMemberDTO == null) {
-      model.addAttribute("member", authMemberDTO);
+      		model.addAttribute("member", authMemberDTO);
 			model.addAttribute("membername", authMemberDTO.getMname());
 			model.addAttribute("memberpoint", memberDAO.getPoint(authMemberDTO.getMemail()));
 			model.addAttribute("membergno", memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getGno());
 		}
 		else {
-      model.addAttribute("member", oauthMemberDTO);
+      		model.addAttribute("member", oauthMemberDTO);
 			model.addAttribute("membername", oauthMemberDTO.getName());
-			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getMemail()));
+			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getEmail()));
 			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getEmail(), 1).getGno());
 		}
 	}
