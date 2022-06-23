@@ -91,4 +91,26 @@ public class BackMemberRestController {
         }
         return "success";
     } // end delete
+    
+    // 회원정보 수정
+    @PutMapping("/grade")
+    @ResponseBody
+    public String updateGrade(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
+    	System.out.println("modify rr");
+    	String email = map.get("memail");
+    	String name = map.get("mname");
+    	String birth = map.get("birth");
+    	String telnum = map.get("telnum");
+    	String address = map.get("maddress");
+    	int gno = Integer.parseInt(map.get("gno"));
+    	
+    	System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address);
+    	
+    	try {
+    		service.admodifyMember(email, name, birth, telnum, address, gno);
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	return "success";
+    } // end modify 
 }
