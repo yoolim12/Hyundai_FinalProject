@@ -1111,6 +1111,15 @@
                        value="fdcc9003-3927-481c-9d6d-70be0aba5887"/>
             </div>
         </form>
+        <form method="post" action="/kakaoPay">
+	       	<button onclick="goKakao()">카카오페이 결제 두번째 방법</button>
+	       	<input type='hidden' id='oid' name='oid' value="">
+	       	<input type='hidden' id='memail' name='memail' th:value="${member.getMemail()}">
+	       	<input type='hidden' id='oitem' name='item' value="">
+	        <input type='hidden' id='totalqty' name='totalqty' value="">
+	       	<input type='hidden' id='totalprice' name='totalprice' value="">
+	    </form>
+                  
         <!--layer pop-->
         <div class="popwrap w_type_3" id="popwrap" style="display: none">
             <!-- Title1 -->

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/common}">
+<div layout:fragment="content"> 
+<br><br><br><br><br><br><br><br>
+	<div id="kakaoInfo" style="margin-left:40%">
+		<h2>카카오페이 결제가 정상적으로 완료되었습니다.</h2><br><br><br>
+		 
+		<h3>결제일시:     [[${kakaoInfo.approved_at}]]</h3><br>
+		<h3>주문번호:    [[${kakaoInfo.partner_order_id}]]</h3><br>
+		<h3>상품명:    [[${kakaoInfo.item_name}]]</h3><br>
+		<h3>상품수량:    [[${kakaoInfo.quantity}]]</h3><br>
+		<h3>결제금액:    [[${kakaoInfo.amount.total}]]</h3><br>
+		<h3>결제방법:    [[${kakaoInfo.payment_method_type}]]</h3>
+		
+		
+		<br><br><br><br>
+		<a href="/mypage/mypage" class="btn gray_ss">주문내역 상세 보기</a>
+	</div>
+</div>
+</html>
