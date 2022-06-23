@@ -36,4 +36,7 @@ public interface MemberDAO {
 
 	// 회원 포인트 조회
 	public int getPoint(String memail) throws Exception;
+
+	// 회원 포인트 적립
+	public void pointSaving(String memail, int savingpoint);
 }
