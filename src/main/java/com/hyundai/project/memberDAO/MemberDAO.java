@@ -19,12 +19,21 @@ public interface MemberDAO {
 	// 이메일로 회원 정보 가져오기
 	public MemberDTO getMemberInfo(String email) throws Exception;
 		
-	// 회원 수정
+	// 회원 수정 (비밀번호 변경)
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception;
+	
+	// 회원 수정 (관리자)
+	public void admodifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno);
 		
 	// 회원 탈퇴
 	public void delMember(String email) throws Exception;
 		
 	// 회원 전체 조회
 	public List<MemberDTO> showAllMember() throws Exception;
+
+	// 결제 시 사용된 포인트 차감
+	public void pointApply(String memail, int ousedpoint);
+
+	// 회원 포인트 조회
+	public int getPoint(String memail) throws Exception;
 }

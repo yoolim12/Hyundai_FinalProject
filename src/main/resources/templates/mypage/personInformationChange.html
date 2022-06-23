@@ -78,7 +78,7 @@ $(document).ready(function(){
 		    
 		    $.ajax({
 				type:'POST',
-				url:"/mypage/passwordCheck",
+				url:'/mypage/passwordCheck',
 				dataType: 'JSON',
     			contentType : "application/json",
 				data:JSON.stringify({"mpassword":pw}),

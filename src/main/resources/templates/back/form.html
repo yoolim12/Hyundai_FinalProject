@@ -114,7 +114,6 @@
     		$.ajax({
     			url : '/back/member',
     			type: 'PUT',
-    			dataType: 'JSON',
     			contentType : "application/json",
     			data : JSON.stringify({
     				'memail' : memail,
@@ -143,10 +142,10 @@
     		$.ajax({
     			url : '/back/member',
     			type: 'DELETE',
-    			dataType: 'JSON',
-    			data : {
+    			data: JSON.stringify({
     				'email' : email
-    			},
+                }),
+    			contentType: "application/json",
     			success: function(res){
     				alert("탈퇴 성공");
     				console.log(res);

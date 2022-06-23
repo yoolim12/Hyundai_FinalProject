@@ -13,9 +13,10 @@ public class OrderResDTO {
 	private String odate;
 	private String oreceiver;
 	private String otel;
-	private int ousedmileage;
+	private int ousedpoint;
 	private int ousedcoupon;
 	private int opayment;
+	private int oprice;
 	private int ostatus;
 	private int odiscounted;
 	private String pid;
@@ -25,5 +26,7 @@ public class OrderResDTO {
 	private String ssize;
 	private int qty;
 	private String cimage1;
+	private int pprice;
+	
 	
 }

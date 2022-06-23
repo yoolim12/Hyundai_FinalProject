@@ -5,7 +5,190 @@
       layout:decorate="~{fragments/common}">
 <div layout:fragment="content"> 
 <script>
- 
+	$(document).on("click", '.btn', function () {
+	    var prodid = $(this).prop('id').split("_");
+	
+	    if (prodid[0] == 'optCancelLayer') {
+	        $(this).parents('.basket_info').slideUp('fast');
+	    }
+	});
+	
+	$(document).on("click", '.btn_option', function () {
+        //옵션변경 클릭시 모든 하위 레이어 닫기
+        $("[class^=store_info]").css("display", "none");
+        var checkIdx = $(".btn_option").index(this);
+        $(".basket_info").each(function (idx) {
+            if (idx != checkIdx) {
+                $(this).css("display", "none");
+            }
+        });
+
+        if ($(this).parents("tr").next("tr").find(".basket_info").prop('style') == 'display: block;') {
+            return;
+        }
+	});
+	
+	$(document).ready(function () {
+		const memail = "[[${member.memail}]]";
+		let o_arr = []; /* 주문(번호) 개수. 중복제거 */
+		let cnt = []; /* 주문 번호에 해당하는 상품 개수 조회 위한 주문 번호 저장 배열 */
+		let tot; /* 외 n-1 건 */
+		$.ajax({
+            type: "get",
+            url: "/mypage/" + memail,
+            dataType: "json",
+            async: false,
+            contentType: "application/json",
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            },
+            success: function (result) {
+            	let ohtml = '';
+            	let list_cnt = []; /* 주문 번호 저장 배열. 반복문 돌때마다 앞에서부터 요소 하나씩 제거용 */
+                if (result.length > 0) {
+                	for (let i = 0; i<result.length;i++){
+                		cnt.push(result[i].oid);
+                		list_cnt.push(result[i].oid);
+                	}
+                    for (var i = 0; i < result.length; i++) {
+                        	let pid = result[i].pid;
+                        	let ccode = result[i].ccolorcode;
+                        	let p_price = '₩'+numWithComma(result[i].pprice * result[i].qty);
+                        if (!o_arr.includes(result[i].oid)){
+                        	list_cnt.shift();
+                        	tot = cnt.filter(element => result[i].oid === element).length;
+                        	o_arr.push(result[i].oid);
+                        	let status;
+                        	if (result[i].ostatus === 1){
+                        		status = '결제 완료';
+                        	} else if (result[i].ostatus === 2){
+                        		status = '입금 대기중';
+                        	} else if (result[i].ostatus === 3)	{
+                        		status = '결제 취소'
+                        	}
+                        	let tprice = '₩'+numWithComma(result[i].oprice);
+                        	let point = numWithComma(result[i].pprice*0.05);
+                        	ohtml += `<tr>
+                        			<td class="al_middle">
+                        				${result[i].oid}
+                        			</td>
+                       				<td class='pt_list_wrap'>
+		                                <div class="pt_list_all">
+		                                <a href="/detail/${pid}_${ccode}"
+		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+		                                <img src="${result[i].cimage1}" alt="" onclick="location.href='/detail/${pid}_${ccode}" style="position:absolute;width:98px;height:98px;"/>
+		                                </a>
+		                                <div class="tlt_wrap">
+		                                <a href="/detail/${pid}_${ccode}" class="basket_tlt"
+		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+		                                <span class="tlt">${result[i].bname}</span>
+		                                <span class="sb_tlt" id="${i}" style="white-space:normal;">
+		                                ${result[i].pname} <strong>등 ${tot}건</strong></span>
+		                                </a>
+		
+		                                <p class="color_op">
+		
+		                                color : ${result[i].ccolorcode}<span class="and_line">/</span>
+		                                size : ${result[i].ssize}</p>
+		                                <div class="option_wrap">
+			                                <a href="#none" class="btn_option" id="optOpenLayer^9^TH2C3TRN644N_CR"
+			                                onclick="GA_Event('주문내역','상세보기', '${result[i].pname}')">상세보기</a>
+		                                </div>
+		                                </div>
+		                                </div>
+		                                <!-- //od_list_all-->
+	                                </td>
+	                                <td class="al_middle">
+	                                	${tot}
+	                                </td>
+	                                <td class="al_middle">
+	                                	<span>${tprice}</span>
+	                                </td>
+	                                <td class="al_middle">
+	                                	${status}
+	                                </td>
+                        			<td class="al_middle">
+                        				${point} P
+                        			</td>
+                       			</tr>
+                       			<!-- 주문 상세조회 -->
+                       			<tr>
+                        		<td colspan="6" class="basket_wrap">
+                        	    <!-- Info -->
+                        	    <div class="basket_info" style="display: none;">
+                        	        <span class="btn_arr">위치아이콘</span>
+                        	        <div class="info">
+                        	            <!-- Products -->
+                        	            <div class="pt_list_all">
+		                                <a href="/detail/${pid}_${ccode}"
+		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+		                                <img src="${result[i].cimage1}" alt="" onclick="location.href='/detail/${pid}_${ccode}" style="position:absolute;width:98px;height:98px;"/>
+		                                </a>
+		                                <div class="tlt_wrap">
+		                                <a href="/detail/${pid}_${ccode}" class="basket_tlt"
+		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+		                                <span class="tlt">${result[i].bname}</span><br>
+		                                <span class="sb_tlt" id="${i}" style="width:350px; max-width:350px; white-space:normal;">
+		                                ${result[i].pname}</span>
+		                                </a>
+		
+		                                <p class="color_op">
+		
+		                                color : ${result[i].ccolorcode}<span class="and_line">/</span>
+		                                size : ${result[i].ssize}<span class="and_line">/</span> 
+		                                구매 수량 : ${result[i].qty}<span class="and_line">/</span> 
+		                                상품 가격 : ${p_price}</p>
+		                                </div>
+		                                </div>
+                        	            <!-- //Products -->
+                        	            <!-- btn -->
+                    	                <a href="#none" class="btn_close" id="optCloseLayer_1">닫기</a>
+                    	            </div>
+                    	            <!-- //btns -->
+                       			`;
+                        } else{
+                        	list_cnt.shift();
+                        	/* 각 주문 건(번호)에 속해있는 상품 목록 보이게 */
+                        	ohtml += `	<div class="info">
+		                        	            <div class="pt_list_all">
+					                                <a href="/detail/${pid}_${ccode}"
+					                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+					                                <img src="${result[i].cimage1}" alt="" onclick="location.href='/detail/${pid}_${ccode}" style="position:absolute;width:98px;height:98px;"/>
+					                                </a>
+					                                <div class="tlt_wrap">
+					                                <a href="/detail/${pid}_${ccode}" class="basket_tlt"
+					                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+					                                <span class="tlt">${result[i].bname}</span><br>
+					                                <span class="sb_tlt" id="${i}" style="width:350px; max-width:350px;white-space:normal;">
+					                                ${result[i].pname}</span>
+					                                </a>
+					                                <p class="color_op">
+					
+					                                color : ${result[i].ccolorcode}<span class="and_line">/</span>
+					                                size : ${result[i].ssize}<span class="and_line">/</span> 
+					                                구매 수량 : ${result[i].qty}<span class="and_line">/</span> 
+					                                상품 가격 : ${p_price}</p>
+					                                </div>
+					                                </div>
+			                        	            <!-- //Products -->
+		                        	            </div>`;
+                      		if(!list_cnt.includes(result[i].oid)){
+                      			ohtml += `           </div>
+				                        	    </div> <!-- //Info -->
+				                        	</td>
+		                               	 </tr>`;
+                          	}     	            
+                        }
+                    }
+                } else{ /* 주문 기록이 없을 때 */
+                	ohtml = `<tr>
+                				<td colspan="6" class="no_data">주문내역이 없습니다.</td>
+                			</tr>`;
+                }
+                $('#listBody').html(ohtml);
+           }
+		})
+	})
    // 리스트에서 제목 클릭 시 내용이 펼쳐지도록
     function showContent(i) {
         var listTag = "";
@@ -71,7 +254,7 @@
         <!-- lnb -->
         <div class="lnb_wrap">
             <h4>
-                <a href="/ko/mypage">마이페이지<!-- 마이페이지 --></a>
+                <a href="/mypage/mypage">마이페이지<!-- 마이페이지 --></a>
             </h4>
             <div class="lnb">
                 <dl>
@@ -154,17 +337,17 @@
         <div class="sub_cnts">
             <div class="profile_info1 clearfix review_betterment1905">
                 <div class="name">
-                    <span th:text="${membername}" class="ico_grade"><span style="margin-left: 10px;"></span></span> <span class="grade_txt" id="grade_txt"></span>
+                    <span th:text="${membername}+ 님" class="ico_grade"><span style="margin-left: 10px;"></span></span> <span class="grade_txt" id="grade_txt"></span>
                 </div>
                 <div class="pointbox_cover">
                     <div class="point_wrap">
-                        <div class="point" style="border-left: 0; padding-left: 0;">
+                        <!-- <div class="point" style="border-left: 0; padding-left: 0;">
                             <p class="title">한섬마일리지</p>
                             <a class="count" href="/ko/mypage/mypoint" onclick="GA_Event('마이페이지','회원정보','한섬마일리지');">0&nbsp;<span>M</span></a>
-                        </div>
+                        </div> -->
                         <div class="point">
                             <p class="title">H.POINT</p>
-                            <a th:text="${membergno}" class="count" href="https://www.h-point.co.kr/cu/myh/myPnt.shd" target="_blank" onclick="GA_Event('마이페이지','회원정보','H.POINT');">message<span>P</span></a>
+                            <a th:text="${memberpoint}" class="count" href="https://www.h-point.co.kr/cu/myh/myPnt.shd" target="_blank" onclick="GA_Event('마이페이지','회원정보','H.POINT');">message<span>P</span></a>
                         </div>
                         <div class="point">
                             <p class="title">GIFT CARD</p>
@@ -215,7 +398,7 @@
                             <th scope="col">처리상태</th>
                         </tr>
                     </thead>
-                    <tbody id="listBody"></tbody>
+                    <tbody id="listBody2"></tbody>
                 </table>
             </div>
             <!-- //Table -->
@@ -258,15 +441,15 @@
                             <th scope="col">상품정보<!-- 상품정보 --></th>
                             <th scope="col" style="padding: 15px 0;">수량<!-- 수량 --></th>
                             <!-- 스타일추가 181204 -->
-                            <th scope="col">판매가<!-- 판매가 --></th>
+                            <th scope="col">결제금액<!-- 판매가 --></th>
                             <th scope="col">주문상태<!-- 주문상태 --></th>
-                            <th scope="col">구분<!-- 구분 --></th>
+                            <th scope="col">적립 포인트<!-- 포인트 --></th>
                         </tr>
                     </thead>
                     <tbody id="listBody">
-                        <tr>
-                            <td colspan="6" class="no_data">최근 한 달간 주문내역이 없습니다.<!-- 최근 한 달간 주문내역이 없습니다. --></td>
-                        </tr>
+                        <!-- <tr>
+                            <td colspan="6" class="no_data">최근 한 달간 주문내역이 없습니다.최근 한 달간 주문내역이 없습니다.</td>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
