@@ -29,26 +29,29 @@
             }
             item_data.push(temp_data);
         }
-        function numWithComma(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-        $(document).ready(function () {
-            var res_data = JSON.parse(localStorage.getItem("station-item"));
-            console.log(res_data);
-            var checktHandsomepointUsableAmount = res_data.totalPrice;
-            const final_tot = numWithComma(checktHandsomepointUsableAmount);
-            $('#totalPrice').text('₩' + final_tot);
-            $('#subTotal').text('₩' + final_tot);
-            $('#userpoint').text(numWithComma(mpoint));
-            var html = "";
-            var mprice = 1;
-            for (var i = 0; i < res_data.item.length; i++) {
-                mprice = numWithComma(res_data.item[i].pprice * res_data.item[i].qty);
-                html += `<tr class="al_middle">
-    <td class="frt">
-        <!-- pt_list_all -->
-        <div class="pt_list_all">
-            <a href="${res_data.item[i].pid}_${res_data.item[i].ccolorcode}">
+
+	$(document).ready(function() {
+		var res_data = JSON.parse(localStorage.getItem("station-item"));
+		console.log(res_data);
+		var checktHandsomepointUsableAmount = res_data.totalPrice;
+		const final_tot = numWithComma(checktHandsomepointUsableAmount);
+		const final_mile = numWithComma(checktHandsomepointUsableAmount*0.05);
+	    const final_hpoint = numWithComma(Math.ceil(checktHandsomepointUsableAmount*0.001));	  
+	  
+        $('#txtAccumulationPoint').text('한섬마일리지 ' + final_mile + ' M');
+        $('#txtAccumulationHPoint').text('H.Point ' + final_hpoint + ' P');
+		$('#totalPrice').text('₩'+final_tot);
+		$('#subTotal').text('₩'+final_tot);
+    $('#userpoint').text(numWithComma(mpoint));
+		var html = "";
+		var mprice = 1;
+		for(var i=0; i<res_data.item.length;i++){
+			mprice = numWithComma(res_data.item[i].pprice * res_data.item[i].qty);
+		    html += `<tr class="al_middle">
+		        <td class="frt">
+		        <!-- pt_list_all -->
+                <div class="pt_list_all">
+                <a href="${res_data.item[i].pid}_${res_data.item[i].ccolorcode}">
                 <img src="${res_data.item[i].cimage1}" alt="" />
             </a>
             <div class="tlt_wrap">
@@ -977,6 +980,15 @@
                        value="fdcc9003-3927-481c-9d6d-70be0aba5887"/>
             </div>
         </form>
+        <form method="post" action="/kakaoPay">
+	       	<button onclick="goKakao()">카카오페이 결제 두번째 방법</button>
+	       	<input type='hidden' id='oid' name='oid' value="">
+	       	<input type='hidden' id='memail' name='memail' th:value="${member.getMemail()}">
+	       	<input type='hidden' id='oitem' name='item' value="">
+	        <input type='hidden' id='totalqty' name='totalqty' value="">
+	       	<input type='hidden' id='totalprice' name='totalprice' value="">
+	    </form>
+                  
         <!--layer pop-->
         <div class="popwrap w_type_3" id="popwrap" style="display: none">
             <!-- Title1 -->

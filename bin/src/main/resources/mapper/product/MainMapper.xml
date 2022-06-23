@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <!-- 
+  /* 작성자 : 문혁
+ * 메인페이지 신상품, 베스트 상품 , 매거진 리스트 조회 쿼리
+ */
+   -->
+ <mapper namespace="com.hyundai.project.productDAO.MainDAO">
+ <!-- pstatus 값이 NEW = 신상품, BEST = 베스트상품 -->
+ <select id="getProductList" resultType="com.hyundai.project.dto.MainListVO">
+ 	select p.pid||'_'||c.ccolorcode productCode, c.cimage1 T01imageUrl, p.pname productName, p.bname brandName, p.pprice price
+	from product p join color c on p.pid = c.pid
+	where p.pstatus = #{param1} and p.clarge = #{param2}
+ </select> 
+ 
+ <select id="getMagazineList" resultType="com.hyundai.project.dto.MainMagazineListVO">
+	select msubtitle mobileSubTitle, dsubtitle desktopSubTitle, mtitle mobileTitle,
+ 	 mimgurl imageUrl, mid pk, mcategory category, dtitle desktopTitle  
+    from magazine where mdisplay = 1
+ </select> 
+
+ </mapper> 
+ 

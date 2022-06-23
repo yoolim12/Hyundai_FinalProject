@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.memberDAO.CartDAO">
+
+	<select id="getCart"
+		resultType="com.hyundai.project.dto.CartDTO">
+		select p.pid, p.bname, p.pname, p.pprice, c.ccolorcode,
+		c.cimage1, mc.ssize, mc.qty from
+		product.product p join product.color c on p.pid = c.pid
+		join member.cart mc on p.pid = mc.pid and c.ccolorcode = mc.ccolorcode
+		where memail = #{memail}
+	</select>
+
+	<insert id="insertCart">
+		insert into cart(memail, pid, ccolorcode, ssize, qty)  values(#{memail}, #{param2.pid}, #{param2.ccolorcode}, #{param2.ssize}, #{param2.qty})
+	</insert>
+
+	<delete id="deleteCart">
+		delete cart where memail=#{memail} and pid = #{param2.pid} and ssize = #{param2.ssize} and ccolorcode = #{param2. ccolorcode}
+	</delete>
+
+	<delete id="deleteAllCart">
+		delete cart where memail=#{memail}
+	</delete>
+
+	<update id="updateCart">
+		update cart set ccolorcode=#{param2.newcolorcode}, ssize=#{param2.newsize}, qty=#{param2.newqty} where memail=#{memail} and pid=#{param2.pid} and ccolorcode=#{param2.ccolorcode} and ssize=#{param2.ssize}
+	</update>
+
+</mapper>
