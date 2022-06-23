@@ -16,6 +16,7 @@ public class OrderResDTO {
 	private int ousedpoint;
 	private int ousedcoupon;
 	private int opayment;
+	private int oprice;
 	private int ostatus;
 	private int odiscounted;
 	private String pid;
