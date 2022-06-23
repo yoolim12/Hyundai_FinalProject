@@ -12,7 +12,6 @@
 	        $(this).parents('.basket_info').slideUp('fast');
 	    }
 	});
-	
 	$(document).on("click", '.btn_option', function () {
         //옵션변경 클릭시 모든 하위 레이어 닫기
         $("[class^=store_info]").css("display", "none");
@@ -29,6 +28,9 @@
 	});
 	
 	$(document).ready(function () {
+	    const hpoint = numWithComma([[${memberpoint}]]);
+        var hhtml = `<br><a class="count" href="https://www.h-point.co.kr/cu/myh/myPnt.shd" target="_blank" onclick="GA_Event('마이페이지','회원정보','H.POINT');"><span>`+hpoint+`P</span></a>`;
+        document.getElementById("hpoint").innerHTML += hhtml;
 		const memail = "[[${member.memail}]]";
 		let o_arr = []; /* 주문(번호) 개수. 중복제거 */
 		let cnt = []; /* 주문 번호에 해당하는 상품 개수 조회 위한 주문 번호 저장 배열 */
@@ -346,8 +348,7 @@
                             <a class="count" href="/ko/mypage/mypoint" onclick="GA_Event('마이페이지','회원정보','한섬마일리지');">0&nbsp;<span>M</span></a>
                         </div> -->
                         <div class="point">
-                            <p class="title">H.POINT</p>
-                            <a th:text="${memberpoint}" class="count" href="https://www.h-point.co.kr/cu/myh/myPnt.shd" target="_blank" onclick="GA_Event('마이페이지','회원정보','H.POINT');">message<span>P</span></a>
+                            <p class="title" id="hpoint">H.POINT</p>
                         </div>
                         <div class="point">
                             <p class="title">GIFT CARD</p>
