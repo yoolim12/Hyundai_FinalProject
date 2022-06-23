@@ -24,17 +24,23 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Log4j2
-@RequestMapping("/cart/*")
+@RequestMapping("/cart")
 @RestController
 public class CartRestController {
     @Autowired
     private CartService service;
 
-    @GetMapping(value = "/{memail}")
-    public ResponseEntity<List<CartDTO>> getCart(@PathVariable("memail") String memail) {
+    @GetMapping("/list")
+    public ResponseEntity<List<CartDTO>> getCart(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO) {
         ResponseEntity<List<CartDTO>> entry = null;
-
+        String memail;
         try {
+            if (oauthMemberDTO == null) {
+                memail = authMemberDTO.getMemail();
+            }
+            else {
+                memail = oauthMemberDTO.getEmail();
+            }
             entry = new ResponseEntity<List<CartDTO>>(service.getCart(memail), HttpStatus.OK);
             log.info(entry);
         } catch (Exception e) {
@@ -44,10 +50,16 @@ public class CartRestController {
         return entry;
     }// end list
 
-    @PostMapping("/{memail}")
-    public String insertCart(@PathVariable("memail") String memail, @RequestBody CartDTO cart) throws Exception {
-
+    @PostMapping
+    public String insertCart(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, @RequestBody CartDTO cart) throws Exception {
+        String memail;
         try {
+            if (oauthMemberDTO == null) {
+                memail = authMemberDTO.getMemail();
+            }
+            else {
+                memail = oauthMemberDTO.getEmail();
+            }
             service.insertCart(memail, cart);
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,10 +67,16 @@ public class CartRestController {
         return "success";
     } // end findid
 
-    @DeleteMapping("/{memail}")
-    public String deleteCart(@PathVariable("memail") String memail, @RequestBody CartDTO cart) throws Exception {
-
+    @DeleteMapping
+    public String deleteCart(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, @RequestBody CartDTO cart) throws Exception {
+        String memail;
         try {
+            if (oauthMemberDTO == null) {
+                memail = authMemberDTO.getMemail();
+            }
+            else {
+                memail = oauthMemberDTO.getEmail();
+            }
             log.info(memail, cart);
             service.deleteCart(memail, cart);
         } catch (Exception e) {
@@ -67,10 +85,16 @@ public class CartRestController {
         return "success";
     }
 
-    @DeleteMapping("/all/{memail}")
-    public String deleteALLCart(@PathVariable("memail") String memail) throws Exception {
-
+    @DeleteMapping("/all")
+    public String deleteALLCart(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO) throws Exception {
+        String memail;
         try {
+            if (oauthMemberDTO == null) {
+                memail = authMemberDTO.getMemail();
+            }
+            else {
+                memail = oauthMemberDTO.getEmail();
+            }
             service.deleteAllCart(memail);
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,9 +102,16 @@ public class CartRestController {
         return "success";
     }
 
-    @PutMapping("/{memail}")
-    public String updateCart(@PathVariable("memail") String memail, @RequestBody CartUpdateDTO cart) {
+    @PutMapping
+    public String updateCart(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, @RequestBody CartUpdateDTO cart) {
+        String memail;
         try {
+            if (oauthMemberDTO == null) {
+                memail = authMemberDTO.getMemail();
+            }
+            else {
+                memail = oauthMemberDTO.getEmail();
+            }
             log.info(cart);
             service.updateCart(memail, cart);
         } catch (Exception e) {
