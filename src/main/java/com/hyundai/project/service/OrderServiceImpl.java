@@ -56,9 +56,12 @@ public class OrderServiceImpl implements OrderService {
                 cartDAO.deleteCart(email, cart);
                 log.info("Cart 삭제 성공");
             }
-
+            log.info("for문 종료");
             // 포인트 차감
+            log.info("memail : " + olist.getMemail());
+            log.info("point : " + olist.getOusedpoint());
             memberDAO.pointApply(olist.getMemail(), olist.getOusedpoint());
+            log.info("포인트 차감");
         } catch (Exception e) {
             log.info("ERROR:" + e.getMessage());
             throw e;

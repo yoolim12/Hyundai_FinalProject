@@ -18,9 +18,9 @@
 		update member set mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
 	</select>
 	
-	<select id="delMember">
+	<delete id="delMember">
 		delete from member where memail = #{email}
-	</select>
+	</delete>
 	
 	<!-- 유림 -->
 	<insert id="simpleRegister" parameterType="com.hyundai.project.dto.MemberDTO">
@@ -46,7 +46,12 @@
 		where c1.memail = #{memail} and c1.from_social=#{from_social}
 	</select>
 
+	<!-- 정민 -->
 	<update id="pointApply">
-		update member set mpoint = mpoint - #{ousedpoint} where memail = #{memail};
+		update member set mpoint = mpoint - #{ousedpoint} where memail = #{memail}
 	</update>
+
+	<select id="getPoint" resultType="int">
+		select mpoint from member where memail = #{memail}
+	</select>
 </mapper>
