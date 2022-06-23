@@ -13,9 +13,16 @@ public interface MemberService {
 	// 회원 수정
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception;
 	
+	// 회원 수정 (관리자)
+	public void admodifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno);
+	
 	// 회원 탈퇴
 	public void delMember(String email) throws Exception;
 	
 	// 회원 전체 조회
 	public List<MemberDTO> showAllMember() throws Exception;
+
+	// 회원 포인트 조회
+	public int getPoint(String memail) throws Exception;
+
 }

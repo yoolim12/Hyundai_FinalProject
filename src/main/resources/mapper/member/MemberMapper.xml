@@ -18,17 +18,17 @@
 		update member set mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
 	</select>
 	
-	<select id="delMember">
+	<delete id="delMember">
 		delete from member where memail = #{email}
-	</select>
+	</delete>
 	
 	<!-- 유림 -->
 	<insert id="simpleRegister" parameterType="com.hyundai.project.dto.MemberDTO">
 		insert into member
-		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social) 
+		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social, gno, mpoint)
 		values (#{memail}, #{mname}, #{birth}, #{telnum}
-		, #{maddress}, #{mgender}, #{mpassword}, #{memail_info}
-		, sysdate, sysdate, 0)
+			   , #{maddress}, #{mgender}, #{mpassword}, #{memail_info}
+			   , sysdate, sysdate, #{from_social}, #{gno}, #{mpoint})
 	</insert>
 	
 	<insert id="registerRole" parameterType="com.hyundai.project.dto.MemberRoleDTO">
@@ -39,10 +39,19 @@
 	
 	<select id="findByEmail" resultType="com.hyundai.project.dto.MemberJoinDTO">
 		select
-		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth, c1.telnum, c1.maddress, c1.mgender, c1.memail_info
+		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth, c1.telnum, c1.maddress, c1.mpoint, c1.mgender, c1.memail_info
 		from
 		member c1 join memberrole c2
 		on c1.memail = c2.memail
 		where c1.memail = #{memail} and c1.from_social=#{from_social}
+	</select>
+
+	<!-- 정민 -->
+	<update id="pointApply">
+		update member set mpoint = mpoint - #{ousedpoint} where memail = #{memail}
+	</update>
+
+	<select id="getPoint" resultType="int">
+		select mpoint from member where memail = #{memail}
 	</select>
 </mapper>

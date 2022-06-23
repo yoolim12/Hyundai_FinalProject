@@ -23,5 +23,6 @@ public class MemberDTO {
     private Date moddate;
     private Date regdate;
     private int from_social;
+    private int mpoint;
     private int gno;
 }

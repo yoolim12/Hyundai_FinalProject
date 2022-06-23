@@ -17,7 +17,7 @@
 		#{oreceiver},
 		#{otel},
 		#{ousedpoint}, #{ousedcoupon}, #{opayment}, #{ostatus},
-		#{odiscounted})
+		#{odiscounted}, #{oprice})
 	</insert>
 
 	<insert id="insertOrderItem"

@@ -1,22 +1,13 @@
 package com.hyundai.project.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.hyundai.project.dto.AuthMemberDTO;
+import com.hyundai.project.dto.ClubAuthMemberDTO;
 import com.hyundai.project.memberDAO.MemberDAO;
 
 import lombok.extern.log4j.Log4j2;
@@ -31,10 +22,19 @@ public class MypageController {
 	private MemberDAO memberDAO;
 	
 	@RequestMapping("/mypage")
-	public void mypage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
-		model.addAttribute("member", authMemberDTO);
-		model.addAttribute("membername", authMemberDTO.getMname());
-		model.addAttribute("membergno", memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getGno());
+	public void mypage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) throws Exception {
+		if (oauthMemberDTO == null) {
+      model.addAttribute("member", authMemberDTO);
+			model.addAttribute("membername", authMemberDTO.getMname());
+			model.addAttribute("memberpoint", memberDAO.getPoint(authMemberDTO.getMemail()));
+			model.addAttribute("membergno", memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getGno());
+		}
+		else {
+      model.addAttribute("member", oauthMemberDTO);
+			model.addAttribute("membername", oauthMemberDTO.getName());
+			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getMemail()));
+			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getEmail(), 1).getGno());
+		}
 	}
 	
 	@RequestMapping("/personInformationChange")
