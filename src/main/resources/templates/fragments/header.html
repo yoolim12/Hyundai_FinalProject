@@ -305,6 +305,21 @@
                         $(".gnb_nav.hscene1906 .cate_m .hscene").mouseout(function () {
                             $(".gnb_nav.hscene1906 .cate_m li .delch_box").removeClass("on");
                         });
+                        let cart_total;
+                        $.ajax({
+                            type: "get",
+                            url: "/cart/total",
+                            dataType: "json",
+                            async: false,
+                            contentType: "application/json",
+                            error: function (request, status, error) {
+                                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                            },
+                            success: function (result) {
+                                cart_total = result;
+                                $("#cartCount").text('('+cart_total+')');
+                            }
+                        });
 
                         var todayDate = new Date();
                         var startDate = new Date("2018/05/29 00:00:01"),
@@ -1761,7 +1776,7 @@
                             </li>
                             <li>
                                 <a href="/cart" onclick="GA_Event('공통','유틸_메뉴','쇼핑백');">
-                                    <span class="ico cart">장바구니</span> <span class="count"><span id="cartCount">(개수)</span> </span>
+                                    <span class="ico cart">장바구니</span> <span class="count"><span id="cartCount"></span> </span>
                                 </a>
                             </li>
                         </ul>

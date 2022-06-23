@@ -1,12 +1,13 @@
 package com.hyundai.project.controller;
 
 import java.util.List;
+import java.util.Map;
 
-import com.hyundai.project.dto.CartUpdateDTO;
-import com.hyundai.project.dto.OrderStationDTO;
+import com.hyundai.project.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hyundai.project.dto.CartDTO;
 import com.hyundai.project.service.CartService;
 
 import lombok.extern.log4j.Log4j2;
@@ -80,7 +80,6 @@ public class CartRestController {
 
     @PutMapping("/{memail}")
     public String updateCart(@PathVariable("memail") String memail, @RequestBody CartUpdateDTO cart) {
-
         try {
             log.info(cart);
             service.updateCart(memail, cart);
@@ -93,6 +92,19 @@ public class CartRestController {
     @PostMapping("/station")
     public OrderStationDTO orderStation(@RequestBody OrderStationDTO station) {
         return station;
+    }
+
+    @GetMapping("/total")
+    public int getCartTotal(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO) throws Exception {
+        String memail;
+        if(authMemberDTO == null && oauthMemberDTO == null) return 0;
+        if (oauthMemberDTO == null) {
+            memail = authMemberDTO.getMemail();
+        }
+        else {
+            memail = oauthMemberDTO.getEmail();
+        }
+        return service.getCartTotal(memail);
     }
 
 } // end class

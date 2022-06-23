@@ -37,7 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        http.authorizeRequests()
                .antMatchers("/HandsomeLogin/HandsomeLoginPage")
                .permitAll()
-               .antMatchers("/mypage/mypage").hasRole("USER")
+               .antMatchers("/mypage").hasRole("USER")
+               .antMatchers("/cart").hasRole("USER")
+               .antMatchers("/order").hasRole("USER")
                ;
 
        //인가 인증 문제시 로그인 화면

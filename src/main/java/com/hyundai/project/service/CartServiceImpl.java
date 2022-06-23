@@ -52,4 +52,9 @@ public class CartServiceImpl implements CartService {
 		cartDAO.updateCart(memail, cart);
 	}
 
+	@Override
+	public int getCartTotal(String memail) throws Exception {
+		return cartDAO.getCartTotal(memail);
+	}
+
 }

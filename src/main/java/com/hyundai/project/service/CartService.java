@@ -17,5 +17,7 @@ public interface CartService {
 	public void deleteAllCart(String memail) throws Exception;
 	
 	public void updateCart(String memail, CartUpdateDTO cart) throws Exception;
+
+	public int getCartTotal(String memail) throws Exception;
 	
 }

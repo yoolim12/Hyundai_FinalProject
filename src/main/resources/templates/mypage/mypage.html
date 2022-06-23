@@ -69,7 +69,9 @@
                         		status = '결제 취소'
                         	}
                         	let tprice = '₩'+numWithComma(result[i].oprice);
-                        	let point = numWithComma(result[i].pprice*0.05);
+                            let usedpoint = '( -'+numWithComma(result[i].ousedpoint)+' P )';
+                            let rprice = result[i].oprice - result[i].ousedpoint;
+                        	let point = numWithComma(Math.ceil(rprice*0.05));
                         	ohtml += `<tr>
                         			<td class="al_middle">
                         				${result[i].oid}
@@ -104,7 +106,8 @@
 	                                	${tot}
 	                                </td>
 	                                <td class="al_middle">
-	                                	<span>${tprice}</span>
+	                                	<span>${tprice}</span><br>
+                                        <span style="font-size: 8px; color:#c69c6d;">${usedpoint}</span>
 	                                </td>
 	                                <td class="al_middle">
 	                                	${status}
@@ -322,7 +325,7 @@
             <!-- ph_guide -->
             <div class="ph_guide">
                 <p class="tlt">고객센터 운영 안내</p>
-                <p class="phone">1800-5700<span style="color: #c69c6d;" class="txt">(유료)</span></p>
+                <p class="phone" style="font-size:18px;">1800-5700<span style="color: #c69c6d;" class="txt"><br>(유료)</span></p>
                 <p class="txt">
                     평일(월~금)<br />
                     am 09:00 ~ pm 18:00<span>토/일, 공휴일 휴무</span>
@@ -412,10 +415,6 @@
                     최근주문&nbsp;
                     <!-- 최근주문 -->
                 </h4>
-                <p class="txt_line">
-                    최근 1개월 내 주문하신 내역입니다.
-                    <!-- 최근 1개월 내 주문하신 내역 입니다. -->
-                </p>
                 <div class="btn_wrap">
                     <a href="/ko/mypage/order/myorders" class="btn add_ss" onclick="GA_Event('마이페이지','최근주문','전체보기');">전체보기<!-- 전체보기 --></a>
                 </div>
