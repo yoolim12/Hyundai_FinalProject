@@ -32,6 +32,7 @@ public class MypageController {
 	
 	@RequestMapping("/mypage")
 	public void mypage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
+		model.addAttribute("member", authMemberDTO);
 		model.addAttribute("membername", authMemberDTO.getMname());
 		model.addAttribute("membergno", memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getGno());
 	}
