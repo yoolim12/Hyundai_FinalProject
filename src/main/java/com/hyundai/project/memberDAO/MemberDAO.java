@@ -30,4 +30,10 @@ public interface MemberDAO {
 		
 	// 회원 전체 조회
 	public List<MemberDTO> showAllMember() throws Exception;
+
+	// 결제 시 사용된 포인트 차감
+	public void pointApply(String memail, int ousedpoint);
+
+	// 회원 포인트 조회
+	public int getPoint(String memail) throws Exception;
 }

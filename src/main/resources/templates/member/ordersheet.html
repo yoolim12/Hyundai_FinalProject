@@ -16,7 +16,7 @@
     <script>
         console.log("[[${member}]]");
         const memail = "[[${member.getMemail()}]]";
-        const mpoint = "[[${member.getMpoint()}]]";
+        const mpoint = "[[${mpoint}]]";
         var res_data = JSON.parse(localStorage.getItem("station-item"));
         console.log(res_data);
         var item_data = [];
@@ -83,9 +83,6 @@
                     }
                 });
             });
-            function getOtel(h1, h2, h3) {
-                return h1 + h2 + h3;
-            }
             function doUseHPoint() {
                 var up = $("#ousedpoint").val();
                 if(up < 100 || mpoint < 100) {
@@ -96,14 +93,22 @@
                 if(up > mpoint) {
                     $("#ousedpoint").val(mpoint);
                 }
-                var remain = parseInt(mpoint) - up;
-                if(remain < 0) remain = 0;
-                $('#userpoint').text(numWithComma(remain));
+                if(parseInt($('#ousedpoint').val()) < res_data.totalPrice) {
+                    var remain = parseInt(mpoint) - up;
+                    if(remain < 0) remain = 0;
+                    $('#userpoint').text(numWithComma(remain));
+                } else {
+                    $("#ousedpoint").val(res_data.totalPrice);
+                    $('#userpoint').text(numWithComma(mpoint - parseInt($('#ousedpoint').val())));
+                }
                 var la = new layerAlert('포인트 적용이 완료되었습니다.');
             }
             function cancelUseHPoint() {
                 $("#ousedpoint").val(0);
                 $("#userpoint").text(numWithComma(mpoint));
+            }
+            function getOtel(h1, h2, h3) {
+                return h1 + h2 + h3;
             }
             function orderProcess() {
                 // !!! 값 설정하기
@@ -148,7 +153,9 @@
                         lc.confirmAction = function(){
                             localStorage.removeItem('station-item');
                             var la = new layerAlert('결제되었습니다.');
-                            location.href = "/order"; // !!! order-list로
+                            la.confirmAction = function(){
+                                location.href = "/order";
+                            };
                         };
                     },
                     error: function (request, status, error) {
