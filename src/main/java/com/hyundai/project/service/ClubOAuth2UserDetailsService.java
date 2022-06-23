@@ -3,6 +3,7 @@ package com.hyundai.project.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -100,9 +101,25 @@ extends DefaultOAuth2UserService {
  
         // 신규회원 테이블에 저장 시작
         String email = null;
+        Map<String, Object> map_email;
+        
         if (clientName.equals("Google")) {// 구글 인증 확인
             email = oAuth2User.getAttribute("email");
         } // end if
+        if (clientName.equals("Kakao")) {// 카카오 인증 확인
+            map_email = oAuth2User.getAttribute("kakao_account");
+            email = map_email.get("email").toString();
+            log.info("카카오 로그인 인증 확인");
+            log.info(email);
+        } // end if
+        if (clientName.equals("Naver")) {// 네이버 인증 확인
+        	map_email = oAuth2User.getAttribute("response");
+            email = map_email.get("email").toString();
+            log.info("네이버 로그인 인증 확인");
+            log.info(email);
+        } // end if
+        
+        
         log.info("구글 인증 확인");
         log.info("email : " + email);
      

@@ -1,6 +1,7 @@
 package com.hyundai.project.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,9 +87,29 @@ public class MypageRestController {
 			@AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) {
 		
 		String mpassword = passwordEncoder.encode(map.get("mpassword"));
-//		MemberJoinDTO memberJoinDTO = memberDAO.findByEmail(authMemberDTO.getEmail(), 0);
-//		Date birth = memberJoinDTO.getBirth();
 		authMemberDTO.setMpassword(mpassword);
+		
+		System.out.println("##############AUTHMEMBER###############"+authMemberDTO);
+		
+		try {
+    		service.modifyMember(authMemberDTO);
+    		
+        	Gson gson = new Gson();
+    		response.setContentType("application/json; charset=utf-8");
+    		response.getWriter().print(gson.toJson(map)); 
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+	}
+	
+	@RequestMapping(value="/updatecomplete")
+	@ResponseBody
+	public void updatecomplete(@RequestBody HashMap<String, String> map, 
+			@AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) {
+		
+		authMemberDTO.setMemail_info(map.get("memail_info"));
+		authMemberDTO.setMname(map.get("mname"));
+		authMemberDTO.setBirth(Date.valueOf(map.get("birth")));
 		
 		System.out.println("##############AUTHMEMBER###############"+authMemberDTO);
 		

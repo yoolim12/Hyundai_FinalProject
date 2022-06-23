@@ -59,6 +59,30 @@
                 <script type="text/javascript">
     //<![CDATA[ 
     $(document).ready(function(){
+    	$("#go_save").click(function(){
+            var birth = $("#selYear").val() + "-" + $("#selMonth").val() + "-" + $("#selDay").val();
+            var memail_info = $("#email").val()+"@"+$("#emailDomain").val();
+            var mname = $("#name").val();
+                
+            $.ajax({
+                   type:"POST",
+                   url:"/mypage/updatecomplete",
+                   dataType: 'JSON',
+                   contentType : "application/json",
+                   data:JSON.stringify({
+                	   'mname' : mname,
+                	   'birth' : birth,
+                	   'memail_info' : memail_info
+                   }),
+                   error : function( request, status, error ){
+                       layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
+                       console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
+                   },
+                   success:function(result){
+                	   alert(result);
+                }
+            });
+        });
         if("ko" == "ko"){
             var pwRegExp = /^(?=.*[a-zA-Z])(?=.*[\?\<\>\;\:\'\"\`\(\)\{\}\[\]\|\\\~\,\.!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
         }else{
@@ -85,7 +109,7 @@
                 else $("#emailDomainSel option:eq(0)").attr("selected", "selected");
                 
                 var nowYear = parseInt('2008');
-                var nowMonth = parseInt('06');
+                var nowMonth = parseInt('12');
                 var nowDay = parseInt('21');
                 var monthArray = [0, 31, 28, 31, 30, 31, 30, 31, 31 ,30, 31, 30, 31];
 
@@ -96,9 +120,15 @@
                 $('#selYear').append("<option value='" + i + "'>" + i + "</option>");
             }
             
-                $("#selDay").val("**");
-                $("#selMonth").val("02");
-                $("#selYear").val("1998");
+            	var birth = "[[${birth}]]";
+            	const arr = birth.split("-");
+            	console.log(birth);
+            	console.log(arr[2]);
+            	console.log(arr);
+            	
+                $("#selDay").val(arr[2]);
+                $("#selMonth").val(arr[1]);
+                $("#selYear").val(arr[0]);
             
             $("#selYear").change(function(){
 
@@ -305,47 +335,27 @@
                     });
                 } else {
                     $("#saveBtn").click(function(){
-                        $("#sBirthday").val($("#selYear").val() + $("#selMonth").val() + $("#selDay").val());
-                        $("#emailAddress").val($("#email").val()+"@"+$("#emailDomain").val());
-                        
-                        var vc = new ValidationCheck(); 
-                        vc.checkIdList = ['email', 'emailDomain', 'emailDuplChk', 'name'];
-                        
-                        if($("#emailDuplChk").val() == 'N'){
-                            return;
-                        }
-                        
-                        if($("#emailAddress").val().length > 50){
-                            layerAlert("E-mail은 최대 50자입니다.");
-                            return;
-                        }
-                        
-                        if(vc.isValid()){           
+                        var birth = $("#selYear").val() + "-" + $("#selMonth").val() + "-" + $("#selDay").val();
+                        var memail_info = $("#email").val()+"@"+$("#emailDomain").val();
+                        var mname = $("#name").val();
                             
-                            var paramDatas = $("#updateProfileForm").serialize();
-                            
-                            $.ajax({
-                                type:"POST",
-                                url:"/ko/mypage/updatecomplete",
-                                datatype:"json",
-                                data:paramDatas,
-                                error : function( request, status, error ){
-                                    layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
-                                    console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
-                                },
-                                success:function(result){
-                                    if(result == "SUCCESS"){
-                                        var lc = new layerAlert("입력하신 정보가 변경완료 되었습니다.");
-                                        
-                                        lc.confirmAction = function(){
-                                            location.href="/ko/mypage";
-                                        };
-                                    }else{
-                                        layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
-                                    }
-                                }
-                            });
-                        }
+                        $.ajax({
+                               type:"POST",
+                               url:"/mypage/updatecomplete",
+                               datatype:"json",
+                               data:{
+                            	   'mname' : mname,
+                            	   'birth' : birth,
+                            	   'memail_info' : memail_info
+                               },
+                               error : function( request, status, error ){
+                                   layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
+                                   console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
+                               },
+                               success:function(result){
+                            	   alert(result);
+                            }
+                        });
                     });
                     
                     $("#memberSecessionBtn").click(function(){
@@ -1196,7 +1206,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row" class="th_space">아이디</th>
-                                    <td>yoo*****************</td>
+                                    <td th:text="${memail}"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="th_space"><label for="pwChangeBtn">비밀번호</label></th>
@@ -1239,7 +1249,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="th_space"><strong class="reqd">*</strong> 이름</th>
-                                    <td><input type="text" style="width:120px" id="name" name="name" value="최*림" /> 
+                                    <td><input type="text" style="width:120px" id="name" name="name" th:value="${mname}"/> 
                                     </td>
                                 </tr>
                                 <tr>
@@ -1263,7 +1273,6 @@
                                             <option value="12">12</option>
                                         </select>
                                         <select style="width:120px" id="selDay" title="일">
-                                            <option value="default" selected>**</option>
                                             <option value="">일</option>
                                             <option value="01">01</option>
                                             <option value="02">02</option>
@@ -1332,7 +1341,7 @@
             </div>
             <div class="btnwrap mypage2">
                 <input type="button" class="btn wt" value="취소" id="cancleBtn" />
-                <input type="button" class="btn gray" value="변경사항 저장" id="saveBtn"/>
+                <input type="button" class="btn gray" value="변경사항 저장" id = "go_save"/>
             </div>
             <!-- //btn_btwrap -->
         </div>

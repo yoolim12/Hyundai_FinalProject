@@ -39,8 +39,13 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/personInformationChange")
-	public void mypageModifyPage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
-		model.addAttribute("memail", authMemberDTO.getMemail());
+	public void mypageModifyPage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) {
+		if (oauthMemberDTO == null) {
+			model.addAttribute("memail", authMemberDTO.getMemail());
+		}
+		else {
+			model.addAttribute("memail", oauthMemberDTO.getEmail());
+		}
 	}
 	
 //	@RequestMapping(value="/passwordCheck", method=RequestMethod.POST)
@@ -62,7 +67,9 @@ public class MypageController {
 //	}
 	
 	@RequestMapping("/modifyPage")
-	public void modifyPage() {
-		
+	public void modifyPage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) {
+		model.addAttribute("memail", authMemberDTO.getMemail());
+		model.addAttribute("mname",authMemberDTO.getMname());
+		model.addAttribute("birth", authMemberDTO.getBirth());
 	}
 }

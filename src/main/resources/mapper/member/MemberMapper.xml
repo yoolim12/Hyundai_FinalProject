@@ -18,9 +18,17 @@
 		update member set mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
 	</select>
 	
+	<update id="admodifyMember">
+		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress}, gno = #{gno}, moddate = sysdate where memail = #{memail}
+	</update>
+	
 	<delete id="delMember">
 		delete from member where memail = #{email}
 	</delete>
+	
+	<update id = "updateGrade">
+		update member set gno = #{gno} where memail = #{email}
+	</update>
 	
 	<!-- 유림 -->
 	<insert id="simpleRegister" parameterType="com.hyundai.project.dto.MemberDTO">
