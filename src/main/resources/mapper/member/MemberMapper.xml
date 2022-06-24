@@ -26,8 +26,30 @@
 		delete from member where memail = #{email}
 	</delete>
 	
-	<update id = "updateGrade">
-		update member set gno = #{gno} where memail = #{email}
+	<insert id = "insertLoginLog">
+		insert into loginLog values (#{memail}, sysdate)
+	</insert>
+	
+	<!-- 휴면 계정 갱신 -->
+	<update id = "updateMemberSleep">
+		<![CDATA[
+			update member set telnum = '111' where regdate < '2022-06-23' and telnum != '111'
+		]]>
+	</update>
+	
+	<!-- 등급 갱신 -->
+	<update id = "updateMemberGrade">
+		<![CDATA[
+			update (select A.memail, price, A.gno as g from member A,
+			(select memail, sum(oprice) as price from orderlist group by memail) B
+			where A.memail = B.memail)
+			set g = 
+			case when price >= 0 and price < 1000000 then 1 
+			     when price >= 1000000 and price < 2000000 then 2
+			     when price >= 2000000 and price < 3000000 then 3 
+			     when price >= 3000000 and price < 5000000 then 4 
+			     when price >= 5000000 then 5 end
+		]]>
 	</update>
 	
 	<!-- 유림 -->
@@ -62,7 +84,7 @@
 	<select id="getPoint" resultType="int">
 		select mpoint from member where memail = #{memail}
 	</select>
-
+	
 	<update id="pointSaving">
 		update member set mpoint = mpoint + #{savingpoint} where memail = #{memail}
 	</update>
