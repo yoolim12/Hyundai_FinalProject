@@ -11,6 +11,7 @@
 <script type="text/javascript">
 //<![CDATA[ 
 $(document).ready(function(){
+	console.log(getCsrfHeaderName(), getYCsrfToken());
     $(".showMobile").remove();
     
     $("input[name=allcheck]").change(function(){
@@ -802,11 +803,14 @@ $(document).ready(function(){
             <!--//sub container-->
         </div>
         
-        <form id="resultSend" action="" method="POST"><input type="hidden" name="uid" value="">
+        <form id="resultSend" action="" method="POST">
+        	<input type="hidden" name="uid" value="">
             <input type="hidden" name="checkOptional" id="checkOptional">
-        <div>
-<!-- <input type="hidden" name="CSRFToken" value="e56e3d45-cde9-4afe-a032-58f636c8acd4" /> -->
-</div></form><!-- footerWrap -->
+        	<div>
+				<input type="hidden" th:name="${ _csrf.parameterName }" th:value="${ _csrf.token }" />
+			</div>
+		</form>
+<!-- footerWrap -->
 
 <script type="text/javascript">
 //<![CDATA[ 

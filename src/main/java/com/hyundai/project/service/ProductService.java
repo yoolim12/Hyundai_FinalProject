@@ -14,4 +14,12 @@ public interface ProductService {
 	
 	public List<ProductSizeDTO> getProductSize(String pid, String ccolorcode) throws Exception;
 	
+	// yoolim start
+	public void delProduct(String pid);
+	
+	public void delColor(String pid);
+	
+	public List<ProductDTO> productSearch(String pname);
+	// yoolim end
+	
 }

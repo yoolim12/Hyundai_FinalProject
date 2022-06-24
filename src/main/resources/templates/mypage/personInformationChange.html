@@ -68,6 +68,10 @@ $(document).ready(function(){
 	capsLockCheck('j_password');
 	
 	$("#login_btn").click(function(){
+		//var header = $("meta[name='_csrf_header']").attr('content');
+		//var token = $("meta[name='_csrf']").attr('content');
+		console.log(getYCsrfToken());
+		console.log(getCsrfHeaderName());
 		var vc = new ValidationCheck();
 		vc.checkIdList = ['j_username', 'j_password'];
 		if(vc.isValid()){
@@ -82,7 +86,13 @@ $(document).ready(function(){
 				url:'/mypage/passwordCheck',
 				dataType: 'JSON',
     			contentType : "application/json",
-				data:JSON.stringify({"mpassword":pw}),
+				data:JSON.stringify({
+					"mpassword":pw,
+					"CSRFToken": getYCsrfToken()
+				}),
+				beforeSend: function(xhr){
+			        xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+			    },
 				success:function(response){
 					console.log(response.mpassword)
 					if(response){

@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,6 +39,28 @@
 </head>
 
 <body class="animsition">
+	<form id="CSRFForm" method="post">
+		<div>
+			<input type="hidden" name="CSRFHeadername" th:value="${_csrf.headerName}" />
+            <input type="hidden" name="CSRFToken" th:value="${_csrf.token}" />
+            <input type="hidden" name="CSRFParameterName" th:value="${ _csrf.parameterName }" />
+        </div>
+    </form>
+    
+    <script>
+		function getCsrfHeaderName() {
+			return $("#CSRFForm [name='CSRFHeadername']").val();
+		}
+
+		function getYCsrfToken() {
+			return $("#CSRFForm [name='CSRFToken']").val();
+		}
+
+		function getCsrfParameterName() {
+			return $("#CSRFForm [name='CSRFParameterName']").val();
+		}
+	</script>
+
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -398,7 +423,7 @@
                 </div>
             </header>
             <!-- HEADER DESKTOP-->
-
+			
             <!-- MAIN CONTENT-->
             <div class="main-content">
                 <div class="section__content section__content--p30">
@@ -637,7 +662,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="card-footer">
+                                   <div class="card-footer">
                                         <button type="submit" class="btn btn-primary btn-sm">
                                             <i class="fa fa-dot-circle-o"></i> Submit
                                         </button>
@@ -646,7 +671,29 @@
                                         </button>
                                     </div>
                                 </div>
-                                
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>상품 삭제</strong>
+                                    </div>
+                                    <div class="card-body card-block">
+                                        <!--<form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                        	
+                                        </form>-->
+                                        <div class="form-header" action="" method="">
+                                        	<div class="col col-md-3">
+                                                <label for="selectLg" class=" form-control-label">상품명 검색</label>
+                                            </div>
+			                                <input id="pname" class="au-input au-input--xl" type="text" name="search" placeholder="상품명을 검색하세요." />
+			                                <button id="productSearch" class="au-btn--submit">
+			                                    <i class="zmdi zmdi-search"></i>
+			                                </button>
+			                            </div>
+			                            <div>
+			                            	<ul id="searchRes">
+			                                </ul>
+			                            </div>
+                                    </div>
+                                </div>                                
                             </div>
              
                         </div>
@@ -663,6 +710,8 @@
         </div>
 
     </div>
+    
+    
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
@@ -689,6 +738,64 @@
     <script src="js/main.js"></script>
 
 </body>
-
+<!-- yoolim start -->
+	<script type="text/javascript">
+		
+		
+			console.log('why?');
+			var searchBtn = document.getElementById("productSearch");
+			searchBtn.addEventListener("click", function(event) {
+				var pname = document.getElementById("pname");
+				console.log(pname.value);
+				
+				$.ajax({
+					type: 'POST',
+					url:'/back/productSearch',
+					dataType: 'JSON',
+					contentType: "application/json",
+					data: JSON.stringify({
+						'pname': pname.value,
+						"CSRFToken": getYCsrfToken()
+					}),
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+					},
+					success: function(response){
+						response.forEach(el => {
+							console.log(el.pname);
+							console.log(el.cimage1);
+							//let new_pTag = document.createElement('p');
+							let parentTag = document.getElementById('searchRes');
+							let liTag = document.createElement('li');
+							let nameTag = document.createElement('div');
+							let imgTag = document.createElement('img');
+							let btn = document.createElement('button');
+							
+							nameTag.innerHTML = el.pname;
+							imgTag.setAttribute('src', el.cimage1);
+							imgTag.setAttribute('style', "width: 100px; height: 100px;");
+							btn.innerHTML = 'DELETE';
+							btn.setAttribute('onclick', 'location.href="/back/delProduct?pid='+el.pid+'"');
+							//btn.setAttribute('value', 'DELETE');
+							
+							parentTag.appendChild(liTag);
+							parentTag.appendChild(nameTag);
+							parentTag.appendChild(imgTag);
+							parentTag.appendChild(btn);
+						});
+						//console.log(response[0]);
+						
+					},
+					error:function(e){
+						console.log('err');
+						console.log(e);
+					}
+				});
+			});
+			
+		
+		
+	</script>
+	<!-- yoolim end -->
 </html>
 <!-- end document-->
