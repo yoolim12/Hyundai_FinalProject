@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
 <div layout:fragment="content">
 <script>
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
 	$(document).on("click", '.btn', function () {
 	    var prodid = $(this).prop('id').split("_");
 
@@ -63,9 +66,11 @@
                         	if (result[i].ostatus === 1){
                         		status = '결제 완료';
                         	} else if (result[i].ostatus === 2){
-                        		status = '입금 대기중';
-                        	} else if (result[i].ostatus === 3)	{
-                        		status = '결제 취소'
+                        		status = '주문 취소';
+                        	} else if (result[i].ostatus === 3){
+                        		status = '배송 준비중'
+                        	} else if (result[i].ostatus === 4){
+                        		status = '배송 완료'
                         	}
                         	let tprice = '₩'+numWithComma(result[i].oprice);
                             let usedpoint = '( -'+numWithComma(result[i].ousedpoint)+' P )';
@@ -109,8 +114,11 @@
                                         <span style="font-size: 8px; color:#c69c6d;">${usedpoint}</span>
 	                                </td>
 	                                <td class="al_middle">
-	                                	${status}
-	                                </td>
+	                                ${status} <br>`
+                                if(result[i].ostatus === 1) {	
+                                	ohtml += `<button onclick="cancelOrder(${result[i].oid})" class="btn gray_ss">주문취소</button>`
+                                }        
+                              	 	ohtml += `</td>
                         			<td class="al_middle">
                         				${point} P
                         			</td>
@@ -193,6 +201,33 @@
            }
 		})
 	})
+	
+	function cancelOrder(oid) {
+		var lc = new layerConfirm('주문을 취소하시겠습니까?', '확인', '취소');
+        lc.confirmAction = function(){
+        	$.ajax({
+                url: "/mypage/cancel/"+oid,
+                method: "put",
+                /* data: JSON.stringify(data), */
+                contentType: "application/json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+                cache: false,
+                success: function (result) {
+	                var la = new layerAlert(result);
+	                la.confirmAction = function(){
+						location.href = "/mypage";	                	
+	                }
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            });
+        };
+
+        }
+	
    // 리스트에서 제목 클릭 시 내용이 펼쳐지도록
     function showContent(i) {
         var listTag = "";
@@ -233,6 +268,12 @@
             $.ajax({
                 url: url,
                 method: "post",
+                data:JSON.stringify({
+					"CSRFToken": getYCsrfToken()
+				}),
+				beforeSend: function(xhr){
+					 xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+				},
                 success: function (data) {
                     alert("완료되었습니다.");
                     location.href='/member/mypage';

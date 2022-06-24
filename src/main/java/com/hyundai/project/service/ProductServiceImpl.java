@@ -34,5 +34,21 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductSizeDTO> getProductSize(String pid, String ccolorcode) throws Exception {
 		return productDAO.getProductSize(pid, ccolorcode);
 	}
-
+	
+	@Override
+	public void delProduct(String pid) {
+		productDAO.delProduct(pid);
+	}
+	
+	@Override
+	public void delColor(String pid) {
+		productDAO.delColor(pid);
+	}
+	
+	@Override
+	public List<ProductDTO> productSearch(String pname){
+		return productDAO.productSearch(pname);
+	}
+	
+	
 }

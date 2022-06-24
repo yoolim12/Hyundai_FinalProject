@@ -28,4 +28,14 @@ public interface ProductDAO {
 			throws SQLException;
 
 	public int getTotal(String clarge, String cmedium, String csmall) throws SQLException;
+	
+	// yoolim start
+	public void delProduct(String pid);
+	
+	public void delColor(String pid);
+	
+	public void delStock(String pid);
+	
+	public List<ProductDTO> productSearch(String pname);
+	// yoolim end
 }

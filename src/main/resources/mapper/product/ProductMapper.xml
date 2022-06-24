@@ -48,5 +48,27 @@
 		select count(distinct pname) from product 
 			where clarge = #{param1} and cmedium = #{param2} and csmall = #{param3}
 	</select>
+	
+	<!-- yoolim start -->
+	<select id="productSearch" resultType="com.hyundai.project.dto.ProductDTO">
+		select p1.pid as pid, p1.pname as pname, p2.cimage1 as cimage1
+		from product p1 
+		join color p2 
+		on p1.pid=p2.pid 
+		where p1.pname=#{pname}
+	</select>
+	
+	<delete id="delStock">
+		delete from stock where pid=#{pid}
+	</delete>
+	
+	<delete id="delColor">
+		delete from color where pid=#{pid}
+	</delete>
+	
+	<delete id="delProduct">
+		delete from product where pid=#{pid}
+	</delete>
+	<!-- yoolim end -->
    
 </mapper>

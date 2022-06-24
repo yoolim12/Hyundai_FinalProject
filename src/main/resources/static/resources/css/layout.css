@@ -655,7 +655,7 @@ iframe.lnb{width:100%;height:100%}
 .util_menu.renew1907 .btn_viptalk_v2.v3{top:2px;right:-81px}
 .honey_talk_service1905.remove1907{position:absolute;top:49px;right:-120px}
 /* 4주년 셀렉트샵 툴팁 191016 */
-.gnb_nav.hscene1910 .cate_m .hscene span{background:url('http://cdn.thehandsome.com/pc/promotion/select2/pc_hscene1910_topGnb.png')no-repeat;width:27px;height:18px;background-size:27px;position:absolute;right:0}
+.gnb_nav.hscene1910 .cate_m .hscene span{background:url('http://cdn.thehandsome.com/pc/promotion/select2/pc_hscene1910_topGnb.png') no-repeat; width:27px; height:18px; background-size:27px; position:absolute; right:0}
 .gnb_nav.hscene1910 .cate_m .hscene{padding-right:33px}
 /* 메인 - 외국어전환탭 191105 */
 .top_nav_wrap .lang_switch.lang_1911{width:79px}
@@ -841,3 +841,13 @@ p.amc_morebtn a::before{ content:''; position:absolute; top:-15px; left:-25px; w
 #headerWrap.selectshop-header-wrap .gnbwarp .gnb_nav .sub_menu.sub_brand > ul > li {margin-right:45px}
 #headerWrap .gnbwarp .gnb_nav .sub_menu.sub_brand > ul > li.new{position:relative;}
 #headerWrap .gnbwarp .gnb_nav .sub_menu.sub_brand > ul > li.new:after{content:""; display:block; width:6px; height:6px; background:url(http://cdn.thehandsome.com/_ui/desktop/common/images/icon_new_pc.gif) 0 0 no-repeat; position:absolute; top:0px; right:-5px;}
+
+/* yoolim add start */
+.logoutBtn {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    font-size: 10px;
+    color: #363636;
+}
+/* yoolim add end */
