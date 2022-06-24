@@ -81,7 +81,7 @@ $(document).ready(function(){
     $("#cancleBtn").click(function(){
         var lc = new layerConfirm('회원가입을 취소하시겠습니까?', '확인', '취소');
         lc.confirmAction = function(){
-            location.href="https://www.thehandsome.com/ko/";
+            location.href="/main";
         };
     });
     
@@ -807,40 +807,6 @@ $(document).ready(function(){
         <div>
 <!-- <input type="hidden" name="CSRFToken" value="e56e3d45-cde9-4afe-a032-58f636c8acd4" /> -->
 </div></form><!-- footerWrap -->
-
-<script type="text/javascript">
-//<![CDATA[ 
-
-$(document).ready(function(){
-    var ua = navigator.userAgent.toLowerCase();
-    // 익스플로러 브라우저 아닐 때만 인스타 링크버튼 노출
-    if((ua.indexOf('trident') == -1) && (ua.indexOf("msie") == -1) ){
-        $("#f_insta").show();
-    }
-});
-
-getNewsList("https://www.thehandsome.com/ko/magazine");
-
-
-// 2022.03.29 푸터 공지사항 추가
-getFooterNotices("https://www.thehandsome.com/ko/svcenter");
-
-
-function moveMobile(){
-// 	location.href = location.href.replace("?uiel=Desktop", "") + "?uiel=Mobile";
-	location.href = "https://www.thehandsome.com/ko/?uiel=Mobile";
-}
-
-
-function setLogout(){
-    deletecookie("UID");   
-    deletecookie("criteoEmail"); 
-    deletecookie("memberGb");
-    location.href = "https://www.thehandsome.com/ko/logout";
-}
-
-//]]>
-</script>
 
 </div>
 </html>

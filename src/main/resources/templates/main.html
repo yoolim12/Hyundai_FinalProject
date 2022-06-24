@@ -38,7 +38,7 @@
 //             신상품, 베스트 상품, 매거진 리스트 조회에 ajax 이용
             $.ajax({
             	type: "get",
-            	url : "/ko/intro/mainCategoryList",
+            	url : "/mainCategoryList",
                 async : true,
                 contentType : "application/json",
                 error : function( request, status, error ){
@@ -112,94 +112,6 @@
             //layerPopup front test (노출 기한 상관 없이 pk 이용하여 메인에서 팝업 보기)
             var pop1 = getUrlParameter('pop1'); 
             if (typeof pop1 == "undefined") pop1 = "N";
-            // 공지사항
-            $.ajax({
-                type: "get",
-                url : "/ko/svcenter/mainNotice",
-                cache : false,
-                data: {"pop1":pop1},
-                async : true,
-                contentType : "application/json",
-                error : function( request, status, error ){     
-                    console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
-                }, 
-                success : function( result ) {
-                    var todayDate = new Date(); 
-                    var switchMain = "";
-                    if(result.length > 0) switchMain = result[0].readCount;
-                    if("N" != switchMain){//switchMain = "N" 이면 메인팝업 기존방식(하드코딩)으로 돌리기 
-                        if(result.length > 0) {
-                            var documentResult="";
-                            var isocode = "ko";
-                            for(var i = 0 ; i < result.length ; i ++ ){
-                                var showYn = "N";
-                                if(getCookie(result[i].pk+isocode) != todayDate.getDate()) showYn = "Y"; // 오늘은 그만보기
-                                if(pop1 != "N") showYn = "Y"; //팝업 미리보기
-                                if(showYn == "Y") {
-                                     if(null != result[i].bgImage && "" != result[i].bgImage.trim()) {
-                                        documentResult += "<div class='popwrap_renewal1910 txtonimg add1' id='"+result[i].pk+isocode+"'>";
-                                        documentResult += "<img src='"+result[i].bgImage+"' alt='' class='pop_backimg'>";
-                                     } else {
-                                         documentResult += "<div class='popwrap_renewal1910' id='"+result[i].pk+isocode+"'>";
-                                     }
-                                     documentResult += "    <div class='pop_cnt'>";
-                                     if(null != result[i].noticeContentsYN && result[i].noticeContentsYN) {//단순 텍스트 출력 시 title 노출, html 포함 출력 시 title 비노출(html 코드에 title 포함)
-                                         if(null != result[i].noticeTitle && "" != result[i].noticeTitle.trim()) {
-                                             var noticeTitle = result[i].noticeTitle;
-                                             var replacedTitle = noticeTitle.replace(/(?:\r\n|\r|\n)/g, '<br>');
-                                             documentResult += '<h3 class="pop_tlt">'+replacedTitle+'</h3>';
-                                         }
-                                     } 
-                                     if(null != result[i].noticeContents && "" != result[i].noticeContents.trim()){
-                                         if(result[i].noticeContentsYN) {
-                                             documentResult += "        <p class='pop_txt'>";
-                                         } else {//html 코드 출력
-                                             documentResult += "        <p class='pop_txt' style='min-height: 0; padding: 25px 0 0 0;'>";
-                                         }
-                                         var noticeContents = result[i].noticeContents;
-                                         var replacedContents = noticeContents.replace(/(?:\r\n|\r|\n)/g, '<br>');
-                                         documentResult +=                replacedContents;
-                                         documentResult += "        </p>";
-                                     }
-                                     if(null != result[i].bannerLink && "" != result[i].bannerLink.trim()){
-                                         documentResult += "        <div class='linkbox'>";
-                                         documentResult += "            <a href='"+result[i].bannerLink+"'>";
-                                        if(null != result[i].bannerLinkText && "" != result[i].bannerLinkText.trim()) documentResult += result[i].bannerLinkText;
-                                         documentResult += "            </a>";
-                                         documentResult += "        </div>";
-                                     }
-                                     documentResult += "    </div>";
-                                     documentResult += "    <div class='btnwrap'>";
-                                     documentResult += "        <input type='button' class='btn stoptoday closeLayerPopup' value=\"오늘은 그만보기 \">";
-                                     documentResult += "        <input type='button' class='btn close closeLayerPopup' value=\"닫기\">";
-                                     documentResult += "    </div>";
-                                     documentResult += "    <a href='#' class='btn_close closeLayerPopup'><img src='/resources/_ui/desktop/common/images/popup/ico_close.png' alt=\"닫기\"></a>";
-                                     documentResult += "</div>";
-                                }
-                            }
-                            $("#mainNoticeWrap").html(documentResult);
-                            
-                            $(".closeLayerPopup").on("click", function(){
-                                if($(this).hasClass("stoptoday")){//오늘은 그만보기
-                                    var todayDate = new Date(); 
-                                    var cookieId = $(this).parents(".popwrap_renewal1910").attr("id");
-                                    setCookie(cookieId, todayDate.getDate(),1);
-                                }
-                                $(this).parents(".popwrap_renewal1910").css("display","none");
-                            });
-                            
-                        }
-                    } else {
-                        // 한섬마일리지 조회/사용불가
-                        if(getCookie('HSlayerPopup3') != todayDate.getDate()) {
-                            var startDate1 = new Date('2018/12/28 16:00:00'), endDate1 = new Date('2019/02/31 00:00:00');
-                            if (todayDate.getTime() >= startDate1.getTime() && todayDate.getTime() <= endDate1.getTime()) {
-                                //layerPopup6('open');
-                            }
-                        }
-                    }
-                }
-            });
                      
             $(".closeLayerPopup").on("click", function(){
                 if($(this).hasClass("stoptoday")){//오늘은 그만보기
@@ -217,24 +129,14 @@
                     // 여기 확인 비로그인시 주석처리
                     setCookie("memberTransPopup", 'Y', 90);
                 
-            
-            //전환가입유도 팝업
-            
-           
-            //자동로그인 팝업
-                    // 여기 확인 비로그인시 주석 해제
-                    // var ssoUrl = "https://sso.h-point.co.kr:29865" + "/co/setSsoReqJSONP.hd";
-                    // gfnSsoReqAjax(ssoUrl, ssoTokenSuc);
-        	
         });
       
 	    // 메인페이지 Ajax 
-	    // getNewProductList 함수로 카테고리 코드 받아옴.
-	    // 여성 WE , 남성 ME, 포인트 ACC WE03, 셀렉티드 WE01
+	    // 여성 WE , 남성 ME, 포인트 ACC WE03
         function getNewProductList(categoryCode) {
         	$.ajax({
         		type: "get",
-            	url : "/ko/intro/mainNewProductList"+"?categoryCode="+categoryCode,
+            	url : "/mainNewProductList"+"?categoryCode="+categoryCode,
                 dataType : "json",
                 async : true,
                 contentType : "application/json",
@@ -253,7 +155,7 @@
                 		html += '				<a href="/product/productDetail?pid='+result[i].productCode+'" class="item_info1" onclick="javascript:GA_main(\'newImg\',$(this));setEcommerceData('+ i +', \'NEW\', \''+categoryCode+'\');">';
                			html += '					<span class="item_img">';
                			html += '						<img src="'+result[i].t01imageUrl+'/dims/resize/234x353" alt="" name="'+result[i].productName+'" class="respon_image">';
-//                			html += '					</span>';
+                		html += '					</span>';
                			html += '				</a>';
                			html += '				<a href="/product/productDetail?pid='+result[i].productCode+'" class="item_info2" onclick="javascript:GA_main(\'new\',$(this));setEcommerceData('+ i +', \'NEW\', \''+categoryCode+'\');">';
                			html += '					<span class="brand">'+result[i].brandName+'</span>';
@@ -278,7 +180,7 @@
         function getBestProductList(categoryCode) {
         	$.ajax({
         		type: "get",
-            	url : "/ko/intro/mainBestProductList"+"?categoryCode="+categoryCode,
+            	url : "/mainBestProductList"+"?categoryCode="+categoryCode,
                 dataType : "json",
                 async : true,
                 contentType : "application/json",
@@ -322,7 +224,7 @@
         function getMagazineList() {
         	$.ajax({
         		type: "get",
-            	url : "/ko/intro/mainMagazine",
+            	url : "/mainMagazine",
                 cache : false,
                 dataType : "json",
                 async : true,

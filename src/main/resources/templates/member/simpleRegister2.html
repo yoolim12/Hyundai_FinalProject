@@ -69,11 +69,6 @@ $(document).ready(function(){
      var nowDay = parseInt('14');
      var monthArray = [0, 31, 28, 31, 30, 31, 30, 31, 31 ,30, 31, 30, 31];
 
-     
-     
-    
-    //if(nowYear < 2000) nowYear += 1900;
-    
     //년도 
     for(var i=nowYear; i>=1900; i--) {
         $('#selYear').append("<option value='" + i + "'>" + i + "</option>");
@@ -140,7 +135,6 @@ $(document).ready(function(){
 					else{$("#selDay").append("<option value='"+i+"'>"+i+"</option>");}
 				}
 			}
-			
 		}
     });
     
@@ -189,7 +183,6 @@ $(document).ready(function(){
 				$("#selDay").append("<option value='31'>31</option>");
     		}
     	}
-    	
     	
     	//만14세미만 가입X
 		if(nowYear == selYear1 && nowMonth == $('#selMonth').val()){
@@ -276,26 +269,6 @@ $(document).ready(function(){
         }
      });
      
-    //  $("#email, #emailDomain, #emailDomainSel").change(function(){
-    //       $("#emailMsg").text('');
-    //       $("#emailDuplChk").val(''); 
-    //       var email1 = "yoolo0212@gmail.com";
-    //       var email2= $("#email").val()+"@"+$("#emailDomain").val();
-          
-    //       if(email1 != email2){
-	//           $("#ck1").prop('checked', false);
-	//           $("#ck1").attr('checked', false);
-    //       }
-    //   });     
-
-    //   $("#cancleBtn").click(function(){
-    //       var lc = new layerConfirm('회원가입을 취소하시겠습니까?', '확인', '취소');
-    //       lc.confirmAction = function(){
-    //           location.href="https://www.thehandsome.com/ko/";
-    //       };
-    //   });
-
-      
     //   var joinCfBtnChk = 0;
        $("#joinBtn").click(function(){
 
@@ -357,8 +330,6 @@ $(document).ready(function(){
               $("#emailAddress").val("");
           }
           $("#sBirthday").val($("#selYear").val() + $("#selMonth").val() + $("#selDay").val());
-        //   $("#memberJoinForm").attr("action", "/member/simpleRegister2");
-        //   $("#memberJoinForm").submit();
           
           console.log('birthday', $("#sBirthday").val());
           
@@ -427,11 +398,7 @@ $(document).ready(function(){
           });
       });
 });
-// yoolim don't erase finish!!!
 
-/*
- * 비밀번호태그 Key 이벤트 [2017.01.11 - 이현승]
- */
 var passwordValidationCheck = function(fid){
 var t = this;
     
@@ -441,7 +408,6 @@ this.msgFn = function(msg){
 };
     
 this.notLockFn = function(){
-//         //default do nothing. but you can do something!
 };
     
 $('#'+fid).keyup(function(event){
@@ -449,9 +415,6 @@ $('#'+fid).keyup(function(event){
 	});
 }
 
-/*
- * 비밀번호 유효성 체크 [2017.01.11 - 이현승]
- */
 var readonlyFlag = false;
 function passwordSamePassCheck(fid){
     
@@ -793,42 +756,5 @@ function validateEmail(email) {
             </div>
         </div>
 </form>
-<!-- footerWrap -->
-
-<script type="text/javascript">
-//<![CDATA[ 
-
-$(document).ready(function(){
-    var ua = navigator.userAgent.toLowerCase();
-    // 익스플로러 브라우저 아닐 때만 인스타 링크버튼 노출
-    if((ua.indexOf('trident') == -1) && (ua.indexOf("msie") == -1) ){
-        $("#f_insta").show();
-    }
-});
-
-getNewsList("https://www.thehandsome.com/ko/magazine");
-
-
-// 2022.03.29 푸터 공지사항 추가
-getFooterNotices("https://www.thehandsome.com/ko/svcenter");
-
-
-function moveMobile(){
-// 	location.href = location.href.replace("?uiel=Desktop", "") + "?uiel=Mobile";
-	location.href = "https://www.thehandsome.com/ko/?uiel=Mobile";
-}
-
-
-function setLogout(){
-    deletecookie("UID");   
-    deletecookie("criteoEmail"); 
-    deletecookie("memberGb");
-    location.href = "https://www.thehandsome.com/ko/logout";
-}
-
-//]]>
-</script>
-
-
 </div>
 </html>
