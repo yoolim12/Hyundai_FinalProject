@@ -86,7 +86,7 @@ public class BackMemberRestController {
     // 회원 탈퇴
     @DeleteMapping("/member")
     @ResponseBody
-    public String delMember(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
+    public String delMember(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
     	String email = map.get("email");
     	
     	System.out.println(email);

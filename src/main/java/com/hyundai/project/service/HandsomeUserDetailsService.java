@@ -52,11 +52,18 @@ public class HandsomeUserDetailsService implements UserDetailsService {
         		memberJoinDTO.getFrom_social(), authorities, memberJoinDTO.getMname(), memberJoinDTO.getBirth()
         		,memberJoinDTO.getTelnum(), memberJoinDTO.getMaddress(), memberJoinDTO.getMgender(),
         		memberJoinDTO.getMemail_info(), memberJoinDTO.getModdate(), memberJoinDTO.getRegdate(), memberJoinDTO.getMpoint(),
-				memberJoinDTO.getGno());
+				memberJoinDTO.getGno(), memberJoinDTO.getMsleep());
         
         log.info(authMemberDTO);
         log.info(authMemberDTO.getAuthorities().toString());
-		
+        
+        try {
+			memberDAO.insertLoginLog(memberJoinDTO.getMemail());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         // AuthMemberDTO는 UserDetails 타입으로 처리됨
 		return authMemberDTO;
 	}

@@ -9,9 +9,15 @@ public class Schedule {
 	@Autowired
 	ScheduleService service;
 	
-	@Scheduled(fixedDelay = 50000000)
-	public void test() {
+	@Scheduled(fixedDelay = 500000)
+	public void updateGrade() {
 		// 등급 갱신
 		service.jobUpdateMemberGrade();
+	}
+	
+	@Scheduled(fixedDelay = 500000)
+	public void updateSleep() {
+		// 휴면 갱신
+		service.jobUpdateMemberSleep();
 	}
 }
