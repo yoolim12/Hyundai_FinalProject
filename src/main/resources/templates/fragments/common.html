@@ -6,6 +6,8 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="naver-site-verification" content="2f9358e1e36605519854a595f243f0171519dd1d" />
     <meta name="google-site-verification" content="0bGV8gPhwO_PzritNvIsz2k74EH5yPsrXXluJ8ZUed8" />

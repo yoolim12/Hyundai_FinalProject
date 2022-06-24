@@ -129,6 +129,9 @@ $(document).ready(function(){
 // 장바구니에 추가하는 함수
 function addToCart()
 {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
     //2019.09.09 주문 불가능한 상품 선택시
     if(selectSize == false){
         var la = new layerAlert('사이즈를 선택해 주세요.');
@@ -149,6 +152,10 @@ function addToCart()
             	qty : qty
             }),
             contentType : "application/json",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+             },
+            cache: false,
             success: function (data) {
 				var lc = new layerConfirm('장바구니로 이동하시겠습니까?', '확인', '취소');
 				lc.confirmAction = function(){
