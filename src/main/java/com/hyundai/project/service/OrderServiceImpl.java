@@ -135,5 +135,9 @@ public class OrderServiceImpl implements OrderService {
         orderDAO.deleteOrderList(oid);
         orderDAO.deleteOrderItem(oid);
     }
-
+    
+    @Override
+    public void updateOrderList(int oid) throws Exception {
+    	orderDAO.updateOrderList(oid);
+    }
 }

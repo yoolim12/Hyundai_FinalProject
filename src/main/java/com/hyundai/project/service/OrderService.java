@@ -16,4 +16,6 @@ public interface OrderService {
 	
 	public void deleteOrder(int oid) throws Exception;
 
+	public void updateOrderList(int oid) throws Exception;
+
 }
