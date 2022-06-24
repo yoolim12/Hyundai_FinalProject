@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
-<div layout:fragment="content"> 
+<div layout:fragment="content">
 <script>
 	$(document).on("click", '.btn', function () {
 	    var prodid = $(this).prop('id').split("_");
-	
+
 	    if (prodid[0] == 'optCancelLayer') {
 	        $(this).parents('.basket_info').slideUp('fast');
 	    }
@@ -64,11 +63,9 @@
                         	if (result[i].ostatus === 1){
                         		status = '결제 완료';
                         	} else if (result[i].ostatus === 2){
-                        		status = '주문 취소';
-                        	} else if (result[i].ostatus === 3){
-                        		status = '배송 준비중'
-                        	} else if (result[i].ostatus === 4){
-                        		status = '배송 완료'
+                        		status = '입금 대기중';
+                        	} else if (result[i].ostatus === 3)	{
+                        		status = '결제 취소'
                         	}
                         	let tprice = '₩'+numWithComma(result[i].oprice);
                             let usedpoint = '( -'+numWithComma(result[i].ousedpoint)+' P )';
@@ -91,9 +88,9 @@
 		                                <span class="sb_tlt" id="${i}" style="white-space:normal;">
 		                                ${result[i].pname} <strong>등 ${tot}건</strong></span>
 		                                </a>
-		
+
 		                                <p class="color_op">
-		
+
 		                                color : ${result[i].ccolorcode}<span class="and_line">/</span>
 		                                size : ${result[i].ssize}</p>
 		                                <div class="option_wrap">
@@ -112,11 +109,8 @@
                                         <span style="font-size: 8px; color:#c69c6d;">${usedpoint}</span>
 	                                </td>
 	                                <td class="al_middle">
-	                                	${status} <br>`
-                            if(result[i].ostatus === 1) {	
-                            	ohtml += `<button onclick="cancelOrder(${result[i].oid})" class="btn gray_ss">주문취소</button>`
-                            }        
-                            	ohtml += `</td>
+	                                	${status}
+	                                </td>
                         			<td class="al_middle">
                         				${point} P
                         			</td>
@@ -141,12 +135,12 @@
 		                                <span class="sb_tlt" id="${i}" style="width:350px; max-width:350px; white-space:normal;">
 		                                ${result[i].pname}</span>
 		                                </a>
-		
+
 		                                <p class="color_op">
-		
+
 		                                color : ${result[i].ccolorcode}<span class="and_line">/</span>
-		                                size : ${result[i].ssize}<span class="and_line">/</span> 
-		                                구매 수량 : ${result[i].qty}<span class="and_line">/</span> 
+		                                size : ${result[i].ssize}<span class="and_line">/</span>
+		                                구매 수량 : ${result[i].qty}<span class="and_line">/</span>
 		                                상품 가격 : ${p_price}</p>
 		                                </div>
 		                                </div>
@@ -173,10 +167,10 @@
 					                                ${result[i].pname}</span>
 					                                </a>
 					                                <p class="color_op">
-					
+
 					                                color : ${result[i].ccolorcode}<span class="and_line">/</span>
-					                                size : ${result[i].ssize}<span class="and_line">/</span> 
-					                                구매 수량 : ${result[i].qty}<span class="and_line">/</span> 
+					                                size : ${result[i].ssize}<span class="and_line">/</span>
+					                                구매 수량 : ${result[i].qty}<span class="and_line">/</span>
 					                                상품 가격 : ${p_price}</p>
 					                                </div>
 					                                </div>
@@ -187,7 +181,7 @@
 				                        	    </div> <!-- //Info -->
 				                        	</td>
 		                               	 </tr>`;
-                          	}     	            
+                          	}
                         }
                     }
                 } else{ /* 주문 기록이 없을 때 */
@@ -199,29 +193,6 @@
            }
 		})
 	})
-	
-	function cancelOrder(oid) {
-		var lc = new layerConfirm('주문을 취소하시겠습니까?', '확인', '취소');
-        lc.confirmAction = function(){
-        	$.ajax({
-                url: "/mypage/cancel/"+oid,
-                method: "put",
-                /* data: JSON.stringify(data), */
-                contentType: "application/json",
-                success: function (result) {
-	                var la = new layerAlert(result);
-	                la.confirmAction = function(){
-						location.href = "/mypage";	                	
-	                }
-                },
-                error: function (request, status, error) {
-                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                }
-            });
-        };
-            
-        }
-	
    // 리스트에서 제목 클릭 시 내용이 펼쳐지도록
     function showContent(i) {
         var listTag = "";
@@ -254,7 +225,7 @@
         }
         document.getElementById("qna" + i).innerHTML = listTag;
     }
-   
+
    // 게시물 삭제하는 ajax 호출
     function deleteContent(qid) {
         var url = "/mypage/deleteQNA?qid=" + qid;
@@ -478,6 +449,20 @@
                     </tbody>
                 </table>
             </div>
+            <!-- table -->
+            <!-- 위시리스트 -->
+            <div class="title_wrap line mt50">
+                <h4>
+                    위시리스트
+                    <!-- 위시리스트 -->
+                </h4>
+                <div class="btn_wrap">
+                    <a href="/ko/mypage/myWish" class="btn add_ss" onclick="GA_Event('마이페이지','위시리스트','전체보기');">전체보기<!-- 전체보기 --></a>
+                </div>
+            </div>
+            <ul class="wish_wrap">
+                <li class="no_data">위시리스트에 저장된 상품이 없습니다.<!-- 위시리스트에 저장된 상품이 없습니다. --></li>
+            </ul>
         </div>
         <!-- //cnts -->
     </div>
