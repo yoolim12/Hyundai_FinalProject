@@ -6,6 +6,8 @@
       layout:decorate="~{fragments/common}">
 <div layout:fragment="content">
     <script type="text/javascript">
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var header = $("meta[name='_csrf_header']").attr("content");
         var color = [];
         var size = [];
         var res_obj, allchecked = false;
@@ -14,13 +16,14 @@
 
         function numWithComma(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }        
+        }
         
         function setOptionColor(obj, idx, c) {
             $(obj).parent().find("a").css("line-height", "18px");
             $(obj).addClass("on");
             $(obj).siblings("a").removeClass("on");
             $(obj).css("line-height", "15px")
+            console.log(idx, c);
             color[idx] = c;
         }
 
@@ -29,10 +32,12 @@
             $(obj).addClass("on");
             $(obj).siblings("a").removeClass("on");
             $(obj).css("line-height", "15px")
+            console.log(idx, s);
             size[idx] = s;
         }
 
         function updateCart(idx) {
+            console.log(res_obj[idx]);
             var data = {
                 pid: res_obj[idx].pid,
                 ccolorcode: res_obj[idx].ccolorcode,
@@ -64,6 +69,7 @@
         }
 
         function qtyUpdateCart(idx) {
+            console.log(res_obj[idx]);
             var data = {
                 pid: res_obj[idx].pid,
                 ccolorcode: res_obj[idx].ccolorcode,
@@ -81,6 +87,7 @@
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                  },
+                cache: false,
                 success: function (data) {
                     var lc = new layerAlert('완료되었습니다.');
                     lc.confirmAction = function(){
@@ -149,8 +156,7 @@
         }
 
         function deleteProduct(pid, ccolorcode, ssize) {
-        	var token = $("meta[name='_csrf']").attr("content");
-        	var header = $("meta[name='_csrf_header']").attr("content");
+            console.log(pid, ccolorcode, ssize);
             var url = "/cart";
             var check = new layerAlert('해당 상품을 삭제하시겠습니까?');
             check.confirmAction = function () {
@@ -211,7 +217,6 @@
             GA_Event('상품_상세', '수량', '+');
 
             $("#txtqty_" + idx).val(qty + 1);
-            //fn_sumPriceCal();
         }
 
         //<![CDATA[
@@ -228,6 +233,7 @@
                 },
                 success: function (result) {
                     res_obj = result;
+                    console.log(result);
                     document.getElementById("total-cnt").innerHTML = '<span class="delt_ico"></span>택배(' + result.length + ')';
                     var str = ``;
                     for (var i = 0; i < result.length; i++) {
@@ -237,9 +243,9 @@
                         size[i] = result[i].ssize;
                         total_price += parseInt(result[i].pprice) * result[i].qty;
                         str += `<tr name="entryProductInfo" data-pk="10687045664812" data-deliverykind=""
-    data-outofstock="false" data-category="ME011">
-    </tr><td class="frt">
-        <!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
+					    data-outofstock="false" data-category="ME011">
+					    </tr><td class="frt">
+				        <!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
                         <input type="checkbox" name="cartlist" data-pk="10687045664812" data-division="" data-deliverykind="" value="9" autocomplete="off">
                         </td>
                         <td class="pt_list_wrap">
@@ -260,9 +266,7 @@
                         <p class="color_op">
 
                         color : ${result[i].ccolorcode}<span class="and_line">/</span>
-
                         size : ${result[i].ssize}</p>
-
 
                         <div class="option_wrap">
                         <a href="#none" class="btn_option" id="optOpenLayer^9^TH2C3TRN644N_CR"
@@ -371,10 +375,13 @@
                         <td colspan="6" class="basket_wrap">
                         </td>
                         </tr>`;
+                        //console.log(str);
                     }
                     $("#cart-list").html(str);
                 }
             });
+
+
             //GA 이벤트 태깅
             $(document).on('click', 'input:checkbox', function () {
                 var isChecked = $(this).is(":checked");
@@ -418,6 +425,7 @@
                     document.getElementById("cartDataSubtotal").innerText = "₩" + numWithComma(selected_price);
                     document.getElementById("cartDataTotalPrice").innerText = "₩" + numWithComma(selected_price);
                 }
+                for (var i = 0; i < res_obj.length; i++) console.log(check_obj[i]);
             });
 
             $(document).on("click", '.left', function () {
@@ -436,9 +444,15 @@
             });
 
             $(document).on("click", '.right', function () {
+                var soldout = $(this).data("soldout");
+                if (soldout == true) {
+                    return false;
+                }
+
                 var qty = $(this).parents('.qty_sel').find('.mr0');
+
                 var productCode = $(this).parents('form').find('input[name="productCode"]').val();
-                 qty.val(Number(qty.val()) + 1);
+
             });
 
             $(document).on("click", '.btn_option', function () {
@@ -458,8 +472,207 @@
                     return;
                 }
             });
-        });
 
+            $(document).on("click", '.btn', function () {
+                var prodid = $(this).prop('id').split("_");
+
+                if (prodid[0] == 'optCancelLayer') {
+                    $(this).parents('.basket_info').slideUp('fast');
+                }
+
+                if (prodid[0] == 'QuantityProduct') {
+                    var form = $('#updateCartForm' + prodid[1]);
+                    var productCode = form.find('input[name=productCode]').val();
+                    var initialCartQuantity = form.find('input[name=initialQuantity]').val();
+                    var newCartQuantity = form.find('input[name=quantity]').val();
+                    var cartData = form.data("cart");
+
+
+                    if (qtyLimitProductYnMap[productCode] == 'true' && parseInt(newCartQuantity) > 2) {
+                        layerAlert('동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.');
+                        return;
+                    }
+                }
+
+                /* !!!!!!!!!!!!!!!!!!! */
+            });
+
+
+            $("#ce_tab li:eq(0) a").click();
+
+            var widthLi = $(".rmd_pb_list .hidden_wrap").width() / 6;
+            $(".productSlide li").css("padding", "0").css("width", "auto");
+            $(".productSlide li img").css("width", "96%").css("padding", "0 2%");
+            $(".hidden_wrap ul li").width(widthLi);
+            $(".hidden_wrap ul li").css("margin-right", "0px");
+            $(".rmd_pb_list ul").css("width", "1000%")
+
+            $(document).on("click", ".prev", function () {
+                slidPrev();
+            });
+            $(document).on("click", ".next", function () {
+                slidNext();
+            });
+
+            var prevSelectEntry = ",";
+            $(document).on("click", '#onlyFourPm', function () {
+
+                var checked = $(this).prop("checked");
+                var entryPkList = ",";
+
+                $("tr[name='entryProductInfo']").each(function () {
+                    if (checked == false) {
+                        $($(this).find("input[type='checkbox']")).each(function () {
+
+                            // 체크되있던거
+                            var checkTempPk = "," + $(this).data("pk") + ",";
+                            if (prevSelectEntry.indexOf(checkTempPk) > -1) {
+                                $(this).prop("checked", true);
+                            }
+                        });
+
+                        if ($(this).find("input[type='checkbox']").prop("checked") == true) {
+                            entryPkList += $(this).data("pk");
+                            entryPkList += ",";
+                        }
+
+                        $(this).show();
+                    } else {
+                        $($(this).find("input[type='checkbox']")).each(function () {
+                            if ($(this).prop("checked") == true) {
+                                prevSelectEntry += $(this).data("pk") + ","; // 체크되있던거
+                            }
+                        });
+
+                        var deliveryKind = $(this).data("deliverykind");
+                        if (deliveryKind == "FOUR_PM") {
+                            if ($(this).find("input[type='checkbox']").prop("checked") == true) {
+                                entryPkList += $(this).data("pk");
+                                entryPkList += ",";
+                            }
+                        } else {
+                            $($(this).find("input[type='checkbox']")).each(function () {
+                                $(this).prop("checked", false);
+                            });
+
+                            var outofstock = $(this).data("outofstock");
+                            if (outofstock == false) {
+                                $(this).hide();
+                            }
+                        }
+                    }
+                });
+
+                if (checked == false) {
+                    prevSelectEntry = ","; // 초기화
+                }
+
+                //if(entryPkList != ",") {
+                cartListCheckPrice(entryPkList, true);
+                //}
+            });
+
+
+            $(document).on("click", "#entryCheckAll", function () {
+                var eachName = $(this).val();
+                eachName = "input[name=" + eachName + "]";
+
+                var checkProp = $(this).prop("checked");
+                var checkOnlyFourPm = $("#onlyFourPm").prop("checked");
+                $(eachName).each(function () {
+
+                    if (checkOnlyFourPm == true) {
+                        var deliveryKind = $(this).data("deliverykind");
+                        if (deliveryKind == "FOUR_PM") {
+                            if ($(this).prop("disabled") == false) {
+                                $(this).prop("checked", checkProp);
+                            }
+                        } else {
+
+                        }
+                    } else {
+                        if ($(this).prop("disabled") == false) {
+                            $(this).prop("checked", checkProp);
+                        }
+                    }
+
+                });
+
+                cartListCheckPrice(",", false);
+            });
+
+            $(document).on("click", "input[name='cartlist']", function () {
+                var obj = this;
+                var isCartListCheckPrice = true;
+                if ($("input:checkbox[name='cartlist']:checked").length > 0) {
+                    $("[class^=shopping_cart_tab]").find("[name=cartDivision]").each(function () {
+                        if ($(this).attr("data-division") == "store") {
+                            if ($(this).hasClass("active")) {
+                                //매장수령일 경우 동일한 브랜드 and 매장 만 체크box 처리
+                                var targetIdx = $("input[name='cartlist']").index(obj);
+                                var targetBrand = $("input[name='cartlist']").eq(targetIdx).parent().next().find(".tlt_wrap > a > span:eq(0)").html();
+                                var targetStore = $("input[name='cartlist']").eq(targetIdx).parent().next().find(".storepick_opt_wrap .info").html();
+                                $("input:checkbox[name='cartlist']").each(function (idx) {
+                                    if (targetIdx != idx) {
+                                        var tempBrand = $(this).parent().next().find(".tlt_wrap > a > span:eq(0)").html();
+                                        var tempStore = $(this).parent().next().find(".storepick_opt_wrap .info").html();
+
+                                        if (targetBrand != tempBrand || targetStore != tempStore) {
+                                            $(this).prop("disabled", true);
+                                        }
+                                    }
+                                });
+                            }
+                        } else if ($(this).attr("data-division") == "athome") {
+                            if ($(this).hasClass("active")) {
+                                if ($("input:checkbox[name='cartlist']:checked").length > 3) {
+                                    layerAlert('앳홈은 3개 상품 까지만 주문이 가능합니다.');
+                                    isCartListCheckPrice = false;
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    if ($("#ordersheetCartDivision").val() != "") {
+                        $("input:checkbox[name='cartlist']").prop("disabled", false);
+                    }
+                }
+
+                if (isCartListCheckPrice) {
+                    cartListCheckPrice(",", false);
+                } else {
+                    return false;
+                }
+            });
+
+			
+            $('.gd_btn1807 li a').on('click', function () {
+                var objN = $(this).attr('rel');
+                var obj = $('.' + objN);
+
+                if (obj.find('tr').length < 1) {
+                    return;
+                }
+
+                var lp = ($(window).width() - obj.width()) / 2;
+                var tp = ($(window).height() - obj.height()) / 2 + $(window).scrollTop();
+                if (lp < 0) lp = 0;
+                if (tp < 0) tp = 0;
+                $('.layerArea').show();
+                obj.css("top", tp).css("position", "absolute").css('left', lp).css("z-index", 101);
+                obj.show();
+            });
+
+            $(".btn_close, .close_btn").on("click", function () {
+                $(".popwrap, .layerArea").hide();
+            });
+
+
+            $(document).on("click", '.gd_btn1807 a:eq(0)', function () {
+                $("#ce_tab li:eq(0) a").click();
+            });
+        });
+        
             function slidPrev() {
                 if (status == 1) {
                     return;
@@ -543,9 +756,6 @@
                     totalPrice : selected_price,
                     item : item
                 };
-                
-                var token = $("meta[name='_csrf']").attr("content");
-            	var header = $("meta[name='_csrf_header']").attr("content");
                 $.ajax({
                     url: "/cart/station",
                     method: "post",
@@ -566,15 +776,20 @@
                         console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                     }
                 });
-
-
             }
 
-
-            function continueUrl() {
-                location.href = "/";
+            function qtyLimitProductAlert() {
+                $('[name=entryProductInfo]').each(function (idx, row) {
+                    var productCode = $(row).find('form [name=productCode]').val();
+                    var quantity = $(row).find('form [name=initialQuantity]').val();
+                    if (qtyLimitProductYnMap[productCode] == 'true' && parseInt(quantity) > 2) {
+                        var brandName = $(row).find('.pt_list_wrap .tlt').text();
+                        var productName = $(row).find('.pt_list_wrap .sb_tlt').text().trim();
+                        layerAlert('[' + brandName + '] [' + productName + ']의<br/>구매 가능한 수량은 2개입니다.<br/>수량 변경 후 구매하실 수 있습니다.');
+                        return false;
+                    }
+                })
             }
-
             //]]>
     </script>
 
@@ -584,6 +799,8 @@
         <h3 class="cnts_title cnts_tlt1807">
             <span>쇼핑백</span>
         </h3>
+        <!--//title-->
+
         <span id="shoppingbagCartView">
             <!--sub_container-->
         <div class="sub_container ">
@@ -604,7 +821,6 @@
                            onclick="GA_Event('쇼핑백', '탭', '퀵배송');"><span class="quk_ico"></span>퀵배송(0)</a>
                     </li>
                     </ul>
-                <!-- //장바구니개편 -->
             </div>
 
             <div class="orderwrap1807">
@@ -690,6 +906,8 @@
                         </div>
                     <!-- //total -->
                 </div>
+                <!--//Total wrap-->
+                <!--button wrap-->
                 <div class="btnwrap order" id="checkout_btn_wrap">
                     <a href="#;" onclick="selectRemove();"><input value="선택상품삭제" class="btn wt" type="button"/></a>
                     <a href="#;" onclick="checkoutPage();">
@@ -698,9 +916,11 @@
 
                      </div>
                     </div>
+            <!--//order wrap-->
         </div>
             <!--//sub_container-->
 </span>
+        <!--Guide table-->
         <div class="gd_wrap mt60">
             <dl class="shoppingbag_list">
                 <dt>
@@ -721,7 +941,18 @@
                 </dd>
             </dl>
         </div>
+        <!--//Guide table-->
+
+        <form id="ordersheetCloneForm" name="orderSheetCloneForm" action="/ko/shoppingbag/checkout" method="get"><input
+                type="hidden" id="ordersheetEntryNumber" name="ordersheetEntryNumber" value=""/>
+            <input type="hidden" id="ordersheetCartDivision" name="ordersheetCartDivision" value=""/>
+            <div>
+                <input type="hidden" name="CSRFToken" value="2e4f730b-79fa-408e-b072-425a73f94a7c"/>
+            </div>
+        </form><!-- layer pop 1 -->
     </div>
+    <!— //bodyWrap —>
+    <!— footerWrap —>
     </body>
 </div>
 </html>
