@@ -53,5 +53,23 @@ public class MemberServiceImpl implements MemberService {
 	public int getPoint(String memail) throws Exception {
 		return mapper.getPoint(memail);
 	}
+	
+	// 로그인 로그 저장
+	@Override
+	public void insertLoginLog(String memail) throws Exception {
+		mapper.insertLoginLog(memail);
+	}
+		
+	// 회원 휴면 갱신
+	@Override
+	public int updateMemberSleep() throws Exception{
+		return mapper.updateMemberSleep();
+	}
+		
+	// 회원 등급 갱신
+	@Override
+	public int updateMemberGrade() throws Exception {
+		return mapper.updateMemberGrade();
+	}
 
 }
