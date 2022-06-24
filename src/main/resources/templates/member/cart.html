@@ -47,6 +47,10 @@
                 method: "put",
                 data: JSON.stringify(data),
                 contentType: "application/json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+                cache: false,
                 success: function (data) {
                     var lc = new layerAlert('완료되었습니다.');
                     lc.confirmAction = function(){
@@ -74,6 +78,9 @@
                 method: "put",
                 data: JSON.stringify(data),
                 contentType: "application/json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
                 success: function (data) {
                     var lc = new layerAlert('완료되었습니다.');
                     lc.confirmAction = function(){
@@ -142,6 +149,8 @@
         }
 
         function deleteProduct(pid, ccolorcode, ssize) {
+        	var token = $("meta[name='_csrf']").attr("content");
+        	var header = $("meta[name='_csrf_header']").attr("content");
             var url = "/cart";
             var check = new layerAlert('해당 상품을 삭제하시겠습니까?');
             check.confirmAction = function () {
@@ -154,6 +163,10 @@
                         ssize: ssize,
                     }),
                     contentType: "application/json",
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                     },
+                    cache: false,
                     success: function (data) {
                         var lc = new layerAlert('완료되었습니다.');
                         lc.confirmAction = function(){
@@ -530,11 +543,18 @@
                     totalPrice : selected_price,
                     item : item
                 };
+                
+                var token = $("meta[name='_csrf']").attr("content");
+            	var header = $("meta[name='_csrf_header']").attr("content");
                 $.ajax({
                     url: "/cart/station",
                     method: "post",
                     data: JSON.stringify(data),
                     contentType: "application/json",
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                     },
+                    cache: false,
                     success: function (data) {
                         var lc = new layerConfirm('주문하시겠습니까?', '확인', '취소');
                         lc.confirmAction = function(){

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-	<meta name="_csrf" th:content="${_csrf.token}"/>
-	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	
 </head>
 <div th:fragment="header">
     <body oncontextmenu="return false">
@@ -330,8 +329,6 @@
                     }
 
                     $(document).ready(function () {
-	//console.log('teeeeeeeeeeeeeeeeeeeeeest', getCsrfName());
-	//console.log('deifbibfeuivefvfe', getCsrfParameterName());
                         $(".gnb_nav.hscene1906 .cate_m .hscene").mouseover(function () {
                             // 툴팁
                             $(".gnb_nav.hscene1906 .cate_m li .delch_box").addClass("on");
@@ -339,7 +336,21 @@
                         $(".gnb_nav.hscene1906 .cate_m .hscene").mouseout(function () {
                             $(".gnb_nav.hscene1906 .cate_m li .delch_box").removeClass("on");
                         });
-
+                        let cart_total;
+                        $.ajax({
+                            type: "get",
+                            url: "/cart/total",
+                            dataType: "json",
+                            async: false,
+                            contentType: "application/json",
+                            error: function (request, status, error) {
+                                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                            },
+                            success: function (result) {
+                                cart_total = result;
+                                $("#cartCount").text('('+cart_total+')');
+                            }
+                        });
                         var todayDate = new Date();
                         var startDate = new Date("2018/05/29 00:00:01"),
                             endDate = new Date("2018/06/17 23:59:59");
@@ -1792,8 +1803,6 @@
                             <li><a href="/ko/ou/outletMain" onclick="GA_Event('공통','GNB','아울렛');">아울렛*</a></li>
                         </ul>
                     </div>
-                    <!-- 첫번째 c:if -->
-                    <!-- 어디다 if 쓴거지 여기 확인. 장바구니 추가하면 숫자늘어나는건가. -->
 
                     <div id="transparent_mask"></div>
                     <!-- 201803 util menu -->
@@ -1809,7 +1818,7 @@
                             </li>
                             <li>
                                 <a href="/cart" onclick="GA_Event('공통','유틸_메뉴','쇼핑백');">
-                                    <span class="ico cart">장바구니</span> <span class="count"><span id="cartCount">(개수)</span> </span>
+                                    <span class="ico cart">장바구니</span> <span class="count"><span id="cartCount"></span> </span>
                                 </a>
                             </li>
                         </ul>

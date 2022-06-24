@@ -16,7 +16,8 @@
 <div layout:fragment="content">
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <script>
-        console.log("[[${member}]]");
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var header = $("meta[name='_csrf_header']").attr("content");
         const mpoint = "[[${mpoint}]]";
         var checktHandsomepointUsableAmount;
         var res_data = JSON.parse(localStorage.getItem("station-item"));
@@ -180,6 +181,10 @@
                                     url:"/mypage", //결제 성공시 갈 url
                                     method:"POST",
                                     headers:{"Content-Type":"application/json"},
+                                    beforeSend: function(xhr) {
+                                              xhr.setRequestHeader(header, token);
+                                        	 },
+                                    cache: false,
                                     data:{ // 가맹점 서버에 인자로 전달한 데이터, 추가할거있으면 하면 됨
                                         imp_uid:rsp.imp_uid, // 결제번호
                                         merchant_uid:rsp.merchant_uid // 주문번호
@@ -240,13 +245,16 @@
                     ostatus: ostatus,
                     oitem: oitem
                 };
-                console.log(data);
                 $.ajax({
                     url: "/order",
                     method: "post",
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     async : false,
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                     },
+                    cache: false,
                     success: function (data) {
                         localStorage.removeItem('station-item');
                     },
