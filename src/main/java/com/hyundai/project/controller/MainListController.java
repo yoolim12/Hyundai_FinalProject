@@ -19,7 +19,6 @@ import com.hyundai.project.service.MainService;
 
 import lombok.extern.log4j.Log4j2;
 
-@RequestMapping("/ko/intro")
 @RestController
 @Log4j2
 public class MainListController {
