@@ -131,6 +131,15 @@
             IMP.init("imp12649976"); // Example: imp00000000
 
             function payment(){
+                const ozipcode = $("#ozipcode").val();
+                const oaddress1 = $("#oaddress1").val();
+                const oaddress2 = $("#oaddress2").val();
+                const oreceiver = $("#oreceiver").val();
+                const otel = getOtel(hp_num1, hp_num2, hp_num3);
+                if(ozipcode == "" || oaddress1 == "" || oaddress2 == "" || oreceiver == "" || otel == "" ) {
+                    var la = new layerAlert('배송지 정보를 모두 입력해주시길 바랍니다.');
+                    return;
+                }
                 let agree_val = document.getElementById('agree').checked;
                 if(!agree_val) {
                     var la = new layerAlert('구매자 동의 항목을 체크하여 주세요.');
@@ -144,7 +153,7 @@
                             var la = new layerAlert('포인트로 결제가 완료되었습니다.');
                             la.confirmAction = function() {
                                 orderProcess();
-                                location.href = "/mypage";
+                                location.href="/mypage";
                             }
                             return;
                         }
@@ -237,6 +246,7 @@
                     method: "post",
                     data: JSON.stringify(data),
                     contentType: "application/json",
+                    async : false,
                     success: function (data) {
                         localStorage.removeItem('station-item');
                     },
