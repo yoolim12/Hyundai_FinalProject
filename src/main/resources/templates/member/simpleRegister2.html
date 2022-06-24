@@ -9,6 +9,7 @@
 	<script type="text/javascript">
 //<![CDATA[ 
 $(document).ready(function(){
+	console.log(getCsrfHeaderName(), getYCsrfToken());
     
     var dclick = $('#idDubChkBtn').click(function(){
 		$.ajax({
@@ -16,7 +17,13 @@ $(document).ready(function(){
 			url:'/member/duplicateCheck',
 			dataType: 'JSON',
 			contentType: "application/json",
-			data: JSON.stringify({'memail': $('[name="memail1"]').val() + '@' + $('[name="memail2"]').val()}),
+			data: JSON.stringify({
+				'memail': $('[name="memail1"]').val() + '@' + $('[name="memail2"]').val(),
+				"CSRFToken": getYCsrfToken()
+			}),
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+			},
 			success: function(response){
 				if(response.memail === '0'){
 					console.log('yes');
@@ -43,7 +50,13 @@ $(document).ready(function(){
 			url:'/member/duplicateCheck',
 			dataType: 'JSON',
 			contentType: "application/json",
-			data: JSON.stringify({'memail': $('[name="memail_info1"]').val() + '@' + $('[name="memail_info2"]').val()}),
+			data: JSON.stringify({
+				'memail': $('[name="memail_info1"]').val() + '@' + $('[name="memail_info2"]').val(),
+				"CSRFToken": getYCsrfToken()
+			}),
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+			},
 			success: function(response){
 				if(response.memail === '0'){
 					console.log('yes');
@@ -348,8 +361,12 @@ $(document).ready(function(){
                     + $('[name="mday"]').val(),
                 "telnum": $('[name="telnum1"]').val() + '-' 
                     + $('[name="telnum2"]').val() + '-' 
-                    + $('[name="telnum3"]').val()
+                    + $('[name="telnum3"]').val(),
+                "CSRFToken": getYCsrfToken()
             }),
+            beforeSend: function(xhr){
+				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+			},
             success:function(response){
 				if(response){
                     // var la = new layerAlert("회원가입이 완료 되었습니다.");

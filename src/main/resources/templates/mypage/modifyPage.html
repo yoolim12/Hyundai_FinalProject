@@ -60,6 +60,39 @@
                 <script type="text/javascript">
     //<![CDATA[ 
     $(document).ready(function(){
+		$('#emailDubChkBtn').click(function(){
+			$.ajax({
+				type: 'POST',
+				url:'/member/duplicateCheck',
+				dataType: 'JSON',
+				contentType: "application/json",
+				data: JSON.stringify({
+					'memail': $('#email').val() + '@' + $('#emailDomainSel').val(),
+					"CSRFToken": getYCsrfToken()
+				}),
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+				},
+				success: function(response){
+					if(response.memail === '0'){
+						console.log('yes');
+						//$('#idDubMsg').text('사용 가능한 이메일입니다.');
+						$("#emailMsg").text('사용 가능한 이메일입니다.');
+						$("#emailDuplChk").val('Y');
+					}
+					else{
+						console.log('no');
+						//$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
+						$("#emailMsg").text('이미 사용 중인 이메일입니다.');
+					}
+				},
+				error:function(e){
+					console.log('err');
+					console.log(e);
+				}
+			});
+		});
+		
     	$("#go_save").click(function(){
             var birth = $("#selYear").val() + "-" + $("#selMonth").val() + "-" + $("#selDay").val();
             var memail_info = $("#email").val()+"@"+$("#emailDomain").val();
@@ -73,17 +106,22 @@
                    data:JSON.stringify({
                 	   'mname' : mname,
                 	   'birth' : birth,
-                	   'memail_info' : memail_info
+                	   'memail_info' : memail_info,
+                	   "CSRFToken": getYCsrfToken()
                    }),
+                   beforeSend: function(xhr){
+						xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+					},
                    error : function( request, status, error ){
                        layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
                        console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
                    },
                    success:function(result){
-                	   alert(result);
-                }
-            });
-        });
+                	   location.href = "/mypage";
+                	}
+	            });
+	        });
+	        
         if("ko" == "ko"){
             var pwRegExp = /^(?=.*[a-zA-Z])(?=.*[\?\<\>\;\:\'\"\`\(\)\{\}\[\]\|\\\~\,\.!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
         }else{
@@ -347,8 +385,12 @@
                                data:{
                             	   'mname' : mname,
                             	   'birth' : birth,
-                            	   'memail_info' : memail_info
+                            	   'memail_info' : memail_info,
+                            	   "CSRFToken": getYCsrfToken()
                                },
+                               beforeSend: function(xhr){
+									xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+					    		},
                                error : function( request, status, error ){
                                    layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
                                    console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
@@ -893,8 +935,12 @@
 						dataType: 'JSON',
     					contentType: "application/json",
     					data: JSON.stringify({
-							"oldpassword": $t.find("#oldPassword").val()
+							"oldpassword": $t.find("#oldPassword").val(),
+							"CSRFToken": getYCsrfToken()
 						}),
+						beforeSend: function(xhr){
+					        xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+					    },
 						success:function(response){
 							if(response){
 							    $t.find("#oldPasswordCheckMsg").text("기존 비밀번호와 일치합니다.");
@@ -1025,8 +1071,12 @@
 						dataType: 'JSON',
 		    			contentType : "application/json",
 		    			data:JSON.stringify({
-							"mpassword": newPassword
+							"mpassword": newPassword,
+							"CSRFToken": getYCsrfToken()
 						}),
+						beforeSend: function(xhr){
+					        xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+					    },
 						success:function(response){
 							if(response){
 							    var la = new layerAlert("비밀번호 변경이 완료 되었습니다. ");		//다국어 : 비밀번호 변경이 완료되었습니다.

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<head>
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
 <div th:fragment="header">
-
     <body oncontextmenu="return false">
         <!-- <div id="transparent_mask"></div> -->
         <!-- Loading -->
@@ -11,13 +13,37 @@
 
         <form id="CSRFForm" action="/ko/" method="post">
             <div>
-                <input type="hidden" name="CSRFToken" value="d1c91672-2a5d-4cd7-bde9-7dfb55a667bc" />
+            	<input type="hidden" name="CSRFHeadername" th:value="${_csrf.headerName}" />
+                <input type="hidden" name="CSRFToken" th:value="${_csrf.token}" />
+                <input type="hidden" name="CSRFParameterName" th:value="${ _csrf.parameterName }" />
             </div>
         </form>
 
         <!-- headerWrap -->
         <div id="headerWrap">
             <div class="header header_fixed header_main1903">
+            <!-- yoolim script for logout start -->
+				<script>
+					var header = $("meta[name='_csrf_header']").attr('content');
+					var token = $("meta[name='_csrf']").attr('content');
+
+					function logoutClick() {
+						$('#logoutForm').submit();
+					}
+
+					function getCsrfHeaderName() {
+						return $("#CSRFForm [name='CSRFHeadername']").val();
+					}
+
+					function getYCsrfToken() {
+						return $("#CSRFForm [name='CSRFToken']").val();
+					}
+
+					function getCsrfParameterName() {
+						return $("#CSRFForm [name='CSRFParameterName']").val();
+					}
+				</script>
+			<!-- yoolim script for logout end -->
                 <script type="text/javascript" src="/resources/_ui/desktop/common/js/SsoAjax.js"></script>
 
                 <script>
@@ -39,6 +65,9 @@
                                 type: "POST",
                                 url: "/ko/chatbot/token",
                                 data: { CSRFToken: "d1c91672-2a5d-4cd7-bde9-7dfb55a667bc" },
+                                beforeSend: function(xhr){
+							        xhr.setRequestHeader(header, token);
+							    },
                                 async: false,
                                 success: function (data) {
                                     if (data.result == "SHOULD_LOGIN") {
@@ -194,6 +223,9 @@
                             type: "GET",
                             url: "/intro/setCategoryList",
                             data: { brandName: brandName, brandCode: brandCode, parentBrandCode: parentBrandCode, sortIndex: sortIndex },
+                            beforeSend: function(xhr){
+		        xhr.setRequestHeader(header, token);
+		    },
                             success: function (data) {
                                 window.location.reload();
                             },
@@ -298,27 +330,14 @@
                     }
 
                     $(document).ready(function () {
+	//console.log('teeeeeeeeeeeeeeeeeeeeeest', getCsrfName());
+	//console.log('deifbibfeuivefvfe', getCsrfParameterName());
                         $(".gnb_nav.hscene1906 .cate_m .hscene").mouseover(function () {
                             // 툴팁
                             $(".gnb_nav.hscene1906 .cate_m li .delch_box").addClass("on");
                         });
                         $(".gnb_nav.hscene1906 .cate_m .hscene").mouseout(function () {
                             $(".gnb_nav.hscene1906 .cate_m li .delch_box").removeClass("on");
-                        });
-                        let cart_total;
-                        $.ajax({
-                            type: "get",
-                            url: "/cart/total",
-                            dataType: "json",
-                            async: false,
-                            contentType: "application/json",
-                            error: function (request, status, error) {
-                                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                            },
-                            success: function (result) {
-                                cart_total = result;
-                                $("#cartCount").text('('+cart_total+')');
-                            }
                         });
 
                         var todayDate = new Date();
@@ -454,6 +473,9 @@
                                 type: "GET",
                                 url: "/ko/hpoint/simpleJoinMember",
                                 data: { mcustNo: data.mcustNo },
+                                beforeSend: function(xhr){
+		        xhr.setRequestHeader(header, token);
+		    },
                                 success: function (data) {
                                     if (data.resultCode == "L") {
                                         $("#hcid").val(data.uid);
@@ -494,6 +516,9 @@
                                         type: "post",
                                         url: "/ko/_s/language" + "?" + "code=" + isoCode,
                                         dataType: "json",
+                                        beforeSend: function(xhr){
+		        xhr.setRequestHeader(header, token);
+		    },
                                         error: function (request, status, error) {
                                             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                                         },
@@ -930,10 +955,18 @@
                         <!--// 201705 search_box_wrap -->
                         <div class="util_menu" style="display: block;">
                             <ul class="clearfix">
-                            	<li><a href="" onclick="" sec:authorize="hasRole('ADMIN')">ADMIN PAGE</a></li>
+                            	<li><a href="/back/form" onclick="" sec:authorize="hasRole('ADMIN')">ADMIN PAGE</a></li>
                                 <li><a href="/member/login" onclick="GA_Event('공통','헤더_메뉴','로그인')" sec:authorize="!isAuthenticated()">로그인</a></li>
-                                <li><a href="/member/logout" onclick="GA_Event('공통','헤더_메뉴','로그아웃')" sec:authorize="isAuthenticated()">로그아웃</a></li>
-                                <!--<li><a href="" onclick="" sec:authorize="hasRole('ADMIN')">ADMIN PAGE</a></li>-->
+                                <li>
+                                	<form id="logoutForm" action="/member/logout" method="post">
+                                		<input type="hidden" th:name="${ _csrf.parameterName }" th:value="${ _csrf.token }">
+                                		<a href="javascript:void(0);" class="logoutBtn" id="logoutBtn" onclick="logoutClick();" sec:authorize="isAuthenticated()"
+                                			style="display:block; height: 40px; line-height: 40px; font-size: 10px; color: #363636;">
+                                			로그아웃
+                                		</a>
+                                	</form>
+                                </li>
+                                
                                 <li class="header_dropmemu mypage">
                                     <a href="/member/login" class="btn" onclick="GA_Event('공통','헤더_메뉴','마이페이지')" sec:authorize="!isAuthenticated()">마이페이지</a>
                                     <a href="/mypage" class="btn" onclick="GA_Event('공통','헤더_메뉴','마이페이지')" sec:authorize="isAuthenticated()">마이페이지</a>
@@ -1776,7 +1809,7 @@
                             </li>
                             <li>
                                 <a href="/cart" onclick="GA_Event('공통','유틸_메뉴','쇼핑백');">
-                                    <span class="ico cart">장바구니</span> <span class="count"><span id="cartCount"></span> </span>
+                                    <span class="ico cart">장바구니</span> <span class="count"><span id="cartCount">(개수)</span> </span>
                                 </a>
                             </li>
                         </ul>
@@ -1787,4 +1820,5 @@
         </div>
         <!-- //headerWrap -->
 </div>
+
 </html>

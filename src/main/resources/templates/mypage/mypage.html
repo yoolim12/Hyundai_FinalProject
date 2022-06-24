@@ -233,6 +233,12 @@
             $.ajax({
                 url: url,
                 method: "post",
+                data:JSON.stringify({
+					"CSRFToken": getYCsrfToken()
+				}),
+				beforeSend: function(xhr){
+					 xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+				},
                 success: function (data) {
                     alert("완료되었습니다.");
                     location.href='/member/mypage';
