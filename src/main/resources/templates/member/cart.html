@@ -6,8 +6,8 @@
       layout:decorate="~{fragments/common}">
 <div layout:fragment="content">
     <script type="text/javascript">
-	    var token = $("meta[name='_csrf']").attr("content");
-	    var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
         var color = [];
         var size = [];
         var res_obj, allchecked = false;
@@ -17,7 +17,7 @@
         function numWithComma(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
-        
+
         function setOptionColor(obj, idx, c) {
             $(obj).parent().find("a").css("line-height", "18px");
             $(obj).addClass("on");
@@ -52,13 +52,13 @@
                 method: "put",
                 data: JSON.stringify(data),
                 contentType: "application/json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
-                 },
+                },
                 cache: false,
                 success: function (data) {
                     var lc = new layerAlert('완료되었습니다.');
-                    lc.confirmAction = function(){
+                    lc.confirmAction = function () {
                         location.href = "/cart";
                     };
                 },
@@ -84,13 +84,13 @@
                 method: "put",
                 data: JSON.stringify(data),
                 contentType: "application/json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
-                 },
+                },
                 cache: false,
                 success: function (data) {
                     var lc = new layerAlert('완료되었습니다.');
-                    lc.confirmAction = function(){
+                    lc.confirmAction = function () {
                         location.href = "/cart";
                     };
                 },
@@ -169,13 +169,13 @@
                         ssize: ssize,
                     }),
                     contentType: "application/json",
-                    beforeSend: function(xhr) {
+                    beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
-                     },
+                    },
                     cache: false,
                     success: function (data) {
                         var lc = new layerAlert('완료되었습니다.');
-                        lc.confirmAction = function(){
+                        lc.confirmAction = function () {
                             location.href = "/cart";
                         };
                     },
@@ -243,9 +243,9 @@
                         size[i] = result[i].ssize;
                         total_price += parseInt(result[i].pprice) * result[i].qty;
                         str += `<tr name="entryProductInfo" data-pk="10687045664812" data-deliverykind=""
-					    data-outofstock="false" data-category="ME011">
-					    </tr><td class="frt">
-				        <!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
+                   data-outofstock="false" data-category="ME011">
+                   </tr><td class="frt">
+                    <!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
                         <input type="checkbox" name="cartlist" data-pk="10687045664812" data-division="" data-deliverykind="" value="9" autocomplete="off">
                         </td>
                         <td class="pt_list_wrap">
@@ -645,7 +645,7 @@
                 }
             });
 
-			
+
             $('.gd_btn1807 li a').on('click', function () {
                 var objN = $(this).attr('rel');
                 var obj = $('.' + objN);
@@ -671,8 +671,9 @@
             $(document).on("click", '.gd_btn1807 a:eq(0)', function () {
                 $("#ce_tab li:eq(0) a").click();
             });
-        });
-        
+        })
+            ;
+
             function slidPrev() {
                 if (status == 1) {
                     return;
@@ -749,25 +750,25 @@
                     return false;
                 }
                 var item = [];
-                for(var i=0; i<res_obj.length; i++) {
-                    if(check_obj[i]) item.push(res_obj[i]);
+                for (var i = 0; i < res_obj.length; i++) {
+                    if (check_obj[i]) item.push(res_obj[i]);
                 }
                 var data = {
-                    totalPrice : selected_price,
-                    item : item
+                    totalPrice: selected_price,
+                    item: item
                 };
                 $.ajax({
                     url: "/cart/station",
                     method: "post",
                     data: JSON.stringify(data),
                     contentType: "application/json",
-                    beforeSend: function(xhr) {
+                    beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
-                     },
+                    },
                     cache: false,
                     success: function (data) {
                         var lc = new layerConfirm('주문하시겠습니까?', '확인', '취소');
-                        lc.confirmAction = function(){
+                        lc.confirmAction = function () {
                             localStorage.setItem('station-item', JSON.stringify(data));
                             location.href = "/order";
                         };
@@ -790,6 +791,7 @@
                     }
                 })
             }
+
             //]]>
     </script>
 
@@ -849,8 +851,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">
-                                	<!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
-                                	<input type="checkbox" id="entryCheckAll" value="cartlist" autocomplete="off">
+                                   <!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
+                                   <input type="checkbox" id="entryCheckAll" value="cartlist" autocomplete="off">
                                 </th>
                                 <th scope="col">상품정보</th>
                                 <th scope="col">수량</th>
@@ -875,7 +877,7 @@
                                 <dd>
                                 <!-- 여기 총 금액 변경되는거.. -->
                                     <span id="cartDataSubtotal"></span>
-			</dd>
+         </dd>
                                 <dt class="delch_wrap">
                                     <p class="tlt_ship">배송비</p>
                                     <!--delivery charge layer popup-->
@@ -891,14 +893,14 @@
                                 </dt>
                                 <dd>
                                     <span id="cartDataDeliveryCost">₩ 0</span>
-				</dd>
+            </dd>
                             </dl>
                         <dl class="total ">
                             <dt>
                                 합계</dt>
                             <dd>
                                 <span id="cartDataTotalPrice"></span>
-			</dd>
+         </dd>
                         </dl>
                     </div>
                     <div class="total_count1807">
