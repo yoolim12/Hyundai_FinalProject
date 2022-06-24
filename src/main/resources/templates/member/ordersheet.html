@@ -134,59 +134,59 @@
                 if(!agree_val) {
                     var la = new layerAlert('구매자 동의 항목을 체크하여 주세요.');
                     la.confirmAction = new function() {
-                        return;
                     }
-                }
-                var lc = new layerConfirm('결제하시겠습니까?', '확인', '취소');
-                lc.confirmAction = function(){
-                    console.log(checktHandsomepointUsableAmount);
-                    if(checktHandsomepointUsableAmount == 0) {
-                        var la = new layerAlert('포인트로 결제가 완료되었습니다.');
-                        la.confirmAction = function() {
-                            orderProcess();
-                            location.href = "/mypage";
-                        }
-                        return;
-                    }
-                    console.log(IMP);
-                    let today = new Date();
-                    let number = 1;
-                    const uid_date = "ORD"+today.getFullYear()+today.getMonth()+today.getDate();
-                    let mer_uid = uid_date + number;
-                    IMP.request_pay({
-                        pg: "html5_inicis",
-                        pay_method: "card",
-                        merchant_uid: mer_uid, // 주문번호
-                        name: order_name, // 2건 이상 : _ 외 1건, 1건 : pname
-                        amount: checktHandsomepointUsableAmount, // 가격 총 합
-                        buyer_email: "[[${member.memail}]]",
-                        buyer_name: "[[${member.mname}]]",
-                        buyer_tel: "[[${member.telnum}]]",
-                        buyer_addr: address,
-                        buyer_postcode: zipcode
-                    }, function(rsp){ // callback
-                        if (rsp.success) {
-                            // jQuery로 http 요청, 결제 승인 또는 가상계좌 발급에 성공한 경우
-                            $.ajax({
-                                url:"/mypage", //결제 성공시 갈 url
-                                method:"POST",
-                                headers:{"Content-Type":"application/json"},
-                                data:{ // 가맹점 서버에 인자로 전달한 데이터, 추가할거있으면 하면 됨
-                                    imp_uid:rsp.imp_uid, // 결제번호
-                                    merchant_uid:rsp.merchant_uid // 주문번호
-                                }
-                            }).done(function (data){
-                                // 결제 성공 시 로직
+                }else {
+                    var lc = new layerConfirm('결제하시겠습니까?', '확인', '취소');
+                    lc.confirmAction = function(){
+                        console.log(checktHandsomepointUsableAmount);
+                        if(checktHandsomepointUsableAmount == 0) {
+                            var la = new layerAlert('포인트로 결제가 완료되었습니다.');
+                            la.confirmAction = function() {
                                 orderProcess();
-                                var la = new layerAlert('결제에 성공하셨습니다.');
-                                la.confirmAction = function() {
-                                    location.href = "/mypage";
-                                }
-                            })
-                        }else {
-                            var la = new layerAlert('결제에 실패하셨습니다.');
+                                location.href = "/mypage";
+                            }
+                            return;
                         }
-                    });
+                        console.log(IMP);
+                        let today = new Date();
+                        let number = 1;
+                        //const uid_date = "ORD"+today.getFullYear()+today.getMonth()+today.getDate()+today.;
+                        let mer_uid = today.getTime();
+                        IMP.request_pay({
+                            pg: "html5_inicis",
+                            pay_method: "card",
+                            merchant_uid: mer_uid, // 주문번호
+                            name: order_name, // 2건 이상 : _ 외 1건, 1건 : pname
+                            amount: checktHandsomepointUsableAmount, // 가격 총 합
+                            buyer_email: "[[${member.memail}]]",
+                            buyer_name: "[[${member.mname}]]",
+                            buyer_tel: "[[${member.telnum}]]",
+                            buyer_addr: address,
+                            buyer_postcode: zipcode
+                        }, function(rsp){ // callback
+                            if (rsp.success) {
+                                // jQuery로 http 요청, 결제 승인 또는 가상계좌 발급에 성공한 경우
+                                $.ajax({
+                                    url:"/mypage", //결제 성공시 갈 url
+                                    method:"POST",
+                                    headers:{"Content-Type":"application/json"},
+                                    data:{ // 가맹점 서버에 인자로 전달한 데이터, 추가할거있으면 하면 됨
+                                        imp_uid:rsp.imp_uid, // 결제번호
+                                        merchant_uid:rsp.merchant_uid // 주문번호
+                                    }
+                                }).done(function (data){
+                                    // 결제 성공 시 로직
+                                    orderProcess();
+                                    var la = new layerAlert('결제에 성공하셨습니다.');
+                                    la.confirmAction = function() {
+                                        location.href = "/mypage";
+                                    }
+                                })
+                            }else {
+                                var la = new layerAlert('결제에 실패하셨습니다.');
+                            }
+                        });
+                    }
                 }
             }
 
