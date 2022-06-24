@@ -24,5 +24,13 @@ public interface MemberService {
 
 	// 회원 포인트 조회
 	public int getPoint(String memail) throws Exception;
+	
+	// 로그인 기록 저장
+	public void insertLoginLog(String memail) throws Exception;
 
+	// 휴면 갱신 (배치)
+	public int updateMemberSleep() throws Exception;
+		
+	// 등급 갱신 (배치)
+	public int updateMemberGrade() throws Exception;
 }

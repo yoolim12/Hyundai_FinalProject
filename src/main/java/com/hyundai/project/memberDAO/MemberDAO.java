@@ -30,6 +30,15 @@ public interface MemberDAO {
 		
 	// 회원 전체 조회
 	public List<MemberDTO> showAllMember() throws Exception;
+	
+	// 로그인 로그 저장
+	public void insertLoginLog(String memail) throws Exception;
+			
+	// 회원 휴면 갱신
+	public int updateMemberSleep() throws Exception;
+			
+	// 회원 등급 갱신
+	public int updateMemberGrade() throws Exception;
 
 	// 결제 시 사용된 포인트 차감
 	public void pointApply(String memail, int ousedpoint);
