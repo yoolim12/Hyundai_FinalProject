@@ -102,7 +102,7 @@ public class MainListController {
 		list.add(new MainCategoryListVO(true, true, "여성", "WE"));
 		list.add(new MainCategoryListVO(true, true, "남성", "ME"));
 		list.add(new MainCategoryListVO(true, true, "포인트 ACC.", "WE03"));
-		list.add(new MainCategoryListVO(true, true, "셀렉티드", "WE01"));
+//		list.add(new MainCategoryListVO(true, true, "셀렉티드", "WE01"));
 		list.add(new MainCategoryListVO(true, false, "여성", "WE"));
 		list.add(new MainCategoryListVO(true, false, "남성", "ME"));
 		
