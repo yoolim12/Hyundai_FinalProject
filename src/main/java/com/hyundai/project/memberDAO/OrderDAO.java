@@ -22,4 +22,6 @@ public interface OrderDAO {
 	public void deleteOrderList(int oid) throws Exception;
 
 	public void deleteOrderItem(int oid) throws Exception;
+
+	public void updateOrderList(int oid) throws Exception;
 }

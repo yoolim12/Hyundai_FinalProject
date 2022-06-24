@@ -9,7 +9,7 @@ public class Schedule {
 	@Autowired
 	ScheduleService service;
 	
-	@Scheduled(fixedDelay = 500000)
+	@Scheduled(fixedDelay = 50000000)
 	public void test() {
 		// 등급 갱신
 		service.jobUpdateMemberGrade();
