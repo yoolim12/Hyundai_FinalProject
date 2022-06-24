@@ -43,6 +43,12 @@ extends DefaultOAuth2UserService {
          
         // 기본 회원이면 정보 반환
         if (!(result == null)) {
+        	try {
+				clubMemberDAO.insertLoginLog(email);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             log.info("기존 회원");
             return  result;
         } // end if
@@ -140,10 +146,18 @@ extends DefaultOAuth2UserService {
                        clubMember2.getMpassword() ,
                        1,
                        authorities,
-                       oAuth2User.getAttributes()
+                       oAuth2User.getAttributes(),
+                       clubMember2.getMsleep()
                );
                clubAuthMemberDTO.setName(clubMember2.getMname());
                clubAuthMemberDTO.setPassword(clubMember2.getMpassword());
+               clubAuthMemberDTO.setMsleep(clubMember2.getMsleep());
+               
+               int sleep = clubMember2.getMsleep();
+               if (sleep == 1) {
+            	   System.out.println("휴면 계정이다.");
+               }
+               
                //clubAuthMemberDTO --> UserDetails 반환
                log.info("OAuth2User 를 clubAuthMemberDTO");
                log.info(clubAuthMemberDTO);

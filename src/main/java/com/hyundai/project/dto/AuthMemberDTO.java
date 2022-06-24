@@ -28,13 +28,14 @@ public class AuthMemberDTO extends User {
     private Date regdate;
     private int mpoint;
     private int from_social;
-    private int gno;	  
+    private int gno;
+    private int msleep;
  
     // 구성자 설정
     public AuthMemberDTO(String username,
             String password, int fromSocial
             , List<GrantedAuthority> authorities, String mname, Date birth, String telnum,
-            String maddress, String mgender, String memail_info, Date moddate, Date regdate, int mpoint, int gno) {
+            String maddress, String mgender, String memail_info, Date moddate, Date regdate, int mpoint, int gno, int msleep) {
         // password는 부모클래스 사용
         super(username, password, authorities);
         this.memail = username;
@@ -51,5 +52,6 @@ public class AuthMemberDTO extends User {
         this.mpoint = mpoint;
         this.regdate = regdate;
         this.gno = gno;
+        this.msleep = msleep;
     }// end ClubAuthMemberDTO
 }

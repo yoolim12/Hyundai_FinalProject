@@ -25,4 +25,5 @@ public class MemberDTO {
     private int from_social;
     private int mpoint;
     private int gno;
+    private int msleep;
 }
