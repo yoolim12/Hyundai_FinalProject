@@ -16,39 +16,42 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class ProductServiceImpl implements ProductService {
 
-	@Autowired
-	private ProductDAO productDAO;
+    @Autowired
+    private ProductDAO productDAO;
 
-	@Override
-	public ProductDTO getProductDetail(String pid, String ccolorcode) throws Exception {
-		return productDAO.getProductDetail(pid, ccolorcode);
-	}
-	
-	@Override 
-	public List<ProductColorDTO> getProductColorDetail(String pid, String ccolorcode) throws Exception {
-		log.info("produtDAO");
-		return productDAO.getProductColorDetail(pid, ccolorcode);
-	}
-	
-	@Override 
-	public List<ProductSizeDTO> getProductSize(String pid, String ccolorcode) throws Exception {
-		return productDAO.getProductSize(pid, ccolorcode);
-	}
-	
-	@Override
-	public void delProduct(String pid) {
-		productDAO.delProduct(pid);
-	}
-	
-	@Override
-	public void delColor(String pid) {
-		productDAO.delColor(pid);
-	}
-	
-	@Override
-	public List<ProductDTO> productSearch(String pname){
-		return productDAO.productSearch(pname);
-	}
-	
-	
+    @Override
+    public ProductDTO getProductDetail(String pid, String ccolorcode) throws Exception {
+        return productDAO.getProductDetail(pid, ccolorcode);
+    }
+
+    @Override
+    public List<ProductColorDTO> getProductColorDetail(String pid, String ccolorcode) throws Exception {
+        log.info("produtDAO");
+        return productDAO.getProductColorDetail(pid, ccolorcode);
+    }
+
+    @Override
+    public List<ProductSizeDTO> getProductSize(String pid, String ccolorcode) throws Exception {
+        return productDAO.getProductSize(pid, ccolorcode);
+    }
+
+    @Override
+    public void delProduct(String pid) {
+        productDAO.delProduct(pid);
+    }
+
+    @Override
+    public void delColor(String pid) {
+        productDAO.delColor(pid);
+    }
+
+    @Override
+    public List<ProductDTO> productSearch(String pname) {
+        return productDAO.productSearch(pname);
+    }
+
+    @Override
+    public void updateMain(String pid, int pstatus) throws Exception {
+        productDAO.updateMain(pid, pstatus);
+    }
 }

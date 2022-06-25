@@ -37,12 +37,6 @@ public class BackMemberRestController {
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
 	
-	@Autowired
-	private MemberDAO memberDAO;
-	
-	@Autowired
-	private ProductService productService;
-	
 	// 회원 찾기
 	@PostMapping("/member")
 	@ResponseBody
@@ -121,27 +115,4 @@ public class BackMemberRestController {
     	}
     	return "success";
     } // end modify
-    
-    @RequestMapping("/productSearch")
-    public ResponseEntity<List<ProductDTO>> productSearch(@RequestBody HashMap<String, String> map, Model model) {
-    	String pname = map.get("pname");
-    	
-    	ResponseEntity<List<ProductDTO>> mem = null;
-		try {
-			List<ProductDTO> list = productService.productSearch(pname);
-	    	model.addAttribute("productList", list);
-	    	mem = new ResponseEntity<List<ProductDTO>>(list, HttpStatus.OK);
-			log.info(mem);
-		} catch (Exception e) {
-			e.printStackTrace();
-			mem = new ResponseEntity<List<ProductDTO>>(HttpStatus.BAD_REQUEST);
-		} // end try
-		return mem;
-    }
-    
-    @RequestMapping("/delProduct")
-    public void delProduct(@RequestParam("pid") String pid) {
-    	productService.delColor(pid);
-    	productService.delProduct(pid);
-    }
 }
