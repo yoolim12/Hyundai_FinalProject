@@ -245,11 +245,9 @@
                         str += `<tr name="entryProductInfo" data-pk="10687045664812" data-deliverykind=""
                    data-outofstock="false" data-category="ME011">
                    </tr><td class="frt">
-                    <!-- 2019.11.07 쇼핑백 진입 시 선택 상품 없도록 수정 -->
                         <input type="checkbox" name="cartlist" data-pk="10687045664812" data-division="" data-deliverykind="" value="9" autocomplete="off">
                         </td>
                         <td class="pt_list_wrap">
-                            <!-- pt_list_all -->
                         <div class="pt_list_all">
                         <a href="/detail/${pid_ccode}"
                         onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
@@ -262,19 +260,15 @@
                         <span class="sb_tlt" id="${i}">
                         ${result[i].pname}</span>
                         </a>
-
                         <p class="color_op">
-
                         color : ${result[i].ccolorcode}<span class="and_line">/</span>
                         size : ${result[i].ssize}</p>
-
                         <div class="option_wrap">
                         <a href="#none" class="btn_option" id="optOpenLayer^9^TH2C3TRN644N_CR"
                         onclick="GA_Event('쇼핑백','옵션변경', '${result[i].pname}')">옵션변경</a>
                         </div>
                         </div>
                         </div>
-                        <!-- //pt_list_all-->
                         </td>
                         <td class="al_middle">
                         <form id="!!!바꾸기"
@@ -375,7 +369,6 @@
                         <td colspan="6" class="basket_wrap">
                         </td>
                         </tr>`;
-                        //console.log(str);
                     }
                     $("#cart-list").html(str);
                 }
