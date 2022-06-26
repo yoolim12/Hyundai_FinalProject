@@ -38,4 +38,7 @@ public interface ProductDAO {
 	
 	public List<ProductDTO> productSearch(String pname);
 	// yoolim end
+
+	// 메인페이지에 보여지는 신상품 및 베스트
+	public void updateMain(String pid, int pstatus);
 }

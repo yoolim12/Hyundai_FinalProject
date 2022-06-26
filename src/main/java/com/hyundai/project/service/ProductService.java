@@ -21,5 +21,7 @@ public interface ProductService {
 	
 	public List<ProductDTO> productSearch(String pname);
 	// yoolim end
-	
+
+	public void updateMain(String pid, int pstatus) throws Exception;
+
 }
