@@ -28,16 +28,10 @@ public class ScheduleService {
 		
 	}
 	
-	/*
-	 * public void jobUpdateMemberSleep() {
-	 * 
-	 * log.info("[휴면 계정] 스케줄러 실행");
-	 * 
-	 * try { int res = memberService.updateMemberSleep();
-	 * 
-	 * log.info("[휴면 계정] "+ res +"건 업데이트 되었습니다."); } catch (Exception e) {
-	 * log.error("[휴면 계정] 스케줄러 실행중 오류가 발생 하였습니다.",e); }
-	 * 
-	 * }
-	 */
+	 public void jobUpdateMemberSleep() {
+		 log.info("[휴면 계정] 스케줄러 실행");
+		 try { int res = memberService.updateMemberSleep();
+		 log.info("[휴면 계정] "+ res +"건 업데이트 되었습니다."); } catch (Exception e) {
+			 log.error("[휴면 계정] 스케줄러 실행중 오류가 발생 하였습니다.",e); }
+		 }
 }

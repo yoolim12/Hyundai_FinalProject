@@ -26,7 +26,8 @@ public class MemberJoinDTO {
     private Date regdate;
     private int from_social;
     private int mpoint;
-    private int gno;	
+    private int gno;
+    private int msleep;
 
     private String role_set;
 }

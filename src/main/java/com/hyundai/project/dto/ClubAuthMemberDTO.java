@@ -28,19 +28,21 @@ public class ClubAuthMemberDTO extends User implements OAuth2User {
 	private String password;
 	private Map<String, Object> OA2_attr;
 	private String role;
+	private int msleep;
 
 	// ClubOAuth2UserDetailsService 용 구성자
 	public ClubAuthMemberDTO(String username, String password, int fromSocial, List<GrantedAuthority> authorities,
-			Map<String, Object> OA2_attr) {
-		this(username, password, fromSocial, authorities);
+			Map<String, Object> OA2_attr, int msleep) {
+		this(username, password, fromSocial, authorities, msleep);
 		this.OA2_attr = OA2_attr;
 	}// end ClubAuthMemberDTO
 
 	// 구성자 설정
-	public ClubAuthMemberDTO(String username, String password, int fromSocial, List<GrantedAuthority> authorities) {
+	public ClubAuthMemberDTO(String username, String password, int fromSocial, List<GrantedAuthority> authorities, int msleep) {
 		super(username, password, authorities); // password는 부모클래스 사용
 		this.email = username;
 		this.fromSocial = fromSocial;
+		this.msleep = msleep;
 	}// end ClubAuthMemberDTO
 
 	// OAuth2User 정보 저장

@@ -9,6 +9,8 @@
     <meta name="description" content="au theme template">
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <!-- Title Page-->
     <title>Forms</title>
@@ -42,12 +44,18 @@
 	
     
     <script>
+	    var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
 	 	// 회원 조회
 	 	$(function(){
 		
 	 		$.ajax({
 				url : '/back/allmember',
 				type: 'GET',
+				beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+                cache: false,
 				success: function(res){
 					alert("success")
 				},
@@ -67,6 +75,10 @@
     			data : {
     				'email' : email
     			},
+    			beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+                cache: false,
     			success: function(res){
     				console.log(res.gno);
     				if (res.gno == 1){
@@ -123,6 +135,10 @@
     				'maddress' : maddress,
     				'gno' : gno
     			}),
+    			beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+                cache: false,
     			success: function(res){
     				alert("수정 성공");
     				console.log(res);
@@ -136,7 +152,7 @@
     	// 회원 정보 탈퇴
     	function delMember(){
     		var email = $("#input_email").val();
-    		
+
     		console.log(email);
     		
     		$.ajax({
@@ -146,6 +162,10 @@
     				'email' : email
                 }),
     			contentType: "application/json",
+    			beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+                cache: false,
     			success: function(res){
     				alert("탈퇴 성공");
     				console.log(res);

@@ -27,13 +27,19 @@
 	</delete>
 	
 	<insert id = "insertLoginLog">
-		insert into loginLog values (#{memail}, sysdate)
+		insert into loginLog values (#{memail}, sysdate, logno_seq.nextval)
 	</insert>
 	
 	<!-- 휴면 계정 갱신 -->
 	<update id = "updateMemberSleep">
 		<![CDATA[
-			update member set telnum = '111' where regdate < '2022-06-23' and telnum != '111'
+			merge
+			into member A
+			using loginlog B
+			on (A.memail = B.memail and to_date(b.logindate) - to_date(A.regdate) > 30)
+			when matched then
+			update
+			set A.msleep = 1
 		]]>
 	</update>
 	
