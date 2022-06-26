@@ -43,12 +43,10 @@ public class MainListController {
 			category = "MEN";
 		} else if(cCode.equals("WE03")) {
 			category = "FASHION-ACC-";
-		} else if(cCode.equals("WE01")) {
-			category = "BEAUTY";
 		}
 		
-		// Product 테이블 pstatus 컬럼의 데이터가 'NEW'이면 신상품.  
-		String pstatus = "NEW";
+		// Product 테이블 pstatus 1 == 'NEW'이면 신상품.  
+		int pstatus = 1;
 		log.info(cCode + " = " + category);
 		try {
 			entry = new ResponseEntity<List<MainListVO>>(service.getProductList(pstatus, category), HttpStatus.OK);
@@ -77,8 +75,8 @@ public class MainListController {
 			category = "MEN";
 		}
 		
-		// Product 테이블 pstatus 컬럼의 데이터가 'BEST'이면 베스트 상품.  
-		String pstatus = "BEST";
+		// Product 테이블 pstatus 2 == 'BEST'이면 베스트 상품.  
+		int pstatus = 2;
 		log.info(cCode + " = " + category);
 		try {
 			entry = new ResponseEntity<List<MainListVO>>(service.getProductList(pstatus, category), HttpStatus.OK);
@@ -101,7 +99,6 @@ public class MainListController {
 		list.add(new MainCategoryListVO(true, true, "여성", "WE"));
 		list.add(new MainCategoryListVO(true, true, "남성", "ME"));
 		list.add(new MainCategoryListVO(true, true, "포인트 ACC.", "WE03"));
-//		list.add(new MainCategoryListVO(true, true, "셀렉티드", "WE01"));
 		list.add(new MainCategoryListVO(true, false, "여성", "WE"));
 		list.add(new MainCategoryListVO(true, false, "남성", "ME"));
 		
