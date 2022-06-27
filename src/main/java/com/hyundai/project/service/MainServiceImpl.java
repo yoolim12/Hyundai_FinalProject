@@ -22,7 +22,7 @@ public class MainServiceImpl  implements MainService{
 	
 	// 메인 페이지 상품 리스트 조회
 	@Override
-	public List<MainListVO> getProductList(String pstatus, String category) throws Exception{
+	public List<MainListVO> getProductList(int pstatus, String category) throws Exception{
 		log.info("get Product List");
 		log.info(pstatus + " " + category);
 		return mapper.getProductList(pstatus, category);

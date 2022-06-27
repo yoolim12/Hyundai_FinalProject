@@ -10,7 +10,7 @@ import com.hyundai.project.dto.MainMagazineListVO;
 public interface MainService {
 	
 	// 상품 리스트 조회. ref 값은 new = 신상품, best = 베스트
-	public List<MainListVO> getProductList(String pstatus, String category) throws Exception;
+	public List<MainListVO> getProductList(int pstatus, String category) throws Exception;
 	
 	// 매거진 리스트 조회
 	public List<MainMagazineListVO> getMagazineList() throws Exception;

@@ -12,7 +12,7 @@ import com.hyundai.project.dto.MainMagazineListVO;
 @Mapper
 public interface MainDAO {
 	
-	public List<MainListVO> getProductList(String pstatus, String category) throws Exception;
+	public List<MainListVO> getProductList(int pstatus, String category) throws Exception;
 	
 	public List<MainMagazineListVO> getMagazineList() throws Exception;
 
