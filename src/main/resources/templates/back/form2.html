@@ -687,6 +687,13 @@
 			                                <button id="productSearch" class="au-btn--submit">
 			                                    <i class="zmdi zmdi-search"></i>
 			                                </button>
+			                                <div class="popwrap w_type_5" id="delPopup" style="display:none;">
+			                                	<div>해당 상품을 삭제하시겠습니까?</div>
+			                                	<div class="btnwrap">
+													<input type="button" class="btn wt_s" id="cancelBtn" value="취소" />
+													<input type="button" class="btn gray_s" id="confirmBtn" value="확인" />
+												</div>
+			                                </div>
 			                            </div>
 			                            <div>
 			                            	<ul id="searchRes">
@@ -775,8 +782,11 @@
 							imgTag.setAttribute('src', el.cimage1);
 							imgTag.setAttribute('style', "width: 100px; height: 100px;");
 							btn.innerHTML = 'DELETE';
-							btn.setAttribute('onclick', 'location.href="/back/delProduct?pid='+el.pid+'"');
-							//btn.setAttribute('value', 'DELETE');
+							btn.setAttribute('style', 'border-left: 50px solid transparent;');
+							btn.setAttribute('id', 'deleteBtn');
+							
+							// 이거 추가하면 버튼 누를때 삭제됨 
+							//btn.setAttribute('onclick', 'location.href="/back/delProduct?pid='+el.pid+'"');
 							
 							parentTag.appendChild(liTag);
 							parentTag.appendChild(nameTag);
@@ -790,7 +800,14 @@
 						console.log('err');
 						console.log(e);
 					}
-				});
+				}); // end ajax
+			});// end searchBtn click
+			
+			var deleteBtn = document.getElementById("deleteBtn");
+			deleteBtn.addEventListener("click", function(event){
+				//var lc = new layerAlert('입력하신 정보가 변경완료 되었습니다.');
+				var delPopup = document.getElementById("delPopup");
+				delPopup.setAttribute('style', 'display: block;');
 			});
 			
 		
