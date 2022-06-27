@@ -152,12 +152,12 @@
                 		for(var i=0; i < result.length; i++) {
                			html += '		<li class="swiper-slide">';
                			html += '			<div class="item_box">';
-                		html += '				<a href="/product/productDetail?pid='+result[i].productCode+'" class="item_info1" onclick="javascript:GA_main(\'newImg\',$(this));setEcommerceData('+ i +', \'NEW\', \''+categoryCode+'\');">';
+                		html += '				<a href="/detail/'+result[i].productCode+'" class="item_info1" onclick="javascript:GA_main(\'newImg\',$(this));setEcommerceData('+ i +', \'NEW\', \''+categoryCode+'\');">';
                			html += '					<span class="item_img">';
                			html += '						<img src="'+result[i].t01imageUrl+'/dims/resize/234x353" alt="" name="'+result[i].productName+'" class="respon_image">';
                 		html += '					</span>';
                			html += '				</a>';
-               			html += '				<a href="/product/productDetail?pid='+result[i].productCode+'" class="item_info2" onclick="javascript:GA_main(\'new\',$(this));setEcommerceData('+ i +', \'NEW\', \''+categoryCode+'\');">';
+               			html += '				<a href="/detail/'+result[i].productCode+'" class="item_info2" onclick="javascript:GA_main(\'new\',$(this));setEcommerceData('+ i +', \'NEW\', \''+categoryCode+'\');">';
                			html += '					<span class="brand">'+result[i].brandName+'</span>';
                			html += '					<span class="price">'+ getExchangePrice(result[i].price) +'</span>';
                			html += '				</a>';
@@ -196,12 +196,12 @@
                 		for(var i=0; i < result.length; i++) {
                			html += '		<li class="swiper-slide">';
                			html += '			<div class="item_box">';
-               			html += '				<a href="/product/productDetail?pid='+result[i].productCode+'" class="item_info1" onclick="javascript:setEcommerceData('+ i +', \'BEST\', \''+categoryCode+'\');">';
+               			html += '				<a href="/detail/'+result[i].productCode+'" class="item_info1" onclick="javascript:setEcommerceData('+ i +', \'BEST\', \''+categoryCode+'\');">';
                			html += '					<span class="item_img">';
                			html += '						<img src="'+result[i].t01imageUrl+'/dims/resize/234x353" alt="" name="'+result[i].productName+'" class="respon_image" onclick="GA_main(\'bestImg\',$(this))">';
                			html += '					</span>';
                			html += '				</a>';
-               			html += '				<a href="/product/productDetail?pid='+result[i].productCode+'" class="item_info2" onclick="javascript:GA_main(\'best\',$(this));setEcommerceData('+ i +', \'BEST\', \''+categoryCode+'\');">';
+               			html += '				<a href="/detail/'+result[i].productCode+'" class="item_info2" onclick="javascript:GA_main(\'best\',$(this));setEcommerceData('+ i +', \'BEST\', \''+categoryCode+'\');">';
                			html += '					<span class="brand">'+result[i].brandName+'</span>';
                			html += '					<span class="price">'+ getExchangePrice(result[i].price) +'</span>';
                			html += '				</a>';
