@@ -25,6 +25,13 @@ public class BackController {
 		return "/back/form";
 	}
 	
+	// 회원관리 페이지 이동
+	@GetMapping("/streaming")
+	public String st() {
+		log.info("회원관리 페이지 요청");
+		return "/back/streaming";
+	}
+	
 	// 상품관리 페이지 이동
 	@GetMapping("/form2")
 	public String form2() {
