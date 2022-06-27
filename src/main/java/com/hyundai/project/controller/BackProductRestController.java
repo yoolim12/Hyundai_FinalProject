@@ -46,6 +46,7 @@ public class BackProductRestController {
 
 	@RequestMapping("/delProduct")
 	public void delProduct(@RequestParam("pid") String pid) {
+		productService.delStock(pid);
 		productService.delColor(pid);
 		productService.delProduct(pid);
 	}
