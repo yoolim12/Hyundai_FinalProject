@@ -31,6 +31,13 @@ public class BackController {
 		log.info("상품관리 페이지 요청");
 		return "/back/form2";
 	}
+	
+	// 매장관리 페이지 이동
+	@GetMapping("/form3")
+	public String form3() {
+		log.info("매장관리 페이지 요청");
+		return "/back/form3";
+	}
 		
 	// 회원 전체 조회
 	@GetMapping("/allmember")
