@@ -2,6 +2,7 @@ package com.hyundai.project.service;
 
 import java.util.List;
 
+import com.hyundai.project.dto.ProductInsertDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +54,46 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateMain(String pid, int pstatus) throws Exception {
         productDAO.updateMain(pid, pstatus);
+    }
+
+    @Override
+    public void updateProduct(ProductDTO product) throws Exception {
+        productDAO.updateProduct(product);
+    }
+
+    // Transaction 처리
+    @Override
+    public void insertProduct(ProductInsertDTO pi) throws Exception {
+        log.info(pi);
+        ProductDTO product = new ProductDTO();
+        product.setPid(pi.getPid());
+        product.setClarge(pi.getClarge());
+        product.setCmedium(pi.getCmedium());
+        product.setCsmall(pi.getCsmall());
+        product.setBname(pi.getBname());
+        product.setPname(pi.getPname());
+        product.setPprice(pi.getPprice());
+        product.setPdetail(pi.getPdetail());
+        log.info(product);
+        productDAO.insertProduct(product);
+        for(int i=0; i<pi.getPcolor().size(); i++) {
+            ProductColorDTO pcolor = new ProductColorDTO();
+            pcolor.setPid(pi.getPid());
+            pcolor.setCcolorcode(pi.getPcolor().get(i).getCcolorcode());
+            pcolor.setCimage1(pi.getPcolor().get(i).getCimage1());
+            pcolor.setCimage2(pi.getPcolor().get(i).getCimage2());
+            pcolor.setCimage3(pi.getPcolor().get(i).getCimage3());
+            pcolor.setCcolorimage(pi.getPcolor().get(i).getCcolorimage());
+            pcolor.setCmatchpid(pi.getPcolor().get(i).getCmatchpid());
+            productDAO.insertProductColor(pcolor);
+            for(int j=0; j<pi.getPcolor().get(i).getPsize().size(); j++) {
+                ProductSizeDTO psize = new ProductSizeDTO();
+                psize.setPid(pi.getPid());
+                psize.setCcolorcode(pi.getPcolor().get(i).getPsize().get(j).getCcolorcode());
+                psize.setSsize(pi.getPcolor().get(i).getPsize().get(j).getSsize());
+                psize.setSamount(pi.getPcolor().get(i).getPsize().get(j).getSamount());
+                productDAO.insertProductSize(psize);
+            }
+        }
     }
 }

@@ -41,4 +41,12 @@ public interface ProductDAO {
 
 	// 메인페이지에 보여지는 신상품 및 베스트
 	public void updateMain(String pid, int pstatus);
+
+	public void updateProduct(ProductDTO product);
+
+	public void insertProduct(ProductDTO product);
+
+	public void insertProductColor(ProductColorDTO color);
+
+	public void insertProductSize(ProductSizeDTO size);
 }

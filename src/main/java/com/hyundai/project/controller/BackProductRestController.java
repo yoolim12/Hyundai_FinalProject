@@ -2,6 +2,7 @@ package com.hyundai.project.controller;
 
 import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.ProductDTO;
+import com.hyundai.project.dto.ProductInsertDTO;
 import com.hyundai.project.memberDAO.MemberDAO;
 import com.hyundai.project.productDAO.ProductDAO;
 import com.hyundai.project.service.MemberService;
@@ -56,5 +57,17 @@ public class BackProductRestController {
 		int pstatus = Integer.parseInt(map.get("pstatus"));
 		log.info("pid : " + pid + " " + "pstatus : " + pstatus);
 		productService.updateMain(pid, pstatus);
+	}
+
+	@PutMapping("/product")
+	public void updateProdut(@RequestBody ProductDTO product) throws Exception {
+		log.info(product);
+		productService.updateProduct(product);
+	}
+
+	@PostMapping("/product")
+	public void insertProduct(@RequestBody ProductInsertDTO product) throws Exception {
+		log.info(product);
+		productService.insertProduct(product);
 	}
 }
