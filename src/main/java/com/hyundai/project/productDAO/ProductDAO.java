@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hyundai.project.dto.Criteria;
+import com.hyundai.project.dto.ProductBackDTO;
 import com.hyundai.project.dto.ProductColorDTO;
 import com.hyundai.project.dto.ProductDTO;
 import com.hyundai.project.dto.ProductListDTO;
@@ -41,4 +42,6 @@ public interface ProductDAO {
 
 	// 메인페이지에 보여지는 신상품 및 베스트
 	public void updateMain(String pid, int pstatus);
+	
+	public List<ProductBackDTO> backProductList(String pid);
 }

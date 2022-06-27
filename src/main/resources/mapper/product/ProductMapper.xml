@@ -119,5 +119,11 @@
     <update id="updateMain">
         UPDATE PRODUCT SET PSTATUS = #{pstatus} WHERE PID = #{pid}
     </update>
+    
+    <select id="backProductList" resultType="com.hyundai.project.dto.ProductBackDTO">
+        select pid, clarge||'-'||cmedium||'-'||csmall category, bname, pname, pprice, pdetail
+		from product
+        where pid = #{pid}
+    </select>
 
 </mapper>
