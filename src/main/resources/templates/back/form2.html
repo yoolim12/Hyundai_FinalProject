@@ -35,6 +35,9 @@
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
+    
+    <!-- jquery -->
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 </head>
 
@@ -671,7 +674,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="card">
+                                <div class="card" style="width: 1000px;">
                                     <div class="card-header">
                                         <strong>상품 삭제</strong>
                                     </div>
@@ -687,18 +690,18 @@
 			                                <button id="productSearch" class="au-btn--submit">
 			                                    <i class="zmdi zmdi-search"></i>
 			                                </button>
-			                                <div class="popwrap w_type_5" id="delPopup" style="display:none;">
+			                                
+			                            </div>
+			                            <!--<div class="popwrap w_type_5" id="delPopup" style="display:none;">
 			                                	<div>해당 상품을 삭제하시겠습니까?</div>
 			                                	<div class="btnwrap">
 													<input type="button" class="btn wt_s" id="cancelBtn" value="취소" />
 													<input type="button" class="btn gray_s" id="confirmBtn" value="확인" />
 												</div>
-			                                </div>
+			                            </div>-->
+			                            <div id="searchRes">
 			                            </div>
-			                            <div>
-			                            	<ul id="searchRes">
-			                                </ul>
-			                            </div>
+			                            
                                     </div>
                                 </div>                                
                             </div>
@@ -747,8 +750,6 @@
 </body>
 <!-- yoolim start -->
 	<script type="text/javascript">
-		
-		
 			console.log('why?');
 			var searchBtn = document.getElementById("productSearch");
 			searchBtn.addEventListener("click", function(event) {
@@ -768,50 +769,101 @@
 						xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
 					},
 					success: function(response){
-						response.forEach(el => {
-							console.log(el.pname);
-							console.log(el.cimage1);
-							//let new_pTag = document.createElement('p');
+						console.log(response);
+						if(response.length === 0){
+							console.log('empty');
 							let parentTag = document.getElementById('searchRes');
-							let liTag = document.createElement('li');
-							let nameTag = document.createElement('div');
-							let imgTag = document.createElement('img');
-							let btn = document.createElement('button');
-							
-							nameTag.innerHTML = el.pname;
-							imgTag.setAttribute('src', el.cimage1);
-							imgTag.setAttribute('style', "width: 100px; height: 100px;");
-							btn.innerHTML = 'DELETE';
-							btn.setAttribute('style', 'border-left: 50px solid transparent;');
-							btn.setAttribute('id', 'deleteBtn');
-							
-							// 이거 추가하면 버튼 누를때 삭제됨 
-							//btn.setAttribute('onclick', 'location.href="/back/delProduct?pid='+el.pid+'"');
-							
-							parentTag.appendChild(liTag);
-							parentTag.appendChild(nameTag);
-							parentTag.appendChild(imgTag);
-							parentTag.appendChild(btn);
-						});
-						//console.log(response[0]);
-						
-					},
+							var elem = document.createElement('div');
+							elem.innerHTML = '해당 검색 결과가 없습니다.';
+							elem.setAttribute('style', 'text-align: center; border-top: 50px; ');
+							parentTag.appendChild(elem);
+						}
+						else{
+							console.log('hi');
+							response.forEach(el => {
+								console.log(el.pname);
+								console.log(el.cimage1);
+								console.log(el.pid);
+								
+								var html = '';
+								
+								//html += '<div>';
+								//html += 	el.pname;
+								//html += '</div>';
+								//html += '<img ' + 'src="' + el.cimage1 + '" ' + 'style=' + '"width: 100px; height: 100px;"' + '/>';
+								//html += '<button ' + 'style=' + '"border-left: 50px solid transparent" ' + 'id="' + 'deleteBtn'
+								//			+ el.pid + '">' + DELETE + '</button>';
+								//let new_pTag = document.createElement('p');
+								let parentTag = document.getElementById('searchRes');
+								//let liTag = document.createElement('li');
+								let nameTag = document.createElement('div');
+								let imgTag = document.createElement('img');
+								let btn = document.createElement('button');
+								let delPopup = document.createElement('div');
+								let message = document.createElement('div');
+								let btnwrap = document.createElement('div');
+								let cancelBtn = document.createElement('input');
+								let div = document.createElement('div');
+								let confirmBtn = document.createElement('input');
+								
+								
+								nameTag.innerHTML = el.pname;
+								imgTag.setAttribute('src', el.cimage1);
+								imgTag.setAttribute('style', "width: 100px; height: 100px;");
+								btn.innerHTML = 'DELETE';
+								btn.setAttribute('style', 'border-left: 50px solid transparent;');
+								btn.setAttribute('id', 'deleteBtn' + el.pid);
+								
+								delPopup.setAttribute('id', 'delPopup'+ el.pid);
+								delPopup.setAttribute('style', 'display:none;');
+								
+								message.innerHTML = '해당 상품을 삭제하시겠습니까?';
+								
+								cancelBtn.setAttribute('type', 'button');
+								cancelBtn.setAttribute('id', 'cancelBtn' + el.pid);
+								cancelBtn.setAttribute('value', '취소');
+								
+								
+								
+								confirmBtn.setAttribute('type', 'button');
+								confirmBtn.setAttribute('id', 'confirmBtn' + el.pid);
+								confirmBtn.setAttribute('value', '확인');
+								confirmBtn.setAttribute('onclick', 'location.href="/back/delProduct?pid='+el.pid+'"');
+								
+								
+								// 이거 추가하면 버튼 누를때 삭제됨 
+								//btn.setAttribute('onclick', 'location.href="/back/delProduct?pid='+el.pid+'"');
+								
+								//parentTag.appendChild(liTag);
+								parentTag.appendChild(nameTag);
+								parentTag.appendChild(imgTag);
+								parentTag.appendChild(btn);
+								parentTag.appendChild(delPopup);
+								delPopup.appendChild(message);
+								delPopup.appendChild(btnwrap);
+								btnwrap.appendChild(cancelBtn);
+								btnwrap.appendChild(div);
+								btnwrap.appendChild(confirmBtn);
+								
+								//var delPopup = document.getElementById("delPopup");
+								var deleteBtn = document.getElementById("deleteBtn"+el.pid);
+								deleteBtn.addEventListener("click", function(event){
+									delPopup.setAttribute('style', 'display: block;');
+								});//end deleteBtn
+								
+								var cancelBtnClick = document.getElementById('cancelBtn' + el.pid);
+								cancelBtnClick.addEventListener("click", function(event){
+									delPopup.setAttribute('style', 'display: none;');
+								});
+							});//end response.forEach
+						}
+					},//end success
 					error:function(e){
 						console.log('err');
 						console.log(e);
 					}
 				}); // end ajax
 			});// end searchBtn click
-			
-			var deleteBtn = document.getElementById("deleteBtn");
-			deleteBtn.addEventListener("click", function(event){
-				//var lc = new layerAlert('입력하신 정보가 변경완료 되었습니다.');
-				var delPopup = document.getElementById("delPopup");
-				delPopup.setAttribute('style', 'display: block;');
-			});
-			
-		
-		
 	</script>
 	<!-- yoolim end -->
 </html>
