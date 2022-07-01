@@ -5,8 +5,8 @@
 <mapper namespace="com.hyundai.project.memberDAO.MemberDAO">
 	
 	<select id="showAllMember"
-		resultType="com.hyundai.project.dto.MemberDTO">
-		select * from member
+		resultType="com.hyundai.project.dto.MemberJoinDTO">
+		select memail, mname, role_set, msleep from member natural join memberrole
 	</select>
 	
 	<select id="getMemberInfo"

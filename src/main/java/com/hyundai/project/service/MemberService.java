@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hyundai.project.dto.AuthMemberDTO;
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.MemberJoinDTO;
 
 public interface MemberService {
 	
@@ -20,7 +21,7 @@ public interface MemberService {
 	public void delMember(String email) throws Exception;
 	
 	// 회원 전체 조회
-	public List<MemberDTO> showAllMember() throws Exception;
+	public List<MemberJoinDTO> showAllMember() throws Exception;
 
 	// 회원 포인트 조회
 	public int getPoint(String memail) throws Exception;

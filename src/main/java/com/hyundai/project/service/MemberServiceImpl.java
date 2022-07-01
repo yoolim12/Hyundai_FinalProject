@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hyundai.project.dto.AuthMemberDTO;
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.MemberJoinDTO;
 import com.hyundai.project.memberDAO.MemberDAO;
 
 import lombok.extern.log4j.Log4j2;
@@ -38,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	// 회원 전체 조회
 	@Override
-	public List<MemberDTO> showAllMember() throws Exception {
+	public List<MemberJoinDTO> showAllMember() throws Exception {
 		return mapper.showAllMember();
 	}
 
