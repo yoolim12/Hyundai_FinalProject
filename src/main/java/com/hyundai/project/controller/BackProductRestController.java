@@ -1,6 +1,7 @@
 package com.hyundai.project.controller;
 
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.ProductCategoryDTO;
 import com.hyundai.project.dto.ProductDTO;
 import com.hyundai.project.dto.ProductInsertDTO;
 import com.hyundai.project.memberDAO.MemberDAO;
@@ -69,5 +70,10 @@ public class BackProductRestController {
 	public void insertProduct(@RequestBody ProductInsertDTO product) throws Exception {
 		log.info(product);
 		productService.insertProduct(product);
+	}
+
+	@GetMapping("/category")
+	public List<ProductCategoryDTO> getCategory() throws Exception {
+		return productService.getCategory();
 	}
 }

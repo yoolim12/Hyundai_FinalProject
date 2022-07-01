@@ -2,13 +2,10 @@ package com.hyundai.project.service;
 
 import java.util.List;
 
-import com.hyundai.project.dto.ProductInsertDTO;
+import com.hyundai.project.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hyundai.project.dto.ProductColorDTO;
-import com.hyundai.project.dto.ProductDTO;
-import com.hyundai.project.dto.ProductSizeDTO;
 import com.hyundai.project.productDAO.ProductDAO;
 
 import lombok.extern.log4j.Log4j2;
@@ -95,5 +92,10 @@ public class ProductServiceImpl implements ProductService {
                 productDAO.insertProductSize(psize);
             }
         }
+    }
+
+    @Override
+    public List<ProductCategoryDTO> getCategory() {
+        return productDAO.getCategory();
     }
 }

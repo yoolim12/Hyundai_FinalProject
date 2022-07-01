@@ -140,4 +140,8 @@
         UPDATE PRODUCT SET PSTATUS = #{pstatus} WHERE PID = #{pid}
     </update>
 
+    <select id="getCategory" resultType="com.hyundai.project.dto.ProductCategoryDTO">
+        select clarge, cmedium, csmall from category order by clarge desc
+    </select>
+
 </mapper>

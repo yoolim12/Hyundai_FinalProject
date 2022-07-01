@@ -3,13 +3,8 @@ package com.hyundai.project.productDAO;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.hyundai.project.dto.*;
 import org.apache.ibatis.annotations.Mapper;
-
-import com.hyundai.project.dto.Criteria;
-import com.hyundai.project.dto.ProductColorDTO;
-import com.hyundai.project.dto.ProductDTO;
-import com.hyundai.project.dto.ProductListDTO;
-import com.hyundai.project.dto.ProductSizeDTO;
 
 @Mapper
 public interface ProductDAO {
@@ -49,4 +44,6 @@ public interface ProductDAO {
 	public void insertProductColor(ProductColorDTO color);
 
 	public void insertProductSize(ProductSizeDTO size);
+
+	public List<ProductCategoryDTO> getCategory();
 }
