@@ -37,7 +37,7 @@ public interface ProductDAO {
 	
 	public void delStock(String pid);
 	
-	public List<ProductDTO> productSearch(String pname);
+	public List<ProductBackDTO> productSearch(String pname);
 	// yoolim end
 
 	// 메인페이지에 보여지는 신상품 및 베스트

@@ -45,7 +45,8 @@
 
 <!-- Main CSS-->
 <link href="css/theme.css" rel="stylesheet" media="all">
-
+<!-- Jquery JS-->
+	<script src="vendor/jquery-3.2.1.min.js"></script>
 </head>
 
 <body class="animsition">
@@ -71,26 +72,6 @@
 			return $("#CSRFForm [name='CSRFParameterName']").val();
 		}
 		
-		function getBackProduct(){
-			$.ajax({
-				type: "get",
-				url: "/back/backProduct/" + pid,
-				dataType: "json",
-				async: true,
-				contentType: "application/json",
-				error: function (request, status, error) {
-					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-				},
-				success: function(result){
-					var html = "";
-					if(result.length > 0){
-						for(var i = 0; i < result.length; i++){
-							
-						}
-					}
-				}
-			})
-		}
 	</script>
 
 	<div class="page-wrapper">
@@ -212,13 +193,19 @@
 				<div class="section__content section__content--p30">
 					<div class="container-fluid">
 						<div class="header-wrap">
-							<form class="form-header" action="" method="POST">
+							<!-- <form class="form-header" action="" method="POST">
 								<input class="au-input au-input--xl" type="text" name="search"
 									placeholder="Search for datas &amp; reports..." />
-								<button class="au-btn--submit" type="submit">
+								<button class="au-btn--submit" type="submit" id="productSearch">
 									<i class="zmdi zmdi-search"></i>
 								</button>
-							</form>
+							</form> -->
+							<div class="form-header" action="" method="">
+                               <input id="pname" class="au-input au-input--xl" type="text" name="search" placeholder="상품명을 검색하세요." />
+                               <button id="productSearch" class="au-btn--submit">
+                                   <i class="zmdi zmdi-search"></i>
+                               </button>
+                            </div>
 							<div class="header-button">
 								<div class="noti-wrap">
 									<div class="noti__item js-item-menu">
@@ -430,44 +417,12 @@
 												<th>category(clarge/cmedium/csmall)</th>
 												<th>bname</th>
 												<th>pname</th>
+												<th>pstatus</th>
 												<th>pprice</th>
-												<th>pdetail</th>
 												<th></th>
 											</tr>
 										</thead>
-										<tbody id="product-list">
-											<tr class="tr-shadow">
-												<td>Lori Lynch</td>
-												<td><span class="block-email"><a
-														href="/cdn-cgi/l/email-protection" class="__cf_email__"
-														data-cfemail="5834372a31183d20393528343d763b3735">[email&#160;protected]</a></span>
-												</td>
-												<td class="desc">Samsung S8 Black</td>
-												<td>2018-09-27 02:12</td>
-												<td><span class="status--process">Processed</span></td>
-												<td>$679.00</td>
-												<td>
-													<div class="table-data-feature">
-														<button class="item" data-toggle="tooltip"
-															data-placement="top" title="Send">
-															<i class="zmdi zmdi-mail-send"></i>
-														</button>
-														<button class="item" data-toggle="tooltip"
-															data-placement="top" title="Edit">
-															<i class="zmdi zmdi-edit"></i>
-														</button>
-														<button class="item" data-toggle="tooltip"
-															data-placement="top" title="Delete">
-															<i class="zmdi zmdi-delete"></i>
-														</button>
-														<button class="item" data-toggle="tooltip"
-															data-placement="top" title="More">
-															<i class="zmdi zmdi-more"></i>
-														</button>
-													</div>
-												</td>
-											</tr>
-											<tr class="spacer"></tr>
+										<tbody id="searchRes">
 										</tbody>
 									</table>
 								</div>
@@ -481,8 +436,7 @@
 
 
 
-	<!-- Jquery JS-->
-	<script src="vendor/jquery-3.2.1.min.js"></script>
+	
 	<!-- Bootstrap JS-->
 	<script src="vendor/bootstrap-4.1/popper.min.js"></script>
 	<script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
@@ -504,66 +458,71 @@
 
 	<!-- Main JS-->
 	<script src="js/main.js"></script>
-
-</body>
-<!-- yoolim start -->
-<script type="text/javascript">
+	<script>
+	var productBtn = document.getElementById("productSearch");
+	productBtn.addEventListener("click", function(event){
+		var pname = document.getElementById("pname");
+		console.log(pname.value);
 		
-		
-			console.log('why?');
-			var searchBtn = document.getElementById("productSearch");
-			searchBtn.addEventListener("click", function(event) {
-				var pname = document.getElementById("pname");
-				console.log(pname.value);
-				
-				$.ajax({
-					type: 'POST',
-					url:'/back/productSearch',
-					dataType: 'JSON',
-					contentType: "application/json",
-					data: JSON.stringify({
-						'pname': pname.value,
-						"CSRFToken": getYCsrfToken()
-					}),
-					beforeSend: function(xhr){
-						xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-					},
-					success: function(response){
-						response.forEach(el => {
-							console.log(el.pname);
-							console.log(el.cimage1);
-							//let new_pTag = document.createElement('p');
-							let parentTag = document.getElementById('searchRes');
-							let liTag = document.createElement('li');
-							let nameTag = document.createElement('div');
-							let imgTag = document.createElement('img');
-							let btn = document.createElement('button');
-							
-							nameTag.innerHTML = el.pname;
-							imgTag.setAttribute('src', el.cimage1);
-							imgTag.setAttribute('style', "width: 100px; height: 100px;");
-							btn.innerHTML = 'DELETE';
-							btn.setAttribute('onclick', 'location.href="/back/delProduct?pid='+el.pid+'"');
-							//btn.setAttribute('value', 'DELETE');
-							
-							parentTag.appendChild(liTag);
-							parentTag.appendChild(nameTag);
-							parentTag.appendChild(imgTag);
-							parentTag.appendChild(btn);
-						});
-						//console.log(response[0]);
-						
-					},
-					error:function(e){
-						console.log('err');
-						console.log(e);
-					}
-				});
-			});
+		$.ajax({
+			type: "POST",
+			url: "/back/productSearch",
+			dataType: "JSON",
+			contentType: "application/json",
+			data: JSON.stringify({
+				'pname': pname.value,
+				"CSRFToken": getYCsrfToken()
+			}),
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+			},
+			error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            },
+			success: function(result){
+	               let html = '';
+	                if(result.length>0){
+	                	for(let i=0;i<result.length;i++){
+			                   html += `
+	                        <tr class="tr-shadow">
+	                        <td>${result[i].pid}</td>
+	                        <td>${result[i].category}</td>
+	                        <td class="desc">${result[i].bname}</td>
+	                        <td>${result[i].pname}</td>`
+	                        
+	                        if(result[i].pstatus === 1){
+	                           html += `<td><span class="text-success" style="font-weight:bold">신상품</span></td>`
+	                        }else if(result[i].pstatus === 2){
+	                           html += `<td><span class="text-warning" style="font-weight:bold">베스트</span></td>`
+	                        }else{
+	                           html += `<td><span class="text-secondary">기본</span></td>`
+	                        }
+	                                             
+	                        html += `<td>₩${result[i].pprice}</td>
+	                        <td>
+	                           <div class="table-data-feature">
+	                              <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+	                                 <i class="zmdi zmdi-edit"></i>
+	                              </button>
+	                              <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+	                                 <i class="zmdi zmdi-delete"></i>
+	                              </button>
+	                              <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
+	                                 <i class="zmdi zmdi-more"></i>
+	                              </button>
+	                           </div>
+	                        </td>
+	                     </tr>
+	                     <tr class="spacer"></tr>
+	                   `;
+	                	}
+	                }
+	               $("#searchRes").html(html);
+				}
 			
-		
-		
+		})
+	})
 	</script>
-<!-- yoolim end -->
+</body>
 </html>
 <!-- end document-->

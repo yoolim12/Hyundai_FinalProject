@@ -20,7 +20,8 @@ public interface ProductService {
 	
 	public void delColor(String pid);
 	
-	public List<ProductDTO> productSearch(String pname);
+//	public List<ProductDTO> productSearch(String pname);
+	public List<ProductBackDTO> productSearch(String pname);
 	// yoolim end
 
 	public void updateMain(String pid, int pstatus) throws Exception;

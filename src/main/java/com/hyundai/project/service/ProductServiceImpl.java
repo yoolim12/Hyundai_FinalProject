@@ -46,8 +46,12 @@ public class ProductServiceImpl implements ProductService {
         productDAO.delColor(pid);
     }
 
+//    @Override
+//    public List<ProductDTO> productSearch(String pname) {
+//        return productDAO.productSearch(pname);
+//    }
     @Override
-    public List<ProductDTO> productSearch(String pname) {
+    public List<ProductBackDTO> productSearch(String pname) {
         return productDAO.productSearch(pname);
     }
 
