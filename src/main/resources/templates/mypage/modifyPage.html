@@ -61,13 +61,22 @@
     //<![CDATA[ 
     $(document).ready(function(){
 		$('#emailDubChkBtn').click(function(){
+			var emailDomain = '';
+			if($('#emailDomainSel').val() === ""){
+				console.log($('#uidDomain').val());
+				emailDomain += $('#emailDomain').val();
+			}
+			else{
+				emailDomain += $('#emailDomainSel').val();
+			}
+			console.log($('#email').val() + '@' + emailDomain)
 			$.ajax({
 				type: 'POST',
 				url:'/member/duplicateCheck',
 				dataType: 'JSON',
 				contentType: "application/json",
 				data: JSON.stringify({
-					'memail': $('#email').val() + '@' + $('#emailDomainSel').val(),
+					'memail': $('#email').val() + '@' + emailDomain,
 					"CSRFToken": getYCsrfToken()
 				}),
 				beforeSend: function(xhr){

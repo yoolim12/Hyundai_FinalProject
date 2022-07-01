@@ -51,6 +51,7 @@
 			else{
 				emailDomain += $('[name="memail2"]').val();
 			}
+			console.log($('[name="memail1"]').val() + '@' + emailDomain)
 			$.ajax({
 				type: 'POST',
 				url:'/member/duplicateCheck',

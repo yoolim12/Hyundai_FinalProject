@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="modifyMember" parameterType="com.hyundai.project.dto.AuthMemberDTO">
-		update member set mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
+		update member set memail_info=#{memail_info}, mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
 	</select>
 	
 	<update id="admodifyMember">
