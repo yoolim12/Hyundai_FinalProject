@@ -53,7 +53,6 @@ public class LoginRestController {
 		String mname = map.get("mname");
 		Date birth = Date.valueOf(map.get("birth"));
 		String telnum = map.get("telnum"); // js로 null인 것들 걸러내
-		
 		memberdto.setMemail(memail);
 		memberRoleDTO.setMemail(memail);
 		

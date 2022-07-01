@@ -88,41 +88,44 @@
             <div class="sub_cnts">
                 
                 
-            <script type="text/javascript">
-                
-                
-    
-                //<![CDATA[ 
-	    $(document).ready(function(){
-			$('#emailDubChkBtn').click(function(){
-				$.ajax({
-					type: 'POST',
-					url:'/member/duplicateCheck',
-					dataType: 'JSON',
-					contentType: "application/json",
-					data: JSON.stringify({
-						'memail': $('#email').val() + '@' + $('#emailDomainSel').val(),
-						"CSRFToken": getYCsrfToken()
-					}),
-					beforeSend: function(xhr){
-						xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-					},
-					success: function(response){
-						if(response.memail === '0'){
-							console.log('yes');
-							//$('#idDubMsg').text('사용 가능한 이메일입니다.');
-							$("#emailMsg").text('사용 가능한 이메일입니다.');
-							$("#emailDuplChk").val('Y');
-						}
-						else{
-							console.log('no');
-							//$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
-							$("#emailMsg").text('이미 사용 중인 이메일입니다.');
-						}
-					},
-					error:function(e){
-						console.log('err');
-						console.log(e);
+
+                <script type="text/javascript">
+    //<![CDATA[ 
+    $(document).ready(function(){
+		$('#emailDubChkBtn').click(function(){
+			var emailDomain = '';
+			if($('#emailDomainSel').val() === ""){
+				console.log($('#uidDomain').val());
+				emailDomain += $('#emailDomain').val();
+			}
+			else{
+				emailDomain += $('#emailDomainSel').val();
+			}
+			console.log($('#email').val() + '@' + emailDomain)
+			$.ajax({
+				type: 'POST',
+				url:'/member/duplicateCheck',
+				dataType: 'JSON',
+				contentType: "application/json",
+				data: JSON.stringify({
+					'memail': $('#email').val() + '@' + emailDomain,
+					"CSRFToken": getYCsrfToken()
+				}),
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+				},
+				success: function(response){
+					if(response.memail === '0'){
+						console.log('yes');
+						//$('#idDubMsg').text('사용 가능한 이메일입니다.');
+						$("#emailMsg").text('사용 가능한 이메일입니다.');
+						$("#emailDuplChk").val('Y');
+					}
+					else{
+						console.log('no');
+						//$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
+						$("#emailMsg").text('이미 사용 중인 이메일입니다.');
+
 					}
 				});
 			});
