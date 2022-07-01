@@ -2,6 +2,7 @@ package com.hyundai.project.controller;
 
 import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.ProductDTO;
+import com.hyundai.project.dto.ProductBackDTO;
 import com.hyundai.project.memberDAO.MemberDAO;
 import com.hyundai.project.productDAO.ProductDAO;
 import com.hyundai.project.service.MemberService;
@@ -27,19 +28,35 @@ public class BackProductRestController {
 	@Autowired
 	private ProductService productService;
 
-	@RequestMapping("/productSearch")
-	public ResponseEntity<List<ProductDTO>> productSearch(@RequestBody HashMap<String, String> map, Model model) {
+//	@RequestMapping("/productSearch")
+//	public ResponseEntity<List<ProductDTO>> productSearch(@RequestBody HashMap<String, String> map, Model model) {
+//		String pname = map.get("pname");
+//
+//		ResponseEntity<List<ProductDTO>> mem = null;
+//		try {
+//			List<ProductDTO> list = productService.productSearch(pname);
+//			model.addAttribute("productList", list);
+//			mem = new ResponseEntity<List<ProductDTO>>(list, HttpStatus.OK);
+//			log.info(mem);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			mem = new ResponseEntity<List<ProductDTO>>(HttpStatus.BAD_REQUEST);
+//		} // end try
+//		return mem;
+//	}
+	
+	@PostMapping("/productSearch")
+	public ResponseEntity<List<ProductBackDTO>> productSearch(@RequestBody HashMap<String, String> map) {
 		String pname = map.get("pname");
 
-		ResponseEntity<List<ProductDTO>> mem = null;
+		ResponseEntity<List<ProductBackDTO>> mem = null;
 		try {
-			List<ProductDTO> list = productService.productSearch(pname);
-			model.addAttribute("productList", list);
-			mem = new ResponseEntity<List<ProductDTO>>(list, HttpStatus.OK);
+			List<ProductBackDTO> list = productService.productSearch(pname);
+			mem = new ResponseEntity<List<ProductBackDTO>>(list, HttpStatus.OK);
 			log.info(mem);
 		} catch (Exception e) {
 			e.printStackTrace();
-			mem = new ResponseEntity<List<ProductDTO>>(HttpStatus.BAD_REQUEST);
+			mem = new ResponseEntity<List<ProductBackDTO>>(HttpStatus.BAD_REQUEST);
 		} // end try
 		return mem;
 	}
@@ -63,5 +80,20 @@ public class BackProductRestController {
 		int pstatus = Integer.parseInt(map.get("pstatus"));
 		log.info("pid : " + pid + " " + "pstatus : " + pstatus);
 		productService.updateMain(pid, pstatus);
+	}
+	
+	@GetMapping("/backProduct/{pid}")
+	public ResponseEntity<List<ProductBackDTO>> backProductList(@PathVariable("pid") String pid, Model model) {
+		ResponseEntity<List<ProductBackDTO>> product = null;
+		try {
+			List<ProductBackDTO> list = productService.backProductList(pid);
+			model.addAttribute("backProduct", list);
+			product = new ResponseEntity<List<ProductBackDTO>>(list, HttpStatus.OK);
+			log.info(product);
+		} catch (Exception e) {
+			e.printStackTrace();
+			product = new ResponseEntity<List<ProductBackDTO>>(HttpStatus.BAD_REQUEST);
+		}
+		return product;
 	}
 }

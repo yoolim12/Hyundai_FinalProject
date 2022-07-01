@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hyundai.project.dto.CartDTO;
-import com.hyundai.project.dto.OrderListDTO;
+import com.hyundai.project.dto.ProductBackDTO;
 import com.hyundai.project.dto.ProductColorDTO;
 import com.hyundai.project.dto.ProductDTO;
 import com.hyundai.project.dto.ProductSizeDTO;
@@ -49,18 +48,8 @@ public class ProductServiceImpl implements ProductService {
         log.info("stock 테이블 삭제");
     }
     
-//    @Override
-//    public void delColor(String pid) {
-//        productDAO.delColor(pid);
-//    }
-//    
-//    @Override
-//    public void delStock(String pid) {
-//    	productDAO.delStock(pid);
-//    }
-
     @Override
-    public List<ProductDTO> productSearch(String pname) {
+    public List<ProductBackDTO> productSearch(String pname) {
         return productDAO.productSearch(pname);
     }
 
@@ -68,4 +57,9 @@ public class ProductServiceImpl implements ProductService {
     public void updateMain(String pid, int pstatus) throws Exception {
         productDAO.updateMain(pid, pstatus);
     }
+
+	@Override
+	public List<ProductBackDTO> backProductList(String pid) throws Exception {
+		return productDAO.backProductList(pid);
+	}
 }

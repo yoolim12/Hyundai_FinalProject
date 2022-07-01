@@ -3,7 +3,92 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
-<div layout:fragment="content"> 
+<div layout:fragment="content">
+<!--<head>
+<style media="screen">
+ .blsmflw1 {animation: target_image 1.5s;animation-iteration-count: 2;transform-origin:50% 50%;}
+ @keyframes target_image {
+	0% { transform: rotate(-1deg); }
+	50% { transform: rotate(9deg) }
+	100% { transform: rotate(-1deg); }
+ }
+</style>
+</head>-->
+<script>
+	$(document).ready(function(){
+		$("#id, #uidDomain, #uidDomainSel").change(function(){	
+	    	var emailRegExp = /^((([^<>()[\]\\.,;:\s@\"~`!@#$%^&*+={}|'/?]+(\.[^<>()[\]\\.,;:\s@\"~`!@#$%^&*+={}|'/?]+)*))|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	    	var email = $("#id").val()+"@"+$("#uidDomain").val();
+	    	console.log($('[name="memail1"]').val() !== "");
+	    	console.log($('[name="memail2"]').val() === "")
+	    	console.log(emailRegExp.test(email) != true);
+	    	
+	    	if($("#id").val() == "" &&  $("#uidDomain").val() == ""){
+	    		$("#idDubMsg").text('');
+	    		$("#uidDuplChk").val('');
+	    	}else{
+	    	
+	  	  	if ( emailRegExp.test(email) != true 
+	  	  		|| ($('[name="memail1"]').val() !== "" && $('[name="memail2"]').val() === "")
+	  	  		|| ($('[name="memail1"]').val() === "" && $('[name="memail2"]').val() !== "") ) {
+	    		
+	            $("#idDubMsg").text("잘못된 E-mail 형식입니다.");
+	            $("#uidDuplChk").val('N');
+	            return;
+	        } else {
+	        	$("#idDubMsg").text('');
+	        	$("#uidDuplChk").val('');
+	        }
+	    	}
+	        
+	    });
+		
+		$("#idDubChkBtn").click(function(){
+			var emailDomain = '';
+			if($('[name="memail2"]').val() === ""){
+				emailDomain += $('#uidDomain').val();
+			}
+			else{
+				emailDomain += $('[name="memail2"]').val();
+			}
+			$.ajax({
+				type: 'POST',
+				url:'/member/duplicateCheck',
+				dataType: 'JSON',
+				contentType: "application/json",
+				data: JSON.stringify({
+					'memail': $('[name="memail1"]').val() + '@' + emailDomain,
+					"CSRFToken": getYCsrfToken()
+				}),
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+				},
+				success: function(response){
+					console.log(response);
+					if(response.memail === '0'){
+						console.log('yes');
+						$('#idDubMsg').text('사용 가능한 이메일입니다.');
+						//$("#emailMsg").text('사용 가능한 이메일입니다.');
+						$("#memailDuplChk").val('Y');
+					}
+					else{
+						console.log('no');
+						$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
+						//$("#emailMsg").text('이미 사용 중인 이메일입니다.');
+					}
+				},
+				error:function(e){
+					console.log('err');
+					console.log(e);
+				}
+			});
+	    });
+		
+		$('#emailAuthBtn').click(function(){
+	        // email send
+	    });
+	});
+</script>
 
 <!-- bodyWrap -->
         <div id="bodyWrap">
@@ -30,16 +115,16 @@
                     <fieldset>
                         <legend>본인인증</legend>
                         <div class="box_type_1">
-                            <div class="email ">
+                            <div class="email" style="background-image:url('http://www.thehandsome.com/_ui/desktop/common/images/member/ico_email.gif'); ">
                                 <p>
                                     <strong>이메일인증으로 회원가입</strong>
                                 </p>
                                 <p>정보입력은 입력한 메일을 통한 인증 후 가능합니다.</p>
                                 <p class="emailinput">
-                                    <input type="text" id="id" name="id" style="width:120px" title="이메일 아이디"> 
+                                    <input type="text" id="id" name="memail1" style="width:120px" title="이메일 아이디"> 
                                     <span class="andmail">@</span>
                                     <input type="text" id="uidDomain" name="uidDomain" style="width:120px" title="이메일 계정">
-                                    <select id="uidDomainSel" style="width:120px; margin:0 0 0 0;" title="이메일 아이디 도메인">
+                                    <select id="uidDomainSel" style="width:120px; margin:0 0 0 0;" title="이메일 아이디 도메인" name="memail2">
                                         <option value="">직접입력</option>
                                         <option value="naver.com">naver.com</option>
                                         <option value="daum.net">daum.net</option>
