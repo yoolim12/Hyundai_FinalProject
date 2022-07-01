@@ -15,6 +15,7 @@ public class ProductInsertDTO {
 	private String pname;
 	private String pprice;
 	private String pdetail;
-	private List<ProductColorDTO> pcolor;
+	private String ccolorcode;
+	private List<ProductSizeDTO> ssize;
 
 }

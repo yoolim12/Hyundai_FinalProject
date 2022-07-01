@@ -71,26 +71,16 @@ public class ProductServiceImpl implements ProductService {
         product.setPname(pi.getPname());
         product.setPprice(pi.getPprice());
         product.setPdetail(pi.getPdetail());
+        product.setCcolorcode(pi.getCcolorcode());
         log.info(product);
         productDAO.insertProduct(product);
-        for(int i=0; i<pi.getPcolor().size(); i++) {
-            ProductColorDTO pcolor = new ProductColorDTO();
-            pcolor.setPid(pi.getPid());
-            pcolor.setCcolorcode(pi.getPcolor().get(i).getCcolorcode());
-            pcolor.setCimage1(pi.getPcolor().get(i).getCimage1());
-            pcolor.setCimage2(pi.getPcolor().get(i).getCimage2());
-            pcolor.setCimage3(pi.getPcolor().get(i).getCimage3());
-            pcolor.setCcolorimage(pi.getPcolor().get(i).getCcolorimage());
-            pcolor.setCmatchpid(pi.getPcolor().get(i).getCmatchpid());
-            productDAO.insertProductColor(pcolor);
-            for(int j=0; j<pi.getPcolor().get(i).getPsize().size(); j++) {
-                ProductSizeDTO psize = new ProductSizeDTO();
-                psize.setPid(pi.getPid());
-                psize.setCcolorcode(pi.getPcolor().get(i).getPsize().get(j).getCcolorcode());
-                psize.setSsize(pi.getPcolor().get(i).getPsize().get(j).getSsize());
-                psize.setSamount(pi.getPcolor().get(i).getPsize().get(j).getSamount());
-                productDAO.insertProductSize(psize);
-            }
+        for(int i=0; i<pi.getSsize().size(); i++) {
+            ProductSizeDTO psize = new ProductSizeDTO();
+            psize.setPid(pi.getPid());
+            psize.setSamount(pi.getSsize().get(i).getSamount());
+            psize.setSsize(pi.getSsize().get(i).getSsize());
+            psize.setCcolorcode(pi.getCcolorcode());
+            productDAO.insertProductSize(psize);
         }
     }
 
