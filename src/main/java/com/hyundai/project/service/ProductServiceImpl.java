@@ -48,20 +48,6 @@ public class ProductServiceImpl implements ProductService {
         log.info("stock 테이블 삭제");
     }
     
-//    @Override
-//    public void delColor(String pid) {
-//        productDAO.delColor(pid);
-//    }
-//    
-//    @Override
-//    public void delStock(String pid) {
-//    	productDAO.delStock(pid);
-//    }
-
-//    @Override
-//    public List<ProductDTO> productSearch(String pname) {
-//        return productDAO.productSearch(pname);
-//    }
     @Override
     public List<ProductBackDTO> productSearch(String pname) {
         return productDAO.productSearch(pname);
