@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:sec="http://www.w3.org/1999/xhtml"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <!-- Required meta tags-->
@@ -10,16 +8,14 @@
     <meta name="description" content="au theme template">
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <!-- Title Page-->
-    <title>Forms</title>
+    <title>Charts</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
-    <link href="vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
     <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
     <!-- Bootstrap CSS-->
@@ -36,135 +32,10 @@
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
-    
-    <!-- jquery -->
-    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 </head>
 
 <body class="animsition">
-	
-    
-    <script>
-	    var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-	 	
-	 	
-    	// 회원 검색
-    	function findUser(){
-    		var email = $("#input_email").val();
-    		$.ajax({
-    			url : '/back/member',
-    			type: 'POST',
-    			dataType: 'JSON',
-    			data : {
-    				'email' : email
-    			},
-    			beforeSend: function(xhr) {
-                    xhr.setRequestHeader(header, token);
-                 },
-                cache: false,
-    			success: function(res){
-    				console.log(res.gno);
-    				if (res.gno == 1){
-    					$('#SelectLm option:eq(1)').prop('selected', true);
-    				}else if (res.gno == 2){
-    					$('#SelectLm option:eq(2)').prop('selected', true);
-    				}else if (res.gno == 3){
-    					$('#SelectLm option:eq(3)').prop('selected', true);
-    				}else if (res.gno == 4){
-    					$('#SelectLm option:eq(4)').prop('selected', true);
-    				}else if (res.gno == 5){
-    					$('#SelectLm option:eq(5)').prop('selected', true);
-    				}else if (res.gno == 6){
-    					$('#SelectLm option:eq(6)').prop('selected', true);
-    				}else if (res.gno == 7){
-    					$('#SelectLm option:eq(7)').prop('selected', true);
-    				}
-    				
-    				$("#mname").val(res.mname);
-    				$("#birth").val(res.birth);
-    				$("#telnum").val(res.telnum);
-    				$("#maddress").val(res.maddress);
-    			},
-    			error: function(res){
-    				console.log(res)
-    			}
-    		});
-    	}
-    	
-    	// 회원 정보 수정
-    	function modify(){
-    		
-    		var memail = $("#input_email").val();
-    		var mname = $("#mname").val();
-    		var birth = $("#birth").val();
-    		var telnum = $("#telnum").val();
-    		var maddress = $("#maddress").val();
-    		var gno = $("#SelectLm option:selected").val();
-    		if(gno == 0){
-    			alert("다시 선택해주세요.");
-    			return;
-    		}
-    		console.log(gno);
-    		
-    		$.ajax({
-    			url : '/back/member',
-    			type: 'PUT',
-    			contentType : "application/json",
-    			data : JSON.stringify({
-    				'memail' : memail,
-    				'mname' : mname,
-    				'birth' : birth,
-    				'telnum' : telnum,
-    				'maddress' : maddress,
-    				'gno' : gno
-    			}),
-    			beforeSend: function(xhr) {
-                    xhr.setRequestHeader(header, token);
-                 },
-                cache: false,
-    			success: function(res){
-    				alert("수정 성공");
-    				console.log(res);
-    			},
-    			error: function(res){
-    				alert("수정 실패");
-    			}
-    		});
-    	}
-    	
-    	// 회원 정보 탈퇴
-    	function delMember(){
-    		var email = $("#input_email").val();
-
-    		console.log(email);
-    		
-    		$.ajax({
-    			url : '/back/member',
-    			type: 'DELETE',
-    			data: JSON.stringify({
-    				'email' : email
-                }),
-    			contentType: "application/json",
-    			beforeSend: function(xhr) {
-                    xhr.setRequestHeader(header, token);
-                 },
-                cache: false,
-    			success: function(res){
-    				alert("탈퇴 성공");
-    				console.log(res);
-    				$("#mname").val('');
-    				$("#birth").val('');
-    				$("#telnum").val('');
-    				$("#maddress").val('');
-    			},
-    			error: function(){
-    				alert("error")
-    			}
-    		});
-    	}
-    </script>
-	
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -209,11 +80,11 @@
                         </li>
                         <li>
                             <a href="table.html">
-                                <i class="fas fa-table"></i>상품 관리</a>
+                                <i class="fas fa-table"></i>Tables</a>
                         </li>
                         <li>
                             <a href="form.html">
-                                <i class="far fa-square"></i>회원 관리</a>
+                                <i class="far fa-check-square"></i>Forms</a>
                         </li>
                         <li>
                             <a href="calendar.html">
@@ -293,20 +164,59 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        
-                        <li>
-                            <a href="chart.html">
-                                <i class="fas fa-chart-bar"></i>차트</a>
-                        </li>
-                        <li>
-                            <a href="form2">
-                                <i class="fas fa-table"></i>상품 관리</a>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="index.html">Dashboard 1</a>
+                                </li>
+                                <li>
+                                    <a href="index2.html">Dashboard 2</a>
+                                </li>
+                                <li>
+                                    <a href="index3.html">Dashboard 3</a>
+                                </li>
+                                <li>
+                                    <a href="index4.html">Dashboard 4</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="active">
-                            <a href="form">
-                                <i class="far fa-check-square"></i>회원 관리</a>
+                            <a href="chart.html">
+                                <i class="fas fa-chart-bar"></i>Charts</a>
                         </li>
-                        
+                        <li>
+                            <a href="table.html">
+                                <i class="fas fa-table"></i>Tables</a>
+                        </li>
+                        <li>
+                            <a href="form.html">
+                                <i class="far fa-check-square"></i>Forms</a>
+                        </li>
+                        <li>
+                            <a href="calendar.html">
+                                <i class="fas fa-calendar-alt"></i>Calendar</a>
+                        </li>
+                        <li>
+                            <a href="map.html">
+                                <i class="fas fa-map-marker-alt"></i>Maps</a>
+                        </li>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-copy"></i>Pages</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="login.html">Login</a>
+                                </li>
+                                <li>
+                                    <a href="register.html">Register</a>
+                                </li>
+                                <li>
+                                    <a href="forget-pass.html">Forget Password</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-desktop"></i>UI Elements</a>
@@ -526,210 +436,99 @@
                     </div>
                 </div>
             </header>
-            <!-- HEADER DESKTOP-->
+            <!-- END HEADER DESKTOP-->
 
             <!-- MAIN CONTENT-->
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong>회원 정보 검색</strong>
-                                        <small> Form</small>
-                                    </div>
-                                    <div class="card-body card-block">
-                                    	<!-- 회원 찾기 -->
-                                        <div class="from-group">
-                                        	<label for="search" class=" form-control-label">Search User</label>
-                                        	<div class="input-group">
-                                            	<div class="input-group-btn">
-                                            		<button type = "button" class="btn btn-primary" onclick="findUser()">
-                                            			<i class="fa fa-search">Search</i> 
-                                                    </button>
-                                                </div>
-                                            <input type="text" id="input_email" name="input_email"  placeholder="Email" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                        	<div class="col col-md-6">
-                                            	<label for="company" class=" form-control-label">이름</label>
-                                            	<input type="text" id="mname" placeholder="이름" class="form-control">
-                                            </div>
-                                            <div class="col col-md-6">
-                                            	<label for="vat" class=" form-control-label">생년월일</label>
-                                            	<input type="text" id="birth" placeholder="생년월일" class="form-control">
-                                        	</div>
-                                        </div>
-                                        
-                                        <div class="row form-group">
-                                        	<div class="col col-md-6">
-                                            	<label for="street" class=" form-control-label">전화 번호</label>
-                                            	<input type="text" id="telnum" placeholder="전화 번호" class="form-control">
-                                            </div>
-                                            
-                                            <div class="col col-md-6">
-                                            	<label for="country" class=" form-control-label">주소</label>
-                                            	<input type="text" id="maddress" placeholder="주소" class="form-control">
-                                        	</div>
-                                        </div>
-                                      	
-                                        
-                                        <div class="row form-group">
-                                        	<div class="col col-md-6">
-	                                            <label for="selectSm" class=" form-control-label">등급</label>
-	                                              <select name="selectSm" id="SelectLm" class="form-control-sm form-control">
-	                                                 <option value="0">등급</option>
-	                                                 <option value="1">Friend</option>
-	                                                 <option value="2">Crew</option>
-	                                                 <option value="3">Mania</option>
-	                                                 <option value="4">Star</option>
-	                                                 <option value="5">The Star</option>
-	                                                 <option value="6">관리자</option>
-	                                                 <option value="7">임직원</option>
-	                                              </select>
-                                              </div>
-                                              <div class="col col-md-6">
-                                            	<label for="selectSm" class=" form-control-label">휴면/비휴면</label>
-                                                <select name="selectSm" id="SelectLm" class="form-control-sm form-control">
-                                                    <option value="0">휴면/비휴면</option>
-                                                    <option value="1">휴면</option>
-                                                    <option value="2">비휴면</option>
-                                                </select>
-                                       		</div>
-                                       </div>
-                                       
-                                       
-                                        
-                                        <div class="card-footer">
-	                                        <button class="btn btn-primary btn-sm" onclick = "modify()">
-	                                            <i class="fa fa-dot-circle-o"></i> 수정하기
-	                                        </button>
-	                                        <button class="btn btn-danger btn-sm" onclick = "delMember()">
-	                                            <i class="fa fa-ban"></i> 탈퇴
-	                                        </button>
-                                    	</div>
+                            <div class="col-lg-6">
+                                <div class="au-card m-b-30">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 m-b-40">Yearly Sales</h3>
+                                        <canvas id="sales-chart"></canvas>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="col-md-12">
-                                <!-- USER DATA-->
-                                <div class="col-md-12">
-                                <!-- USER TABLE -->
-                                <h3 class="title-5 m-b-35">data table</h3>
-                                <div class="table-data__tool">
-                                    <div class="table-data__tool-left">
-                                        <div class="rs-select2--light rs-select2--md">
-                                            <select class="js-select2" name="property">
-                                                <option selected="selected">All Properties</option>
-                                                <option value="">Option 1</option>
-                                                <option value="">Option 2</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                        <div class="rs-select2--light rs-select2--sm">
-                                            <select class="js-select2" name="time">
-                                                <option selected="selected">Today</option>
-                                                <option value="">3 Days</option>
-                                                <option value="">1 Week</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                        <button class="au-btn-filter">
-                                            <i class="zmdi zmdi-filter-list"></i>filters</button>
-                                    </div>
-                                    <div class="table-data__tool-right">
-                                        <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                            <i class="zmdi zmdi-plus"></i>add item</button>
-                                        <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                            <select class="js-select2" name="type">
-                                                <option selected="selected">Export</option>
-                                                <option value="">Option 1</option>
-                                                <option value="">Option 2</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
+                            <div class="col-lg-6">
+                                <div class="au-card m-b-30">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 m-b-40">Team Commits</h3>
+                                        <canvas id="team-chart"></canvas>
                                     </div>
                                 </div>
-                                <div class="table-responsive table-responsive-data2">
-                                    <table class="table table-data2">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <th>name</th>
-                                                <th>email</th>
-                                                <th>description</th>
-                                                <th>date</th>
-                                                <th>status</th>
-                                                <th>price</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="tr-shadow" th:each = "user : ${userList}">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td th:text = "${user.mname}"></td>
-                                                <td>
-                                                    <span class="block-email" th:text = "${user.memail}"></span>
-                                                </td>
-                                                <td th:if = "${user.role_set == 'ADMIN'}">
-                                                     <span class="role admin" th:text = "${user.role_set}"></span>
-                                                </td>
-                                                <td th:if = "${user.role_set == 'USER'}">
-                                                     <span class="role user" th:text = "${user.role_set}"></span>
-                                                </td>
-                                                <td>2018-09-27 02:12</td>
-                                                <td>
-                                                    <span class="status--process">Processed</span>
-                                                </td>
-                                                <td>$679.00</td>
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                            <i class="zmdi zmdi-mail-send"></i>
-                                                        </button>
-                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="zmdi zmdi-edit"></i>
-                                                        </button>
-                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                            <i class="zmdi zmdi-delete"></i>
-                                                        </button>
-                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                                            <i class="zmdi zmdi-more"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                        </tbody>
-                                    </table>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="au-card m-b-30">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 m-b-40">Bar chart</h3>
+                                        <canvas id="barChart"></canvas>
+                                    </div>
                                 </div>
                             </div>
-                                <!-- END USER DATA-->
+                            <div class="col-lg-6">
+                                <div class="au-card m-b-30">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 m-b-40">Rader chart</h3>
+                                        <canvas id="radarChart"></canvas>
+                                    </div>
+                                </div>
                             </div>
-   
+                            <div class="col-lg-6">
+                                <div class="au-card m-b-30">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 m-b-40">Line Chart</h3>
+                                        <canvas id="lineChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="au-card m-b-30">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 m-b-40">Doughut Chart</h3>
+                                        <canvas id="doughutChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="au-card m-b-30">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 m-b-40">Pie Chart</h3>
+                                        <canvas id="pieChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="au-card m-b-30">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 m-b-40">Polar Chart</h3>
+                                        <canvas id="polarChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="au-card m-b-30">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 m-b-40">Single Bar Chart</h3>
+                                        <canvas id="singelBarChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
                                     <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
                                 </div>
                             </div>
-
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- END MAIN CONTENT-->
         </div>
+        <!-- END PAGE CONTAINER-->
 
     </div>
 

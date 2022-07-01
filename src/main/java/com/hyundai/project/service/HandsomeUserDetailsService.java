@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.hyundai.project.dto.AuthMemberDTO;
 import com.hyundai.project.dto.MemberJoinDTO;
+import com.hyundai.project.mail.MailService;
 import com.hyundai.project.memberDAO.MemberDAO;
 
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +23,9 @@ import lombok.extern.log4j.Log4j2;
 public class HandsomeUserDetailsService implements UserDetailsService {
 	@Autowired
 	private MemberDAO memberDAO;
+	
+	@Autowired
+	private MailService mail;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

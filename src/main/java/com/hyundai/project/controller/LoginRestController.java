@@ -48,7 +48,6 @@ public class LoginRestController {
 			HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Enter registerPost!!");
 		String memail = map.get("memail"); // js로 null인 것들 걸러내
-		System.out.println("register post memail: " + memail);
 		String mpassword = passwordEncoder.encode(map.get("mpassword"));
 		String memail_info = map.get("memail_info");
 		String mname = map.get("mname");
@@ -73,9 +72,8 @@ public class LoginRestController {
 		try {
     		service.simpleRegister(memberdto);
     		service.registerRole(memberRoleDTO);
-    		
-    		mail.welcomeMailSend();
     		System.out.println("register success!!");
+    		mail.welcomeMailSend(memail);
     		
         	Gson gson = new Gson();
     		response.setContentType("application/json; charset=utf-8");

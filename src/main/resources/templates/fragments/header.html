@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-232962099-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
 	
+	  gtag('config', 'UA-232962099-1');
+	</script>
+	
+		<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-N8D6M2Q');</script>
+	<!-- End Google Tag Manager -->
+	
+	<script>
+		function GA_Event(Category,Action,Label) {
+		    
+		    Label = unescape(Label).replace(/\&#039;/gi,"'");
+		    
+		    var v_Label = Label;
+		    var v_Category = Category;
+		    var v_Action = Action;
+		    //공백처리을  _ 처리
+		    if(Category != null){
+		        v_Category = Category.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
+		    }
+		    if(Action != null){
+		        v_Action = Action.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
+		    }
+		    if(Label != null){
+		        v_Label = Label.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
+		    }
+		    ga('gp.send','event',v_Category,v_Action,v_Label);
+		}
+	</script>
 </head>
 <div th:fragment="header">
     <body oncontextmenu="return false">
+	    <!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N8D6M2Q"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
         <!-- <div id="transparent_mask"></div> -->
         <!-- Loading -->
         <div class="loading_bar" id="loadingBarDiv" style="display: none;"><img src="/resources/_ui/desktop/common/images/common/loading.gif" alt="loading" /> <span> 로딩중</span></div>
@@ -792,6 +835,8 @@
                     }
 
                     //]]>
+                    
+            		
                 </script>
                 <form id="autologinForm" name="autologinForm" action="/ko/hp/autologin" method="get">
                     <input type="hidden" name="hcid" id="hcid" value="e2gaf@naver.com" />
