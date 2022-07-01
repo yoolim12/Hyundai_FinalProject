@@ -49,6 +49,11 @@ public class LoginController {
 	public void simpleRegisterEmail() {
 		System.out.println("simpleRegisterEmail return");
 	}
+	
+	@RequestMapping("/emailSend")
+	public void emailSend() {
+		
+	}
 
 	@RequestMapping("/simpleRegister")
 	public void simpleRegister() {
