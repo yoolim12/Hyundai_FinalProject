@@ -62,6 +62,57 @@
 		function getCsrfParameterName() {
 			return $("#CSRFForm [name='CSRFParameterName']").val();
 		}
+		console.log('why?');
+		var searchBtn = document.getElementById("productSearch");
+		searchBtn.addEventListener("click", function(event) {
+			var pname = document.getElementById("pname");
+			console.log(pname.value);
+			
+			$.ajax({
+				type: 'POST',
+				url:'/back/productSearch',
+				dataType: 'JSON',
+				contentType: "application/json",
+				data: JSON.stringify({
+					'pname': pname.value,
+					"CSRFToken": getYCsrfToken()
+				}),
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+				},
+				success: function(response){
+					response.forEach(el => {
+						console.log(el.pname);
+						console.log(el.cimage1);
+						//let new_pTag = document.createElement('p');
+						let parentTag = document.getElementById('searchRes');
+						let liTag = document.createElement('li');
+						let nameTag = document.createElement('div');
+						let imgTag = document.createElement('img');
+						let btn = document.createElement('button');
+						
+						nameTag.innerHTML = el.pname;
+						imgTag.setAttribute('src', el.cimage1);
+						imgTag.setAttribute('style', "width: 100px; height: 100px;");
+						btn.innerHTML = 'DELETE';
+						btn.setAttribute('onclick', 'location.href="/back/delProduct?pid='+el.pid+'"');
+						btn.setAttribute('style', 'border-left: 50px solid transparent;');
+						
+						parentTag.appendChild(liTag);
+						parentTag.appendChild(nameTag);
+						parentTag.appendChild(imgTag);
+						parentTag.appendChild(btn);
+					});
+					//console.log(response[0]);
+					
+				},
+				error:function(e){
+					console.log('err');
+					console.log(e);
+				}
+			});
+		});
+
 	</script>
 
     <div class="page-wrapper">
