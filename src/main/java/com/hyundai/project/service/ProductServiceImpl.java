@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.project.dto.ProductBackDTO;
 import com.hyundai.project.dto.ProductColorDTO;
@@ -35,26 +36,18 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductSizeDTO> getProductSize(String pid, String ccolorcode) throws Exception {
         return productDAO.getProductSize(pid, ccolorcode);
     }
-
+    
+    @Transactional(value = "productTxManager")
     @Override
     public void delProduct(String pid) {
         productDAO.delProduct(pid);
-    }
-
-    @Override
-    public void delColor(String pid) {
+        log.info("product 테이블 삭제");
         productDAO.delColor(pid);
+        log.info("color 테이블 삭제");
+        productDAO.delStock(pid);
+        log.info("stock 테이블 삭제");
     }
     
-    @Override
-    public void delStock(String pid) {
-    	productDAO.delStock(pid);
-    }
-
-//    @Override
-//    public List<ProductDTO> productSearch(String pname) {
-//        return productDAO.productSearch(pname);
-//    }
     @Override
     public List<ProductBackDTO> productSearch(String pname) {
         return productDAO.productSearch(pname);
