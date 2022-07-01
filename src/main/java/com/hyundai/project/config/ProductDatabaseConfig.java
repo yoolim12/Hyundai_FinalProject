@@ -12,6 +12,8 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -37,5 +39,10 @@ public class ProductDatabaseConfig {
 	public SqlSessionTemplate productSqlTemplate(SqlSessionFactory productSqlSessionFactory) {
 		
 		return new SqlSessionTemplate(productSqlSessionFactory);
+	}
+	
+	@Bean
+	public PlatformTransactionManager productTxManager() {
+		return new DataSourceTransactionManager(productDataSource());
 	}
 }
