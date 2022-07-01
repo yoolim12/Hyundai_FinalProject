@@ -44,6 +44,11 @@ public class ProductServiceImpl implements ProductService {
     public void delColor(String pid) {
         productDAO.delColor(pid);
     }
+    
+    @Override
+    public void delStock(String pid) {
+    	productDAO.delStock(pid);
+    }
 
     @Override
     public List<ProductDTO> productSearch(String pname) {

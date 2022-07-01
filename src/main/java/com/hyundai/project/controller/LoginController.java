@@ -44,6 +44,11 @@ public class LoginController {
 		System.out.println("Login Fail");
 		return "/member/login";
 	}
+	
+	@RequestMapping("/simpleRegisterEmail")
+	public void simpleRegisterEmail() {
+		System.out.println("simpleRegisterEmail return");
+	}
 
 	@RequestMapping("/simpleRegister")
 	public void simpleRegister() {

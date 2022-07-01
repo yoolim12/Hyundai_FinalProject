@@ -129,9 +129,10 @@ $(document).ready(function(){
 // 장바구니에 추가하는 함수
 function addToCart()
 {
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	
+	console.log('yoo');
+	console.log(getYCsrfToken());
+	console.log(getCsrfHeaderName());
+	console.log('lim');	
     //2019.09.09 주문 불가능한 상품 선택시
     if(selectSize == false){
         var la = new layerAlert('사이즈를 선택해 주세요.');
@@ -149,11 +150,12 @@ function addToCart()
             	pid : pid,
             	ccolorcode : ccolorcode,
             	ssize : ssize,
-            	qty : qty
+            	qty : qty,
+            	"CSRFToken": getYCsrfToken()
             }),
             contentType : "application/json",
             beforeSend: function(xhr) {
-                xhr.setRequestHeader(header, token);
+                xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
              },
             cache: false,
             success: function (data) {
@@ -1340,7 +1342,8 @@ function prevImgMove(){
                 <span class="arr">위치아이콘</span>
             </div>
             <!--//190508 추가 -->
-			<form id="addToCartForm" name="addToCartForm" action="/shoppingbag" method="post"><input type="hidden" maxlength="3" size="1" name="qty" class="qty" />
+			<form id="addToCartForm" name="addToCartForm" action="/shoppingbag" method="post">
+				<input type="hidden" maxlength="3" size="1" name="qty" class="qty" />
 				<input type="hidden" name="productCodePost" value=""/>
 				<input type="hidden" id="pid" name="pid" value=""/>
 				<input type="hidden" id="mid" name="mid" value=""/>
@@ -1348,9 +1351,11 @@ function prevImgMove(){
 				<input type="hidden" id="pcolor" name="pcolor" value=""/>
 				<input type="hidden" id="samount" name="samount" value=""/>
 				<input type="button" value='쇼핑백 담기' class="btn cart1803 float_left ml0" id="addToCartButton" onClick="addToCart();"/>
-        <div>
+        
+        <!-- 이미 addToCart() 내의 ajax에서 csrftoken 처리해줌 -->
+        <!--<div>
           <input type="hidden" name="CSRFToken" value="ec35065f-63f2-4b5d-8f20-aec5bd737cbc" />
-        </div>
+        </div>-->
       </form><input type="button" value="바로주문" class="btn order float_right mr0" id="addToCartBuyNowButton" onClick="GA_Event('상품_상세','하단 고정 버튼','바로주문');addToCart(true);">   
 	                </div>
 		
