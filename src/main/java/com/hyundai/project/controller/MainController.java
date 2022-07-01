@@ -1,7 +1,10 @@
 package com.hyundai.project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.hyundai.project.mail.MailService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -11,7 +14,6 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Controller
 public class MainController {
-	
 	@GetMapping("/main")
 	public void main() {
 		log.info("메인페이지 요청");

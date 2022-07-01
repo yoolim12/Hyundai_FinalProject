@@ -25,11 +25,25 @@ public class BackController {
 		return "/back/form";
 	}
 	
+	// 회원관리 페이지 이동
+	@GetMapping("/streaming")
+	public String st() {
+		log.info("회원관리 페이지 요청");
+		return "/back/streaming";
+	}
+	
 	// 상품관리 페이지 이동
 	@GetMapping("/form2")
 	public String form2() {
 		log.info("상품관리 페이지 요청");
 		return "/back/form2";
+	}
+	
+	// 매장관리 페이지 이동
+	@GetMapping("/form3")
+	public String form3() {
+		log.info("매장관리 페이지 요청");
+		return "/back/form3";
 	}
 		
 	// 회원 전체 조회

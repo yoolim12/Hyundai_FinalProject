@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.MemberJoinDTO;
 import com.hyundai.project.dto.MemberRoleDTO;
+import com.hyundai.project.mail.MailService;
 import com.hyundai.project.memberDAO.MemberDAO;
 import com.hyundai.project.service.RegisterService;
 
@@ -37,6 +38,9 @@ public class LoginRestController {
 	
 	@Autowired
 	private MemberDAO memberDAO;
+	
+	@Autowired
+	private MailService mail;
 	
 	@RequestMapping("/registerPost")
 	public void registerPost(@RequestBody HashMap<String, String> map, 
@@ -69,6 +73,7 @@ public class LoginRestController {
     		service.simpleRegister(memberdto);
     		service.registerRole(memberRoleDTO);
     		
+    		mail.welcomeMailSend();
     		System.out.println("register success!!");
     		
         	Gson gson = new Gson();

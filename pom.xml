@@ -19,11 +19,25 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>1.6.0</version>
+		</dependency>
+		
 		<!-- 스프링 배치 -->
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-batch</artifactId>
         </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/org.webjars/video-js -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>video-js</artifactId>
+		    <version>7.1.0</version>
+		</dependency>
         
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
