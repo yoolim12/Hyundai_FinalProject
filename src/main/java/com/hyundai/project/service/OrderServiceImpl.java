@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private MemberDAO memberDAO;
 
-    @Transactional(value = "transactionManager")
+    @Transactional(value = "memberTxManager")
     @Override
     public void insertOrder(OrderListDTO olist) throws Exception {
         try {
