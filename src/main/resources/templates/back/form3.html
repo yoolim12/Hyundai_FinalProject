@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 <meta name="_csrf" th:content="${_csrf.token}" />
@@ -48,7 +48,7 @@
 <!-- Main CSS-->
 <link href="css/theme.css" rel="stylesheet" media="all">
 <!-- Jquery JS-->
-	<script src="vendor/jquery-3.2.1.min.js"></script>
+<script src="vendor/jquery-3.2.1.min.js"></script>
 </head>
 
 <body class="animsition">
@@ -74,6 +74,9 @@
 			return $("#CSRFForm [name='CSRFParameterName']").val();
 		}
 		
+		$(document).ready(function () {
+			$("#searchRes").html('<h2>상품명을 검색해주세요</h2>');
+		})
 	</script>
 
 	<div class="page-wrapper">
@@ -203,11 +206,13 @@
 								</button>
 							</form> -->
 							<div class="form-header" action="" method="">
-                               <input id="pname" class="au-input au-input--xl" type="text" name="search" placeholder="상품명을 검색하세요." />
-                               <button id="productSearch" class="au-btn--submit">
-                                   <i class="zmdi zmdi-search"></i>
-                               </button>
-                            </div>
+								<input onkeyup="enterkey();" id="pname"
+									class="au-input au-input--xl" type="text" name="search"
+									placeholder="상품명을 검색하세요." />
+								<button id="productSearch" class="au-btn--submit">
+									<i class="zmdi zmdi-search"></i>
+								</button>
+							</div>
 							<div class="header-button">
 								<div class="noti-wrap">
 									<div class="noti__item js-item-menu">
@@ -415,12 +420,12 @@
 									<table class="table table-data2">
 										<thead>
 											<tr>
-												<th>pid</th>
-												<th>category(clarge/cmedium/csmall)</th>
-												<th>bname</th>
-												<th>pname</th>
-												<th>pstatus</th>
-												<th>pprice</th>
+												<th>상품 아이디</th>
+												<th>카테고리</th>
+												<th>브랜드</th>
+												<th>상품 이름</th>
+												<th>상품 상태</th>
+												<th>가격</th>
 												<th></th>
 											</tr>
 										</thead>
@@ -438,7 +443,7 @@
 
 
 
-	
+
 	<!-- Bootstrap JS-->
 	<script src="vendor/bootstrap-4.1/popper.min.js"></script>
 	<script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
@@ -461,10 +466,12 @@
 	<!-- Main JS-->
 	<script src="js/main.js"></script>
 	<script>
-	var productBtn = document.getElementById("productSearch");
-	productBtn.addEventListener("click", function(event){
+	function numWithComma(num) {
+	  	  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	  	}
+	
+	function showList(){
 		var pname = document.getElementById("pname");
-		console.log(pname.value);
 		
 		$.ajax({
 			type: "POST",
@@ -485,6 +492,7 @@
 	               let html = '';
 	                if(result.length>0){
 	                	for(let i=0;i<result.length;i++){
+	                		let price = numWithComma(result[i].pprice);
 			                   html += `
 	                        <tr class="tr-shadow">
 	                        <td>${result[i].pid}</td>
@@ -500,7 +508,7 @@
 	                           html += `<td><span class="text-secondary">기본</span></td>`
 	                        }
 	                                             
-	                        html += `<td>₩${result[i].pprice}</td>
+	                        html += `<td>₩${price}</td>
 	                        <td>
 	                           <div class="table-data-feature">
 	                              <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
@@ -518,12 +526,34 @@
 	                     <tr class="spacer"></tr>
 	                   `;
 	                	}
+	                } else {
+	                	html += `
+	                	<div class="card border border-secondary">
+	                	<div class="card-header">
+	                	<strong class="card-title">해당 상품이 존재하지 않습니다.</strong>
+	                	</div>
+	                	<div class="card-body">
+	                	<p class="card-text">상품을 다시 검색하세요.</p>
+	                	</div>
+	                	</div>
+	                	`;
 	                }
 	               $("#searchRes").html(html);
 				}
 			
 		})
+	}
+	
+	var productBtn = document.getElementById("productSearch");
+	productBtn.addEventListener("click", function(event){
+		showList();
 	})
+	
+	function enterkey(){
+		if(window.event.keyCode == 13){
+			showList();
+		}
+	}
 	</script>
 </body>
 </html>

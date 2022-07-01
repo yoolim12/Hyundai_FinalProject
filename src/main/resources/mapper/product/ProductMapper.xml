@@ -123,7 +123,8 @@
     <select id="productSearch" resultType="com.hyundai.project.dto.ProductBackDTO">
         select pid, clarge||'-'||cmedium||'-'||csmall category, bname, pname, pprice, pdetail, pstatus
 		from product
-        where pname = #{pname}
+        where pname like '%'||#{pname}||'%'
+        order by pid
     </select>
 
 </mapper>
