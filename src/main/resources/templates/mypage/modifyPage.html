@@ -4,6 +4,37 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
+<head>
+	<script>
+	
+	function go_delete(memail){
+    	$.ajax({
+            type:"DELETE",
+            url:"../back/member",
+            contentType : "application/json",
+            async : false,
+            data:JSON.stringify({
+         	   'email' : memail,
+         	   "CSRFToken": getYCsrfToken()
+            }),
+            beforeSend: function(xhr){
+					xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+				},
+            error : function( request, status, error ){
+                layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
+                console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
+            },
+            success:function(result){
+            	logoutClick();
+         	}
+         });
+    }
+	
+	function logoutClick() {
+		$('#logoutForm').submit();
+	}
+	</script>
+</head>
 <div layout:fragment="content">
     <body>
         <div id="bodyWrap">
@@ -57,41 +88,44 @@
             <div class="sub_cnts">
                 
                 
-                <script type="text/javascript">
-    //<![CDATA[ 
-    $(document).ready(function(){
-		$('#emailDubChkBtn').click(function(){
-			$.ajax({
-				type: 'POST',
-				url:'/member/duplicateCheck',
-				dataType: 'JSON',
-				contentType: "application/json",
-				data: JSON.stringify({
-					'memail': $('#email').val() + '@' + $('#emailDomainSel').val(),
-					"CSRFToken": getYCsrfToken()
-				}),
-				beforeSend: function(xhr){
-					xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-				},
-				success: function(response){
-					if(response.memail === '0'){
-						console.log('yes');
-						//$('#idDubMsg').text('사용 가능한 이메일입니다.');
-						$("#emailMsg").text('사용 가능한 이메일입니다.');
-						$("#emailDuplChk").val('Y');
+            <script type="text/javascript">
+                
+                
+    
+                //<![CDATA[ 
+	    $(document).ready(function(){
+			$('#emailDubChkBtn').click(function(){
+				$.ajax({
+					type: 'POST',
+					url:'/member/duplicateCheck',
+					dataType: 'JSON',
+					contentType: "application/json",
+					data: JSON.stringify({
+						'memail': $('#email').val() + '@' + $('#emailDomainSel').val(),
+						"CSRFToken": getYCsrfToken()
+					}),
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+					},
+					success: function(response){
+						if(response.memail === '0'){
+							console.log('yes');
+							//$('#idDubMsg').text('사용 가능한 이메일입니다.');
+							$("#emailMsg").text('사용 가능한 이메일입니다.');
+							$("#emailDuplChk").val('Y');
+						}
+						else{
+							console.log('no');
+							//$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
+							$("#emailMsg").text('이미 사용 중인 이메일입니다.');
+						}
+					},
+					error:function(e){
+						console.log('err');
+						console.log(e);
 					}
-					else{
-						console.log('no');
-						//$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
-						$("#emailMsg").text('이미 사용 중인 이메일입니다.');
-					}
-				},
-				error:function(e){
-					console.log('err');
-					console.log(e);
-				}
+				});
 			});
-		});
 		
     	$("#go_save").click(function(){
             var birth = $("#selYear").val() + "-" + $("#selMonth").val() + "-" + $("#selDay").val();
@@ -1232,7 +1266,13 @@
         return returnVal;
     }
     //]]>
+    
     </script>
+
+     <form id="logoutForm" action="../member/logout" method="post">
+         <input type="hidden" th:name="${ _csrf.parameterName }" th:value="${ _csrf.token }">
+    
+    </form>
     <form id="updateProfileForm" action="/ko/mypage/personInfomationChange" method="post"><input type="hidden" name="prk" id="prk" value="8929295794180" />
             <input type="hidden" name="emailDuplChk" id="emailDuplChk" value="Y" title="이메일 중복" />
             <input type="hidden" id="emailAddress" name="emailAddress" value="" />
@@ -1388,7 +1428,7 @@
 
             <!-- btn_btwrap -->
             <div class="btn_btwrap">
-                <input type="button" class="btn wt_ss" value="회원탈퇴" id="memberSecessionBtn"/>
+                <input type="button" class="btn wt_ss" value="회원탈퇴" th:onclick = "go_delete([[${memail}]]);"/>
             </div>
             <div class="btnwrap mypage2">
                 <input type="button" class="btn wt" value="취소" id="cancleBtn" />

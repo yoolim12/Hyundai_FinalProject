@@ -29,7 +29,7 @@ public interface MemberDAO {
 	public void delMember(String email) throws Exception;
 		
 	// 회원 전체 조회
-	public List<MemberDTO> showAllMember() throws Exception;
+	public List<MemberJoinDTO> showAllMember() throws Exception;
 	
 	// 로그인 로그 저장
 	public void insertLoginLog(String memail) throws Exception;
