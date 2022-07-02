@@ -17,7 +17,7 @@ public interface MemberDAO {
 	public MemberJoinDTO findByEmail(String memail, int from_social);
 	
 	// 이메일로 회원 정보 가져오기
-	public MemberDTO getMemberInfo(String email) throws Exception;
+	public List<MemberJoinDTO> getMemberInfo(String email) throws Exception;
 		
 	// 회원 수정 (비밀번호 변경)
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception;
