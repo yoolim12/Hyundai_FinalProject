@@ -47,10 +47,28 @@
     <script>
 	    var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		// 회원 검색 조회
+		function findUser(){
+			var emailBean = {
+			        email:$("#inputEmail").val()
+			    };
+			    $.ajax({
+			        url: "/back/view",
+			        type: "POST",
+			        data: emailBean,
+			        beforeSend: function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	                 },
+			    })
+			    .done(function (fragment) {
+			        $('#memberInfo').replaceWith(fragment);
+			    });
+		}
 	 	
 	 	
     	// 회원 검색
-    	function findUser(){
+    	function findUser2(){
     		var email = $("#input_email").val();
     		$.ajax({
     			url : '/back/member',
@@ -134,9 +152,7 @@
     	}
     	
     	// 회원 정보 탈퇴
-    	function delMember(){
-    		var email = $("#input_email").val();
-
+    	function delMember(email){
     		console.log(email);
     		
     		$.ajax({
@@ -149,8 +165,10 @@
     			beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                  },
+                async : false,
                 cache: false,
     			success: function(res){
+    				location.reload();
     				alert("탈퇴 성공");
     				console.log(res);
     				$("#mname").val('');
@@ -162,6 +180,10 @@
     				alert("error")
     			}
     		});
+    	}
+    	
+    	function test(test){
+    		alert(test)
     	}
     </script>
 	
@@ -539,8 +561,8 @@
                                         <strong>회원 정보 검색</strong>
                                         <small> Form</small>
                                     </div>
-                                    <div class="card-body card-block">
-                                    	<!-- 회원 찾기 -->
+                                    <!-- <div class="card-body card-block">
+                                    	회원 찾기
                                         <div class="from-group">
                                         	<label for="search" class=" form-control-label">Search User</label>
                                         	<div class="input-group">
@@ -610,7 +632,7 @@
 	                                            <i class="fa fa-ban"></i> 탈퇴
 	                                        </button>
                                     	</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             
@@ -620,40 +642,31 @@
                                 <!-- USER TABLE -->
                                 <h3 class="title-5 m-b-35">data table</h3>
                                 <div class="table-data__tool">
-                                    <div class="table-data__tool-left">
-                                        <div class="rs-select2--light rs-select2--md">
-                                            <select class="js-select2" name="property">
-                                                <option selected="selected">All Properties</option>
-                                                <option value="">Option 1</option>
-                                                <option value="">Option 2</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                        <div class="rs-select2--light rs-select2--sm">
-                                            <select class="js-select2" name="time">
-                                                <option selected="selected">Today</option>
-                                                <option value="">3 Days</option>
-                                                <option value="">1 Week</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                        <button class="au-btn-filter">
-                                            <i class="zmdi zmdi-filter-list"></i>filters</button>
-                                    </div>
+	                                <div class="table-data__tool-left">
+	                                        
+	                                        <input type="text" name="search" placeholder="Email" id = "inputEmail"/>
+			                                <button class="au-btn--submit" onclick = "findUser()">
+			                                    <i class="zmdi zmdi-search"></i>
+			                                </button>
+	                                </div>
                                     <div class="table-data__tool-right">
                                         <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                            <i class="zmdi zmdi-plus"></i>add item</button>
-                                        <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                            <select class="js-select2" name="type">
-                                                <option selected="selected">Export</option>
-                                                <option value="">Option 1</option>
-                                                <option value="">Option 2</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
+	                                            <i class="zmdi zmdi-plus"></i>add item</button>
+	                                        <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
+	                                            <select class="js-select2" name="type">
+	                                                <option selected="selected">Export</option>
+	                                                <option value="">Option 1</option>
+	                                                <option value="">Option 2</option>
+	                                            </select>
+	                                            <div class="dropDownSelect2"></div>
+	                                        </div>
+                                        <!-- <button class="au-btn-filter">
+                                            <i class="zmdi zmdi-filter-list"></i>filters</button> -->
+                            
+	                                       
                                     </div>
                                 </div>
-                                <div class="table-responsive table-responsive-data2">
+                                <div class="table-responsive table-responsive-data2" id = "memberInfo">
                                     <table class="table table-data2">
                                         <thead>
                                             <tr>
@@ -703,7 +716,7 @@
                                                         <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
                                                             <i class="zmdi zmdi-edit"></i>
                                                         </button>
-                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" th:onclick = "delMember([[${user.memail}]]);">
                                                             <i class="zmdi zmdi-delete"></i>
                                                         </button>
                                                         <button class="item" data-toggle="tooltip" data-placement="top" title="More">
