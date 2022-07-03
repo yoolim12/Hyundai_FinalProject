@@ -16,6 +16,11 @@ public class ProductInsertDTO {
 	private String pprice;
 	private String pdetail;
 	private String ccolorcode;
+	private String cimage1;
+	private String cimage2;
+	private String cimage3;
+	private String ccolorimage;
+	private String cmatchpid;
 	private List<ProductSizeDTO> ssize;
 
 }

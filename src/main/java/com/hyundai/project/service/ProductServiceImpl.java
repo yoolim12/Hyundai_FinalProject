@@ -61,6 +61,8 @@ public class ProductServiceImpl implements ProductService {
     // Transaction 처리
     @Override
     public void insertProduct(ProductInsertDTO pi) throws Exception {
+        // 이미 product 테이블에 존재하는 Pid인데 새로운 컬러만 추가하는 경우 처리
+        // product 테이블에서 pid 검색 후 없으면 product에도 입력, 있으면 product 생략
         log.info(pi);
         ProductDTO product = new ProductDTO();
         product.setPid(pi.getPid());
@@ -74,6 +76,16 @@ public class ProductServiceImpl implements ProductService {
         product.setCcolorcode(pi.getCcolorcode());
         log.info(product);
         productDAO.insertProduct(product);
+
+        ProductColorDTO pcolor = new ProductColorDTO();
+        pcolor.setPid(pi.getPid());
+        pcolor.setCcolorcode(pi.getCcolorcode());
+        pcolor.setCimage1(pi.getCimage1());
+        pcolor.setCimage2(pi.getCimage2());
+        pcolor.setCimage3(pi.getCimage3());
+        pcolor.setCcolorimage(pi.getCcolorimage());
+        pcolor.setCmatchpid(pi.getCmatchpid());
+        productDAO.insertProductColor(pcolor);
         for(int i=0; i<pi.getSsize().size(); i++) {
             ProductSizeDTO psize = new ProductSizeDTO();
             psize.setPid(pi.getPid());

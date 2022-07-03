@@ -14,6 +14,5 @@ public class ProductColorDTO {
 	private String cimage2;
 	private String cimage3;
 	private String cmatchpid;
-	private List<ProductSizeDTO> psize;
 
 }

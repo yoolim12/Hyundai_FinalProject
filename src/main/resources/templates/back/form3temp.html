@@ -58,8 +58,17 @@
 </form>
 
 <script type="text/javascript">
-    let category_obj = [], depth1 = [], depth2 = [], depth3 = [];
+    let category_obj = [], depth1 = [], depth2 = [], depth3 = [], size_obj = [];
     let idx = 0;
+
+    function getCsrfHeaderName() {
+        return $("#CSRFForm [name='CSRFHeadername']").val();
+    }
+
+    function getYCsrfToken() {
+        return $("#CSRFForm [name='CSRFToken']").val();
+    }
+
     function getDepth2() {
         let depth1 = $("#depth1").val();
         for (var i = 0; i < category_obj.length; i++) {
@@ -74,6 +83,7 @@
         }
         document.getElementById("depth2").innerHTML = depth2html;
     }
+
     function getDepth3() {
         let depth1 = $("#depth1").val();
         let depth2 = $("#depth2").val();
@@ -89,20 +99,94 @@
         }
         document.getElementById("depth3").innerHTML = depth3html;
     }
+
     function deleteSize(idx) {
-        document.getElementById("size"+idx).style.display = "none";
+        document.getElementById("size" + idx).style.display = "none";
+        var target = document.getElementById("size" + idx).innerText;
+        var arr = target.split(' ');
+        console.log(arr);
+        for (var i = 0; i < size_obj.length; i++) {
+            if (size_obj[i] === arr[2]) {
+                size_obj.splice(i, 1);
+                i--;
+            }
+        }
+        console.log(size_obj);
     }
-    // sizeDiv
+
     function addSize() {
         var ssize = $("#ssize").val();
         console.log(ssize);
-        var shtml = `<p id="size${idx}">사이즈 : ${ssize}<button class="btn btn-secondary mb-1" onclick="deleteSize(${idx})">삭제</button></p>`;
+        size_obj.push(ssize);
+        var shtml = `<p style="height: 45px; color: #3f729b;" id="size${idx}">사이즈 : ${ssize} <button style="float: right;" class="btn btn-secondary mb-1" onclick="deleteSize(${idx})">삭제</button></p>`;
         document.getElementById("sizeDiv").innerHTML += shtml;
         idx += 1;
     }
 
     function insertProduct() {
-        
+        var ssize = [];
+        var pid = $("#pid").val();
+        var bname = $("#bname").val();
+        var clarge = $("#depth1").val();
+        var cmedium = $("#depth2").val();
+        var csmall = $("#depth3").val();
+        var pname = $("#pname").val();
+        var pprice = $("#pprice").val();
+        var pdetail = $("#pdetail").val();
+        var ccolorcode = $("#ccolorcode").val();
+        var cimage1 = $("#cimage1").val();
+        var cimage2 = $("#cimage2").val();
+        var cimage3 = $("#cimage3").val();
+        var ccolorimage = $("#ccolorimage").val();
+        var cmatchpid = $("#cmatchpid").val();
+        var samount = 0; // !!! 나중에 재고 입력받기
+        for (var i = 0; i < size_obj.length; i++) {
+            var temp = {
+                pid: pid,
+                ccolorcode: ccolorcode,
+                samount: samount,
+                ssize: size_obj[i]
+            }
+            ssize.push(temp);
+        }
+        var data = {
+            pid: pid,
+            bname: bname,
+            clarge: clarge,
+            cmedium: cmedium,
+            csmall: csmall,
+            pname: csmall,
+            pprice: pprice,
+            pdetail: pdetail,
+            ccolorcode: ccolorcode,
+            cimage1 : cimage1,
+            cimage2 : cimage2,
+            cimage3 : cimage3,
+            ccolorimage : ccolorimage,
+            cmatchpid : cmatchpid,
+            ssize: ssize
+        }
+        console.log(data);
+        $.ajax({
+            url: "/back/product",
+            method: "post",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+            },
+            cache: false,
+            success: function (data) {
+                console.log("GG");
+                var lc = new layerAlert('완료되었습니다.');
+                lc.confirmAction = function () {
+
+                };
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
     }
 </script>
 <button type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#scrollmodal">
@@ -120,101 +204,137 @@
             </div>
             <div class="modal-body">
                 <div class="card-body card-block">
-                        <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="text-input" class=" form-control-label">상품 ID</label>
-                            </div>
-                            <div class="col-12 col-md-9">
-                                <input type="text" id="pid" name="text-input" class="form-control">
-                                <small class="form-text text-muted">상품 pid를 입력해주세요</small>
-                            </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">상품 ID</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="select" class=" form-control-label">상품 카테고리</label>
-                            </div>
-                            <div class="col-12 col-md-9" style="float: inherit">
-                                <div class="noti-wrap">
-                                <select name="select" id="depth1" class="form-control" style="width: 150px; margin-right:20px;" onchange="getDepth2()">
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="pid" name="text-input" class="form-control">
+                            <small class="form-text text-muted">상품 pid를 입력해주세요</small>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="select" class=" form-control-label">상품 카테고리</label>
+                        </div>
+                        <div class="col-12 col-md-9" style="float: inherit">
+                            <div class="noti-wrap">
+                                <select name="select" id="depth1" class="form-control"
+                                        style="width: 150px; margin-right:20px;" onchange="getDepth2()">
                                     <option value="0">상품 대분류</option>
                                 </select>
-                                <select name="select" id="depth2" class="form-control" style="width: 150px; margin-right:20px;" onchange="getDepth3()">
+                                <select name="select" id="depth2" class="form-control"
+                                        style="width: 150px; margin-right:20px;" onchange="getDepth3()">
                                     <option value="0">상품 중분류</option>
                                 </select>
                                 <select name="select" id="depth3" class="form-control" style="width: 150px;">
                                     <option value="0">상품 소분류</option>
                                 </select>
-                                </div>
                             </div>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="text-input" class=" form-control-label">브랜드 이름</label>
-                            </div>
-                            <div class="col-12 col-md-9">
-                                <input type="text" id="bname" name="text-input" class="form-control">
-                                <small class="form-text text-muted">브랜드를 입력해주세요</small>
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">브랜드 이름</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="text-input" class=" form-control-label">상품 이름</label>
-                            </div>
-                            <div class="col-12 col-md-9">
-                                <input type="text" id="pname" name="text-input" class="form-control">
-                                <small class="form-text text-muted">상품명을 입력해주세요</small>
-                            </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="bname" name="text-input" class="form-control">
+                            <small class="form-text text-muted">브랜드를 입력해주세요</small>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="text-input" class=" form-control-label">상품 가격</label>
-                            </div>
-                            <div class="col-12 col-md-9">
-                                <input type="text" id="pprice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="form-control">
-                                <small class="form-text text-muted">상품 가격을 입력해주세요</small>
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">상품 이름</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="textarea-input" class=" form-control-label">상품 상세</label>
-                            </div>
-                            <div class="col-12 col-md-9">
-                                <textarea name="textarea-input" id="textarea-input" rows="9" class="form-control"></textarea>
-                                <small class="form-text text-muted">상품 상세 내용을 입력해주세요</small>
-                            </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="pname" name="text-input" class="form-control">
+                            <small class="form-text text-muted">상품명을 입력해주세요</small>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="textarea-input" class=" form-control-label">상품 색상코드</label>
-                            </div>
-                            <div class="col-12 col-md-9">
-                                <input type="text" id="ccolorcode" class="form-control">
-                                <small class="form-text text-muted">색상코드를 입력해주세요</small>
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">상품 가격</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="text-input" class=" form-control-label">상품 사이즈</label>
-                            </div>
-                            <div class="col-md-7">
-                                <input type="text" id="ssize" name="text-input" class="form-control">
-                            </div>
-                            <button onclick="addSize()" class="btn btn-secondary btn-sm" style="height: 38px;">사이즈 추가</button>
-                            <div class="col col-md-3">
-                                <label for="text-input" class=" form-control-label"></label>
-                            </div>
-                            <div class="col-md-7">
-                                <small class="form-text text-muted" style="margin-left: ">사이즈를 추가 해주세요</small>
-                            </div>
-                            <div class="col col-md-3">
-                                <label for="text-input" class=" form-control-label"></label>
-                            </div>
-                            <div class="col-md-7">
-                                <div id="sizeDiv"></div>
-                            </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="pprice"
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                   class="form-control">
+                            <small class="form-text text-muted">상품 가격을 입력해주세요</small>
                         </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="textarea-input" class=" form-control-label">상품 상세</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <textarea name="textarea-input" id="pdetail" rows="9" class="form-control"></textarea>
+                            <small class="form-text text-muted">상품 상세 내용을 입력해주세요</small>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="textarea-input" class=" form-control-label">상품 색상코드</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="ccolorcode" class="form-control">
+                            <small class="form-text text-muted">색상코드를 입력해주세요</small>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="textarea-input" class=" form-control-label">상품 이미지</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="cimage1" class="form-control">
+                            <input type="text" id="cimage2" class="form-control">
+                            <input type="text" id="cimage3" class="form-control">
+                            <small class="form-text text-muted">상품 이미지를 입력해주세요</small>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="textarea-input" class=" form-control-label">컬러칩 이미지</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="ccolorimage" class="form-control">
+                            <small class="form-text text-muted">컬러칩 이미지를 입력해주세요</small>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">상품 사이즈</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" id="ssize" name="text-input" class="form-control">
+                        </div>
+                        <button onclick="addSize()" class="btn btn-secondary btn-sm" style="height: 38px;">사이즈 추가
+                        </button>
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label"></label>
+                        </div>
+                        <div class="col-md-7">
+                            <small class="form-text text-muted" style="margin-bottom: 20px;">사이즈를 추가 해주세요</small>
+                        </div>
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label"></label>
+                        </div>
+                        <div class="col-md-7">
+                            <div id="sizeDiv"></div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="textarea-input" class=" form-control-label">함께 코디한 상품</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="cmatchpid" class="form-control">
+                            <small class="form-text text-muted">함께 코디한 상품을 입력해주세요</small>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" onclick="insertProduct()">상품 등록</button>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
