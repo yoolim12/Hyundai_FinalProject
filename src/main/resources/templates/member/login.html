@@ -8,7 +8,11 @@
 	<script type="text/javascript">
 //<![CDATA[
 var tempData = "";
-$(document).ready(function(){
+$(document).ready(function(){	
+	if(location.href === 'http://localhost:8080/member/loginfail'){
+		$('#hpErrMsg').html('입력하신 아이디 혹은 비밀번호가 일치하지 않습니다.');
+	}
+	
 	var egiftParam = "";
     
     if(egiftParam != "") {
@@ -192,7 +196,7 @@ function layerPopup(division) {
 function easyMemJoin() {
     var lc = new layerConfirm("<span style='color:red;'>간편회원으로 가입</span>하실 경우,<br> <span style='color:red;'>한섬마일리지 및 H.Point 적립이 불가</span>하며,<br><span style='color:red;'>한섬 온라인 멤버십 서비스 ‘THE 클럽’의 혜택을 받으실 수 없습니다.<br></span> 간편회원 가입을 진행하시겠습니까?", "간편회원 가입", "통합회원 가입");
     lc.confirmAction = function(){
-        location.href = "/member/simpleRegister";
+        location.href = "/member/simpleRegisterEmail";
     };
     return;
 }
@@ -219,9 +223,8 @@ function easyMemJoin() {
 	                    <input type="hidden" name="inputId" id="inputId" value = "" />
 	                    <fieldset>
 	                        <legend>로그인 입력항목</legend>
-	                        <div class="login_section">
-	                                
-	                            <p class="login_err_txt" id="hpErrMsg" style="margin-left:0px;"> </p>
+	                        <div class="login_section">       
+	                            <p class="login_err_txt" id="hpErrMsg" style="margin-left:0px;"></p>
 	                            <div>
 	                                <div>
 	                                    <input type="text" id="j_username" name="memail" placeholder="아이디 / 이메일을 입력하세요." title="아이디" value=""/>
