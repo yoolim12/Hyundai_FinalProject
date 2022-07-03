@@ -45,8 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        //  /samle/all 모든 사용자 가능
        //  /sample/member USER 롤 사용자만
        http.authorizeRequests()
-               .antMatchers("/HandsomeLogin/HandsomeLoginPage")
-               .permitAll()
                .antMatchers("/mypage").hasRole("USER")
                .antMatchers("/cart").hasRole("USER")
                .antMatchers("/order").hasRole("USER")
