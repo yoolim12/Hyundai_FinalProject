@@ -1,11 +1,16 @@
 package com.hyundai.project.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hyundai.project.mail.MailService;
 import com.hyundai.project.service.MemberService;
 
 import lombok.Setter;
@@ -25,18 +30,39 @@ public class BackController {
 		return "/back/form3temp";
 	}
 	
-	// 회원관리 페이지 이동
-	@GetMapping("/form")
-	public String form() {
-		log.info("회원관리 페이지 요청");
-		return "/back/form";
-	}
+	@Autowired
+	private MailService mail;
 	
 	// 회원관리 페이지 이동
-	@GetMapping("/streaming")
+	@GetMapping("/form")
+	public void form(Model model) throws Exception {
+		System.out.println(service.showAllMember());
+		model.addAttribute("userList", service.showAllMember());
+	}
+	
+	// 회원 조회 ajax + thymleaf
+	@PostMapping("/view")
+	public String view(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
+		String memail = paramMap.get("email");
+		System.out.println(memail);
+		System.out.println(service.getMemberInfo(memail));
+		model.addAttribute("userList", service.getMemberInfo(memail));
+		
+		return "/back/form :: #memberInfo";
+	}
+	
+	// 스트리밍 페이지 이동
+	@GetMapping("/test")
 	public String st() {
-		log.info("회원관리 페이지 요청");
-		return "/back/streaming";
+		log.info("스트리밍 페이지 요청");
+		return "/back/test";
+	}
+	
+	// 스트리밍 페이지 이동
+	@GetMapping("/test2")
+	public String st2() {
+		log.info("스트리밍 페이지 요청");
+		return "/back/test2";
 	}
 	
 	// 상품관리 페이지 이동
@@ -52,13 +78,12 @@ public class BackController {
 		log.info("매장관리 페이지 요청");
 		return "/back/form3";
 	}
+	
+	// 차트 페이지 이동
+	@GetMapping("/chart")
+	public String chart() {
+		log.info("상품관리 페이지 요청");
+		return "/back/chart";
+	}
 		
-	// 회원 전체 조회
-	@GetMapping("/allmember")
-	public ModelAndView showAllMember() throws Exception {
-		ModelAndView model = new ModelAndView();
-		model.addObject("userList", service.showAllMember());
-		model.setViewName("back/form");
-		return model;
-	} // end allmember
 }

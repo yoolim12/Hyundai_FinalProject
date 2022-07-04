@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/common}">
+<div layout:fragment="content">
+<!--<head>
+<style media="screen">
+ .blsmflw1 {animation: target_image 1.5s;animation-iteration-count: 2;transform-origin:50% 50%;}
+ @keyframes target_image {
+	0% { transform: rotate(-1deg); }
+	50% { transform: rotate(9deg) }
+	100% { transform: rotate(-1deg); }
+ }
+</style>
+</head>-->
+<script>
+	$(document).ready(function(){
+		$("#id, #uidDomain, #uidDomainSel").change(function(){	
+	    	var emailRegExp = /^((([^<>()[\]\\.,;:\s@\"~`!@#$%^&*+={}|'/?]+(\.[^<>()[\]\\.,;:\s@\"~`!@#$%^&*+={}|'/?]+)*))|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	    	var email = $("#id").val()+"@"+$("#uidDomain").val();
+	    	console.log($('[name="memail1"]').val() !== "");
+	    	console.log($('[name="memail2"]').val() === "")
+	    	console.log(emailRegExp.test(email) != true);
+	    	
+	    	if($("#id").val() == "" &&  $("#uidDomain").val() == ""){
+	    		$("#idDubMsg").text('');
+	    		$("#uidDuplChk").val('');
+	    	}else{
+	    	
+	  	  	if ( emailRegExp.test(email) != true) {
+	    		
+	            $("#idDubMsg").text("잘못된 E-mail 형식입니다.");
+	            $("#uidDuplChk").val('N');
+	            return;
+	        } else {
+	        	$("#idDubMsg").text('');
+	        	$("#uidDuplChk").val('');
+	        }
+	    	}
+	        
+	    });
+	    
+	    //if(!($('[name="memail1"]').val() !== "" && $('[name="memail2"]').val() !== "")){
+		//	$("#idDubChkBtn").click(function(){
+		//		$("#idDubMsg").text("잘못된 E-mail 형식입니다.");
+		//	});
+		//	$('#emailAuthBtn').click(function(){
+		//		// email send
+		//		$('#emailMessage').html('필수 데이터가 입력되지 않았습니다.')
+		//		$('#layerDiv').attr("style", "z-index: 1110; display:block;");
+		//	});
+		//	return;
+		//}
+		
+		$('#btnClose, #btnConfirm').click(function(){
+			$('#layerDiv').attr("style", "z-index: 1110; display:none;");
+		});
+		
+		$("#idDubChkBtn").click(function(){
+						
+			var emailDomain = '';
+			
+			if($('[name="memail2"]').val() === ""){
+				emailDomain += $('#uidDomain').val();
+			}
+			else{
+				emailDomain += $('[name="memail2"]').val();
+			}
+			console.log($('[name="memail1"]').val() + '@' + emailDomain)
+			$.ajax({
+				type: 'POST',
+				url:'/member/duplicateCheck',
+				dataType: 'JSON',
+				contentType: "application/json",
+				data: JSON.stringify({
+					'memail': $('[name="memail1"]').val() + '@' + emailDomain,
+					"CSRFToken": getYCsrfToken()
+				}),
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+				},
+				success: function(response){
+					console.log(response);
+					
+					if(response.memail === '0'){
+						console.log('yes');
+						console.log('ahhhhhhhhh' + $("#memailDuplChk").val())
+						if(!($('[name="memail1"]').val() !== "" && $('[name="memail2"]').val() !== "")){
+								$("#idDubMsg").text("잘못된 E-mail 형식입니다.");
+								$('#emailAuthBtn').click(function(){
+									// email send
+									$('#emailMessage').html('필수 데이터가 입력되지 않았습니다.')
+									$('#layerDiv').attr("style", "z-index: 1110; display:block;");
+								});
+							} else{
+								$('#idDubMsg').text('사용 가능한 이메일입니다.');
+						$('#emailAuthBtn').click(function(){
+							
+					       
+								
+								$("#memailDuplChk").val('Y');
+						        $('#emailMessage').html('['+$('[name="memail1"]').val() + '@' + emailDomain+']으로 발송된 인증메일의<br>인증링크를 유효시간 30분 안에 선택해주세요.')
+						        $('#layerDiv').attr("style", "z-index: 1110; display:block;");
+						        console.log($('[name="memail1"]').val())
+						        console.log(emailDomain)
+						        $('#btnClose, #btnConfirm').click(function(){
+									$('#layerDiv').attr("style", "z-index: 1110; display:none;");
+									$('#emailAuthBtn').remove();
+								});
+							}
+					    });
+					}
+					else{
+						console.log('no');
+						console.log('ahhhhhhhhh' + $("#memailDuplChk").val())
+						$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
+						//$("#emailMsg").text('이미 사용 중인 이메일입니다.');
+						$('#emailAuthBtn').click(function(){
+					        // email send
+					        console.log('click')
+					        $('#emailMessage').html('이메일 아이디의 중복 확인이 필요합니다.')
+					        $('#layerDiv').attr("style", "z-index: 1110; display:block;");
+					        
+					        console.log('clack')
+					    });
+					    
+					    
+					}
+				},
+				error:function(e){
+					console.log('err');
+					console.log(e);
+				}
+			});
+			
+			
+	    });
+	});
+</script>
+
+<!-- bodyWrap -->
+        <div id="bodyWrap">
+            <!--title-->
+            <h3 class="cnts_title"><span>회원가입</span></h3>
+            <!--//title-->
+            <!--email step-->
+            <div class="email_step">
+                <ul class="clearfix">
+                    <li class="step01 on">step01 이메일인증</li>
+                    <li class="step02">step02 회원약관동의</li>
+                    <li class="step03">step03 회원정보 입력</li>
+                    <li class="step04">step04 가입완료</li>
+                </ul>
+            </div>
+            <!--/email  step-->
+            <!--sub container-->
+            <div class="sub_container">
+                <div class="join_title">
+                    <p class="title">더한섬닷컴에 가입을 환영합니다.</p>
+                    <p class="s_title"><strong>본인인증 절차 없이, 더한섬닷컴에서 제공하는 서비스만 제한적으로 이용할 수 있습니다.</strong><br/>더한섬닷컴에서 사용 가능하며, <span style="color:#c69c6c;font-weight:normal;text-decoration:underline;">오프라인 매장에서는 사용할 수 없습니다.<br/>한섬마일리지와 현대백화점그룹 H.Point 혜택, 한섬의 온라인 멤버십 서비스 ‘THE 클럽’의 혜택은 제공되지 않습니다.</span></p>
+                </div>
+                <form>
+                    <fieldset>
+                        <legend>본인인증</legend>
+                        <div class="box_type_1">
+                            <div class="email" style="background-image:url('http://www.thehandsome.com/_ui/desktop/common/images/member/ico_email.gif'); ">
+                                <p>
+                                    <strong>이메일인증으로 회원가입</strong>
+                                </p>
+                                <p>정보입력은 입력한 메일을 통한 인증 후 가능합니다.</p>
+                                <p class="emailinput">
+                                    <input type="text" id="id" name="memail1" style="width:120px" title="이메일 아이디"> 
+                                    <span class="andmail">@</span>
+                                    <input type="text" id="uidDomain" name="uidDomain" style="width:120px" title="이메일 계정">
+                                    <select id="uidDomainSel" style="width:120px; margin:0 0 0 0;" title="이메일 아이디 도메인" name="memail2">
+                                        <option value="">직접입력</option>
+                                        <option value="naver.com">naver.com</option>
+                                        <option value="daum.net">daum.net</option>
+                                        <option value="gmail.com">gmail.com</option>
+                                        <option value="yahoo.co.kr">yahoo.co.kr</option>
+                                        <option value="lycos.co.kr">lycos.co.kr</option>
+                                        <option value="nate.com">nate.com</option>
+                                        <option value="empas.com">empas.com</option>
+                                        <option value="hotmail.com">hotmail.com</option>
+                                        <option value="msn.com">msn.com</option>
+                                        <option value="hanmir.com">hanmir.com</option>
+                                        <option value="chol.net">chol.net</option>
+                                        <option value="korea.com">korea.com</option>
+                                        <option value="netsgo.com">netsgo.com</option>
+                                        <option value="dreamwiz.com">dreamwiz.com</option>
+                                        <option value="hanafos.com">hanafos.com</option>
+                                        <option value="freechal.com">freechal.com</option>
+                                        <option value="hitel.net">hitel.net</option>
+                                    </select>
+                                    <input type="button" class="btn add_s" id="idDubChkBtn" value="중복확인">
+                                    <br/>
+                                    <span class="guide_comment" id="idDubMsg"></span>
+                                </p>
+                                <input type="button" value="이메일 인증하기" class="btn acc"  id="emailAuthBtn" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="jo_bottom_banner">
+                    <div class="left_banner">
+                        <a href="http://www.thehandsome.com/ko/magazine/events/8802941687680" target="_blank">통합회원 가입 시 <br/>가입 축하 <span style="color:#c69c6c;">정상 15% & 아울렛 5% 쿠폰</span> 증정<span class="dtil_viw">자세히 보기 >></span></a>
+                    </div>
+                    <div class="right_banner">
+                        <a href="/ko/svcenter/theClubInfo" target="_blank">통합회원을 위한<br/>한섬 온라인 멤버십 <span style="color:#c69c6c;">THE 클럽</span><span class="dtil_viw">자세히 보기 >></span></a>
+                    </div>
+                </div>
+            </div>
+            <!--//sub container-->
+        </div>
+        <!-- //bodyWrap -->
+</div>
+</html>
+<div class="layerArea" style="z-index: 1110; display:none;" id="layerDiv">
+    <div class="layerBg"></div>
+    <div class="popwrap w_type_1 " style="z-index: 150; margin-top: 531px;" tabindex="-1">
+        <div class="pop_cnt">
+            <h3 class="pop_tlt copy" id="emailMessage"></h3>
+            <div class="btnwrap">
+                <input type="button" class="btn gray_s mr0" id="btnConfirm" value="확인">
+            </div>
+        </div>
+        <a href="javascript:void(0);" class="btn_close" id="btnClose">
+            <img src="/_ui/desktop/common/images/popup/ico_close.png" alt="닫기">
+        </a>
+    </div>
+</div>

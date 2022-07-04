@@ -12,13 +12,22 @@ $(document).ready(function(){
 	console.log(getCsrfHeaderName(), getYCsrfToken());
     
     var dclick = $('#idDubChkBtn').click(function(){
+		var emailDomain = '';
+		if($('[name="memail2"]').val() === ""){
+			console.log($('#uidDomain').val());
+			emailDomain += $('#uidDomain').val();
+		}
+		else{
+			emailDomain += $('[name="memail2"]').val();
+		}
+		
 		$.ajax({
 			type: 'POST',
 			url:'/member/duplicateCheck',
 			dataType: 'JSON',
 			contentType: "application/json",
 			data: JSON.stringify({
-				'memail': $('[name="memail1"]').val() + '@' + $('[name="memail2"]').val(),
+				'memail': $('[name="memail1"]').val() + '@' + emailDomain,
 				"CSRFToken": getYCsrfToken()
 			}),
 			beforeSend: function(xhr){
@@ -45,13 +54,21 @@ $(document).ready(function(){
 	});
 	
 	$('#emailDubChkBtn').click(function(){
+		var emailDomain = '';
+		if($('[name="memail2"]').val() === ""){
+			emailDomain += $('#uidDomain').val();
+		}
+		else{
+			emailDomain += $('[name="memail2"]').val();
+		}
+		
 		$.ajax({
 			type: 'POST',
 			url:'/member/duplicateCheck',
 			dataType: 'JSON',
 			contentType: "application/json",
 			data: JSON.stringify({
-				'memail': $('[name="memail_info1"]').val() + '@' + $('[name="memail_info2"]').val(),
+				'memail': $('[name="memail_info1"]').val() + '@' + emailDomain,
 				"CSRFToken": getYCsrfToken()
 			}),
 			beforeSend: function(xhr){
@@ -346,13 +363,21 @@ $(document).ready(function(){
           
           console.log('birthday', $("#sBirthday").val());
           
+          var emailDomain = '';
+          if($('[name="memail2"]').val() === ""){
+				emailDomain += $('#uidDomain').val();
+			}
+			else{
+				emailDomain += $('[name="memail2"]').val();
+			}
+          
           $.ajax({
             type: 'POST',
             url: '/member/registerPost',
             dataType: 'JSON',
             contentType : "application/json",
             data: JSON.stringify({
-                "memail": $('[name="memail1"]').val() + '@' + $('[name="memail2"]').val(),
+                "memail": $('[name="memail1"]').val() + '@' + emailDomain,
                 "mpassword": $('[name="mpassword"]').val(),
                 "memail_info": $('[name="memail_info1"]').val() + '@' + $('[name="memail_info2"]').val(),
                 "mname": $('[name="mname"]').val(),
@@ -371,7 +396,7 @@ $(document).ready(function(){
 				if(response){
                     // var la = new layerAlert("회원가입이 완료 되었습니다.");
                     console.log('register success!!!')
-					location.href = '/member/login';
+					location.href = '/member/simpleRegister3';
 				}else{
 					// var la = new layerAlert("회원가입에 실패하였습니다.");
 					console.log('register fail.......')

@@ -43,7 +43,7 @@ public class MemberDatabaseConfig {
 	}
 	
 	@Bean
-	public PlatformTransactionManager transactionManager() {
+	public PlatformTransactionManager memberTxManager() {
 		return new DataSourceTransactionManager(memberDataSource());
 	}
 }

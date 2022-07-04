@@ -1,4 +1,4 @@
-"https://cff34ca342b3.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.328322480690.channel.BcJ2oqvO9gcc.m3u8";
+
 <!DOCTYPE html>
 <html xmlns:sec="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
@@ -11,10 +11,10 @@
 
 <body>
     <div class="video-container">
-        <form class="src-container-direct">
+        <!-- <form class="src-container-direct">
             <input class="src-input" placeholder="Enter .m3u8" />
             <button class="src-submit" type="submit">Load</button>
-        </form>
+        </form> -->
         <video id="amazon-ivs-videojs" class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay playsinline>
         </video>
     </div>
@@ -30,7 +30,7 @@
         }
     </style>
     <script>
-    const DEFAULT_STREAM = "";
+    const DEFAULT_STREAM = "https://cff34ca342b3.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.328322480690.channel.hhsMUbOq5NC6.m3u8";
     (function () {
         registerIVSTech(videojs); 
         registerIVSQualityPlugin(videojs);
@@ -95,7 +95,7 @@
         videoJSPlayer.ready(readyCallback);
     })();
 
-    /* // ¼Â¾÷
+    /* 
     (function () {
         const containerEl = document.querySelector(".video-container");
         const directSrcFormEl = containerEl.querySelector(".src-container-direct");

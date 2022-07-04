@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.hyundai.project.dto.AuthMemberDTO;
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.MemberJoinDTO;
 
 public interface MemberService {
 	
 	// 이메일로 회원 정보 가져오기
-	public MemberDTO getMemberInfo(String email) throws Exception;
+	public List<MemberJoinDTO> getMemberInfo(String email) throws Exception;
 	
 	// 회원 수정
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception;
@@ -20,7 +21,7 @@ public interface MemberService {
 	public void delMember(String email) throws Exception;
 	
 	// 회원 전체 조회
-	public List<MemberDTO> showAllMember() throws Exception;
+	public List<MemberJoinDTO> showAllMember() throws Exception;
 
 	// 회원 포인트 조회
 	public int getPoint(String memail) throws Exception;

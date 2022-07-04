@@ -89,13 +89,13 @@
     </select>
 
     <!-- yoolim start -->
-    <select id="productSearch" resultType="com.hyundai.project.dto.ProductDTO">
+    <!-- <select id="productSearch" resultType="com.hyundai.project.dto.ProductDTO">
         select p1.pid as pid, p1.pname as pname, p2.cimage1 as cimage1
         from product p1
                  join color p2
                       on p1.pid = p2.pid
         where p1.pname = #{pname}
-    </select>
+    </select> -->
 
     <delete id="delStock">
         delete
@@ -139,6 +139,13 @@
     <update id="updateMain">
         UPDATE PRODUCT SET PSTATUS = #{pstatus} WHERE PID = #{pid}
     </update>
+    
+    <select id="productSearch" resultType="com.hyundai.project.dto.ProductBackDTO">
+        select pid, clarge||'-'||cmedium||'-'||csmall category, bname, pname, pprice, pdetail, pstatus
+		from product
+        where pname like '%'||#{pname}||'%'
+        order by pid
+    </select>
 
     <select id="getCategory" resultType="com.hyundai.project.dto.ProductCategoryDTO">
         select clarge, cmedium, csmall from category order by clarge desc

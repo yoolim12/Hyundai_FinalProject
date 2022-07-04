@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<script>
+	/*
+	1. To connect to a chat room, you need to create a Secure-WebSocket connection
+	using the client token you created in the previous steps. Use one of the provided 
+	endpoints in the Chat Messaging API, depending on your AWS region.
+	*/
+	const chatClientToken = "AQICAHhXoLOILaBZssrAK_tnWqb0x0qRB09F9Q-WJE7jwbAx9gFAFdiL7PZHJQ3EBsSiCxBuAAAB7zCCAesGCSqGSIb3DQEHBqCCAdwwggHYAgEAMIIB0QYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAwZ62hAKsyoT0eUN6oCARCAggGiisv-QWNjnDf8lYnQgdjM9VUE3nxdkxVcGdKoWGokbUNx9T--oZlTHwifycgA9ov19G-nwLSfqlX1cqje_zIryO9Q46fldD_CWgmNIPlC8KQZ1SADgUevk01XpUI7Y8vckuIEnDuzeeT3NvYPcBmPpCic5ZOOCU6lK_DuGVMB1dzsaBGTO_goJ6q3lQoxWbC6mVNJZI1CSujxMl0FJjRDuvdtk0CR5h3CnTgnUHrEYaUd9NWcdx1_V_zm9gbliJiR_Gn7XSqqMm6mrANssRcLoB0V6V-cxifwTfwBDPc2tLMIUxFrhW_e2c97LV5fKsszIuXSpBJazWidKnFnwqMFRJvJwQX7csgMw2bGDnFgmb1WWc5I9rRqkZ8llQGRmpT-pQACEQ0OJ22hCq6CNJliyA-bMaeCUlbwBw3vuBTxaNktkchkSF0xpv4mrrIuwmgD9MA81CL1_ztOLRHA1k6QPSQihy5cpdvC-j4hDGkvmcrj7n6szvyNh53Acu7h8sQR1IZHSr4JdGR1NGpPKyoySWOuZ6-C271qlC5w88Q3M1rEow!!#0";
+	const socket = "wss://edge.ivschat.us-east-1.amazonaws.com"; // Replace “us-west-2” with supported region of choice.
+	const connection = new WebSocket(socket, chatClientToken);
+
+	/*
+	2. You can send your first message by listening to user input 
+	in the UI and sending messages to the WebSocket connection.
+	*/
+	const payload = {
+	  "Action": "SEND_MESSAGE",
+	  "RequestId": "test",
+	  "Content": "text message",
+	  "Attributes": {
+	    "CustomMetadata": "test metadata"
+	  }
+	}
+	connection.send(JSON.stringify(payload));
+
+	/*
+	3. To listen to incoming chat messages from this WebSocket connection 
+	and display them in your UI, you must add some event listeners.
+	*/
+	connection.onmessage = (event) => {
+	  const data = JSON.parse(event.data);
+	  displayMessages({
+	    display_name: data.Sender.Attributes.DisplayName,
+	    message: data.Content,
+	    timestamp: data.SendTime
+	  });
+	}
+
+	function displayMessages(message) {
+	  // Modify this function to display messages in your chat UI however you like.
+	  console.log(message);
+	}
+	</script>
+	<body>
+		<button class="item" onclick = "displayMessages('');">
+             <i class="zmdi zmdi-delete"></i>
+        </button>
+	</body>
+</head>
+
+
+
+</html>

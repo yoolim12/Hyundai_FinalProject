@@ -80,21 +80,24 @@
 						var s = getProductSize(result[i].pid,result[i].ccolorcode);
 						html += '<li>';
 						html += '<div class="item_box">';
-						html += '   <a href="/detail/' + result[i].pid + '_' + result[i].ccolorcode + '"'+ ' class="item_info1">';
+						html += '   <a href="/detail/' + result[i].pid + '_' + result[i].ccolorcode + '" class="item_info1">';
 						html += '      <span class="item_img">';
-						html += '         <img src=' + result[i].cimage1 + ' id="T01_IMG_0" alt=' + result[i].pname + ' targetcode=' + result[i].pid + ' class="respon_image" onerror="this.src=' + '"http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg">';
-						html += '         <img src=' + result[i].cimage2 + ' id="T02_IMG_0" alt=' + result[i].pname + ' targetcode=' + result[i].pname + ' class="respon_image on" onerror="this.src=' + '"http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg" style="display: none; opacity: 1;">';
-						html += '            <input type="hidden" id="newImage1_0" value="' + result[i].cimage1 + '">';
-						html += '            <input type="hidden" id="newImage2_0" value="' + result[i].cimage2 + '">';
+						html += '         <img src=' + result[i].cimage1 + ' id="T01_IMG_' +i+'" alt="' + result[i].pname + '" targetcode=' + result[i].pid + '_' + result[i].ccolorcode +' class="respon_image" onerror="this.src=' + '"http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg">';
+						html += '         <img src=' + result[i].cimage2 + ' id="T02_IMG_' +i+'" alt="' + result[i].pname + '" targetcode=' + result[i].pid + '_' + result[i].ccolorcode +' class="respon_image on" onerror="this.src=' + '"http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg" style="display: none; opacity: 1;">';
+						html += '            <input type="hidden" id="newImage1_' +i+'" value="' + result[i].cimage1 + '">';
+						html += '            <input type="hidden" id="newImage2_' +i+'" value="' + result[i].cimage2 + '">';
 						html += '      </span>';
-						html += '      <span class="item_size" id="itemsize_0" style="display: none; height: 20px; padding-top: 15px; margin-top: 0px; padding-bottom: 15px; margin-bottom: 0px;">';
+						html += '      <span class="item_size" id="itemsize_' +i+'" style="display: none; height: 20px; padding-top: 15px; margin-top: 0px; padding-bottom: 15px; margin-bottom: 0px;">';
 						html += s;
 						html += '      </span>';
 						html += '      </a>';
-						html += '      <a href="/ko/p/' + result[i].pid + '" class="item_info2">';
+						html += '      <a href="/detail/' + result[i].pid + '_' + result[i].ccolorcode +'" class="item_info2">';
 						html += '      		<span class="brand">' + result[i].bname + '</span>';
 						html += '      		<span class="title">' + result[i].pname + '</span>';
-						html += '      		<span class="price">₩' + numWithComma(result[i].pprice);
+						html += '      		<span class="price">'
+						html += '               <span id="price_'+ result[i].pid + '_' + result[i].ccolorcode +'">';
+						html += '           		<span>₩' + numWithComma(result[i].pprice) + '</span>';
+						html += ' 				</span>'
 						html += '      		</span>';
 						html += '      		<span class="flag">';
 						html += '      				<span class="product">NEW</span>';
