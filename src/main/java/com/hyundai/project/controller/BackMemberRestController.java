@@ -66,11 +66,12 @@ public class BackMemberRestController {
     	String telnum = map.get("telnum");
     	String address = map.get("maddress");
     	int gno = Integer.parseInt(map.get("gno"));
+    	int msleep = Integer.parseInt(map.get("msleep"));
     	
-    	System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address);
+    	System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address + ' ' + msleep);
     	
     	try {
-    		service.admodifyMember(email, name, birth, telnum, address, gno);
+    		service.admodifyMember(email, name, birth, telnum, address, gno, msleep);
     	}catch(Exception e){
     		e.printStackTrace();
     	}
@@ -105,11 +106,12 @@ public class BackMemberRestController {
     	String telnum = map.get("telnum");
     	String address = map.get("maddress");
     	int gno = Integer.parseInt(map.get("gno"));
+    	int msleep = Integer.parseInt(map.get("msleep"));
     	
     	System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address);
     	
     	try {
-    		service.admodifyMember(email, name, birth, telnum, address, gno);
+    		service.admodifyMember(email, name, birth, telnum, address, gno, msleep);
     	}catch(Exception e){
     		e.printStackTrace();
     	}
