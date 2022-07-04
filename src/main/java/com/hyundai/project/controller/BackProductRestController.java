@@ -1,29 +1,18 @@
 package com.hyundai.project.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
 import com.hyundai.project.config.AwsS3Config;
 import com.hyundai.project.dto.*;
-import com.hyundai.project.memberDAO.MemberDAO;
-import com.hyundai.project.productDAO.ProductDAO;
 import com.hyundai.project.service.AwsS3Service;
-import com.hyundai.project.service.MemberService;
 import com.hyundai.project.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.StringReader;
-import java.lang.reflect.Field;
 import java.util.*;
 
 @Log4j2
@@ -36,8 +25,6 @@ public class BackProductRestController {
     private ProductService productService;
 
     private final AwsS3Service awsS3Service;
-
-    private AwsS3Config awsS3Config;
 
     @RequestMapping("/productSearch")
     public ResponseEntity<List<ProductDTO>> productSearch(@RequestBody HashMap<String, String> map, Model model) {
