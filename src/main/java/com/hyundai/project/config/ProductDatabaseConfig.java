@@ -40,9 +40,10 @@ public class ProductDatabaseConfig {
 		
 		return new SqlSessionTemplate(productSqlSessionFactory);
 	}
+	
+	@Bean
+	public PlatformTransactionManager productTxManager() {
+		return new DataSourceTransactionManager(productDataSource());
+	}
 
-//	@Bean
-//	public PlatformTransactionManager ProductTransactionManager() {
-//		return new DataSourceTransactionManager(productDataSource());
-//	}
 }

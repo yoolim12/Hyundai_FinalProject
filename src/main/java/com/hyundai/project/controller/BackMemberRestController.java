@@ -40,17 +40,17 @@ public class BackMemberRestController {
 	// 회원 찾기
 	@PostMapping("/member")
 	@ResponseBody
-    public ResponseEntity<MemberDTO> findId(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
+    public ResponseEntity<List<MemberJoinDTO>> findId(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
 		String email = map.get("email");
 		System.out.println(email);
 		
-		ResponseEntity<MemberDTO> mem = null;
+		ResponseEntity<List<MemberJoinDTO>> mem = null;
 		try {
-			mem = new ResponseEntity<MemberDTO>(service.getMemberInfo(email), HttpStatus.OK);
+			mem = new ResponseEntity<List<MemberJoinDTO>>(service.getMemberInfo(email), HttpStatus.OK);
 			log.info(mem);
 		} catch (Exception e) {
 			e.printStackTrace();
-			mem = new ResponseEntity<MemberDTO>(HttpStatus.BAD_REQUEST);
+			mem = new ResponseEntity<List<MemberJoinDTO>>(HttpStatus.BAD_REQUEST);
 		} // end try
 		return mem;
     } // end findid

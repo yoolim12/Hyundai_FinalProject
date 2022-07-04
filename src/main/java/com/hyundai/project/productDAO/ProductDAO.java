@@ -6,6 +6,13 @@ import java.util.List;
 import com.hyundai.project.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
+import com.hyundai.project.dto.Criteria;
+import com.hyundai.project.dto.ProductBackDTO;
+import com.hyundai.project.dto.ProductColorDTO;
+import com.hyundai.project.dto.ProductDTO;
+import com.hyundai.project.dto.ProductListDTO;
+import com.hyundai.project.dto.ProductSizeDTO;
+
 @Mapper
 public interface ProductDAO {
 
@@ -31,7 +38,7 @@ public interface ProductDAO {
 	
 	public void delStock(String pid);
 	
-	public List<ProductDTO> productSearch(String pname);
+	public List<ProductBackDTO> productSearch(String pname);
 	// yoolim end
 
 	// 메인페이지에 보여지는 신상품 및 베스트
@@ -46,4 +53,7 @@ public interface ProductDAO {
 	public void insertProductSize(ProductSizeDTO size);
 
 	public List<ProductCategoryDTO> getCategory();
+	
+	public List<ProductBackDTO> backProductList(String pid);
+
 }

@@ -17,7 +17,7 @@ public interface MemberDAO {
 	public MemberJoinDTO findByEmail(String memail, int from_social);
 	
 	// 이메일로 회원 정보 가져오기
-	public MemberDTO getMemberInfo(String email) throws Exception;
+	public List<MemberJoinDTO> getMemberInfo(String email) throws Exception;
 		
 	// 회원 수정 (비밀번호 변경)
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception;
@@ -29,7 +29,7 @@ public interface MemberDAO {
 	public void delMember(String email) throws Exception;
 		
 	// 회원 전체 조회
-	public List<MemberDTO> showAllMember() throws Exception;
+	public List<MemberJoinDTO> showAllMember() throws Exception;
 	
 	// 로그인 로그 저장
 	public void insertLoginLog(String memail) throws Exception;

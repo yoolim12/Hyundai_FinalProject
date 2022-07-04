@@ -5,17 +5,24 @@
 <mapper namespace="com.hyundai.project.memberDAO.MemberDAO">
 	
 	<select id="showAllMember"
-		resultType="com.hyundai.project.dto.MemberDTO">
-		select * from member
+		resultType="com.hyundai.project.dto.MemberJoinDTO">
+		select memail, mname, role_set, msleep from member natural join memberrole
 	</select>
 	
 	<select id="getMemberInfo"
-		resultType="com.hyundai.project.dto.MemberDTO">
-		select * from member where memail = #{email}
+		resultType="com.hyundai.project.dto.MemberJoinDTO">
+		<![CDATA[
+		select
+		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth, c1.telnum, c1.maddress, c1.mpoint, c1.mgender, c1.memail_info
+		from
+		member c1 join memberrole c2
+		on c1.memail = c2.memail
+		where c1.memail LIKE '%'||#{memail}||'%'
+		]]>
 	</select>
 	
 	<select id="modifyMember" parameterType="com.hyundai.project.dto.AuthMemberDTO">
-		update member set mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
+		update member set memail_info=#{memail_info}, mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
 	</select>
 	
 	<update id="admodifyMember">
