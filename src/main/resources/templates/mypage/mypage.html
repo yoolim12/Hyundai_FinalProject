@@ -30,6 +30,15 @@
         }
 	});
 	$(document).ready(function () {
+		let rank = [[${membergno}]];
+		let grade = '';
+		if (rank === 1) grade ='FRIEND';
+		else if (rank === 2) grade = 'CREW';
+		else if (rank === 3) grade = 'MANIA';
+		else if (rank === 4) grade = 'STAR';
+		else grade = 'THESTAR';
+		$("#mrank").html(grade);
+		
 	    const hpoint = numWithComma([[${memberpoint}]]);
         var hhtml = `<br><a class="count" href="https://www.h-point.co.kr/cu/myh/myPnt.shd" target="_blank" onclick="GA_Event('마이페이지','회원정보','H.POINT');"><span>`+hpoint+`P</span></a>`;
         document.getElementById("hpoint").innerHTML += hhtml;
@@ -91,15 +100,17 @@
 		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
 		                                <span class="tlt">${result[i].bname}</span>
 		                                <span class="sb_tlt" id="${i}" style="white-space:normal;">
-		                                ${result[i].pname} <strong>등 ${tot}건</strong></span>
-		                                </a>
-
+		                                `
+	                                if (tot == 1) ohtml += `${result[i].pname}</span>`;
+	                                else  ohtml += `${result[i].pname} <strong>외 ${tot-1}건</strong></span>`;
+	                                
+		                            ohtml+=`</a>
 		                                <p class="color_op">
-
 		                                color : ${result[i].ccolorcode}<span class="and_line">/</span>
-		                                size : ${result[i].ssize}</p>
+		                                size : ${result[i].ssize} <br>
+		                                주문날짜 : ${result[i].odate}</p>
 		                                <div class="option_wrap">
-			                                <a href="#none" class="btn_option" id="optOpenLayer^9^TH2C3TRN644N_CR"
+			                                <a href="#none" class="btn_option" id="optOpenLayer^${i}^${pid}_${ccode}"
 			                                onclick="GA_Event('주문내역','상세보기', '${result[i].pname}')">상세보기</a>
 		                                </div>
 		                                </div>
@@ -192,6 +203,7 @@
                           	}
                         }
                     }
+                  $("#ocount").html(o_arr.length+' 건');
                 } else{ /* 주문 기록이 없을 때 */
                 	ohtml = `<tr>
                 				<td colspan="6" class="no_data">주문내역이 없습니다.</td>
@@ -203,7 +215,7 @@
 	})
 	
 	function cancelOrder(oid) {
-		var lc = new layerConfirm('주문을 취소하시겠습니까?', '확인', '취소');
+		var lc = new layerConfirm('주문을 취소하시겠습니까? 구매시 적립된 포인트가 차감됩니다.', '확인', '취소');
         lc.confirmAction = function(){
         	$.ajax({
                 url: "/mypage/cancel/"+oid,
@@ -311,25 +323,10 @@
                 <dl>
                     <dt>혜택관리</dt>
                     <dd>
-                        <a href="/ko/mypage/myGradeInfo" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
+                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
                     </dd>
                     <dd>
-                        <a href="/ko/mypage/voucher" onclick="GA_Event('마이페이지','LNB','나의 쿠폰');">나의 쿠폰<!-- 쿠폰함 --></a>
-                    </dd>
-                    <dd>
-                        <a href="/ko/mypage/mypoint" onclick="GA_Event('마이페이지','LNB','나의 한섬마일리지');">나의 한섬마일리지</a>
-                    </dd>
-                    <dd>
-                        <a href="/ko/mypage/myEGiftCard" onclick="GA_Event('마이페이지','LNB','E-GIFT CARD');">e-Gift Card</a>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>나의 상품관리</dt>
-                    <dd>
-                        <a href="/ko/mypage/myWish" onclick="GA_Event('마이페이지','LNB','위시리스트');">위시리스트<!-- 위시리스트 --></a>
-                    </dd>
-                    <dd>
-                        <a href="/ko/mypage/rsalarm" onclick="GA_Event('마이페이지','LNB','재입고 알림');">재입고 알림<!-- 재입고알림 --></a>
+                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 한섬마일리지');">나의 H.POINT</a>
                     </dd>
                 </dl>
                 <dl>
@@ -337,27 +334,12 @@
                     <dd>
                         <a href="/mypage/personInformationChange" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
                     </dd>
-                    <dd>
-                        <a href="/ko/mypage/shoppingAddressPWCheck" onclick="GA_Event('마이페이지','LNB','배송지 관리');">배송지 관리</a>
-                    </dd>
-                    <dd>
-                        <a href="/ko/mypage/oneClick" onclick="GA_Event('마이페이지','LNB','원클릭 결제 관리');">원클릭 결제 관리</a>
-                    </dd>
-                    <dd>
-                        <a href="/ko/mypage/mergeCustomerInfo" onclick="GA_Event('마이페이지','LNB','한섬 멤버십 통합');">한섬 멤버십 통합</a>
-                    </dd>
                 </dl>
                 <dl>
                     <dt>나의 활동관리</dt>
                     <!-- <dd><a href="#">회원등급</a></dd> -->
                     <dd>
-                        <a href="/ko/mypage/myreview" onclick="GA_Event('마이페이지','LNB','내 상품평');">내 상품평</a>
-                    </dd>
-                    <dd>
-                        <a href="/ko/mypage/myqna" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a>
-                    </dd>
-                    <dd>
-                        <a href="/ko/mypage/mymantomaninquiry" onclick="GA_Event('마이페이지','LNB','1:1 문의');">1:1 문의</a>
+                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a>
                     </dd>
                     <!-- <dd><a href="#">이벤트 참여현황</a></dd> -->
                 </dl>
@@ -394,21 +376,12 @@
                             <p class="title" id="hpoint">H.POINT</p>
                         </div>
                         <div class="point">
-                            <p class="title">GIFT CARD</p>
-                            <a class="count" href="/ko/mypage/mygiftcard" onclick="GA_Event('마이페이지','회원정보','GIFT CARD');">0&nbsp;<span>원</span></a>
-                        </div>
-                        <div class="point">
-                            <p class="title">e-money</p>
-                            <a class="count" href="/ko/mypage/myEGiftCard" onclick="GA_Event('마이페이지','회원정보','E-MONEY');">0&nbsp;<span>원</span></a>
-                        </div>
-                        <div class="point">
-                            <p class="title">COUPON</p>
-                            <a class="count" href="/ko/mypage/voucher" onclick="GA_Event('마이페이지','회원정보','COUPON');">5&nbsp;<span>장</span></a>
+                            <p class="title">회원 등급</p>
+                            <a class="count" href="/mypage" onclick="GA_Event('마이페이지','회원정보','RANK');" id="mrank"></a>
                         </div>
                         <div class="point review">
-                            <p class="title">상품평</p>
-                            <img src="/resources/_ui/desktop/common/images/common/ico_ques2.png" alt="상품평이란?" class="tlt" />
-                            <a href="/mypage/myreview" class="count" onclick="GA_Event('마이페이지','회원정보','상품평');">0&nbsp;<span>개</span></a>
+                            <p class="title">총 주문</p>
+                            <a href="/mypage/myreview" class="count" id="ocount" onclick="GA_Event('마이페이지','회원정보','상품평');"></a>
                         </div>
                     </div>
                 </div>
@@ -455,9 +428,6 @@
                     최근주문&nbsp;
                     <!-- 최근주문 -->
                 </h4>
-                <div class="btn_wrap">
-                    <a href="/ko/mypage/order/myorders" class="btn add_ss" onclick="GA_Event('마이페이지','최근주문','전체보기');">전체보기<!-- 전체보기 --></a>
-                </div>
             </div>
             <!-- table -->
             <div class="tblwrap lncl1812">
@@ -490,20 +460,6 @@
                     </tbody>
                 </table>
             </div>
-            <!-- table -->
-            <!-- 위시리스트 -->
-            <div class="title_wrap line mt50">
-                <h4>
-                    위시리스트
-                    <!-- 위시리스트 -->
-                </h4>
-                <div class="btn_wrap">
-                    <a href="/ko/mypage/myWish" class="btn add_ss" onclick="GA_Event('마이페이지','위시리스트','전체보기');">전체보기<!-- 전체보기 --></a>
-                </div>
-            </div>
-            <ul class="wish_wrap">
-                <li class="no_data">위시리스트에 저장된 상품이 없습니다.<!-- 위시리스트에 저장된 상품이 없습니다. --></li>
-            </ul>
         </div>
         <!-- //cnts -->
     </div>
