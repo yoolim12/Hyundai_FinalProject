@@ -457,7 +457,7 @@
                </div>
                <div class="card-footer">
                	<div class="float-right">
-                  <button type="submit" id="confirm" class="btn btn-primary btn-sm">
+                  <button type="submit" id="confirm" class="btn btn-primary btn-sm" data-dismiss="modal">
                      <i class="fa fa-dot-circle-o"></i> 확인
                   </button>
                   <button type="button" id="cancle" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
@@ -679,7 +679,7 @@
 		}
 		
 		function deleteProduct(pid) {
-	           var url = "/back/delProduct?pid="+pid;
+	           let url = "/back/delProduct";
 	           $.ajax({
 	                  url: url,
 	                  method: "delete",
@@ -693,7 +693,7 @@
 	      			},
 	                  cache: false,
 	                  success: function (res) {
-	                      location.href = "/back/form3"
+	                      showList();
 	                  },
 	                  error: function (request, status, error) {
 	                      console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
