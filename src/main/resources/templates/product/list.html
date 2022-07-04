@@ -78,7 +78,11 @@
 					for (var i = 0; i < result.length; i++) {
 						var c = getProductColor(result[i].pid,result[i].ccolorcode);
 						var s = getProductSize(result[i].pid,result[i].ccolorcode);
-						html += '<li>';
+						if (i==3 || i==7 || i==11){
+							html += '<li class="mr1m">'
+						} else {
+							html += '<li>'
+						}
 						html += '<div class="item_box">';
 						html += '   <a href="/detail/' + result[i].pid + '_' + result[i].ccolorcode + '" class="item_info1">';
 						html += '      <span class="item_img">';

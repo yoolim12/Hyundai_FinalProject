@@ -48,31 +48,17 @@ public class BackProductRestController {
 		  return mem;
 	  }
 
-    @RequestMapping("/delProduct")
-	  public String delProduct(@RequestParam("pid") String pid) throws Exception {
-        //		productService.delStock(pid);
-        //		productService.delColor(pid);
-		    try {
-		    	productService.delProduct(pid);
-		    } catch (Exception e) {
-		    	e.printStackTrace();
-	  }
-		      return "Product Delete Success";
-	  }
-
-    @PutMapping("/mainproduct")
-	      public void mainProduct(@RequestBody HashMap<String, String> map) throws Exception {
-		    String pid = map.get("pid");
-		    int pstatus = Integer.parseInt(map.get("pstatus"));
-		    log.info("pid : " + pid + " " + "pstatus : " + pstatus);
-		    productService.updateMain(pid, pstatus);
-	  }
-
-    @PutMapping("/product")
-    public void updateProdut(@RequestBody ProductDTO product) throws Exception {
-        log.info(product);
-        productService.updateProduct(product);
-    }
+	@DeleteMapping("/delProduct")
+	public String delProduct(@RequestParam("pid") String pid) throws Exception {
+		try {
+			productService.delProduct(pid);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "삭제에 실패하였습니다.";
+		}
+		
+		return "Product Delete Success";
+	}
 
 	@GetMapping("/backProduct/{pid}")
 	public ResponseEntity<List<ProductBackDTO>> backProductList(@PathVariable("pid") String pid, Model model) {
