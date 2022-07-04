@@ -5,12 +5,12 @@
       layout:decorate="~{fragments/common}">
 <div layout:fragment="content">
 <script>
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	
-	function send_mail(email){
-		console.log(email);
-		$.ajax({
+   var token = $("meta[name='_csrf']").attr("content");
+   var header = $("meta[name='_csrf_header']").attr("content");
+   
+   function send_mail(email){
+      console.log(email);
+      $.ajax({
             url : '/member/sendEmail',
             type: 'POST',
             data: JSON.stringify({
@@ -29,11 +29,11 @@
                alert("수정 실패");
             }
          });
-	}
-	$(document).ready(function(){
+   }
+   $(document).ready(function(){
         function emailValid(id, domain){
             var pattern = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; //한글
-			console.log('id: ',id, 'domain: ', domain);
+         console.log('id: ',id, 'domain: ', domain);
             if(id !== "" && domain !== "" && !pattern.test(id+domain)){
                 return true;
             }
@@ -43,8 +43,8 @@
         }
 
         $('#btnClose, #btnConfirm').click(function(){
-			$('#layerDiv').attr("style", "z-index: 1110; display:none;");
-		});
+         $('#layerDiv').attr("style", "z-index: 1110; display:none;");
+      });
 
         $('#emailAuthBtn').click(function(){
             var emailDomain = '';
@@ -55,8 +55,8 @@
                 emailDomain += $('#uidDomainSel').val();
             }
 
-			console.log('emailAuthBtn click');
-			console.log('line44', $("#uidDuplChk").val());
+         console.log('emailAuthBtn click');
+         console.log('line44', $("#uidDuplChk").val());
             if(emailValid($("#id").val(), emailDomain) && $("#uidDuplChk").val() !='N' ){
                 $("#idDubChkBtn").attr("disabled", true);
                 $("#emailAuthBtn").attr("disabled", true);
@@ -65,26 +65,26 @@
                 
                 send_mail(email);
                 $('#emailMessage').html("["+email+"]으로 발송된 인증메일을 클릭해주세요")
-				$('#layerDiv').attr("style", "z-index: 1110; display:block;");
+            $('#layerDiv').attr("style", "z-index: 1110; display:block;");
                 //layerAlert("["+email+"]으로 발송된 인증메일의<br/>인증링크를 유효시간 30분 안에 선택해주세요.");
                 $('#emailAuthBtn').hide();
             }
 
             if(!emailValid($("#id").val(), emailDomain)){
                 $('#emailMessage').html('필수 데이터가 입력되지 않았습니다.')
-				$('#layerDiv').attr("style", "z-index: 1110; display:block;");
+            $('#layerDiv').attr("style", "z-index: 1110; display:block;");
             }
 
             if($("#uidDuplChk").val() =='N'){
                 $('#emailMessage').html('이메일 아이디의 중복 확인이 필요합니다.')
-				$('#layerDiv').attr("style", "z-index: 1110; display:block;");
+            $('#layerDiv').attr("style", "z-index: 1110; display:block;");
             }
         });
 
         $("#idDubChkBtn").click(function(){
-			console.log('idDubChkBtn click');
+         console.log('idDubChkBtn click');
             if($("#uidDuplChk").val() == 'N'){
-                return;        	
+                return;           
             }
             
             var emailDomain = '';
@@ -126,8 +126,8 @@
             }
         });
 
-		$("#id, #uidDomain, #uidDomainSel").change(function(){
-			var emailDomain = '';
+      $("#id, #uidDomain, #uidDomainSel").change(function(){
+         var emailDomain = '';
             if($('#uidDomainSel').val() === ""){
                 emailDomain += $('#uidDomain').val();
                 $('#uidDomain').show();
@@ -137,14 +137,14 @@
                 $('#uidDomain').hide();
             }
             
-	    	var emailRegExp = /^((([^<>()[\]\\.,;:\s@\"~`!@#$%^&*+={}|'/?]+(\.[^<>()[\]\\.,;:\s@\"~`!@#$%^&*+={}|'/?]+)*))|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	    	var email = $("#id").val()+"@"+emailDomain;
-	    	
-	    	
-	    	if($("#id").val() == "" &&  $("#uidDomain").val() == ""){
-	    		$("#idDubMsg").text('');
-	    		$("#uidDuplChk").val('');
-	    	}
+          var emailRegExp = /^((([^<>()[\]\\.,;:\s@\"~`!@#$%^&*+={}|'/?]+(\.[^<>()[\]\\.,;:\s@\"~`!@#$%^&*+={}|'/?]+)*))|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          var email = $("#id").val()+"@"+emailDomain;
+          
+          
+          if($("#id").val() == "" &&  $("#uidDomain").val() == ""){
+             $("#idDubMsg").text('');
+             $("#uidDuplChk").val('');
+          }
             else{
                 if ( emailRegExp.test(email) != true) {
                     $("#idDubMsg").text("잘못된 E-mail 형식입니다.");
@@ -155,8 +155,8 @@
                     $("#idDubMsg").text('');
                     $("#uidDuplChk").val('');
                 }
-	    	}
-	    });
+          }
+       });
     });
 </script>
 <!-- bodyWrap --><input type="hidden" name="uidDuplChk" id="uidDuplChk" value="" title="이메일 아이디 중복" />
@@ -182,7 +182,7 @@
                     <p class="s_title"><strong>본인인증 절차 없이, 더한섬닷컴에서 제공하는 서비스만 제한적으로 이용할 수 있습니다.</strong><br/>더한섬닷컴에서 사용 가능하며, <span style="color:#c69c6c;font-weight:normal;text-decoration:underline;">오프라인 매장에서는 사용할 수 없습니다.<br/>한섬마일리지와 현대백화점그룹 H.Point 혜택, 한섬의 온라인 멤버십 서비스 ‘THE 클럽’의 혜택은 제공되지 않습니다.</span></p>
                 </div>
                 <form>
-                	
+                   
                     <fieldset>
                         <legend>본인인증</legend>
                         <div class="box_type_1">

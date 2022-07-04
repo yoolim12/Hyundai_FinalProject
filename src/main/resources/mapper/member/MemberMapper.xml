@@ -93,7 +93,7 @@
 		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social, gno, mpoint)
 		values (#{memail}, #{mname}, #{birth}, #{telnum}
 			   , #{maddress}, #{mgender}, #{mpassword}, #{memail_info}
-			   , sysdate, sysdate, #{from_social}, #{gno}, #{mpoint})
+			   , sysdate, sysdate, #{from_social}, #{gno}, 10000)
 	</insert>
 	
 	<insert id="registerRole" parameterType="com.hyundai.project.dto.MemberRoleDTO">
