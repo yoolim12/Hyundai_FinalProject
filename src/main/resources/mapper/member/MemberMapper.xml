@@ -6,18 +6,27 @@
 	
 	<select id="showAllMember"
 		resultType="com.hyundai.project.dto.MemberJoinDTO">
-		select memail, mname, role_set, msleep from member natural join memberrole
+		select memail, mname, role_set, msleep, regdate, gname from (select memail, mname, role_set, msleep, regdate, gno from member natural join memberrole) natural join grade
 	</select>
 	
 	<select id="getMemberInfo"
 		resultType="com.hyundai.project.dto.MemberJoinDTO">
 		<![CDATA[
-		select
+		select memail, moddate, regdate, from_social, mname, mpassword, role_set, gno, birth, telnum, maddress, mpoint, mgender, memail_info, gname from(select
 		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth, c1.telnum, c1.maddress, c1.mpoint, c1.mgender, c1.memail_info
 		from
 		member c1 join memberrole c2
 		on c1.memail = c2.memail
 		where c1.memail LIKE '%'||#{memail}||'%'
+		) natural join grade
+		]]>
+	</select>
+	
+	<select id="getEmployeeInfo"
+		resultType="com.hyundai.project.dto.MemberJoinDTO">
+		<![CDATA[
+		select memail, mname, role_set, msleep, regdate, gname from (select memail, mname, role_set, msleep, regdate, gno from member natural join memberrole) natural join grade
+		where role_set = 'EMPLOYEE'
 		]]>
 	</select>
 	

@@ -34,4 +34,7 @@ public interface MemberService {
 		
 	// 등급 갱신 (배치)
 	public int updateMemberGrade() throws Exception;
+	
+	// 임직원 조회
+	public List<MemberJoinDTO> getEmployeeInfo(String memail);
 }
