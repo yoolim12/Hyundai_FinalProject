@@ -47,10 +47,10 @@ public class MainListController {
 		
 		// Product 테이블 pstatus 1 == 'NEW'이면 신상품.  
 		int pstatus = 1;
-		log.info(cCode + " = " + category);
+		//log.info(cCode + " = " + category);
 		try {
 			entry = new ResponseEntity<List<MainListVO>>(service.getProductList(pstatus, category), HttpStatus.OK);
-			log.info(entry);
+			//log.info(entry);
 		} catch (Exception e) {
 			e.printStackTrace();
 			entry = new ResponseEntity<List<MainListVO>>(HttpStatus.BAD_REQUEST);
@@ -77,10 +77,10 @@ public class MainListController {
 		
 		// Product 테이블 pstatus 2 == 'BEST'이면 베스트 상품.  
 		int pstatus = 2;
-		log.info(cCode + " = " + category);
+		//log.info(cCode + " = " + category);
 		try {
 			entry = new ResponseEntity<List<MainListVO>>(service.getProductList(pstatus, category), HttpStatus.OK);
-			log.info(entry);
+			//log.info(entry);
 		} catch (Exception e) {
 			e.printStackTrace();
 			entry = new ResponseEntity<List<MainListVO>>(HttpStatus.BAD_REQUEST);
@@ -102,7 +102,7 @@ public class MainListController {
 		list.add(new MainCategoryListVO(true, false, "여성", "WE"));
 		list.add(new MainCategoryListVO(true, false, "남성", "ME"));
 		
-		log.info(list.toString());
+		//log.info(list.toString());
 		return list;
 	}//end mainCategoryList
 	
@@ -116,7 +116,7 @@ public class MainListController {
 		List<MainMagazineListVO> list = new ArrayList<>();
 		try {
 			entry = new ResponseEntity<List<MainMagazineListVO>>(service.getMagazineList(), HttpStatus.OK);
-			log.info(entry);
+			//log.info(entry);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

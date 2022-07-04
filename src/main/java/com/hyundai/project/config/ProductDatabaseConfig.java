@@ -45,4 +45,5 @@ public class ProductDatabaseConfig {
 	public PlatformTransactionManager productTxManager() {
 		return new DataSourceTransactionManager(productDataSource());
 	}
+
 }
