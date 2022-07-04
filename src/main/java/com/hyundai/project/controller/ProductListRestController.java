@@ -23,69 +23,68 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/product/*")
 @RestController
 public class ProductListRestController {
-	@Autowired
-	private ProductListService service;
-	
-	@Autowired
-	private ProductService pservice;
-	
-	@GetMapping(value = "/productList")
-	public ResponseEntity<List<ProductListDTO>> getList() {
-		ResponseEntity<List<ProductListDTO>> entry = null;
+    @Autowired
+    private ProductListService service;
 
-		try {
-			entry = new ResponseEntity<List<ProductListDTO>>(
-					service.getListAll(), HttpStatus.OK);
-			log.info(entry);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entry = new ResponseEntity<List<ProductListDTO>>(
-					HttpStatus.BAD_REQUEST);
-		} // end try
-		return entry;
-	}// end list
-	
-	@GetMapping(value = "/list/{clarge}/{cmedium}/{csmall}")
-	public ResponseEntity<List<ProductListDTO>> getProductlist(
-			Criteria cri, @PathVariable("clarge") String clarge, @PathVariable("cmedium") String cmedium, @PathVariable("csmall") String csmall) {
-		ResponseEntity<List<ProductListDTO>> entry = null;
+    @Autowired
+    private ProductService pservice;
 
-		try {
-			System.out.println(cri);
-			entry = new ResponseEntity<List<ProductListDTO>>(
-					service.getListWithPaging(cri, clarge, cmedium, csmall), HttpStatus.OK);
-			log.info(entry);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entry = new ResponseEntity<List<ProductListDTO>>(
-					HttpStatus.BAD_REQUEST);
-		} // end try
-		return entry;
-	}// end list
-	
-	@GetMapping(value = "/color/{pid}/{ccolorcode}")
-	public ResponseEntity<List<ProductColorDTO>> getProductColorDetail(@PathVariable("pid") String pid, @PathVariable("ccolorcode") String ccolorcode) {
-		ResponseEntity<List<ProductColorDTO>> entry = null;
-		try {
-			entry = new ResponseEntity<List<ProductColorDTO>>(pservice.getProductColorDetail(pid, ccolorcode), HttpStatus.OK);
-			log.info(entry);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entry = new ResponseEntity<List<ProductColorDTO>>(HttpStatus.BAD_REQUEST);
-		} // end try
-		return entry;
-	}
-	
-	@GetMapping(value = "/size/{pid}/{ccolorcode}")
-	public ResponseEntity<List<ProductSizeDTO>> getProductSize(@PathVariable("pid") String pid, @PathVariable("ccolorcode") String ccolorcode) {
-		ResponseEntity<List<ProductSizeDTO>> entry = null;
-		try {
-			entry = new ResponseEntity<List<ProductSizeDTO>>(pservice.getProductSize(pid, ccolorcode), HttpStatus.OK);
-			log.info(entry);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entry = new ResponseEntity<List<ProductSizeDTO>>(HttpStatus.BAD_REQUEST);
-		} // end try
-		return entry;
-	}
+    @GetMapping(value = "/productList")
+    public ResponseEntity<List<ProductListDTO>> getList() {
+        ResponseEntity<List<ProductListDTO>> entry = null;
+
+        try {
+            entry = new ResponseEntity<List<ProductListDTO>>(
+                    service.getListAll(), HttpStatus.OK);
+            log.info(entry);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entry = new ResponseEntity<List<ProductListDTO>>(
+                    HttpStatus.BAD_REQUEST);
+        } // end try
+        return entry;
+    }// end list
+
+    @GetMapping(value = "/list/{clarge}/{cmedium}/{csmall}")
+    public ResponseEntity<List<ProductListDTO>> getProductlist(
+            Criteria cri, @PathVariable("clarge") String clarge, @PathVariable("cmedium") String cmedium, @PathVariable("csmall") String csmall) {
+        ResponseEntity<List<ProductListDTO>> entry = null;
+        try {
+            System.out.println(cri);
+            entry = new ResponseEntity<List<ProductListDTO>>(
+                    service.getListWithPaging(cri, clarge, cmedium, csmall), HttpStatus.OK);
+            log.info(entry);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entry = new ResponseEntity<List<ProductListDTO>>(
+                    HttpStatus.BAD_REQUEST);
+        } // end try
+        return entry;
+    }// end list
+
+    @GetMapping(value = "/color/{pid}/{ccolorcode}")
+    public ResponseEntity<List<ProductColorDTO>> getProductColorDetail(@PathVariable("pid") String pid, @PathVariable("ccolorcode") String ccolorcode) {
+        ResponseEntity<List<ProductColorDTO>> entry = null;
+        try {
+            entry = new ResponseEntity<List<ProductColorDTO>>(pservice.getProductColorDetail(pid, ccolorcode), HttpStatus.OK);
+            log.info(entry);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entry = new ResponseEntity<List<ProductColorDTO>>(HttpStatus.BAD_REQUEST);
+        } // end try
+        return entry;
+    }
+
+    @GetMapping(value = "/size/{pid}/{ccolorcode}")
+    public ResponseEntity<List<ProductSizeDTO>> getProductSize(@PathVariable("pid") String pid, @PathVariable("ccolorcode") String ccolorcode) {
+        ResponseEntity<List<ProductSizeDTO>> entry = null;
+        try {
+            entry = new ResponseEntity<List<ProductSizeDTO>>(pservice.getProductSize(pid, ccolorcode), HttpStatus.OK);
+            log.info(entry);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entry = new ResponseEntity<List<ProductSizeDTO>>(HttpStatus.BAD_REQUEST);
+        } // end try
+        return entry;
+    }
 } // end class

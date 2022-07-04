@@ -24,4 +24,5 @@ public class ProductListController {
 		System.out.println(service.getTotal(clarge, cmedium, csmall));
 		return "/product/list";
 	}
+
 }
