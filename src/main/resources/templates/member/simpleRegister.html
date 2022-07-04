@@ -9,6 +9,8 @@
 	.upSize{font-size: 12px;}
 </style>
 <script type="text/javascript">
+
+
 //<![CDATA[ 
 $(document).ready(function(){
 	console.log(getCsrfHeaderName(), getYCsrfToken());
@@ -86,39 +88,41 @@ $(document).ready(function(){
         };
     });
     
-    $("#nextBtn").click(function(){
-        var agreeAll = true;
-        
-        if(!$("#checkagY_ck1").is(":checked")){
-            agreeAll = false;
-            layerAlert("약관에 모두 동의해 주세요.");
-            return false;
-        }
-
-        if(!$("#checkagY_ck2").is(":checked")){
-            agreeAll = false;
-            layerAlert("약관에 모두 동의해 주세요.");
-            return false;
-        }
-
-        if(!$("#checkagY_ck3").is(":checked")){
-            agreeAll = false;
-            layerAlert("약관에 모두 동의해 주세요.");
-            return false;
-        }
-
-        if($("#checkagY").is(":checked")){
-            $("#checkOptional").val("Y");
-        }else {
-            $("#checkOptional").val("N");
-        }
-        
-        if(agreeAll){
-            $("#resultSend").attr("action", "/member/simpleRegister2" ).submit();
-            /*  $("#resultSend").submit();*/
-        }
-    });
+    
 });
+
+function test(memail){
+	var agreeAll = true;
+    
+    if(!$("#checkagY_ck1").is(":checked")){
+        agreeAll = false;
+        layerAlert("약관에 모두 동의해 주세요.");
+        return false;
+    }
+
+    if(!$("#checkagY_ck2").is(":checked")){
+        agreeAll = false;
+        layerAlert("약관에 모두 동의해 주세요.");
+        return false;
+    }
+
+    if(!$("#checkagY_ck3").is(":checked")){
+        agreeAll = false;
+        layerAlert("약관에 모두 동의해 주세요.");
+        return false;
+    }
+
+    if($("#checkagY").is(":checked")){
+        $("#checkOptional").val("Y");
+    }else {
+        $("#checkOptional").val("N");
+    }
+    
+    if(agreeAll){ 
+        $("#resultSend").attr("action", "/member/simpleRegister2" + "/" + memail).submit();
+        /*  $("#resultSend").submit();*/
+    }
+}
 //]]>
 </script>
 
@@ -795,7 +799,7 @@ $(document).ready(function(){
                             <div class="btnwrap">
                                 <p style="display: none;">전체 약관에 모두 동의합니다.</p>
                                 <input type="button" value="취소" class="btn wt" id="cancleBtn" />
-                                <input type="button" value="다음" class="btn gray mr0" id="nextBtn" />
+                                <input type="button" value="다음" class="btn gray mr0" id="nextBtn" th:onclick = "test([[${mail.memail}]])"/>
                             </div>
                         </div>
                     </fieldset>
