@@ -85,7 +85,7 @@ $(document).ready(function(){
         	if(result.length > 0){
         		html += '<ul class="color_chip clearfix">';
         		for(var i=0; i<result.length; i++) {
-        			if(i==0) html += '<a href="#" class="beige on" style="background:url('+result[i].ccolorimage+')" ></a>';
+        			if(i==0) html += '<a href="#" class="beige on" style="background:url('+result[i].ccolorimage+')" style="width: 294px; height: 444px"></a>';
         			else html += '<a href="/detail/'+pid+'_'+result[i].ccolorcode+'" class="beige" style="background:url('+result[i].ccolorimage+')" ></a>';
         			$("#pcolor").val(ccolorcode);
         		}
