@@ -50,4 +50,8 @@
 	<update id="updateOrderList">
 		update orderlist set ostatus = 2 where oid=#{oid}
 	</update>
+
+	<select id="getOrderDetail" resultType="com.hyundai.project.dto.OrderListDTO">
+		select * from orderlist where oid=#{oid}
+	</select>
 </mapper>

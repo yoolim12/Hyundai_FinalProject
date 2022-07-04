@@ -81,65 +81,24 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderResDTO> getOrder(String memail) throws Exception {
-//		List<OrderResDTO> ol = orderDAO.getOrder(memail);
-//		Map<Integer, List<OrderProductDTO>> m = new HashMap<Integer, List<OrderProductDTO>>();
-//		for (int i = 0; i < ol.size(); i++) {
-//			OrderProductDTO op = new OrderProductDTO();
-//			op.setPid(ol.get(i).getPid());
-//			op.setPname(ol.get(i).getPname());
-//			op.setBname(ol.get(i).getBname());
-//			op.setCcolorcode(ol.get(i).getCcolorcode());
-//			op.setSsize(ol.get(i).getSsize());
-//			op.setQty(ol.get(i).getQty());
-//			op.setCimage1(ol.get(i).getCimage1());
-//			if (m.containsKey(ol.get(i).getOid())) {
-//				m.get(ol.get(i).getOid()).add(op);
-//			} else {
-//				List<OrderProductDTO> temp = new ArrayList<OrderProductDTO>();
-//				temp.add(op);
-//				m.put(ol.get(i).getOid(), temp);
-//			}
-//		}
-//		Object[] mapkey = m.keySet().toArray();
-//		Arrays.sort(mapkey);
-//		log.info(m);
-//		for (Integer oid : m.keySet()) {
-//			List<OrderProductDTO> temp = m.get(oid);
-//			log.info(oid);
-//			log.info(temp);
-//		}
-//		Object[] keys = m.keySet().toArray();
-//
-//		log.info(keys[1]);
-//		List<OrderArrResDTO> or = new ArrayList<OrderArrResDTO>();
-//		m.get(keys);
-//		for(int i=0; i<m.size(); i++) {
-//			OrderArrResDTO temp = new OrderArrResDTO();
-//			
-//			temp.setOid(Integer.parseInt((String) keys[i]));
-//			log.info(temp.getOid());
-//			temp.setMemail(ol.get(i).getMemail());
-//			temp.setOzipcode(ol.get(i).getOzipcode());
-//			temp.setOaddress1(ol.get(i).getOaddress1());
-//			temp.setOaddress2(ol.get(i).getOaddress2());
-//			temp.setOdate(ol.get(i).getOdate());
-//			temp.setOreceiver(ol.get(i).getOreceiver());
-//			temp.setOtel(ol.get(i).getOtel());
-//			temp.setOusedmileage(ol.get(i).getOid());
-//			temp.setOid(ol.get(i).getOid());
-//			temp.setOid(ol.get(i).getOid());
     	log.info("마이페이지 주문 조회");
-        // }
         return orderDAO.getOrder(memail);
     }
+
 
     public void deleteOrder(int oid) throws Exception {
         orderDAO.deleteOrderList(oid);
         orderDAO.deleteOrderItem(oid);
     }
-    
+
+    @Transactional(value = "memberTxManager")
     @Override
     public void updateOrderList(int oid) throws Exception {
     	orderDAO.updateOrderList(oid);
+        OrderListDTO order = orderDAO.getOrderDetail(oid);
+        int savingpoint = (int) Math.ceil((double)(order.getOprice()-order.getOusedpoint())*0.05);
+        memberDAO.pointApply(order.getMemail(), savingpoint);
+        memberDAO.pointSaving(order.getMemail(), order.getOusedpoint());
+        log.info(savingpoint);
     }
 }

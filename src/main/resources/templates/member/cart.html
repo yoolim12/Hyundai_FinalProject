@@ -157,7 +157,7 @@
 
         function deleteProduct(pid, ccolorcode, ssize) {
             var url = "/cart";
-            var check = new layerAlert('해당 상품을 삭제하시겠습니까?');
+            var check = new layerConfirm('해당 상품을 삭제하시겠습니까?');
             check.confirmAction = function () {
                 $.ajax({
                     url: url,
@@ -301,16 +301,12 @@
                         </div> <!-- //Price -->
                         </td>
                         <td class="al_middle">
-                        <span class="earn">5% (한섬마일리지)</span>
-                        <br>
-                        <span class="earn">0.1% (H.Point)</span>
+                        <span class="earn">5% (H.Point)</span>
                         </td>
                         <td class="al_middle">
                             <!-- Button size -->
                         <div class="btn_wrap">
-                        <a href="#none" class="btn gray_ss"
-                        onclick="callWishListClick('${result[i].pname}',$(this),'${result[i].pid}');" data-value="0">위시리스트</a>
-                        <a href="javascript:deleteProduct('${result[i].pid}', '${result[i].ccolorcode}', '${result[i].ssize}');" id="RemoveProduct_${i}" class="btn wt_ss"
+                        <a href="javascript:deleteProduct('${result[i].pid}', '${result[i].ccolorcode}', '${result[i].ssize}');" id="RemoveProduct_${i}" class="btn gray_ss"
                         onclick="GA_Event('쇼핑백','삭제','${result[i].pname}');">삭제</a>
                         </div> <!-- //Button size -->
                         </td>
