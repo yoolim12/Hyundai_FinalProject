@@ -49,9 +49,9 @@ public class BackProductRestController {
 	  }
 
 	@DeleteMapping("/delProduct")
-	public String delProduct(@RequestParam("pid") String pid) throws Exception {
+	public String delProduct(@RequestBody HashMap<String, String> map) throws Exception {
 		try {
-			productService.delProduct(pid);
+			productService.delProduct(map.get("pid"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "삭제에 실패하였습니다.";
