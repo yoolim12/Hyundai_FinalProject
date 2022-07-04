@@ -3,6 +3,7 @@ package com.hyundai.project.productDAO;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.hyundai.project.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hyundai.project.dto.Criteria;
@@ -42,6 +43,18 @@ public interface ProductDAO {
 
 	// 메인페이지에 보여지는 신상품 및 베스트
 	public void updateMain(String pid, int pstatus);
+
+	public void updateProduct(ProductDTO product);
+
+	public void insertProduct(ProductDTO product);
+
+	public void insertProductColor(ProductColorDTO color);
+
+	public void insertProductSize(ProductSizeDTO size);
+
+	public List<ProductCategoryDTO> getCategory();
 	
 	public List<ProductBackDTO> backProductList(String pid);
+
+	public int productModify(ProductBackDTO productBackDTO);
 }

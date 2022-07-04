@@ -1,11 +1,7 @@
 package com.hyundai.project.service;
 
 import java.util.List;
-
-import com.hyundai.project.dto.ProductBackDTO;
-import com.hyundai.project.dto.ProductColorDTO;
-import com.hyundai.project.dto.ProductDTO;
-import com.hyundai.project.dto.ProductSizeDTO;
+import com.hyundai.project.dto.*;
 
 public interface ProductService {
 	
@@ -28,5 +24,13 @@ public interface ProductService {
 
 	public void updateMain(String pid, int pstatus) throws Exception;
 
+	public void updateProduct(ProductDTO product) throws Exception;
+
+	public void insertProduct(ProductInsertDTO product) throws Exception;
+
+	public List<ProductCategoryDTO> getCategory() throws Exception;
+
 	public List<ProductBackDTO> backProductList(String pid) throws Exception;
+	
+	public int productModify(ProductBackDTO productBackDTO);
 }

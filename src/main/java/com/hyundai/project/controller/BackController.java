@@ -1,11 +1,14 @@
 package com.hyundai.project.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hyundai.project.mail.MailService;
 import com.hyundai.project.service.MemberService;
@@ -19,6 +22,13 @@ import lombok.extern.log4j.Log4j2;
 public class BackController {
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
+
+	// !!! 임시 페이지 나중에 지울것
+	@GetMapping("/temp")
+	public String temp() {
+		log.info("매장관리 페이지 요청");
+		return "/back/form3temp";
+	}
 	
 	@Autowired
 	private MailService mail;
@@ -30,11 +40,29 @@ public class BackController {
 		model.addAttribute("userList", service.showAllMember());
 	}
 	
-	// 회원관리 페이지 이동
+	// 회원 조회 ajax + thymleaf
+	@PostMapping("/view")
+	public String view(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
+		String memail = paramMap.get("email");
+		System.out.println(memail);
+		System.out.println(service.getMemberInfo(memail));
+		model.addAttribute("userList", service.getMemberInfo(memail));
+		
+		return "/back/form :: #memberInfo";
+	}
+	
+	// 스트리밍 페이지 이동
 	@GetMapping("/test")
 	public String st() {
-		log.info("회원관리 페이지 요청");
+		log.info("스트리밍 페이지 요청");
 		return "/back/test";
+	}
+	
+	// 스트리밍 페이지 이동
+	@GetMapping("/test2")
+	public String st2() {
+		log.info("스트리밍 페이지 요청");
+		return "/back/test2";
 	}
 	
 	// 상품관리 페이지 이동
