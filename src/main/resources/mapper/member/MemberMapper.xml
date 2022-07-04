@@ -51,6 +51,10 @@
 		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress}, gno = #{gno}, msleep = #{msleep}, moddate = sysdate where memail = #{memail}
 	</update>
 	
+	<update id="admodifyAuth">
+		update memberrole set role_set = #{role} where memail = #{memail}
+	</update>
+	
 	<delete id="delMember">
 		delete from member where memail = #{email}
 	</delete>

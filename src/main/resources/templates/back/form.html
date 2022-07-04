@@ -167,13 +167,14 @@
        
        // 회원 정보 수정
        function modify(){
-          
+          console.log($('#selectAuth option:selected').val());
           var memail = $("#input_email").val();
           var mname = $("#mname").val();
           var birth = $("#birth").val();
           var telnum = $("#telnum").val();
           var maddress = $("#maddress").val();
           var gno = $("#SelectLm option:selected").val();
+          var auth = $('#selectAuth option:selected').val();
           var msleep = $("#SelectSleep option:selected").val();
           
           if (msleep == 2){
@@ -186,6 +187,12 @@
           }
           console.log(gno);
           
+          if(auth == 0){
+             alert("다시 선택해주세요.");
+             return;
+          }
+          console.log(auth);
+          
           $.ajax({
              url : '/back/member',
              type: 'PUT',
@@ -197,6 +204,7 @@
                 'telnum' : telnum,
                 'maddress' : maddress,
                 'gno' : gno,
+                'auth': auth,
                 'msleep' : msleep
              }),
              beforeSend: function(xhr) {
@@ -216,7 +224,8 @@
        }
        
        // 회원 정보 탈퇴
-       function delMember(email){
+       function delMember2(email){
+		console.log('delMember(email)');
           console.log(email);
           
           $.ajax({
@@ -247,7 +256,7 @@
           });
        }
        
-       // 회원 정보 탈퇴
+       // 회원 정보 탈퇴(this)
        function delMember(){
           var email = $("#input_email").val();
           
@@ -283,6 +292,17 @@
        function go_check(){
           location.reload();
        }
+       
+       // delete modal
+       function delModal(memail){
+			console.log('delmodal');
+			// $('#delWho').val(memail);
+			console.log('delMember2(' + "'" + memail + "'" + ')');
+			$('#confirm').attr('onclick', 'delMember2(' + "'" + memail + "'" + ')');
+			console.log('check')
+        	$("#deletemodal").modal();
+       }
+
     </script>
    
     <div class="page-wrapper">
@@ -776,10 +796,10 @@
                                                                     <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
                                                                         <i class="zmdi zmdi-mail-send"></i>
                                                                     </button>
-                                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Edit" th:onclick = "go_edit([[${user.memail}]]);">
+                                                                    <button class="item" id="editMember" data-toggle="tooltip" data-placement="top" title="Edit" th:onclick = "go_edit([[${user.memail}]]);">
                                                                         <i class="zmdi zmdi-edit"></i>
                                                                     </button>
-                                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" th:onclick = "delMember([[${user.memail}]]);">
+                                                                    <button class="item" id="delMember" data-toggle="tooltip" data-placement="top" title="Delete" th:onclick="delModal([[${user.memail}]])">
                                                                         <i class="zmdi zmdi-delete"></i>
                                                                     </button>
                                                                 </div>
@@ -926,6 +946,19 @@
                                                              </select>
                                                           </div>
                                                    </div>
+                                                   
+                                                   <div class="row form-group">
+                                                       <div class="col col-md-11">
+                                                           <label for="selectAuth" class=" form-control-label">권한</label>
+                                                             <select name="selectAuth" id="selectAuth" class="form-control-sm form-control">
+                                                                <option value="0">권한</option>
+                                                                <option value="1">USER</option>
+                                                                <option value="2">EMPLOYEE</option>
+                                                                <option value="3">ADMIN</option>
+                                                             </select>
+                                                          </div>
+                                                   </div>
+                                                   
                                                    <div class="row form-group">
                                                           <div class="col col-md-11">
                                                            <label for="selectSm" class=" form-control-label">휴면/비휴면</label>
@@ -966,6 +999,39 @@
         </div>
         
         <!-- modal static -->
+        <input type="hidden" id="delWho" value="">
+        <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog"
+	     aria-labelledby="deletemodalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-md" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title" id="scrollmodalLabel">회원 탈퇴</h5>
+		                <button type="button" class="close" id="ico-cancle" data-dismiss="modal"
+		                        aria-label="Close">
+		                    <span aria-hidden="true">&times;</span>
+		                </button>
+		            </div>
+		            <div class="modal-body">
+		                <div class="card-body card-block">
+		                    <div class="row form-group">
+		                        해당 회원을 탈퇴시키겠습니까?
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <div class="float-right">
+		                        <button type="button" id="confirm" class="btn btn-primary btn-sm" data-dismiss="modal">
+		                            <i class="fa fa-dot-circle-o"></i> 확인
+		                        </button>
+		                        <button type="button" id="cancle" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+		                            <i class="fa fa-ban"></i> 취소
+		                        </button>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
       <div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true"
           data-backdrop="static">
             <div class="modal-dialog modal-sm" role="document">
