@@ -4,958 +4,1015 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<!-- Required meta tags-->
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="au theme template">
-<meta name="author" content="Hau Nguyen">
-<meta name="keywords" content="au theme template">
-<meta name="_csrf" th:content="${_csrf.token}" />
-<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
-<!-- Title Page-->
-<title>Forms</title>
+    <!-- Title Page-->
+    <title>Forms</title>
 
-<!-- Fontfaces CSS-->
-<link href="css/font-face.css" rel="stylesheet" media="all">
-<link href="vendor/font-awesome-5/css/fontawesome-all.min.css"
-	rel="stylesheet" media="all">
-<link href="vendor/font-awesome-4.7/css/font-awesome.min.css"
-	rel="stylesheet" media="all">
-<link href="vendor/mdi-font/css/material-design-iconic-font.min.css"
-	rel="stylesheet" media="all">
+    <!-- Fontfaces CSS-->
+    <link href="css/font-face.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
-<!-- Bootstrap CSS-->
-<link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet"
-	media="all">
+    <!-- Bootstrap CSS-->
+    <link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
 
-<!-- Vendor CSS-->
-<link href="vendor/animsition/animsition.min.css" rel="stylesheet"
-	media="all">
-<link
-	href="vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet" media="all">
-<link href="vendor/wow/animate.css" rel="stylesheet" media="all">
-<link href="vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet"
-	media="all">
-<link href="vendor/slick/slick.css" rel="stylesheet" media="all">
-<link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
-<link href="vendor/perfect-scrollbar/perfect-scrollbar.css"
-	rel="stylesheet" media="all">
+    <!-- Vendor CSS-->
+    <link href="vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
-<!-- Main CSS-->
-<link href="css/theme.css" rel="stylesheet" media="all">
-
-<!-- jquery -->
-<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- Main CSS-->
+    <link href="css/theme.css" rel="stylesheet" media="all">
+    
+    <!-- jquery -->
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 
 <body class="animsition">
-
-
-	<script>
-		var token = $("meta[name='_csrf']").attr("content");
+	
+    
+    <script>
+	    var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
-
-		$(function() {
+		
+		$(function(){
 			document.getElementById("home-tab").click();
 			$('#home-tab').addClass('active');
-
+			
 		});
-
-		function go_edit(memail) {
+		
+		function go_edit(memail){
 			$('#home-tab').removeClass('active');
 			document.getElementById("modify-tab").click();
 			$('#modify-tab').addClass('active');
 			$('#input_email').val(memail);
 			$('#findUser2').click();
-
+			
 		}
-
+		
 		// 임직원 조회
-		function findEmployee() {
+		function findEmployee(){
 			var emailBean = {
-				email : $("#inputEmail").val()
-			};
-			$.ajax({
-				url : "/back/viewEmployee",
-				type : "POST",
-				data : emailBean,
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(header, token);
-				},
-			}).done(function(fragment) {
-				$('#employeeInfo').replaceWith(fragment);
-			});
+			        email:$("#inputEmail").val()
+			    };
+			    $.ajax({
+			        url: "/back/viewEmployee",
+			        type: "POST",
+			        data: emailBean,
+			        beforeSend: function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	                 },
+			    })
+			    .done(function (fragment) {
+			        $('#employeeInfo').replaceWith(fragment);
+			    });
 		}
-
+		
 		// 회원 검색 조회
-		function findUser() {
+		function findUser(){
 			var emailBean = {
-				email : $("#inputEmail").val()
-			};
-			$.ajax({
-				url : "/back/view",
-				type : "POST",
-				data : emailBean,
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(header, token);
-				},
-			}).done(function(fragment) {
-				$('#memberInfo').replaceWith(fragment);
-			});
+			        email:$("#inputEmail").val()
+			    };
+			    $.ajax({
+			        url: "/back/view",
+			        type: "POST",
+			        data: emailBean,
+			        beforeSend: function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	                 },
+			    })
+			    .done(function (fragment) {
+			        $('#memberInfo').replaceWith(fragment);
+			    });
 		}
-
+		
 		// 임직원 검색 조회
-		function SfindEmployee() {
+		function SfindEmployee(){
 			var emailBean = {
-				email : $("#inputEmail").val()
-			};
-			$.ajax({
-				url : "/back/SfindEmployee",
-				type : "POST",
-				data : emailBean,
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(header, token);
-				},
-				success : function(res) {
-					console.log(res);
-				}
-			}).done(function(fragment) {
-				$('#employeeInfo').replaceWith(fragment);
-			});
+			        email:$("#inputEmail").val()
+			    };
+			    $.ajax({
+			        url: "/back/SfindEmployee",
+			        type: "POST",
+			        data: emailBean,
+			        beforeSend: function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	                 },
+	                 success: function(res){
+	 			    	console.log(res);
+	 			    }
+			    })
+			    .done(function (fragment) {
+			        $('#employeeInfo').replaceWith(fragment);
+			    });
 		}
+	 	
+	 	
+    	// 회원 검색
+    	function findUser2(){
+    		var email = $("#input_email").val();
+    		$.ajax({
+    			url : '/back/member',
+    			type: 'POST',
+    			dataType: 'JSON',
+    			data : {
+    				'email' : email
+    			},
+    			beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+                cache: false,
+    			success: function(res){
+    				console.log(res[0].gno);
+    				if (res[0].gno == 1){
+    					$('#SelectLm option:eq(1)').prop('selected', true);
+    				}else if (res[0].gno == 2){
+    					$('#SelectLm option:eq(2)').prop('selected', true);
+    				}else if (res[0].gno == 3){
+    					$('#SelectLm option:eq(3)').prop('selected', true);
+    				}else if (res[0].gno == 4){
+    					$('#SelectLm option:eq(4)').prop('selected', true);
+    				}else if (res[0].gno == 5){
+    					$('#SelectLm option:eq(5)').prop('selected', true);
+    				}
+    				
+    				if (res[0].msleep == 1){
+    					$('#SelectSleep option:eq(1)').prop('selected', true); //휴면
+    				} else{
+    					$('#SelectSleep option:eq(2)').prop('selected', true); //비휴면
+    				}
+    				$("#mname").val(res[0].mname);
+    				$("#birth").val(res[0].birth);
+    				$("#telnum").val(res[0].telnum);
+    				$("#maddress").val(res[0].maddress);
+    			},
+    			error: function(res){
+    				console.log(res)
+    			}
+    		});
+    	}
+    	
+    	// 회원 정보 수정
+    	function modify(){
+    		
+    		var memail = $("#input_email").val();
+    		var mname = $("#mname").val();
+    		var birth = $("#birth").val();
+    		var telnum = $("#telnum").val();
+    		var maddress = $("#maddress").val();
+    		var gno = $("#SelectLm option:selected").val();
+    		var msleep = $("#SelectSleep option:selected").val();
+    		
+    		if (msleep == 2){
+    			msleep = 0;
+    		}
+    		
+    		if(gno == 0){
+    			alert("다시 선택해주세요.");
+    			return;
+    		}
+    		console.log(gno);
+    		
+    		$.ajax({
+    			url : '/back/member',
+    			type: 'PUT',
+    			contentType : "application/json",
+    			data : JSON.stringify({
+    				'memail' : memail,
+    				'mname' : mname,
+    				'birth' : birth,
+    				'telnum' : telnum,
+    				'maddress' : maddress,
+    				'gno' : gno,
+    				'msleep' : msleep
+    			}),
+    			beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                async: false,
+                cache: false,
+    			success: function(res){
+    				//alert("수정 성공");
+    				$("#staticModal").modal();
+    				console.log(res);
+    			},
+    			error: function(res){
+    				alert("수정 실패");
+    			}
+    		});
+    	}
+    	
+    	// 회원 정보 탈퇴
+    	function delMember(email){
+    		console.log(email);
+    		
+    		$.ajax({
+    			url : '/back/member',
+    			type: 'DELETE',
+    			data: JSON.stringify({
+    				'email' : email
+                }),
+    			contentType: "application/json",
+    			beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+                async : false,
+                cache: false,
+    			success: function(res){
+    				$("#staticModal").modal();
+    				
+    				//alert("탈퇴 성공");
+    				console.log(res);
+    				$("#mname").val('');
+    				$("#birth").val('');
+    				$("#telnum").val('');
+    				$("#maddress").val('');
+    			},
+    			error: function(){
+    				alert("error")
+    			}
+    		});
+    	}
+    	
+    	// 회원 정보 탈퇴
+    	function delMember(){
+    		var email = $("#input_email").val();
+    		
+    		$.ajax({
+    			url : '/back/member',
+    			type: 'DELETE',
+    			data: JSON.stringify({
+    				'email' : email
+                }),
+    			contentType: "application/json",
+    			beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+                async : false,
+                cache: false,
+    			success: function(res){
+    				$("#staticModal").modal();
+    				
+    				//alert("탈퇴 성공");
+    				console.log(res);
+    				$("#mname").val('');
+    				$("#birth").val('');
+    				$("#telnum").val('');
+    				$("#maddress").val('');
+    			},
+    			error: function(){
+    				alert("error")
+    			}
+    		});
+    	}
+    	
+    	// 모달 창 확인
+    	function go_check(){
+    		location.reload();
+    	}
+    </script>
+	
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <header class="header-mobile d-block d-lg-none">
+            <div class="header-mobile__bar">
+                <div class="container-fluid">
+                    <div class="header-mobile-inner">
+                        <a class="logo" href="index.html">
+                            <img src="images/icon/logo.png" alt="CoolAdmin" />
+                        </a>
+                        <button class="hamburger hamburger--slider" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar-mobile">
+                <div class="container-fluid">
+                    <ul class="navbar-mobile__list list-unstyled">
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="index.html">Dashboard 1</a>
+                                </li>
+                                <li>
+                                    <a href="index2.html">Dashboard 2</a>
+                                </li>
+                                <li>
+                                    <a href="index3.html">Dashboard 3</a>
+                                </li>
+                                <li>
+                                    <a href="index4.html">Dashboard 4</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="chart.html">
+                                <i class="fas fa-chart-bar"></i>Charts</a>
+                        </li>
+                        <li>
+                            <a href="table.html">
+                                <i class="fas fa-table"></i>상품 관리</a>
+                        </li>
+                        <li>
+                            <a href="form.html">
+                                <i class="far fa-square"></i>회원 관리</a>
+                        </li>
+                        <li>
+                            <a href="calendar.html">
+                                <i class="fas fa-calendar-alt"></i>Calendar</a>
+                        </li>
+                        <li>
+                            <a href="map.html">
+                                <i class="fas fa-map-marker-alt"></i>Maps</a>
+                        </li>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-copy"></i>Pages</a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="login.html">Login</a>
+                                </li>
+                                <li>
+                                    <a href="register.html">Register</a>
+                                </li>
+                                <li>
+                                    <a href="forget-pass.html">Forget Password</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-desktop"></i>UI Elements</a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="button.html">Button</a>
+                                </li>
+                                <li>
+                                    <a href="badge.html">Badges</a>
+                                </li>
+                                <li>
+                                    <a href="tab.html">Tabs</a>
+                                </li>
+                                <li>
+                                    <a href="card.html">Cards</a>
+                                </li>
+                                <li>
+                                    <a href="alert.html">Alerts</a>
+                                </li>
+                                <li>
+                                    <a href="progress-bar.html">Progress Bars</a>
+                                </li>
+                                <li>
+                                    <a href="modal.html">Modals</a>
+                                </li>
+                                <li>
+                                    <a href="switch.html">Switchs</a>
+                                </li>
+                                <li>
+                                    <a href="grid.html">Grids</a>
+                                </li>
+                                <li>
+                                    <a href="fontawesome.html">Fontawesome Icon</a>
+                                </li>
+                                <li>
+                                    <a href="typo.html">Typography</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- END HEADER MOBILE-->
 
-		// 회원 검색
-		function findUser2() {
-			var email = $("#input_email").val();
-			$.ajax({
-				url : '/back/member',
-				type : 'POST',
-				dataType : 'JSON',
-				data : {
-					'email' : email
-				},
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(header, token);
-				},
-				cache : false,
-				success : function(res) {
-					console.log(res[0].gno);
-					if (res[0].gno == 1) {
-						$('#SelectLm option:eq(1)').prop('selected', true);
-					} else if (res[0].gno == 2) {
-						$('#SelectLm option:eq(2)').prop('selected', true);
-					} else if (res[0].gno == 3) {
-						$('#SelectLm option:eq(3)').prop('selected', true);
-					} else if (res[0].gno == 4) {
-						$('#SelectLm option:eq(4)').prop('selected', true);
-					} else if (res[0].gno == 5) {
-						$('#SelectLm option:eq(5)').prop('selected', true);
-					} else if (res[0].gno == 6) {
-						$('#SelectLm option:eq(6)').prop('selected', true);
-					} else if (res[0].gno == 7) {
-						$('#SelectLm option:eq(7)').prop('selected', true);
-					}
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar d-none d-lg-block">
+            <div class="logo">
+                <a href="#">
+                    <img src="images/icon/logo.png" alt="Cool Admin" />
+                </a>
+            </div>
+            <div class="menu-sidebar__content js-scrollbar1">
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+                        
+                        <li>
+                            <a href="chart.html">
+                                <i class="fas fa-chart-bar"></i>차트</a>
+                        </li>
+                        <li class="active"><a href="form"> <i
+                        class="far fa-check-square"></i>회원 관리
+                  </a></li>
+                  <li><a href="form3"> <i class="fas fa-table"></i>매장 관리
+                  </a></li>
+                        
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-desktop"></i>UI Elements</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="button.html">Button</a>
+                                </li>
+                                <li>
+                                    <a href="badge.html">Badges</a>
+                                </li>
+                                <li>
+                                    <a href="tab.html">Tabs</a>
+                                </li>
+                                <li>
+                                    <a href="card.html">Cards</a>
+                                </li>
+                                <li>
+                                    <a href="alert.html">Alerts</a>
+                                </li>
+                                <li>
+                                    <a href="progress-bar.html">Progress Bars</a>
+                                </li>
+                                <li>
+                                    <a href="modal.html">Modals</a>
+                                </li>
+                                <li>
+                                    <a href="switch.html">Switchs</a>
+                                </li>
+                                <li>
+                                    <a href="grid.html">Grids</a>
+                                </li>
+                                <li>
+                                    <a href="fontawesome.html">Fontawesome Icon</a>
+                                </li>
+                                <li>
+                                    <a href="typo.html">Typography</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
 
-					$("#mname").val(res[0].mname);
-					$("#birth").val(res[0].birth);
-					$("#telnum").val(res[0].telnum);
-					$("#maddress").val(res[0].maddress);
-				},
-				error : function(res) {
-					console.log(res)
-				}
-			});
-		}
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap">
+                            <form class="form-header" action="" method="POST">
+                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                                <button class="au-btn--submit" type="submit">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
+                            <div class="header-button">
+                                <div class="noti-wrap">
+                                    <div class="noti__item js-item-menu">
+                                        <i class="zmdi zmdi-comment-more"></i>
+                                        <span class="quantity">1</span>
+                                        <div class="mess-dropdown js-dropdown">
+                                            <div class="mess__title">
+                                                <p>You have 2 news message</p>
+                                            </div>
+                                            <div class="mess__item">
+                                                <div class="image img-cir img-40">
+                                                    <img src="images/icon/avatar-06.jpg" alt="Michelle Moreno" />
+                                                </div>
+                                                <div class="content">
+                                                    <h6>Michelle Moreno</h6>
+                                                    <p>Have sent a photo</p>
+                                                    <span class="time">3 min ago</span>
+                                                </div>
+                                            </div>
+                                            <div class="mess__item">
+                                                <div class="image img-cir img-40">
+                                                    <img src="images/icon/avatar-04.jpg" alt="Diane Myers" />
+                                                </div>
+                                                <div class="content">
+                                                    <h6>Diane Myers</h6>
+                                                    <p>You are now connected on message</p>
+                                                    <span class="time">Yesterday</span>
+                                                </div>
+                                            </div>
+                                            <div class="mess__footer">
+                                                <a href="#">View all messages</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="noti__item js-item-menu">
+                                        <i class="zmdi zmdi-email"></i>
+                                        <span class="quantity">1</span>
+                                        <div class="email-dropdown js-dropdown">
+                                            <div class="email__title">
+                                                <p>You have 3 New Emails</p>
+                                            </div>
+                                            <div class="email__item">
+                                                <div class="image img-cir img-40">
+                                                    <img src="images/icon/avatar-06.jpg" alt="Cynthia Harvey" />
+                                                </div>
+                                                <div class="content">
+                                                    <p>Meeting about new dashboard...</p>
+                                                    <span>Cynthia Harvey, 3 min ago</span>
+                                                </div>
+                                            </div>
+                                            <div class="email__item">
+                                                <div class="image img-cir img-40">
+                                                    <img src="images/icon/avatar-05.jpg" alt="Cynthia Harvey" />
+                                                </div>
+                                                <div class="content">
+                                                    <p>Meeting about new dashboard...</p>
+                                                    <span>Cynthia Harvey, Yesterday</span>
+                                                </div>
+                                            </div>
+                                            <div class="email__item">
+                                                <div class="image img-cir img-40">
+                                                    <img src="images/icon/avatar-04.jpg" alt="Cynthia Harvey" />
+                                                </div>
+                                                <div class="content">
+                                                    <p>Meeting about new dashboard...</p>
+                                                    <span>Cynthia Harvey, April 12,,2018</span>
+                                                </div>
+                                            </div>
+                                            <div class="email__footer">
+                                                <a href="#">See all emails</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="noti__item js-item-menu">
+                                        <i class="zmdi zmdi-notifications"></i>
+                                        <span class="quantity">3</span>
+                                        <div class="notifi-dropdown js-dropdown">
+                                            <div class="notifi__title">
+                                                <p>You have 3 Notifications</p>
+                                            </div>
+                                            <div class="notifi__item">
+                                                <div class="bg-c1 img-cir img-40">
+                                                    <i class="zmdi zmdi-email-open"></i>
+                                                </div>
+                                                <div class="content">
+                                                    <p>You got a email notification</p>
+                                                    <span class="date">April 12, 2018 06:50</span>
+                                                </div>
+                                            </div>
+                                            <div class="notifi__item">
+                                                <div class="bg-c2 img-cir img-40">
+                                                    <i class="zmdi zmdi-account-box"></i>
+                                                </div>
+                                                <div class="content">
+                                                    <p>Your account has been blocked</p>
+                                                    <span class="date">April 12, 2018 06:50</span>
+                                                </div>
+                                            </div>
+                                            <div class="notifi__item">
+                                                <div class="bg-c3 img-cir img-40">
+                                                    <i class="zmdi zmdi-file-text"></i>
+                                                </div>
+                                                <div class="content">
+                                                    <p>You got a new file</p>
+                                                    <span class="date">April 12, 2018 06:50</span>
+                                                </div>
+                                            </div>
+                                            <div class="notifi__footer">
+                                                <a href="#">All notifications</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="account-wrap">
+                                    <div class="account-item clearfix js-item-menu">
+                                        <div class="image">
+                                            <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                        </div>
+                                        <div class="content">
+                                            <a class="js-acc-btn" href="#">john doe</a>
+                                        </div>
+                                        <div class="account-dropdown js-dropdown">
+                                            <div class="info clearfix">
+                                                <div class="image">
+                                                    <a href="#">
+                                                        <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <h5 class="name">
+                                                        <a href="#">john doe</a>
+                                                    </h5>
+                                                    <span class="email">johndoe@example.com</span>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-account"></i>Account</a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__footer">
+                                                <a href="#">
+                                                    <i class="zmdi zmdi-power"></i>Logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- HEADER DESKTOP-->
 
-		// 회원 정보 수정
-		function modify() {
-
-			var memail = $("#input_email").val();
-			var mname = $("#mname").val();
-			var birth = $("#birth").val();
-			var telnum = $("#telnum").val();
-			var maddress = $("#maddress").val();
-			var gno = $("#SelectLm option:selected").val();
-			if (gno == 0) {
-				alert("다시 선택해주세요.");
-				return;
-			}
-			console.log(gno);
-
-			$.ajax({
-				url : '/back/member',
-				type : 'PUT',
-				contentType : "application/json",
-				data : JSON.stringify({
-					'memail' : memail,
-					'mname' : mname,
-					'birth' : birth,
-					'telnum' : telnum,
-					'maddress' : maddress,
-					'gno' : gno
-				}),
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(header, token);
-				},
-				async : false,
-				cache : false,
-				success : function(res) {
-					//alert("수정 성공");
-					$("#staticModal").modal();
-					console.log(res);
-				},
-				error : function(res) {
-					alert("수정 실패");
-				}
-			});
-		}
-
-		// 회원 정보 탈퇴
-		function delMember(email) {
-			console.log(email);
-
-			$.ajax({
-				url : '/back/member',
-				type : 'DELETE',
-				data : JSON.stringify({
-					'email' : email
-				}),
-				contentType : "application/json",
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(header, token);
-				},
-				async : false,
-				cache : false,
-				success : function(res) {
-					$("#staticModal").modal();
-
-					//alert("탈퇴 성공");
-					console.log(res);
-					$("#mname").val('');
-					$("#birth").val('');
-					$("#telnum").val('');
-					$("#maddress").val('');
-				},
-				error : function() {
-					alert("error")
-				}
-			});
-		}
-
-		// 회원 정보 탈퇴
-		function delMember() {
-			var email = $("#input_email").val();
-
-			$.ajax({
-				url : '/back/member',
-				type : 'DELETE',
-				data : JSON.stringify({
-					'email' : email
-				}),
-				contentType : "application/json",
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(header, token);
-				},
-				async : false,
-				cache : false,
-				success : function(res) {
-					$("#staticModal").modal();
-
-					//alert("탈퇴 성공");
-					console.log(res);
-					$("#mname").val('');
-					$("#birth").val('');
-					$("#telnum").val('');
-					$("#maddress").val('');
-				},
-				error : function() {
-					alert("error")
-				}
-			});
-		}
-
-		// 모달 창 확인
-		function go_check() {
-			location.reload();
-		}
-	</script>
-
-	<div class="page-wrapper">
-		<!-- HEADER MOBILE-->
-		<header class="header-mobile d-block d-lg-none">
-			<div class="header-mobile__bar">
-				<div class="container-fluid">
-					<div class="header-mobile-inner">
-						<a class="logo" href="index.html"> <img
-							src="images/icon/logo.png" alt="CoolAdmin" />
-						</a>
-						<button class="hamburger hamburger--slider" type="button">
-							<span class="hamburger-box"> <span class="hamburger-inner"></span>
-							</span>
-						</button>
-					</div>
-				</div>
-			</div>
-			<nav class="navbar-mobile">
-				<div class="container-fluid">
-					<ul class="navbar-mobile__list list-unstyled">
-						<li class="has-sub"><a class="js-arrow" href="#"> <i
-								class="fas fa-tachometer-alt"></i>Dashboard
-						</a>
-							<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-								<li><a href="index.html">Dashboard 1</a></li>
-								<li><a href="index2.html">Dashboard 2</a></li>
-								<li><a href="index3.html">Dashboard 3</a></li>
-								<li><a href="index4.html">Dashboard 4</a></li>
-							</ul></li>
-						<li><a href="chart.html"> <i class="fas fa-chart-bar"></i>Charts
-						</a></li>
-						<li><a href="table.html"> <i class="fas fa-table"></i>상품
-								관리
-						</a></li>
-						<li><a href="form.html"> <i class="far fa-square"></i>회원
-								관리
-						</a></li>
-						<li><a href="calendar.html"> <i
-								class="fas fa-calendar-alt"></i>Calendar
-						</a></li>
-						<li><a href="map.html"> <i class="fas fa-map-marker-alt"></i>Maps
-						</a></li>
-						<li class="has-sub"><a class="js-arrow" href="#"> <i
-								class="fas fa-copy"></i>Pages
-						</a>
-							<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-								<li><a href="login.html">Login</a></li>
-								<li><a href="register.html">Register</a></li>
-								<li><a href="forget-pass.html">Forget Password</a></li>
-							</ul></li>
-						<li class="has-sub"><a class="js-arrow" href="#"> <i
-								class="fas fa-desktop"></i>UI Elements
-						</a>
-							<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-								<li><a href="button.html">Button</a></li>
-								<li><a href="badge.html">Badges</a></li>
-								<li><a href="tab.html">Tabs</a></li>
-								<li><a href="card.html">Cards</a></li>
-								<li><a href="alert.html">Alerts</a></li>
-								<li><a href="progress-bar.html">Progress Bars</a></li>
-								<li><a href="modal.html">Modals</a></li>
-								<li><a href="switch.html">Switchs</a></li>
-								<li><a href="grid.html">Grids</a></li>
-								<li><a href="fontawesome.html">Fontawesome Icon</a></li>
-								<li><a href="typo.html">Typography</a></li>
-							</ul></li>
-					</ul>
-				</div>
-			</nav>
-		</header>
-		<!-- END HEADER MOBILE-->
-
-		<!-- MENU SIDEBAR-->
-		<aside class="menu-sidebar d-none d-lg-block">
-			<div class="logo">
-				<a href="#"> <img src="images/icon/logo.png" alt="Cool Admin" />
-				</a>
-			</div>
-			<div class="menu-sidebar__content js-scrollbar1">
-				<nav class="navbar-sidebar">
-					<ul class="list-unstyled navbar__list">
-
-						<li><a href="chart.html"> <i class="fas fa-chart-bar"></i>차트
-						</a></li>
-						<li><a href="form3"> <i class="fas fa-table"></i>매장 관리
-						</a></li>
-						<li class="active"><a href="form"> <i
-								class="far fa-check-square"></i>회원 관리
-						</a></li>
-
-						<li class="has-sub"><a class="js-arrow" href="#"> <i
-								class="fas fa-desktop"></i>UI Elements
-						</a>
-							<ul class="list-unstyled navbar__sub-list js-sub-list">
-								<li><a href="button.html">Button</a></li>
-								<li><a href="badge.html">Badges</a></li>
-								<li><a href="tab.html">Tabs</a></li>
-								<li><a href="card.html">Cards</a></li>
-								<li><a href="alert.html">Alerts</a></li>
-								<li><a href="progress-bar.html">Progress Bars</a></li>
-								<li><a href="modal.html">Modals</a></li>
-								<li><a href="switch.html">Switchs</a></li>
-								<li><a href="grid.html">Grids</a></li>
-								<li><a href="fontawesome.html">Fontawesome Icon</a></li>
-								<li><a href="typo.html">Typography</a></li>
-							</ul></li>
-					</ul>
-				</nav>
-			</div>
-		</aside>
-		<!-- END MENU SIDEBAR-->
-
-		<!-- PAGE CONTAINER-->
-		<div class="page-container">
-			<!-- HEADER DESKTOP-->
-			<header class="header-desktop">
-				<div class="section__content section__content--p30">
-					<div class="container-fluid">
-						<div class="header-wrap">
-							<form class="form-header" action="" method="POST">
-								<input class="au-input au-input--xl" type="text" name="search"
-									placeholder="Search for datas &amp; reports..." />
-								<button class="au-btn--submit" type="submit">
-									<i class="zmdi zmdi-search"></i>
-								</button>
-							</form>
-							<div class="header-button">
-								<div class="noti-wrap">
-									<div class="noti__item js-item-menu">
-										<i class="zmdi zmdi-comment-more"></i> <span class="quantity">1</span>
-										<div class="mess-dropdown js-dropdown">
-											<div class="mess__title">
-												<p>You have 2 news message</p>
-											</div>
-											<div class="mess__item">
-												<div class="image img-cir img-40">
-													<img src="images/icon/avatar-06.jpg" alt="Michelle Moreno" />
-												</div>
-												<div class="content">
-													<h6>Michelle Moreno</h6>
-													<p>Have sent a photo</p>
-													<span class="time">3 min ago</span>
-												</div>
-											</div>
-											<div class="mess__item">
-												<div class="image img-cir img-40">
-													<img src="images/icon/avatar-04.jpg" alt="Diane Myers" />
-												</div>
-												<div class="content">
-													<h6>Diane Myers</h6>
-													<p>You are now connected on message</p>
-													<span class="time">Yesterday</span>
-												</div>
-											</div>
-											<div class="mess__footer">
-												<a href="#">View all messages</a>
-											</div>
-										</div>
-									</div>
-									<div class="noti__item js-item-menu">
-										<i class="zmdi zmdi-email"></i> <span class="quantity">1</span>
-										<div class="email-dropdown js-dropdown">
-											<div class="email__title">
-												<p>You have 3 New Emails</p>
-											</div>
-											<div class="email__item">
-												<div class="image img-cir img-40">
-													<img src="images/icon/avatar-06.jpg" alt="Cynthia Harvey" />
-												</div>
-												<div class="content">
-													<p>Meeting about new dashboard...</p>
-													<span>Cynthia Harvey, 3 min ago</span>
-												</div>
-											</div>
-											<div class="email__item">
-												<div class="image img-cir img-40">
-													<img src="images/icon/avatar-05.jpg" alt="Cynthia Harvey" />
-												</div>
-												<div class="content">
-													<p>Meeting about new dashboard...</p>
-													<span>Cynthia Harvey, Yesterday</span>
-												</div>
-											</div>
-											<div class="email__item">
-												<div class="image img-cir img-40">
-													<img src="images/icon/avatar-04.jpg" alt="Cynthia Harvey" />
-												</div>
-												<div class="content">
-													<p>Meeting about new dashboard...</p>
-													<span>Cynthia Harvey, April 12,,2018</span>
-												</div>
-											</div>
-											<div class="email__footer">
-												<a href="#">See all emails</a>
-											</div>
-										</div>
-									</div>
-									<div class="noti__item js-item-menu">
-										<i class="zmdi zmdi-notifications"></i> <span class="quantity">3</span>
-										<div class="notifi-dropdown js-dropdown">
-											<div class="notifi__title">
-												<p>You have 3 Notifications</p>
-											</div>
-											<div class="notifi__item">
-												<div class="bg-c1 img-cir img-40">
-													<i class="zmdi zmdi-email-open"></i>
-												</div>
-												<div class="content">
-													<p>You got a email notification</p>
-													<span class="date">April 12, 2018 06:50</span>
-												</div>
-											</div>
-											<div class="notifi__item">
-												<div class="bg-c2 img-cir img-40">
-													<i class="zmdi zmdi-account-box"></i>
-												</div>
-												<div class="content">
-													<p>Your account has been blocked</p>
-													<span class="date">April 12, 2018 06:50</span>
-												</div>
-											</div>
-											<div class="notifi__item">
-												<div class="bg-c3 img-cir img-40">
-													<i class="zmdi zmdi-file-text"></i>
-												</div>
-												<div class="content">
-													<p>You got a new file</p>
-													<span class="date">April 12, 2018 06:50</span>
-												</div>
-											</div>
-											<div class="notifi__footer">
-												<a href="#">All notifications</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="account-wrap">
-									<div class="account-item clearfix js-item-menu">
-										<div class="image">
-											<img src="images/icon/avatar-01.jpg" alt="John Doe" />
-										</div>
-										<div class="content">
-											<a class="js-acc-btn" href="#">john doe</a>
-										</div>
-										<div class="account-dropdown js-dropdown">
-											<div class="info clearfix">
-												<div class="image">
-													<a href="#"> <img src="images/icon/avatar-01.jpg"
-														alt="John Doe" />
-													</a>
-												</div>
-												<div class="content">
-													<h5 class="name">
-														<a href="#">john doe</a>
-													</h5>
-													<span class="email">johndoe@example.com</span>
-												</div>
-											</div>
-											<div class="account-dropdown__body">
-												<div class="account-dropdown__item">
-													<a href="#"> <i class="zmdi zmdi-account"></i>Account
-													</a>
-												</div>
-												<div class="account-dropdown__item">
-													<a href="#"> <i class="zmdi zmdi-settings"></i>Setting
-													</a>
-												</div>
-												<div class="account-dropdown__item">
-													<a href="#"> <i class="zmdi zmdi-money-box"></i>Billing
-													</a>
-												</div>
-											</div>
-											<div class="account-dropdown__footer">
-												<a href="#"> <i class="zmdi zmdi-power"></i>Logout
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
-			<!-- HEADER DESKTOP-->
-
-			<!-- MAIN CONTENT-->
-			<div class="main-content">
-				<div class="section__content section__content--p30">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-md-6 col-lg-3">
-								<div class="statistic__item">
-									<h2 class="number">10,368</h2>
-									<span class="desc">members</span>
-									<div class="icon">
-										<i class="zmdi zmdi-account-o"></i>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-lg-3">
-								<div class="statistic__item">
-									<h2 class="number">388,688</h2>
-									<span class="desc">items sold</span>
-									<div class="icon">
-										<i class="zmdi zmdi-shopping-cart"></i>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-lg-3">
-								<div class="statistic__item">
-									<h2 class="number">1,086</h2>
-									<span class="desc">this week</span>
-									<div class="icon">
-										<i class="zmdi zmdi-calendar-note"></i>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-lg-3">
-								<div class="statistic__item">
-									<h2 class="number">$1,060,386</h2>
-									<span class="desc">total earnings</span>
-									<div class="icon">
-										<i class="zmdi zmdi-money"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12"></div>
-
-							<div class="col-md-12">
-								<div class="card">
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                    	<div class="row">
+                            <div class="col-md-6 col-lg-3">
+                                <div class="statistic__item">
+                                    <h2 class="number">10,368</h2>
+                                    <span class="desc">members</span>
+                                    <div class="icon">
+                                        <i class="zmdi zmdi-account-o"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="statistic__item">
+                                    <h2 class="number">388,688</h2>
+                                    <span class="desc">items sold</span>
+                                    <div class="icon">
+                                        <i class="zmdi zmdi-shopping-cart"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="statistic__item">
+                                    <h2 class="number">1,086</h2>
+                                    <span class="desc">this week</span>
+                                    <div class="icon">
+                                        <i class="zmdi zmdi-calendar-note"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="statistic__item">
+                                    <h2 class="number">$1,060,386</h2>
+                                    <span class="desc">total earnings</span>
+                                    <div class="icon">
+                                        <i class="zmdi zmdi-money"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                
+                            </div>
+                            
+                            <div class="col-md-12">
+	                            <div class="card">
 									<div class="card-header">
 										<h4>회원 조회 / 수정 / 탈퇴</h4>
 									</div>
 									<div class="card-body">
-
+										
 										<ul class="nav nav-tabs" id="myTab" role="tablist">
-											<li class="nav-item"><a class="nav-link" id="home-tab"
-												data-toggle="tab" href="#home" role="tab"
-												aria-controls="home">멤버 조회</a></li>
-											<li class="nav-item"><a class="nav-link"
-												id="profile-tab" data-toggle="tab" href="#profile"
-												role="tab" aria-controls="profile" onclick="findEmployee();">임직원
-													관리</a></li>
-											<li class="nav-item" hidden><a class="nav-link"
-												id="modify-tab" data-toggle="tab" href="#modify" role="tab"
-												aria-controls="modify">Menu 2</a></li>
+											<li class="nav-item">
+												<a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" >멤버 조회</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" onclick = "findEmployee();">임직원 관리</a>
+											</li>
+											<li class="nav-item" hidden>
+												<a class="nav-link" id="modify-tab" data-toggle="tab" href="#modify" role="tab" aria-controls="modify" >Menu 2</a>
+											</li>
 										</ul>
-
+										
 										<div class="tab-content pl-3 p-1" id="myTabContent">
-											<div class="tab-pane fade show active" id="home"
-												role="tabpanel" aria-labelledby="home-tab">
-												<div class="table-responsive table-responsive-data2"
-													id="memberInfo">
-													<table class="table table-data2">
-														<thead>
-															<tr align="right">
-																<div class="input-group">
+											<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+												<div class="table-responsive table-responsive-data2" id = "memberInfo">
+				                                    <table class="table table-data2">
+				                                        <thead>
+				                                        	<tr align = "right">
+				                                        		<div class="input-group">
 																	<div class="input-group-btn">
-																		<input type="text" id="inputEmail" name="input-small"
-																			placeholder="Email"
-																			class="input-sm form-control-sm form-control">
+																		<input type="text" id="inputEmail" name="input-small" placeholder="Email" class="input-sm form-control-sm form-control">
 																	</div>
-																	<button type="button" class="btn btn-primary btn-sm"
-																		onclick="findUser();">검색</button>
-																</div>
-															</tr>
-
-															<tr>
-																<th><label class="au-checkbox"> <input
-																		type="checkbox"> <span class="au-checkmark"></span>
-																</label></th>
-																<th>name</th>
-																<th>email</th>
-																<th>description</th>
-																<th>date</th>
-																<th>status</th>
-																<th>grade</th>
-																<th>
-																	<!-- <input type="text" name="search" placeholder="Email" id = "inputEmail"/> -->
-																</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr class="tr-shadow" th:each="user : ${userList}">
-																<td><label class="au-checkbox"> <input
-																		type="checkbox"> <span class="au-checkmark"></span>
-																</label></td>
-																<td th:text="${user.mname}"></td>
-																<td><span class="block-email"
-																	th:text="${user.memail}"></span></td>
-																<td th:if="${user.role_set == 'ADMIN'}"><span
-																	class="role admin" th:text="${user.role_set}"></span></td>
-																<td th:if="${user.role_set == 'USER'}"><span
-																	class="role user" th:text="${user.role_set}"></span></td>
-																<td th:if="${user.role_set == 'EMPLOYEE'}"><span
-																	class="role member" th:text="${user.role_set}"></span>
-																</td>
-																<td th:text="${user.regdate}"></td>
-																<td><span class="status--denied"
-																	th:if="${user.msleep == 1}">휴면</span> <span
-																	class="status--process" th:unless="${user.msleep == 1}">비휴면</span>
-																</td>
-																<td th:text="${user.gname}"></td>
-																<td>
-																	<div class="table-data-feature">
-																		<button class="item" data-toggle="tooltip"
-																			data-placement="top" title="Send">
-																			<i class="zmdi zmdi-mail-send"></i>
-																		</button>
-																		<button class="item" data-toggle="tooltip"
-																			data-placement="top" title="Edit"
-																			th:onclick="go_edit([[${user.memail}]]);">
-																			<i class="zmdi zmdi-edit"></i>
-																		</button>
-																		<button class="item" data-toggle="tooltip"
-																			data-placement="top" title="Delete"
-																			th:onclick="delMember([[${user.memail}]]);">
-																			<i class="zmdi zmdi-delete"></i>
-																		</button>
+																	<button type="button" class="btn btn-primary btn-sm" onclick = "findUser();">검색</button>
+																</div>	
+				                                        	</tr>
+				                                        		
+				                                            <tr>
+				                                                <th>
+				                                                    <label class="au-checkbox">
+				                                                        <input type="checkbox">
+				                                                        <span class="au-checkmark"></span>
+				                                                    </label>
+				                                                </th>
+				                                                <th>name</th>
+				                                                <th>email</th>
+				                                                <th>description</th>
+				                                                <th>date</th>
+				                                                <th>status</th>
+				                                                <th>grade</th>
+				                                                <th>
+				                                                	
+				                                                	<!-- <input type="text" name="search" placeholder="Email" id = "inputEmail"/> -->
+			                                					</th>
+				                                            </tr>
+				                                        </thead>
+				                                        <tbody>
+				                                            <tr class="tr-shadow" th:each = "user : ${userList}">
+				                                                <td>
+				                                                    <label class="au-checkbox">
+				                                                        <input type="checkbox">
+				                                                        <span class="au-checkmark"></span>
+				                                                    </label>
+				                                                </td>
+				                                                <td th:text = "${user.mname}"></td>
+				                                                <td>
+				                                                    <span class="block-email" th:text = "${user.memail}"></span>
+				                                                </td>
+				                                                <td th:if = "${user.role_set == 'ADMIN'}">
+				                                                     <span class="role admin" th:text = "${user.role_set}"></span>
+				                                                </td>
+				                                                <td th:if = "${user.role_set == 'USER'}">
+				                                                     <span class="role user" th:text = "${user.role_set}"></span>
+				                                                </td>
+				                                                <td th:if = "${user.role_set == 'EMPLOYEE'}">
+				                                                     <span class="role member" th:text = "${user.role_set}"></span>
+				                                                </td>
+				                                                <td th:text = "${user.regdate}"></td>
+				                                                <td>
+				                                                    <span class="status--denied" th:if = "${user.msleep == 1}">휴면</span>
+				                                                    <span class="status--process" th:unless = "${user.msleep == 1}">비휴면</span>
+				                                                </td>
+				                                                <td th:text = "${user.gname}"></td>
+				                                                <td>
+				                                                    <div class="table-data-feature">
+				                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
+				                                                            <i class="zmdi zmdi-mail-send"></i>
+				                                                        </button>
+				                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit" th:onclick = "go_edit([[${user.memail}]]);">
+				                                                            <i class="zmdi zmdi-edit"></i>
+				                                                        </button>
+				                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" th:onclick = "delMember([[${user.memail}]]);">
+				                                                            <i class="zmdi zmdi-delete"></i>
+				                                                        </button>
+				                                                    </div>
+				                                                </td>
+				                                            </tr>
+				                                            <tr class="spacer"></tr>
+				                                        </tbody>
+				                                    </table>
+				                                </div>
+											</div>
+											<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+												<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+													<div class="table-responsive table-responsive-data2" id = "employeeInfo">
+					                                    <table class="table table-data2">
+					                                        <thead>
+					                                        	<tr>
+				                                        		<div class="input-group">
+																	<div class="input-group-btn">
+																		<input type="text" id="inputEmail" name="input-small" placeholder="Email" class="input-sm form-control-sm form-control">
 																	</div>
-																</td>
-															</tr>
-															<tr class="spacer"></tr>
-														</tbody>
-													</table>
+																	<button type="button" class="btn btn-primary btn-sm" onclick = "SfindEmployee();">검색</button>
+																</div>	
+				                                        		</tr>
+					                                            <tr>
+					                                                <th>
+					                                                    <label class="au-checkbox">
+					                                                        <input type="checkbox">
+					                                                        <span class="au-checkmark"></span>
+					                                                    </label>
+					                                                </th>
+					                                                <th>name</th>
+					                                                <th>email</th>
+					                                                <th>description</th>
+					                                                <th>date</th>
+					                                                <th>status</th>
+					                                                <th>grade</th>
+					                                                
+					                                                <th></th>
+					                                            </tr>
+					                                        </thead>
+					                                        <tbody>
+					                                            <tr class="tr-shadow" th:each = "user : ${userList}">
+					                                                <td>
+					                                                    <label class="au-checkbox">
+					                                                        <input type="checkbox">
+					                                                        <span class="au-checkmark"></span>
+					                                                    </label>
+					                                                </td>
+					                                                <td th:text = "${user.mname}"></td>
+					                                                <td>
+					                                                    <span class="block-email" th:text = "${user.memail}"></span>
+					                                                </td>
+					                                                <td th:if = "${user.role_set == 'ADMIN'}">
+					                                                     <span class="role admin" th:text = "${user.role_set}"></span>
+					                                                </td>
+					                                                <td th:if = "${user.role_set == 'USER'}">
+					                                                     <span class="role user" th:text = "${user.role_set}"></span>
+					                                                </td>
+					                                                <td th:if = "${user.role_set == 'EMPLOYEE'}">
+				                                                     	<span class="role member" th:text = "${user.role_set}"></span>
+				                                                	</td>
+					                                                <td th:text = "${user.regdate}"></td>
+					                                                <td>
+					                                                    <span class="status--denied" th:if = "${user.msleep == 1}">휴면</span>
+					                                                    <span class="status--process" th:unless = "${user.msleep == 1}">비휴면</span>
+					                                                </td>
+					                                                <td th:text = "${user.gname}"></td>
+					                                                <td>
+					                                                    <div class="table-data-feature">
+					                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
+					                                                            <i class="zmdi zmdi-mail-send"></i>
+					                                                        </button>
+					                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit" th:onclick = "go_edit([[${user.memail}]]);">
+					                                                            <i class="zmdi zmdi-edit"></i>
+					                                                        </button>
+					                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" th:onclick = "delMember([[${user.memail}]]);">
+					                                                            <i class="zmdi zmdi-delete"></i>
+					                                                        </button>
+					                                                    </div>
+					                                                </td>
+					                                            </tr>
+					                                            <tr class="spacer"></tr>
+					                                        </tbody>
+					                                    </table>
+					                                </div>
 												</div>
 											</div>
-											<div class="tab-pane fade" id="profile" role="tabpanel"
-												aria-labelledby="profile-tab">
-												<div class="tab-pane fade show active" id="home"
-													role="tabpanel" aria-labelledby="home-tab">
-													<div class="table-responsive table-responsive-data2"
-														id="employeeInfo">
-														<table class="table table-data2">
-															<thead>
-																<tr>
-																	<div class="input-group">
-																		<div class="input-group-btn">
-																			<input type="text" id="inputEmail" name="input-small"
-																				placeholder="Email"
-																				class="input-sm form-control-sm form-control">
-																		</div>
-																		<button type="button" class="btn btn-primary btn-sm"
-																			onclick="SfindEmployee();">검색</button>
-																	</div>
-																</tr>
-																<tr>
-																	<th><label class="au-checkbox"> <input
-																			type="checkbox"> <span class="au-checkmark"></span>
-																	</label></th>
-																	<th>name</th>
-																	<th>email</th>
-																	<th>description</th>
-																	<th>date</th>
-																	<th>status</th>
-																	<th>grade</th>
-
-																	<th></th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr class="tr-shadow" th:each="user : ${userList}">
-																	<td><label class="au-checkbox"> <input
-																			type="checkbox"> <span class="au-checkmark"></span>
-																	</label></td>
-																	<td th:text="${user.mname}"></td>
-																	<td><span class="block-email"
-																		th:text="${user.memail}"></span></td>
-																	<td th:if="${user.role_set == 'ADMIN'}"><span
-																		class="role admin" th:text="${user.role_set}"></span>
-																	</td>
-																	<td th:if="${user.role_set == 'USER'}"><span
-																		class="role user" th:text="${user.role_set}"></span></td>
-																	<td th:if="${user.role_set == 'EMPLOYEE'}"><span
-																		class="role member" th:text="${user.role_set}"></span>
-																	</td>
-																	<td th:text="${user.regdate}"></td>
-																	<td><span class="status--denied"
-																		th:if="${user.msleep == 1}">휴면</span> <span
-																		class="status--process"
-																		th:unless="${user.msleep == 1}">비휴면</span></td>
-																	<td th:text="${user.gname}"></td>
-																	<td>
-																		<div class="table-data-feature">
-																			<button class="item" data-toggle="tooltip"
-																				data-placement="top" title="Send">
-																				<i class="zmdi zmdi-mail-send"></i>
-																			</button>
-																			<button class="item" data-toggle="tooltip"
-																				data-placement="top" title="Edit"
-																				th:onclick="go_edit([[${user.memail}]]);">
-																				<i class="zmdi zmdi-edit"></i>
-																			</button>
-																			<button class="item" data-toggle="tooltip"
-																				data-placement="top" title="Delete"
-																				th:onclick="delMember([[${user.memail}]]);">
-																				<i class="zmdi zmdi-delete"></i>
-																			</button>
-																		</div>
-																	</td>
-																</tr>
-																<tr class="spacer"></tr>
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-											<div class="tab-pane fade" id="modify" role="tabpanel"
-												aria-labelledby="modify-tab">
+											<div class="tab-pane fade" id="modify" role="tabpanel" aria-labelledby="modify-tab">
 												<div class="card">
-													<div class="card-header">
-														<strong>회원 정보 검색</strong> <small> Form</small>
-													</div>
-
-
-													<div class="card-body card-block">
-														<div class="from-group">
-															<div class="input-group">
-																<div class="input-group-btn">
-																	<button type="button" hidden class="btn btn-primary"
-																		onclick="findUser2()" id="findUser2">
-																		<i class="fa fa-search">Search</i>
-																	</button>
-																</div>
-																<input type="hidden" id="input_email" name="input_email"
-																	placeholder="Email" class="form-control">
-															</div>
-														</div>
-														<div class="row form-group">
-															<div class="col col-md-11">
-																<label for="company" class=" form-control-label">이름</label>
-																<input type="text" id="mname" placeholder="이름"
-																	class="form-control">
-															</div>
-														</div>
-														<div class="row form-group">
-															<div class="col col-md-11">
-																<label for="vat" class=" form-control-label">생년월일</label>
-																<input type="text" id="birth" placeholder="생년월일"
-																	class="form-control">
-															</div>
-														</div>
-
-														<div class="row form-group">
-															<div class="col col-md-11">
-																<label for="street" class=" form-control-label">전화
-																	번호</label> <input type="text" id="telnum" placeholder="전화 번호"
-																	class="form-control">
-															</div>
-														</div>
-
-														<div class="row form-group">
-															<div class="col col-md-11">
-																<label for="country" class=" form-control-label">주소</label>
-																<input type="text" id="maddress" placeholder="주소"
-																	class="form-control">
-															</div>
-														</div>
-
-														<div class="row form-group">
-															<div class="col col-md-11">
-																<label for="selectSm" class=" form-control-label">등급</label>
-																<select name="selectSm" id="SelectLm"
-																	class="form-control-sm form-control">
-																	<option value="0">등급</option>
-																	<option value="1">Friend</option>
-																	<option value="2">Crew</option>
-																	<option value="3">Mania</option>
-																	<option value="4">Star</option>
-																	<option value="5">The Star</option>
-																	<option value="6">관리자</option>
-																	<option value="7">임직원</option>
-																</select>
-															</div>
-														</div>
-														<div class="row form-group">
-															<div class="col col-md-11">
-																<label for="selectSm" class=" form-control-label">휴면/비휴면</label>
-																<select name="selectSm" id="SelectLm"
-																	class="form-control-sm form-control">
-																	<option value="0">휴면/비휴면</option>
-																	<option value="1">휴면</option>
-																	<option value="2">비휴면</option>
-																</select>
-															</div>
-														</div>
-														<div class="card-footer">
-															<button class="btn btn-primary btn-sm" onclick="modify()">
-																<i class="fa fa-dot-circle-o"></i> 수정하기
-															</button>
-															<button class="btn btn-danger btn-sm"
-																onclick="delMember()">
-																<i class="fa fa-ban"></i> 탈퇴
-															</button>
-														</div>
-													</div>
-												</div>
+				                                    <div class="card-header">
+				                                        <strong>회원 정보 검색</strong>
+				                                        <small> Form</small>
+				                                    </div>
+				                                    
+				                                    
+				                                    <div class="card-body card-block">
+				                                    	<div class="from-group">
+				                                        	<div class="input-group">
+				                                            	<div class="input-group-btn">
+				                                            		<button type = "button" hidden class="btn btn-primary" onclick="findUser2()" id = "findUser2">
+				                                            			<i class="fa fa-search">Search</i> 
+				                                                    </button>
+				                                                </div>
+				                                            <input type="hidden" id="input_email" name="input_email"  placeholder="Email" class="form-control">
+				                                            </div>
+				                                        </div>
+				                                        <div class="row form-group">
+				                                        	<div class="col col-md-11">
+				                                            	<label for="company" class=" form-control-label">이름</label>
+				                                            	<input type="text" id="mname" placeholder="이름" class="form-control">
+				                                            </div>
+				                                        </div>
+				                                        <div class="row form-group">
+				                                            <div class="col col-md-11">
+				                                            	<label for="vat" class=" form-control-label">생년월일</label>
+				                                            	<input type="text" id="birth" placeholder="생년월일" class="form-control">
+				                                        	</div>
+				                                        </div>
+				                                        
+				                                        <div class="row form-group">
+				                                        	<div class="col col-md-11">
+				                                            	<label for="street" class=" form-control-label">전화 번호</label>
+				                                            	<input type="text" id="telnum" placeholder="전화 번호" class="form-control">
+				                                            </div>
+				                                        </div>
+				                                        
+				                                        <div class="row form-group">
+				                                            <div class="col col-md-11">
+				                                            	<label for="country" class=" form-control-label">주소</label>
+				                                            	<input type="text" id="maddress" placeholder="주소" class="form-control">
+				                                        	</div>
+				                                        </div>
+				                                        
+				                                        <div class="row form-group">
+				                                        	<div class="col col-md-11">
+					                                            <label for="selectSm" class=" form-control-label">등급</label>
+					                                              <select name="selectSm" id="SelectLm" class="form-control-sm form-control">
+					                                                 <option value="0">등급</option>
+					                                                 <option value="1">Friend</option>
+					                                                 <option value="2">Crew</option>
+					                                                 <option value="3">Mania</option>
+					                                                 <option value="4">Star</option>
+					                                                 <option value="5">The Star</option>
+					                                              </select>
+				                                              </div>
+				                                       </div>
+				                                       <div class="row form-group">
+				                                              <div class="col col-md-11">
+				                                            	<label for="selectSm" class=" form-control-label">휴면/비휴면</label>
+				                                                <select name="selectSm" id="SelectSleep" class="form-control-sm form-control">
+				                                                    <option value="0">휴면/비휴면</option>
+				                                                    <option value="1">휴면</option>
+				                                                    <option value="2">비휴면</option>
+				                                                </select>
+				                                       		</div>
+				                                       </div>
+				                                        <div class="card-footer">
+					                                        <button class="btn btn-primary btn-sm" onclick = "modify()">
+					                                            <i class="fa fa-dot-circle-o"></i> 수정하기
+					                                        </button>
+					                                        <button class="btn btn-danger btn-sm" onclick = "delMember()">
+					                                            <i class="fa fa-ban"></i> 탈퇴
+					                                        </button>
+				                                    	</div>
+				                                    </div>
+				                                </div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<!-- END USER DATA-->
-						</div>
-						<input class="btn btn-success" type="submit" value="임직원 등록">
-						<div class="col-md-12">
-							<div class="copyright">
-								<p>
-									Copyright © 2018 Colorlib. All rights reserved. Template by <a
-										href="https://colorlib.com">Colorlib</a>.
-								</p>
-							</div>
-						</div>
+                            </div>
+                                <!-- END USER DATA-->
+                            </div>
+   <input class="btn btn-success" type="submit" value="임직원 등록">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                                </div>
+                            </div>
 
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- modal static -->
+		<div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true"
+			 data-backdrop="static">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="staticModalLabel">Success</h5>
+							<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button> -->
+						</div>
+						<div class="modal-body">
+							<p>
+								처리되었습니다.
+							</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" onclick = "go_check();">확인</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			<!-- end modal static -->
+    </div>
 
-		<!-- modal static -->
-		<div class="modal fade" id="staticModal" tabindex="-1" role="dialog"
-			aria-labelledby="staticModalLabel" aria-hidden="true"
-			data-backdrop="static">
-			<div class="modal-dialog modal-sm" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="staticModalLabel">Success</h5>
-						<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                     </button> -->
-					</div>
-					<div class="modal-body">
-						<p>처리되었습니다.</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary"
-							onclick="go_check();">확인</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- end modal static -->
-	</div>
+    <!-- Jquery JS-->
+    <script src="vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="vendor/slick/slick.min.js">
+    </script>
+    <script src="vendor/wow/wow.min.js"></script>
+    <script src="vendor/animsition/animsition.min.js"></script>
+    <script src="vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="vendor/select2/select2.min.js">
+    </script>
 
-	<!-- Jquery JS-->
-	<script src="vendor/jquery-3.2.1.min.js"></script>
-	<!-- Bootstrap JS-->
-	<script src="vendor/bootstrap-4.1/popper.min.js"></script>
-	<script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
-	<!-- Vendor JS       -->
-	<script src="vendor/slick/slick.min.js">
-		
-	</script>
-	<script src="vendor/wow/wow.min.js"></script>
-	<script src="vendor/animsition/animsition.min.js"></script>
-	<script src="vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-		
-	</script>
-	<script src="vendor/counter-up/jquery.waypoints.min.js"></script>
-	<script src="vendor/counter-up/jquery.counterup.min.js">
-		
-	</script>
-	<script src="vendor/circle-progress/circle-progress.min.js"></script>
-	<script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-	<script src="vendor/chartjs/Chart.bundle.min.js"></script>
-	<script src="vendor/select2/select2.min.js">
-		
-	</script>
-
-	<!-- Main JS-->
-	<script src="js/main.js"></script>
+    <!-- Main JS-->
+    <script src="js/main.js"></script>
 
 </body>
 
