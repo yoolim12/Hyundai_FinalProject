@@ -61,14 +61,13 @@ public class BackProductRestController {
 		return mem;
 	}
 
-	@RequestMapping("/delProduct")
+	@DeleteMapping("/delProduct")
 	public String delProduct(@RequestParam("pid") String pid) throws Exception {
-//		productService.delStock(pid);
-//		productService.delColor(pid);
 		try {
 			productService.delProduct(pid);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "삭제에 실패하였습니다.";
 		}
 		
 		return "Product Delete Success";

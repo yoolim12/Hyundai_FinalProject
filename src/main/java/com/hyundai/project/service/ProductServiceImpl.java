@@ -40,12 +40,12 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(value = "productTxManager")
     @Override
     public void delProduct(String pid) {
+    	productDAO.delStock(pid);
+    	log.info("stock 테이블 삭제");
+    	productDAO.delColor(pid);
+    	log.info("color 테이블 삭제");
         productDAO.delProduct(pid);
         log.info("product 테이블 삭제");
-        productDAO.delColor(pid);
-        log.info("color 테이블 삭제");
-        productDAO.delStock(pid);
-        log.info("stock 테이블 삭제");
     }
     
     @Override
