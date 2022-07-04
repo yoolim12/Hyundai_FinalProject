@@ -13,7 +13,7 @@
  	select p.pid||'_'||c.ccolorcode productCode, c.cimage1 T01imageUrl, p.pname productName, p.bname brandName, p.pprice price
 	from product p join color c on p.pid = c.pid
 	where p.pstatus = #{param1} and p.clarge = #{param2}
-	order by p.pinsertdate
+	order by p.pupdatedate desc
  </select> 
  
  <select id="getMagazineList" resultType="com.hyundai.project.dto.MainMagazineListVO">

@@ -44,4 +44,6 @@ public interface ProductDAO {
 	public void updateMain(String pid, int pstatus);
 	
 	public List<ProductBackDTO> backProductList(String pid);
+
+	public int productModify(ProductBackDTO productBackDTO);
 }

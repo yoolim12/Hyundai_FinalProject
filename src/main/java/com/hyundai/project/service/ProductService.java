@@ -29,4 +29,6 @@ public interface ProductService {
 	public void updateMain(String pid, int pstatus) throws Exception;
 
 	public List<ProductBackDTO> backProductList(String pid) throws Exception;
+	
+	public int productModify(ProductBackDTO productBackDTO);
 }

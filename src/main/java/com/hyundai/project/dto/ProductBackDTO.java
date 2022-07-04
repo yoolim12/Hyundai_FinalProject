@@ -15,5 +15,6 @@ public class ProductBackDTO {
 	private int pstatus;
 //	수정
 	private int samount;
-	private String size;
+	private String ssize;
+	private String ccolorcode;
 }
