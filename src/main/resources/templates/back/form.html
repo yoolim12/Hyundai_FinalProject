@@ -98,6 +98,27 @@
 			        $('#memberInfo').replaceWith(fragment);
 			    });
 		}
+		
+		// 임직원 검색 조회
+		function SfindEmployee(){
+			var emailBean = {
+			        email:$("#inputEmail").val()
+			    };
+			    $.ajax({
+			        url: "/back/SfindEmployee",
+			        type: "POST",
+			        data: emailBean,
+			        beforeSend: function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	                 },
+	                 success: function(res){
+	 			    	console.log(res);
+	 			    }
+			    })
+			    .done(function (fragment) {
+			        $('#employeeInfo').replaceWith(fragment);
+			    });
+		}
 	 	
 	 	
     	// 회원 검색
@@ -126,12 +147,13 @@
     					$('#SelectLm option:eq(4)').prop('selected', true);
     				}else if (res[0].gno == 5){
     					$('#SelectLm option:eq(5)').prop('selected', true);
-    				}else if (res[0].gno == 6){
-    					$('#SelectLm option:eq(6)').prop('selected', true);
-    				}else if (res[0].gno == 7){
-    					$('#SelectLm option:eq(7)').prop('selected', true);
     				}
     				
+    				if (res[0].msleep == 1){
+    					$('#SelectSleep option:eq(1)').prop('selected', true); //휴면
+    				} else{
+    					$('#SelectSleep option:eq(2)').prop('selected', true); //비휴면
+    				}
     				$("#mname").val(res[0].mname);
     				$("#birth").val(res[0].birth);
     				$("#telnum").val(res[0].telnum);
@@ -152,6 +174,12 @@
     		var telnum = $("#telnum").val();
     		var maddress = $("#maddress").val();
     		var gno = $("#SelectLm option:selected").val();
+    		var msleep = $("#SelectSleep option:selected").val();
+    		
+    		if (msleep == 2){
+    			msleep = 0;
+    		}
+    		
     		if(gno == 0){
     			alert("다시 선택해주세요.");
     			return;
@@ -168,7 +196,8 @@
     				'birth' : birth,
     				'telnum' : telnum,
     				'maddress' : maddress,
-    				'gno' : gno
+    				'gno' : gno,
+    				'msleep' : msleep
     			}),
     			beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
@@ -774,7 +803,7 @@
 																	<div class="input-group-btn">
 																		<input type="text" id="inputEmail" name="input-small" placeholder="Email" class="input-sm form-control-sm form-control">
 																	</div>
-																	<button type="button" class="btn btn-primary btn-sm" onclick = "findUser();">검색</button>
+																	<button type="button" class="btn btn-primary btn-sm" onclick = "SfindEmployee();">검색</button>
 																</div>	
 				                                        		</tr>
 					                                            <tr>
@@ -897,15 +926,13 @@
 					                                                 <option value="3">Mania</option>
 					                                                 <option value="4">Star</option>
 					                                                 <option value="5">The Star</option>
-					                                                 <option value="6">관리자</option>
-					                                                 <option value="7">임직원</option>
 					                                              </select>
 				                                              </div>
 				                                       </div>
 				                                       <div class="row form-group">
 				                                              <div class="col col-md-11">
 				                                            	<label for="selectSm" class=" form-control-label">휴면/비휴면</label>
-				                                                <select name="selectSm" id="SelectLm" class="form-control-sm form-control">
+				                                                <select name="selectSm" id="SelectSleep" class="form-control-sm form-control">
 				                                                    <option value="0">휴면/비휴면</option>
 				                                                    <option value="1">휴면</option>
 				                                                    <option value="2">비휴면</option>

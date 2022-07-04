@@ -43,8 +43,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void admodifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno) throws Exception{
-		mapper.admodifyMember(memail, mname, birth, telnum, maddress, gno);
+	public void admodifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno, int msleep) throws Exception{
+		mapper.admodifyMember(memail, mname, birth, telnum, maddress, gno, msleep);
 	}
 
 	// 회원 포인트 조회
@@ -75,6 +75,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<MemberJoinDTO> getEmployeeInfo(String memail) {
 		return mapper.getEmployeeInfo(memail);
+	}
+
+	// 임직원 검색 조회
+	@Override
+	public List<MemberJoinDTO> SfindEmployee(String memail) {
+		return mapper.SfindEmployee(memail);
 	}
 
 }

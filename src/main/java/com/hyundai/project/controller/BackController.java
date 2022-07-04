@@ -62,6 +62,17 @@ public class BackController {
 		return "/back/form :: #employeeInfo";
 	}
 	
+	// 임직원 검색 조회 ajax + thymleaf
+	@PostMapping("/SfindEmployee")
+	public String SfindEmployee(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
+		String memail = paramMap.get("email");
+		System.out.println(memail);
+		System.out.println(service.SfindEmployee(memail));
+		model.addAttribute("userList", service.SfindEmployee(memail));
+			
+		return "/back/form :: #employeeInfo";
+	}
+	
 	// 스트리밍 페이지 이동
 	@GetMapping("/test")
 	public String st() {
