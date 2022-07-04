@@ -10,25 +10,23 @@
 		<div class="footer_cnts1 clearfix">
 			<!-- footer_menu-->
 			<div class="footer_menu cnts1_left">
-				<div class="footer_logo"><a href="/ko/main" onclick="GA_Event('공통','로고','하단');"><img src="/resources/_ui/desktop/common/images/common/footer_logo_renew.png" alt="HANDSOME" /></a></div>
+				<div class="footer_logo"><a href="/main" onclick="GA_Event('공통','로고','하단');"><img src="/resources/_ui/desktop/common/images/common/footer_logo_renew.png" alt="HANDSOME" /></a></div>
 				<div class="footer_link">
-					<ul class="clearfix">
+					<ul class="clearfix" style="visibility: hidden;" >
 					    <li><a href="/ko/svcenter/theClubInfo" onclick="GA_Event('공통','푸터_메뉴','온라인 멤버십');">온라인 멤버십</a></li>
 						<li><a href="/ko/svcenter/memberbenefitguide" onclick="GA_Event('공통','푸터_메뉴','한섬 VVIP 혜택');">한섬 VVIP 혜택</a></li>
 						<li><a href="/ko/svcenter/pointguide" onclick="GA_Event('공통','푸터_메뉴','한섬마일리지 혜택');">한섬마일리지 혜택</a></li>
 						<li><a href="/ko/svcenter/couponguide" onclick="GA_Event('공통','푸터_메뉴','쿠폰');">쿠폰</a></li>
 						<li><a href="/ko/svcenter/asguide" onclick="GA_Event('공통','푸터_메뉴','반품&환불안내');">반품&amp;환불안내</a></li>
-							</ul>
-					<ul class="clearfix">
+					</ul>
+					<ul class="clearfix" style="visibility: hidden;">
 						<li><a href="/ko/svcenter/submain" onclick="GA_Event('공통','푸터_메뉴','고객센터');">고객센터</a></li>
 						<li><a href="/ko/svcenter/faq" onclick="GA_Event('공통','푸터_메뉴','FAQ');">FAQ</a></li>
 						<li><a href="/ko/svcenter/mending" onclick="GA_Event('공통','푸터_메뉴','수선진행조회');">수선진행조회</a></li>
-						</ul>
+					</ul>
 					<ul class="clearfix">
-					    <li><a href="javascript:setLogout();" onclick="GA_Event('공통','푸터_메뉴','로그아웃');">로그아웃</a></li>
-					    <li><a href="/ko/mypage/order/myorders" onclick="GA_Event('공통','푸터_메뉴','주문배송조회');">주문배송조회</a></li>
-						<li><a href="/ko/mypage/order/myorders" onclick="GA_Event('공통','푸터_메뉴','취소/반품');">취소/반품</a></li>
-						<li><a href="/ko/mypage/myWish" onclick="GA_Event('공통','푸터_메뉴','위시리스트');">위시리스트</a></li>
+					    <li><a href="/mypage" onclick="GA_Event('공통','푸터_메뉴','주문배송조회');">주문배송조회</a></li>
+						<li><a href="/mypage" onclick="GA_Event('공통','푸터_메뉴','취소/반품');">취소/반품</a></li>
 					</ul>
 					<ul class="clearfix">
 						<li><a href="http://www.handsome.co.kr/ko/company/aboutHandsome.do" target="_blank" onclick="GA_Event('공통','푸터_메뉴','회사소개');">회사소개<!-- 회사소개 --></a></li>
@@ -79,16 +77,6 @@
 			</div>
 			<div class="cnts2_right">
 				<div class="related_site clearfix">
-					<dl class="global lang_1911">
-					    <dt><a href="javascript:void(0);" class="" onclick="GA_Event('공통','푸터_CNT','LANGUAGE');">LANGUAGE</a></dt>
-						<dd style="display: none;">
-							<ul>
-								<li><a href="javascript:language('ko')" onclick="GA_Event('공통','푸터_CNT','LANGUAGE_한국어');">한국어</a></li>
-								<li><a href="javascript:language('en')" onclick="GA_Event('공통','푸터_CNT','LANGUAGE_ENGLISH');">ENGLISH</a></li>
-								<li><a href="javascript:language('zh')" onclick="GA_Event('공통','푸터_CNT','LANGUAGE_中文');">中文</a></li>
-							</ul>
-						</dd>
-					</dl>
 					<dl class="family">
 						<dt><a href="javascript:void(0);" onclick="GA_Event('공통','푸터_CNT','FAMILY SITE');">FAMILY SITE<!-- FAMILY SITE --></a></dt>
 						<dd style="">
@@ -123,8 +111,6 @@
 				
 				
 				</div>
-				<!-- 푸터 공지 추가 220404 -->
-				<!-- 공지 -->
 				<div id="noticeWrap" class="notice">
 					<div class="controls">
 						<a href="javascript:void(0);" class="prev">이전</a>
@@ -133,16 +119,12 @@
 					<div class="list">
 						<div class="tlt">공지<!-- 공지 --></div>
 						<ul class="list_new">
-							<!-- NoticeContent -->
 							<li>
-								<a href="/ko/svcenter/notice?noticeCode=8803793555376">[당첨자발표] 더한섬닷컴 3월 신규회원 댓글 이벤트 당첨자 발표</a>
+								<span>[당첨자발표] 더한섬닷컴 7월 신규회원 댓글 이벤트 당첨자 발표</span>
 							</li>
 						</ul>
 					</div>
 				</div>
-				<!-- //공지 -->
-				
-				<!-- 뉴스 -->
 				<div id="newsWrap" class="news">
 					<div class="controls">
 						<a href="javascript:void(0);" class="prev">이전</a>
@@ -151,9 +133,8 @@
 					<div class="list">
 						<div class="tlt">뉴스<!-- 뉴스 --></div>
 						<ul class="list_new">
-							<!-- NewsContent -->
 							<li>
-								<a href="/ko/magazine/newsDetailtemplatetype4?newsCode=8803465877276&amp;typeCode=WEB" onclick="GA_Common('news',$(this))">[핸썸TV] 딱 지금을 위한! FOURM 에센셜 아이템</a>
+								<span>[핸썸TV] 딱 지금을 위한! FOURM 에센셜 아이템</span>
 							</li>
 						</ul>
 					</div>
