@@ -114,4 +114,8 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.backProductList(pid);
 	}
 
+	@Override
+	public int productModify(ProductBackDTO productBackDTO) {
+		return productDAO.productModify(productBackDTO);
+	}
 }

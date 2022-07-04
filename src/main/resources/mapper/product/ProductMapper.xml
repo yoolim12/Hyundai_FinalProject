@@ -146,6 +146,10 @@
         where pname like '%'||#{pname}||'%'
         order by pid
     </select>
+    
+    <update id="productModify">
+        update product set pprice = #{pprice}, pstatus = #{pstatus}, pupdatedate = sysdate WHERE pid = #{pid}
+    </update>
 
     <select id="getCategory" resultType="com.hyundai.project.dto.ProductCategoryDTO">
         select clarge, cmedium, csmall from category order by clarge desc

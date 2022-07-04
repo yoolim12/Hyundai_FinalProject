@@ -31,5 +31,6 @@ public interface ProductService {
 	public List<ProductCategoryDTO> getCategory() throws Exception;
 
 	public List<ProductBackDTO> backProductList(String pid) throws Exception;
-
+	
+	public int productModify(ProductBackDTO productBackDTO);
 }

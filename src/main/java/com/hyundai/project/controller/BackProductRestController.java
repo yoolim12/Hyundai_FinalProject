@@ -88,6 +88,16 @@ public class BackProductRestController {
 		}
 		return product;
 	}
+	
+	@PutMapping(value = "/product")
+	public String userModify(@RequestBody HashMap<String, String> map) {
+		ProductBackDTO dto = new ProductBackDTO();
+		dto.setPid(map.get("pid"));
+		dto.setPprice(map.get("pprice"));
+		dto.setPstatus(Integer.parseInt(map.get("pstatus")));
+		productService.productModify(dto);
+		return "modify success";
+	}
 
     @PostMapping("/product")
     public void insertProduct(@RequestPart(value = "key") ProductInsertDTO product, @RequestPart(value = "cimage", required = false) List<MultipartFile> cimage,
