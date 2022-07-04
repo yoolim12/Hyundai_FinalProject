@@ -453,8 +453,8 @@
                   </div>
                </div>
                <div class="card-footer">
-                  <div class="float-right">
-                  <button type="submit" id="confirm" class="btn btn-primary btn-sm">
+               	<div class="float-right">
+                  <button type="submit" id="confirm" class="btn btn-primary btn-sm" data-dismiss="modal">
                      <i class="fa fa-dot-circle-o"></i> 확인
                   </button>
                   <button type="button" id="cancle" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
@@ -642,64 +642,63 @@
          beforeSend: function(xhr){
                 xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
              },
-         success:function() {
-            showList();
-         },
-         error: function (request, status, error) {
-            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-         },
+        success:function() {
+          showList();
+        },
+        error: function (request, status, error) {
+          console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
       });
-   });
-   
-   $(document).ready(function () {
+    });
+
+    $(document).ready(function () {
       $("#searchRes").html('<div class="alert alert-light">'
-            + '<h4 class="alert-heading">관리자 페이지에 오신 것을 환영합니다!</h4>'
-            + '<hr>'
-            + '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
-            + '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
-            + '</div>');
-      
-      
+          + '<h4 class="alert-heading">관리자 페이지에 오신 것을 환영합니다!</h4>'
+          + '<hr>'
+          + '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
+          + '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
+          + '</div>');
+
+
       $("#searchRes").html('<div class="alert alert-light">'
-            + '<h4 class="alert-heading">관리자 페이지에 오신 것을 환영합니다!</h4>'
-            + '<hr>'
-            + '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
-            + '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
-            + '</div>');
-      
-      
-   })
-   
-      function openModal(pid){
-         $("#deletemodal").modal("toggle");
-         document.getElementById("confirm").setAttribute("onclick","deleteProduct('"+pid+"')");
-      }
-      
-      function deleteProduct(pid) {
-              var url = "/back/delProduct?pid="+pid;
-              console.log("gg");
-              $.ajax({
-                     url: url,
-                     method: "delete",
-                     data: JSON.stringify({
-                         pid: pid,
-                         "CSRFToken": getYCsrfToken()
-                     }),
-                     contentType: "application/json",
-                     beforeSend: function(xhr){
-                     xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-                  },
-                     cache: false,
-                     success: function (res) {
-                         console.log('삭제완료')
-                         location.href = "/back/form3"
-                     },
-                     error: function (request, status, error) {
-                         console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                     }
-                 });
-          }
-   </script>
+          + '<h4 class="alert-heading">관리자 페이지에 오신 것을 환영합니다!</h4>'
+          + '<hr>'
+          + '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
+          + '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
+          + '</div>');
+		
+		
+	})
+	
+		function openModal(pid){
+			$("#deletemodal").modal("toggle");
+			document.getElementById("confirm").setAttribute("onclick","deleteProduct('"+pid+"')");
+		}
+		
+		function deleteProduct(pid) {
+	           let url = "/back/delProduct";
+	           $.ajax({
+	                  url: url,
+	                  method: "delete",
+	                  data: JSON.stringify({
+	                      pid: pid,
+	                      "CSRFToken": getYCsrfToken()
+	                  }),
+	                  contentType: "application/json",
+	                  beforeSend: function(xhr){
+	      				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+	      			},
+	                  cache: false,
+	                  success: function (res) {
+	                      showList();
+	                  },
+	                  error: function (request, status, error) {
+	                      console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	                  }
+	              });
+	       }
+	</script>
+
 
 </body>
 </html>
