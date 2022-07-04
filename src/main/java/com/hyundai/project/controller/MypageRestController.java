@@ -127,7 +127,7 @@ public class MypageRestController {
         
         try {
             entry = new ResponseEntity<List<OrderResDTO>>(oservice.getOrder(memail), HttpStatus.OK);
-            log.info(entry);
+            //log.info(entry);
         } catch (Exception e) {
             e.printStackTrace();
             entry = new ResponseEntity<List<OrderResDTO>>(HttpStatus.BAD_REQUEST);

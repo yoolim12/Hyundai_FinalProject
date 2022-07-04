@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
         productDAO.updateProduct(product);
     }
 
-    // Transaction 처리
+    @Transactional(value = "productTxManager")
     @Override
     public void insertProduct(ProductInsertDTO pi) throws Exception {
         // 이미 product 테이블에 존재하는 Pid인데 새로운 컬러만 추가하는 경우 처리

@@ -85,11 +85,13 @@ public class OrderServiceImpl implements OrderService {
         return orderDAO.getOrder(memail);
     }
 
+
     public void deleteOrder(int oid) throws Exception {
         orderDAO.deleteOrderList(oid);
         orderDAO.deleteOrderItem(oid);
     }
-    
+
+    @Transactional(value = "memberTxManager")
     @Override
     public void updateOrderList(int oid) throws Exception {
     	orderDAO.updateOrderList(oid);
