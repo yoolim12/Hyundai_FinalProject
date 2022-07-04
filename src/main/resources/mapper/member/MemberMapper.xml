@@ -12,12 +12,25 @@
 	<select id="getMemberInfo"
 		resultType="com.hyundai.project.dto.MemberJoinDTO">
 		<![CDATA[
+		select memail, moddate, regdate, from_social, mname, mpassword, role_set, gno, birth, telnum, maddress, mpoint, mgender, memail_info, gname, msleep from(select
+		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth, c1.telnum, c1.maddress, c1.mpoint, c1.mgender, c1.memail_info, c1.msleep
+		from
+		member c1 join memberrole c2
+		on c1.memail = c2.memail
+		where c1.memail LIKE '%'||#{memail}||'%'
+		) natural join grade
+		]]>
+	</select>
+	
+	<select id="SfindEmployee"
+		resultType="com.hyundai.project.dto.MemberJoinDTO">
+		<![CDATA[
 		select memail, moddate, regdate, from_social, mname, mpassword, role_set, gno, birth, telnum, maddress, mpoint, mgender, memail_info, gname from(select
 		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth, c1.telnum, c1.maddress, c1.mpoint, c1.mgender, c1.memail_info
 		from
 		member c1 join memberrole c2
 		on c1.memail = c2.memail
-		where c1.memail LIKE '%'||#{memail}||'%'
+		where c1.memail LIKE '%'||#{memail}||'%' and role_set = 'EMPLOYEE'
 		) natural join grade
 		]]>
 	</select>
@@ -31,11 +44,11 @@
 	</select>
 	
 	<select id="modifyMember" parameterType="com.hyundai.project.dto.AuthMemberDTO">
-		update member set memail_info=#{memail_info}, mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress} where memail = #{memail}
+		update member set memail_info=#{memail_info}, mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress}, msleep = #{msleep}, moddate = sysdate where memail = #{memail}
 	</select>
 	
 	<update id="admodifyMember">
-		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress}, gno = #{gno}, moddate = sysdate where memail = #{memail}
+		update member set mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress}, gno = #{gno}, msleep = #{msleep}, moddate = sysdate where memail = #{memail}
 	</update>
 	
 	<delete id="delMember">

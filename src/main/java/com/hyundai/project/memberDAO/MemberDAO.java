@@ -23,7 +23,7 @@ public interface MemberDAO {
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception;
 	
 	// 회원 수정 (관리자)
-	public void admodifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno) throws Exception;
+	public void admodifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno, int msleep) throws Exception;
 		
 	// 회원 탈퇴
 	public void delMember(String email) throws Exception;
@@ -51,4 +51,7 @@ public interface MemberDAO {
 	
 	// 임직원 조회
 	public List<MemberJoinDTO> getEmployeeInfo(String memail);
+	
+	// 임직원 검색 조회
+	public List<MemberJoinDTO> SfindEmployee(String memail);
 }
