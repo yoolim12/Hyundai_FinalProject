@@ -7,6 +7,115 @@
 
 <!-- yoolim don't erase!!! -->
 	<script type="text/javascript">
+	
+	function go_join(memail){
+		var vc = new ValidationCheck(); 
+        vc.checkIdList = ['pw', 'pwc', 'name', 'selYear', 'selMonth', 'selDay'];
+
+        if(!vc.isValid()){
+            return;
+        }
+        
+        var pwTypeChk = $("#pwTypeChk").val();
+        var pwConfirmChk = $("#pwConfirmChk").val();
+        var emailDuplChk = $("#emailDuplChk").val();
+        var memailDuplChk = $("#memailDuplChk").val();
+        emailDuplChk = "Y";
+        memailDuplChk = "Y";
+        if ( pwTypeChk !== "Y") {
+            layerAlert("비밀번호는 8~15자리 이하로 영문/숫자/특수문자를 혼합해주세요 ");
+            return;
+        }
+        
+        if ( pwConfirmChk !== "Y") {
+            layerAlert("비밀번호가 일치하지 않습니다 ");
+            return;
+        }
+        
+        
+        if(memail!=""){
+			console.log($("#email").val())
+			console.log(emailDuplChk);
+            if (memailDuplChk !== 'Y' || emailDuplChk !== 'Y') {
+                layerAlert("E-mail 중복확인이 되지 않았습니다.");
+                return;
+            }
+            
+            var email = memail;
+            if (!validateEmail(email)) {
+                layerAlert("잘못된 E-mail 형식입니다.");
+                return;
+            }
+            
+            if(email.length > 50) {
+                layerAlert("E-mail은 최대 50자입니다.");
+                return;
+            }
+        }else{
+            if($("#emailReceiveYn").is(':checked')){
+                layerAlert("E-mail (정보수신용) 을 입력해 주세요.");
+                return;
+            }
+        }
+        
+        $("#cancleBtn").attr("disabled", true);
+        $("#joinBtn").attr("disabled", true);
+        
+        $("#collectionAgreementYN").val("N");
+        $("#emailAddress").val($("#email").val()+"@"+$("#emailDomain").val());
+        
+        if($("#email").val()==""){
+            $("#emailAddress").val("");
+        }
+        $("#sBirthday").val($("#selYear").val() + $("#selMonth").val() + $("#selDay").val());
+        
+        console.log('birthday', $("#sBirthday").val());
+        
+        var emailDomain = '';
+        if($('[name="memail2"]').val() === ""){
+				emailDomain += $('#uidDomain').val();
+			}
+			else{
+				emailDomain += $('[name="memail2"]').val();
+			}
+        
+        $.ajax({
+          type: 'POST',
+          url: '/member/registerPost',
+          dataType: 'JSON',
+          contentType : "application/json",
+          data: JSON.stringify({
+              "memail": memail,
+              "mpassword": $('[name="mpassword"]').val(),
+              "memail_info": $('[name="memail_info1"]').val() + '@' + $('[name="memail_info2"]').val(),
+              "mname": $('[name="mname"]').val(),
+              "birth": $('[name="myear"]').val() + '-' 
+                  + $('[name="mmonth"]').val() + '-' 
+                  + $('[name="mday"]').val(),
+              "telnum": $('[name="telnum1"]').val() + '-' 
+                  + $('[name="telnum2"]').val() + '-' 
+                  + $('[name="telnum3"]').val(),
+              "CSRFToken": getYCsrfToken()
+          }),
+          beforeSend: function(xhr){
+				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+			},
+          success:function(response){
+				if(response){
+                  // var la = new layerAlert("회원가입이 완료 되었습니다.");
+                  console.log('register success!!!')
+					location.href = '/member/simpleRegister3';
+				}else{
+					// var la = new layerAlert("회원가입에 실패하였습니다.");
+					console.log('register fail.......')
+					location.href='/member/simpleRegister';
+				}
+			},
+			error:function(e){
+				console.log(e);
+			}
+        });
+	}
 //<![CDATA[ 
 $(document).ready(function(){
 	console.log(getCsrfHeaderName(), getYCsrfToken());
@@ -302,111 +411,7 @@ $(document).ready(function(){
     //   var joinCfBtnChk = 0;
        $("#joinBtn").click(function(){
 
-          var vc = new ValidationCheck(); 
-          vc.checkIdList = ['pw', 'pwc', 'name', 'selYear', 'selMonth', 'selDay'];
-
-          if(!vc.isValid()){
-              return;
-          }
           
-          var pwTypeChk = $("#pwTypeChk").val();
-          var pwConfirmChk = $("#pwConfirmChk").val();
-          var emailDuplChk = $("#emailDuplChk").val();
-          var memailDuplChk = $("#memailDuplChk").val();
-
-          if ( pwTypeChk !== "Y") {
-              layerAlert("비밀번호는 8~15자리 이하로 영문/숫자/특수문자를 혼합해주세요 ");
-              return;
-          }
-          
-          if ( pwConfirmChk !== "Y") {
-              layerAlert("비밀번호가 일치하지 않습니다 ");
-              return;
-          }
-          
-          
-          if($("#email").val()!=""){
-			console.log($("#email").val())
-			console.log(emailDuplChk);
-              if (memailDuplChk !== 'Y' || emailDuplChk !== 'Y') {
-                  layerAlert("E-mail 중복확인이 되지 않았습니다.");
-                  return;
-              }
-              
-              var email = $("#email").val()+"@"+$("#emailDomain").val();
-              if (!validateEmail(email)) {
-                  layerAlert("잘못된 E-mail 형식입니다.");
-                  return;
-              }
-              
-              if(email.length > 50) {
-                  layerAlert("E-mail은 최대 50자입니다.");
-                  return;
-              }
-          }else{
-              if($("#emailReceiveYn").is(':checked')){
-                  layerAlert("E-mail (정보수신용) 을 입력해 주세요.");
-                  return;
-              }
-          }
-          
-          $("#cancleBtn").attr("disabled", true);
-          $("#joinBtn").attr("disabled", true);
-          
-          $("#collectionAgreementYN").val("N");
-          $("#emailAddress").val($("#email").val()+"@"+$("#emailDomain").val());
-          
-          if($("#email").val()==""){
-              $("#emailAddress").val("");
-          }
-          $("#sBirthday").val($("#selYear").val() + $("#selMonth").val() + $("#selDay").val());
-          
-          console.log('birthday', $("#sBirthday").val());
-          
-          var emailDomain = '';
-          if($('[name="memail2"]').val() === ""){
-				emailDomain += $('#uidDomain').val();
-			}
-			else{
-				emailDomain += $('[name="memail2"]').val();
-			}
-          
-          $.ajax({
-            type: 'POST',
-            url: '/member/registerPost',
-            dataType: 'JSON',
-            contentType : "application/json",
-            data: JSON.stringify({
-                "memail": $('[name="memail1"]').val() + '@' + emailDomain,
-                "mpassword": $('[name="mpassword"]').val(),
-                "memail_info": $('[name="memail_info1"]').val() + '@' + $('[name="memail_info2"]').val(),
-                "mname": $('[name="mname"]').val(),
-                "birth": $('[name="myear"]').val() + '-' 
-                    + $('[name="mmonth"]').val() + '-' 
-                    + $('[name="mday"]').val(),
-                "telnum": $('[name="telnum1"]').val() + '-' 
-                    + $('[name="telnum2"]').val() + '-' 
-                    + $('[name="telnum3"]').val(),
-                "CSRFToken": getYCsrfToken()
-            }),
-            beforeSend: function(xhr){
-				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-			},
-            success:function(response){
-				if(response){
-                    // var la = new layerAlert("회원가입이 완료 되었습니다.");
-                    console.log('register success!!!')
-					location.href = '/member/simpleRegister3';
-				}else{
-					// var la = new layerAlert("회원가입에 실패하였습니다.");
-					console.log('register fail.......')
-					location.href='/member/simpleRegister';
-				}
-			},
-			error:function(e){
-				console.log(e);
-			}
-          });
       });
       
       
@@ -418,7 +423,7 @@ $(document).ready(function(){
       
       $('#ck1').click(function(){
           if($(this).is(':checked')){
-              var email = $('[name="memail1"]').val()+'@'+$('[name="memail2"]').val()
+              var email = "[[${mail.memail}]]";
               var emailArray = email.split("@");
               
               $("#email").val(emailArray[0]);
@@ -571,35 +576,7 @@ function validateEmail(email) {
                                     <tbody>
                                         <tr>
                                             <th scope="row">이메일 아이디</th>
-                                            <td>
-                                                <p class="emailinput">
-                                                    <input type="text" id="id" name="memail1" style="width:120px" title="이메일 아이디"> 
-                                                    <span class="andmail">@</span>
-                                                    <input type="text" id="uidDomain" style="width:120px" title="이메일 계정">
-                                                    <select id="uidDomainSel" style="width:120px; margin:0 0 0 0;" title="이메일 아이디 도메인" name="memail2">
-                                                        <option value="">직접입력</option>
-                                                        <option value="naver.com">naver.com</option>
-                                                        <option value="daum.net">daum.net</option>
-                                                        <option value="gmail.com">gmail.com</option>
-                                                        <option value="yahoo.co.kr">yahoo.co.kr</option>
-                                                        <option value="lycos.co.kr">lycos.co.kr</option>
-                                                        <option value="nate.com">nate.com</option>
-                                                        <option value="empas.com">empas.com</option>
-                                                        <option value="hotmail.com">hotmail.com</option>
-                                                        <option value="msn.com">msn.com</option>
-                                                        <option value="hanmir.com">hanmir.com</option>
-                                                        <option value="chol.net">chol.net</option>
-                                                        <option value="korea.com">korea.com</option>
-                                                        <option value="netsgo.com">netsgo.com</option>
-                                                        <option value="dreamwiz.com">dreamwiz.com</option>
-                                                        <option value="hanafos.com">hanafos.com</option>
-                                                        <option value="freechal.com">freechal.com</option>
-                                                        <option value="hitel.net">hitel.net</option>
-                                                    </select>
-                                                    <input type="button" class="btn add_s" id="idDubChkBtn" value="중복확인">
-                                                    <br/>
-                                                    <span class="guide_comment" id="idDubMsg"></span>
-                                                </p>
+                                            <td th:text = "${mail.memail}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -647,7 +624,7 @@ function validateEmail(email) {
                                                 <input type="button" class="btn add_s" id="emailDubChkBtn"  value="중복확인">
                                                 <span class="guide_comment" id="emailMsg" ></span>
                                                 <div class="wtype_comment pt10">
-                                                    <input type="checkbox" id="ck1" /><label for="ck1">이메일 아이디 적용</label>
+                                                    <input type="checkbox" id="ck1"/><label for="ck1">이메일 아이디 적용</label>
                                                 </div>
                                                 <div class="wtype_comment pt5">
                                                     <input type="checkbox" id="emailReceiveYn" name="emailReceiveYn" value="Y"/><label for="emailReceiveYn">이메일을 통한 상품 및 이벤트 정보 수신에 동의합니다. (선택)</label>
@@ -746,7 +723,7 @@ function validateEmail(email) {
                                 </table>                            
                                 <div class="btnwrap">
                                     <input type="button" value="취소" class="btn wt" id="cancleBtn" />
-                                    <input type="button" value="회원가입" class="btn gray mr0" id="joinBtn" />
+                                    <input type="button" value="회원가입" class="btn gray mr0" id="joinBtn" th:onclick = "go_join([[${mail.memail}]])"/>
                                 </div>
                             </div>
                             

@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -41,6 +43,15 @@ public class LoginRestController {
 	
 	@Autowired
 	private MailService mail;
+	
+	@PostMapping("/sendEmail")
+	@ResponseBody
+	public String sendEmail(@RequestBody HashMap<String, String> map) {
+		String memail = map.get("memail");
+		mail.welcomeMailSend(memail);
+		System.out.println("send email");
+		return "success";
+	}
 	
 	@RequestMapping("/registerPost")
 	public void registerPost(@RequestBody HashMap<String, String> map, 
@@ -72,7 +83,6 @@ public class LoginRestController {
     		service.simpleRegister(memberdto);
     		service.registerRole(memberRoleDTO);
     		System.out.println("register success!!");
-    		mail.welcomeMailSend(memail);
     		
         	Gson gson = new Gson();
     		response.setContentType("application/json; charset=utf-8");

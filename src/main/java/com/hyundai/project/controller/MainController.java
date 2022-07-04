@@ -14,6 +14,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Controller
 public class MainController {
+	@Autowired
+	MailService mail;
+	
 	@GetMapping("/main")
 	public void main() {
 		log.info("메인페이지 요청");

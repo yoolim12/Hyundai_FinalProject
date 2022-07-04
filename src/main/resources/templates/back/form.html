@@ -48,6 +48,11 @@
        var token = $("meta[name='_csrf']").attr("content");
       var header = $("meta[name='_csrf_header']").attr("content");
       
+      function confirm(){
+    	  $("#deletemodal").modal("toggle");
+		  document.getElementById("confirm").setAttribute("onclick","delMember()");
+      }
+      
       $(function(){
          document.getElementById("home-tab").click();
          $('#home-tab').addClass('active');
@@ -102,7 +107,7 @@
       // 임직원 검색 조회
       function SfindEmployee(){
          var emailBean = {
-                 email:$("#inputEmail").val()
+                 email:$("#EinputEmail").val()
              };
              $.ajax({
                  url: "/back/SfindEmployee",
@@ -232,7 +237,8 @@
                 async : false,
                 cache: false,
              success: function(res){
-                $("#staticModal").modal();
+            	
+                //$("#staticModal").modal();
                 
                 //alert("탈퇴 성공");
                 console.log(res);
@@ -264,7 +270,8 @@
                 async : false,
                 cache: false,
              success: function(res){
-                $("#staticModal").modal();
+            	 
+            	 //$("#staticModal").modal();
                 
                 //alert("탈퇴 성공");
                 console.log(res);
@@ -791,14 +798,14 @@
                                             </div>
                                  </div>
                                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                        <div class="table-responsive table-responsive-data2" id = "employeeInfo">
                                                    <table class="table table-data2">
                                                        <thead>
                                                           <tr>
                                                           <div class="input-group">
                                                    <div class="input-group-btn">
-                                                      <input type="text" id="inputEmail" name="input-small" placeholder="Email" class="input-sm form-control-sm form-control">
+                                                      <input type="text" id="EinputEmail" name="input-small" placeholder="Email" class="input-sm form-control-sm form-control">
                                                    </div>
                                                    <button type="button" class="btn btn-primary btn-sm" onclick = "SfindEmployee();">검색</button>
                                                 </div>   
@@ -937,10 +944,10 @@
                                                          </div>
                                                    </div>
                                                     <div class="card-footer">
-                                                       <button class="btn btn-primary btn-sm" onclick = "modify()">
+                                                       <button class="btn btn-primary btn-sm" onclick = "modify();">
                                                            <i class="fa fa-dot-circle-o"></i> 수정하기
                                                        </button>
-                                                       <button class="btn btn-danger btn-sm" onclick = "delMember()">
+                                                       <button class="btn btn-danger btn-sm" onclick = "confirm();">
                                                            <i class="fa fa-ban"></i> 탈퇴
                                                        </button>
                                                    </div>
@@ -988,6 +995,38 @@
             </div>
          </div>
          <!-- end modal static -->
+         
+         <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog"
+	      aria-labelledby="deletemodalLabel" aria-hidden="true">
+	      <div class="modal-dialog modal-md" role="document">
+	         <div class="modal-content">
+	            <div class="modal-header">
+	               <h5 class="modal-title" id="scrollmodalLabel">회원 삭제</h5>
+	               <button type="button" class="close" id="ico-cancle" data-dismiss="modal"
+	                  aria-label="Close">
+	                  <span aria-hidden="true">&times;</span>
+	               </button>
+	            </div>
+	            <div class="modal-body">
+	               <div class="card-body card-block">
+	                  <div class="row form-group">
+	                     해당 회원을 삭제하시겠습니까?
+	                  </div>
+	               </div>
+	               <div class="card-footer">
+	               	<div class="float-right">
+	                  <button id="confirm" class="btn btn-primary btn-sm" data-dismiss="modal">
+	                     <i class="fa fa-dot-circle-o"></i> 확인
+	                  </button>
+	                  <button type="button" id="cancle" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+	                     <i class="fa fa-ban"></i> 취소
+	                  </button>
+	                 </div>
+	               </div>
+	            </div>
+	         </div>
+	      </div>
+	</div>
     </div>
 
     <!-- Jquery JS-->
