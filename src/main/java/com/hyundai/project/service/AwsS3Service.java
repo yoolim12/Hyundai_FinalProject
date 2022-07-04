@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class AwsS3Service {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+
+    @Value("${cloud.aws.region.static}")
+    private String region;
 
     private final AmazonS3 amazonS3;
 
@@ -47,7 +52,7 @@ public class AwsS3Service {
             fileNameList.add(fileName);
         });
 
-        return fileNameList;
+        return getUrl(fileNameList);
     }
 
     public void deleteFile(String fileName) {
@@ -64,5 +69,15 @@ public class AwsS3Service {
         } catch (StringIndexOutOfBoundsException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 형식의 파일(" + fileName + ") 입니다.");
         }
+    }
+
+    public List<String> getUrl(List<String> fileNameList) {
+        log.info(fileNameList);
+        List<String> result = new ArrayList<>();
+        for (int i=0; i<fileNameList.size(); i++) {
+            String temp = "https://"+bucket+".s3."+region+".amazonaws.com/"+fileNameList.get(i);
+            result.add(temp);
+        }
+        return result;
     }
 }

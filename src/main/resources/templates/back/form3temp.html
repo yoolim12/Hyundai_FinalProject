@@ -155,23 +155,39 @@
             clarge: clarge,
             cmedium: cmedium,
             csmall: csmall,
-            pname: csmall,
+            pname: pname,
             pprice: pprice,
             pdetail: pdetail,
             ccolorcode: ccolorcode,
-            cimage1 : cimage1,
-            cimage2 : cimage2,
-            cimage3 : cimage3,
             ccolorimage : ccolorimage,
             cmatchpid : cmatchpid,
             ssize: ssize
         }
+        var formData = new FormData();
+        var fileInput = $('#cimage');
+        var fileInput2 = $('#ccolorimage');
+        console.log(fileInput2);
+        // fileInput 개수를 구한다.
+        for (var i = 0; i < fileInput.length; i++) {
+            if (fileInput[i].files.length > 0) {
+                for (var j = 0; j < fileInput[i].files.length; j++) {
+                    console.log(" fileInput[i].files[j] :::"+ fileInput[i].files[j]);
+                    // formData에 'file'이라는 키값으로 fileInput 값을 append 시킨다.
+                    formData.append('cimage', $('#cimage')[i].files[j]);
+                }
+            }
+        }
+        console.log(fileInput2);
+        formData.append("ccolorimage",fileInput2[0].files[0]);
+        formData.append('key', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
         console.log(data);
         $.ajax({
             url: "/back/product",
             method: "post",
-            data: JSON.stringify(data),
-            contentType: "application/json",
+            data: formData,
+            contentType: false,               // * 중요 *
+            processData: false,               // * 중요 *
+            enctype : 'multipart/form-data',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
             },
@@ -285,9 +301,10 @@
                             <label for="textarea-input" class=" form-control-label">상품 이미지</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="cimage1" class="form-control">
-                            <input type="text" id="cimage2" class="form-control">
-                            <input type="text" id="cimage3" class="form-control">
+<!--                            <input type="text" id="cimage1" class="form-control">-->
+<!--                            <input type="text" id="cimage2" class="form-control">-->
+<!--                            <input type="text" id="cimage3" class="form-control">-->
+                            <input type="file" id="cimage" name="file-multiple-input" multiple class="form-control-file">
                             <small class="form-text text-muted">상품 이미지를 입력해주세요</small>
                         </div>
                     </div>
@@ -296,7 +313,7 @@
                             <label for="textarea-input" class=" form-control-label">컬러칩 이미지</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="ccolorimage" class="form-control">
+                            <input type="file" id="ccolorimage" name="file-multiple-input" class="form-control-file">
                             <small class="form-text text-muted">컬러칩 이미지를 입력해주세요</small>
                         </div>
                     </div>

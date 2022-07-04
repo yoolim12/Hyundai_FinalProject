@@ -86,6 +86,7 @@ public class ProductServiceImpl implements ProductService {
         pcolor.setCcolorimage(pi.getCcolorimage());
         pcolor.setCmatchpid(pi.getCmatchpid());
         productDAO.insertProductColor(pcolor);
+        log.info(pcolor);
         for(int i=0; i<pi.getSsize().size(); i++) {
             ProductSizeDTO psize = new ProductSizeDTO();
             psize.setPid(pi.getPid());
@@ -93,6 +94,7 @@ public class ProductServiceImpl implements ProductService {
             psize.setSsize(pi.getSsize().get(i).getSsize());
             psize.setCcolorcode(pi.getCcolorcode());
             productDAO.insertProductSize(psize);
+            log.info(psize);
         }
     }
 
