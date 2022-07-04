@@ -144,7 +144,7 @@
         select pid, clarge||'-'||cmedium||'-'||csmall category, bname, pname, pprice, pdetail, pstatus
 		from product
         where pname like '%'||#{pname}||'%'
-        order by pid
+        order by pupdatedate desc
     </select>
     
     <update id="productModify">

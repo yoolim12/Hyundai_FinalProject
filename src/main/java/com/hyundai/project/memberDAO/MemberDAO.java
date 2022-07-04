@@ -48,4 +48,7 @@ public interface MemberDAO {
 
 	// 회원 포인트 적립
 	public void pointSaving(String memail, int savingpoint);
+	
+	// 임직원 조회
+	public List<MemberJoinDTO> getEmployeeInfo(String memail);
 }
