@@ -49,11 +49,6 @@
 <link href="css/theme.css" rel="stylesheet" media="all">
 <!-- Jquery JS-->
 <script src="vendor/jquery-3.2.1.min.js"></script>
-<style>
-	#deletemodal.modal-overlay{
-		display: none;
-	}
-</style>
 </head>
 
 <body class="animsition">
@@ -78,61 +73,6 @@
 		function getCsrfParameterName() {
 			return $("#CSRFForm [name='CSRFParameterName']").val();
 		}
-		
-		$(document).ready(function () {
-			$("#searchRes").html('<h2>상품명을 검색해주세요</h2>');
-			
-			const open = () => {
-				document.querySelector(".modal").classList.remove("hidden");
-			}
-			const close = () => {
-				document.querySelector(".modal").classList.add("hidden");
-			}
-			
-			document.querySelector("#btn-modal").addEventListener("click", open);
-			document.querySelector("#cancle").addEventListener("click", close);
-			document.querySelector("#ico-cancle").addEventListener("click", close);
-			
-			
-			const modal = document.getElementById("deletemodal")
-			const btnModal = document.getElementById("btn-modal")
-			btnModal.addEventListener("click", e=>{
-				modal.style.display = "flex"
-			})
-			
-			function deleteProduct(pid) {
-		           var url = "/back/delProduct?pid="+pid;
-		           console.log("gg");
-		           /* $("#deletemodal").show("slow"); */
-		           /* alert */
-		           /* $.ajax({
-		                  url: url,
-		                  method: "delete",
-		                  data: JSON.stringify({
-		                      pid: pid,
-		                      "CSRFToken": getYCsrfToken()
-		                  }),
-		                  contentType: "application/json",
-		                  beforeSend: function(xhr){
-		      				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-		      			},
-		                  cache: false,
-		                  success: function (res) {
-		                      console.log('삭제완료')
-		                      location.href = "/back/form3"
-		                  },
-		                  error: function (request, status, error) {
-		                      console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-		                  }
-		              }); */
-		       }
-			$("#searchRes").html('<div class="alert alert-light">'
-					+ '<h4 class="alert-heading">관리자 페이지에 오신 것을 환영합니다!</h4>'
-					+ '<hr>'
-					+ '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
-					+ '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
-					+ '</div>');
-		})
 	</script>
 	
 
@@ -498,8 +438,8 @@
 		</div>
 	</div>
 
-	<div class="modal hidden" id="deletemodal" tabindex="-1" role="dialog"
-      aria-labelledby="scrollmodalLabel" aria-hidden="true">
+	<div class="modal fade" id="deletemodal" tabindex="-1" role="dialog"
+      aria-labelledby="deletemodalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
          <div class="modal-content">
             <div class="modal-header">
@@ -517,7 +457,7 @@
                </div>
                <div class="card-footer">
                	<div class="float-right">
-                  <button type="submit" id="confirm" class="btn btn-primary btn-sm" onclick:"deleteProduct()">
+                  <button type="submit" id="confirm" class="btn btn-primary btn-sm">
                      <i class="fa fa-dot-circle-o"></i> 확인
                   </button>
                   <button type="button" id="cancle" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
@@ -601,7 +541,7 @@
 	                              <button class="item modiBtn" type="button" data-toggle="modal" data-target="#scrollmodal" data-placement="top" title="" data-original-title="Edit">
 	                              	 <i class="zmdi zmdi-edit"></i>
   		                          </button>
-	                              <button class="item" id="btn-modal" type="button" onclick:"deleteProduct(${result[i].pid})" data-placement="top" title="" data-original-title="Delete" >
+	                              <button class="item" id="btn-modal" type="button" onclick="openModal('${result[i].pid}')" data-placement="top" title="" data-original-title="Delete" >
 	                                 <i class="zmdi zmdi-delete"></i>
 	                              </button>
 	                              <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
@@ -632,7 +572,7 @@
 	                              <button class="item modifyBtn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" style="background: lightsteelblue;">
 	                              	 <i class="zmdi zmdi-edit"></i>
   		                          </button>
-	                              <button class="item" id="btn-modal" type="button" onclick:"deleteProduct(${result[i].pid})" data-placement="top" title="" data-original-title="Delete" >
+	                              <button class="item" id="btn-modal" type="button" onclick="openModal('${result[i].pid}')" data-placement="top" title="" data-original-title="Delete" >
 	                                 <i class="zmdi zmdi-delete"></i>
 	                              </button>
 	                              <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
@@ -713,6 +653,53 @@
 			},
 		});
 	});
+	
+	$(document).ready(function () {
+		$("#searchRes").html('<div class="alert alert-light">'
+				+ '<h4 class="alert-heading">관리자 페이지에 오신 것을 환영합니다!</h4>'
+				+ '<hr>'
+				+ '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
+				+ '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
+				+ '</div>');
+		
+		
+		$("#searchRes").html('<div class="alert alert-light">'
+				+ '<h4 class="alert-heading">관리자 페이지에 오신 것을 환영합니다!</h4>'
+				+ '<hr>'
+				+ '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
+				+ '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
+				+ '</div>');
+		
+		
+	})
+	
+		function openModal(pid){
+			$("#deletemodal").modal("toggle");
+			document.getElementById("confirm").setAttribute("onclick","deleteProduct('"+pid+"')");
+		}
+		
+		function deleteProduct(pid) {
+	           var url = "/back/delProduct?pid="+pid;
+	           $.ajax({
+	                  url: url,
+	                  method: "delete",
+	                  data: JSON.stringify({
+	                      pid: pid,
+	                      "CSRFToken": getYCsrfToken()
+	                  }),
+	                  contentType: "application/json",
+	                  beforeSend: function(xhr){
+	      				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+	      			},
+	                  cache: false,
+	                  success: function (res) {
+	                      location.href = "/back/form3"
+	                  },
+	                  error: function (request, status, error) {
+	                      console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	                  }
+	              });
+	       }
 	</script>
 
 </body>
