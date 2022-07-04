@@ -115,6 +115,26 @@
         where pid = #{pid}
     </delete>
     <!-- yoolim end -->
+    <update id="updateProduct">
+        update product set pid=#{pid}, clage=#{clarge}, cmedium=#{cmedium},
+        csmall=#{csmall}, bname=#{bname}, pname=#{pname}, pprice=#{pprice}, pdatail=#{pdetail}
+        where pid = #{pid}
+    </update>
+
+    <insert id="insertProduct">
+        insert into product(pid, clarge, cmedium, csmall, bname, pname, pprice, pdetail, pstatus)
+        values(#{pid}, #{clarge}, #{cmedium}, #{csmall}, #{bname}, #{pname}, #{pprice}, #{pdetail}, 0)
+    </insert>
+
+    <insert id="insertProductColor" parameterType="com.hyundai.project.dto.ProductColorDTO">
+        insert into color(pid, ccolorcode, cimage1, cimage2, cimage3, ccolorimage, cmatchpid)
+        values(#{pid}, #{ccolorcode}, #{cimage1}, #{cimage2}, #{cimage3}, #{ccolorimage}, #{cmatchpid})
+    </insert>
+
+    <insert id="insertProductSize" parameterType="com.hyundai.project.dto.ProductSizeDTO">
+        insert into stock(pid, ccolorcode, ssize, samount)
+        values(#{pid}, #{ccolorcode}, #{ssize}, #{samount})
+    </insert>
 
     <update id="updateMain">
         UPDATE PRODUCT SET PSTATUS = #{pstatus} WHERE PID = #{pid}
@@ -125,6 +145,10 @@
 		from product
         where pname like '%'||#{pname}||'%'
         order by pid
+    </select>
+
+    <select id="getCategory" resultType="com.hyundai.project.dto.ProductCategoryDTO">
+        select clarge, cmedium, csmall from category order by clarge desc
     </select>
 
 </mapper>
