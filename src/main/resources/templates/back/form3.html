@@ -90,6 +90,7 @@
             depth2html += `<option value="${depth2[i]}">${depth2[i]}</option>`;
         }
         document.getElementById("depth2").innerHTML = depth2html;
+        depth2 = [];
     }
 
     function getDepth3() {
@@ -106,6 +107,7 @@
             depth3html += `<option value="${depth3[i]}">${depth3[i]}</option>`;
         }
         document.getElementById("depth3").innerHTML = depth3html;
+        depth3 = [];
     }
 
     function deleteSize(idx) {
