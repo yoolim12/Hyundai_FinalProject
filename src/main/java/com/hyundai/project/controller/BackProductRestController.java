@@ -79,7 +79,6 @@ public class BackProductRestController {
     @PostMapping("/product")
     public void insertProduct(@RequestPart(value = "key") ProductInsertDTO product, @RequestPart(value = "cimage", required = false) List<MultipartFile> cimage,
                             @RequestPart(value = "ccolorimage", required = false) MultipartFile ccolorimage) throws Exception {
-        // Map<String, List<Object>> size;
 
         // S3 이미지 업로드 (Cimage1, Cimage2, Cimage3)
         List<String> fileNameList = awsS3Service.uploadFile(cimage);
@@ -98,49 +97,6 @@ public class BackProductRestController {
         List<String> colorimage = awsS3Service.uploadFile(ccolor);
         product.setCcolorimage(colorimage.get(0));
         log.info(product);
-
-//        ProductInsertDTO pi = new ProductInsertDTO();
-//        pi.setPid(product.get("pid").toString());
-//        pi.setBname(product.get("bname").toString());
-//        pi.setClarge(product.get("clarge").toString());
-//        pi.setCmedium(product.get("cmedium").toString());
-//        pi.setCsmall(product.get("csmall").toString());
-//        pi.setPname(product.get("pname").toString());
-//        pi.setPprice(product.get("pprice").toString());
-//        pi.setPdetail(product.get("pdetail").toString());
-//        pi.setCcolorcode(product.get("ccolorcode").toString());
-//        pi.setCimage1(product.get("cimage1").toString());
-//        pi.setCimage2(product.get("cimage2").toString());
-//        pi.setCimage3(product.get("cimage3").toString());
-//        pi.setCcolorimage(product.get("ccolorimage").toString());
-//        pi.setCmatchpid(product.get("cmatchpid").toString());
-//
-//        List<ProductSizeDTO> ps = (List<ProductSizeDTO>) product.get("ssize");
-//        // [{pid=Jm8, ccolorcode=Jm8, samount=0, ssize=90}, {pid=Jm8, ccolorcode=Jm8, samount=0, ssize=95}]
-//        log.info(ps.size());
-//        String[] array = ps.toString().split("=");
-//        for(int i=0; i<array.length; i++)
-//            log.info(array[i]);
-
-        //log.info(ps.toString().split("=").toString());
-//        List<ProductSizeDTO> insertps = new ArrayList<>();
-//        log.info(ps.get(0).getPid().toString());
-//        for(int i=0; i<ps.size(); i++) {
-//            ProductSizeDTO temp = new ProductSizeDTO();
-//            temp.setPid(ps.get(i).getPid());
-//            temp.setCcolorcode(ps.get(i).getCcolorcode());
-//            temp.setSamount(ps.get(i).getSamount());
-//            temp.setSsize(ps.get(i).getSsize());
-//            insertps.add(temp);
-//        }
-//        pi.setSsize(insertps);
-//        ProductSizeDTO doc = new ProductSizeDTO(ps.get(0));
-//        List<ProductSizeDTO> ps = (List<ProductSizeDTO>) product.get("ssize");
-//        for(ProductSizeDTO l : ps) {
-//            log.info(l);
-//        }
-//        pi.setSsize(ps);
-        //log.info(pi);
 
         productService.insertProduct(product);
     }
