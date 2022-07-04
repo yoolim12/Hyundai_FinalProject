@@ -102,7 +102,7 @@
       // 임직원 검색 조회
       function SfindEmployee(){
          var emailBean = {
-                 email:$("#inputEmail").val()
+                 email:$("#EinputEmail").val()
              };
              $.ajax({
                  url: "/back/SfindEmployee",
@@ -407,7 +407,7 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img src="images/icon/logo.png" alt="Cool Admin" />
+                    <img src="images/icon/handsome-logo.png" alt="Cool Admin" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -791,14 +791,14 @@
                                             </div>
                                  </div>
                                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                        <div class="table-responsive table-responsive-data2" id = "employeeInfo">
                                                    <table class="table table-data2">
                                                        <thead>
                                                           <tr>
                                                           <div class="input-group">
                                                    <div class="input-group-btn">
-                                                      <input type="text" id="inputEmail" name="input-small" placeholder="Email" class="input-sm form-control-sm form-control">
+                                                      <input type="text" id="EinputEmail" name="input-small" placeholder="Email" class="input-sm form-control-sm form-control">
                                                    </div>
                                                    <button type="button" class="btn btn-primary btn-sm" onclick = "SfindEmployee();">검색</button>
                                                 </div>   
