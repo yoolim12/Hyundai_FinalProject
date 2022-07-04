@@ -71,4 +71,10 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.updateMemberGrade();
 	}
 
+	// 임직원 조회
+	@Override
+	public List<MemberJoinDTO> getEmployeeInfo(String memail) {
+		return mapper.getEmployeeInfo(memail);
+	}
+
 }

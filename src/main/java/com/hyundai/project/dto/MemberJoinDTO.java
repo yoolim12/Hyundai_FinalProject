@@ -28,6 +28,7 @@ public class MemberJoinDTO {
     private int mpoint;
     private int gno;
     private int msleep;
-
+    
+    private String gname;
     private String role_set;
 }
