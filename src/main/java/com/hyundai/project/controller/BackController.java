@@ -77,7 +77,7 @@ public class BackController {
 		log.info("스트리밍 페이지 요청");
 		return "/back/test";
 	}
-	
+		
 	// 스트리밍 페이지 이동
 	@GetMapping("/test2")
 	public String st2() {
