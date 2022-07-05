@@ -7,15 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Log4j2
 @Controller
-public class StreamingController {
+@Log4j2
+public class ChatController {
 
-	@GetMapping("/streaming")
-	public void stream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model){
+    @GetMapping("/chat")
+    public String chatGET(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model){
 
-		log.info("@StreamingController, GET()");
-		model.addAttribute("member", authMemberDTO);
-
-	}
+        log.info("@ChatController, chat GET()");
+        model.addAttribute("member", authMemberDTO);
+        return "/streamingchat/chat";
+    }
 }
