@@ -5,7 +5,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
 <th:block layout:fragment="css">
-    <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video-js.css}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video-js.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/_ui/desktop/common/css/stream.css}"/>
 </th:block>
 <th:block layout:fragment="script">
@@ -13,11 +14,11 @@
     <script th:src="@{https://player.live-video.net/1.10.0/amazon-ivs-videojs-tech.min.js}"></script>
     <script th:src="@{https://player.live-video.net/1.10.0/amazon-ivs-quality-plugin.min.js}"></script>
 </th:block>
-<div layout:fragment="content">     
-		<script type="text/javascript">
-        
-        
-        $(document).ready(function(){
+<div layout:fragment="content">
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
             var todayDate = new Date();
 
             var getUrlParameter = function getUrlParameter(sParam) {//URL에 포함된 파라미터 이용하기
@@ -32,131 +33,233 @@
                     }
                 }
             };
-                
-        });
-    
-    function videoWidth(){
-        var target = $('.video_area1903').attr('id');
-        var idx = 0;
-        var width = $("#"+ target +" div:eq("+idx+")").width();
-        var height = $("#"+ target +"  div:eq("+idx+")").height();
-        $('#'+target).find('video').css({'width':width+'px','height':height+'px'});
-        $('#'+target).css({'width':width+'px','height':height+'px'});
-    }
-    function videoPlay1903(){
-	    $('.video_area1903').children('a').on('click',function(){
-	        $(this).find('.video_main').next('video').show();
-	        $(this).find('.video_main').hide();
-	        $('#video')[0].play();
-	    });
-    }
-    function videoEnded(target, idx){
-	    $("#"+ target +" video").hide();
-	    $("#"+ target +" div:eq("+idx+")").show();
-    }
-	</script>
 
-<div id="bodyWrap" style="padding-bottom:0;">
+        });
+
+        function videoWidth() {
+            var target = $('.video_area1903').attr('id');
+            var idx = 0;
+            var width = $("#" + target + " div:eq(" + idx + ")").width();
+            var height = $("#" + target + "  div:eq(" + idx + ")").height();
+            $('#' + target).find('video').css({'width': width + 'px', 'height': height + 'px'});
+            $('#' + target).css({'width': width + 'px', 'height': height + 'px'});
+        }
+
+        function videoPlay1903() {
+            $('.video_area1903').children('a').on('click', function () {
+                $(this).find('.video_main').next('video').show();
+                $(this).find('.video_main').hide();
+                $('#video')[0].play();
+            });
+        }
+
+        function videoEnded(target, idx) {
+            $("#" + target + " video").hide();
+            $("#" + target + " div:eq(" + idx + ")").show();
+        }
+    </script>
+
+    <div id="bodyWrap" style="padding-bottom:0;">
         <div class="video_main_wrap" style="line-height:0;">
-        	<h3 class="cnts_title ou1804">
+            <h3 class="cnts_title ou1804">
 			    <span>
 			        H-DAY STREAMING
 			    </span>
-			</h3>
-					<h4 class="tit"><spring:theme code="main.video.title" /></h4>
-					<div class="video_area1903" id="videoDiv1903">
-						<a href="javascript:void(0);">
-							<!-- <div class="video_main" style="display: block;">
-								<span class="play_btn"></span>
-								<img src="/resources/medias/220610-D-awesome-03.jpg?context=bWFzdGVyfGltYWdlc3w4NjUzM3xpbWFnZS9qcGVnfGltYWdlcy9oMWUvaGRjLzkzMDQ4OTk3ODA2MzguanBnfDRjODEzNTQ3NDgxYzhmNDZhNGY2ZWRjMWY4OWVjOTNhOTY4NWFkMTM5ZDViMzQyYjgzOWFiMjdhZmI4YzY1NzY" alt="poster">
-							</div> -->
-							<video id="amazon-ivs-videojs" class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay playsinline>
-        					</video>
-						</a>
-					</div>
-					<div class="txt">
-						<p class="tit">aweSOME life 7.<br>HANESOME-E</p>
-						<p class="s_t">변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택</p>
-					</div>
+            </h3>
+            <div>
+                <h4 class="tit">
+                    <spring:theme code="main.video.title"/>
+                </h4>
+                <div style="height: auto">
+                    <div class="video_area1903" id="videoDiv1903" style="float:left; width: 70%;">
+                        <a href="javascript:void(0);">
+                            <!-- <div class="video_main" style="display: block;">
+                                <span class="play_btn"></span>
+                                <img src="/resources/medias/220610-D-awesome-03.jpg?context=bWFzdGVyfGltYWdlc3w4NjUzM3xpbWFnZS9qcGVnfGltYWdlcy9oMWUvaGRjLzkzMDQ4OTk3ODA2MzguanBnfDRjODEzNTQ3NDgxYzhmNDZhNGY2ZWRjMWY4OWVjOTNhOTY4NWFkMTM5ZDViMzQyYjgzOWFiMjdhZmI4YzY1NzY" alt="poster">
+                            </div> -->
+                            <video id="amazon-ivs-videojs" class="video-js vjs-4-3 vjs-big-play-centered" controls
+                                   autoplay
+                                   playsinline>
+                            </video>
+                        </a>
+                    </div>
+                    <div class="container" style="float:right; width: 30%; height: 70%">
+                        <div class="col-6">
+                            <label><b>채팅방</b></label>
+                        </div>
+                        <div>
+                            <div id="msgArea" class="col"></div>
+                            <div class="col-6">
+                                <div class="input-group mb-3">
+                                    <input type="text" id="msg" class="form-control" aria-label="Recipient's username"
+                                           aria-describedby="button-addon2"/>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="button-send"
+                                                onclick="send()">전송
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="txt">
+                <p class="tit">aweSOME life 7.<br>HANESOME-E</p>
+                <p class="s_t">변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택</p>
+            </div>
         </div>
-</div>
-<script>
-    const DEFAULT_STREAM = "https://cff34ca342b3.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.328322480690.channel.hhsMUbOq5NC6.m3u8";
-    (function () {
-        registerIVSTech(videojs); 
-        registerIVSQualityPlugin(videojs);
+    </div>
+    <script>
+        const DEFAULT_STREAM = "https://cff34ca342b3.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.328322480690.channel.hhsMUbOq5NC6.m3u8";
+        (function () {
+            registerIVSTech(videojs);
+            registerIVSQualityPlugin(videojs);
 
-        const videoJSPlayer = videojs("amazon-ivs-videojs", {
-            techOrder: ["AmazonIVS"],
-            controlBar: {
-                playToggle: {
-                    replay: false
-                }, 
-                pictureInPictureToggle: false 
-            }
-        });
-
-        const readyCallback = function () {
-            window.videoJSPlayer = videoJSPlayer;
-
-            const ivsPlayer = videoJSPlayer.getIVSPlayer();
-
-            const videoContainerEl = document.querySelector("#amazon-ivs-videojs");
-            videoContainerEl.addEventListener("click", () => {
-                if (videoJSPlayer.paused()) {
-                    videoContainerEl.classList.remove("vjs-has-started");
-                } else {
-                    videoContainerEl.classList.add("vjs-has-started");
+            const videoJSPlayer = videojs("amazon-ivs-videojs", {
+                techOrder: ["AmazonIVS"],
+                controlBar: {
+                    playToggle: {
+                        replay: false
+                    },
+                    pictureInPictureToggle: false
                 }
             });
 
-            const PlayerState = videoJSPlayer.getIVSEvents().PlayerState;
-            ivsPlayer.addEventListener(PlayerState.PLAYING, () => {
-                console.log("Player State - PLAYING");
-                setTimeout(() => {
+            const readyCallback = function () {
+                window.videoJSPlayer = videoJSPlayer;
+
+                const ivsPlayer = videoJSPlayer.getIVSPlayer();
+
+                const videoContainerEl = document.querySelector("#amazon-ivs-videojs");
+                videoContainerEl.addEventListener("click", () => {
+                    if (videoJSPlayer.paused()) {
+                        videoContainerEl.classList.remove("vjs-has-started");
+                    } else {
+                        videoContainerEl.classList.add("vjs-has-started");
+                    }
+                });
+
+                const PlayerState = videoJSPlayer.getIVSEvents().PlayerState;
+                ivsPlayer.addEventListener(PlayerState.PLAYING, () => {
+                    console.log("Player State - PLAYING");
+                    setTimeout(() => {
+                        console.log(
+                            `This stream is ${
+                                ivsPlayer.isLiveLowLatency() ? "" : "not "
+                            }playing in ultra low latency mode`
+                        );
+                        console.log(`Stream Latency: ${ivsPlayer.getLiveLatency()}s`);
+                    }, 3000);
+                });
+
+                // Log errors
+                const PlayerEventType = videoJSPlayer.getIVSEvents().PlayerEventType;
+                ivsPlayer.addEventListener(PlayerEventType.ERROR, (type, source) => {
+                    console.warn("Player Event - ERROR: ", type, source);
+                });
+
+                ivsPlayer.addEventListener(PlayerEventType.TEXT_METADATA_CUE, (cue) => {
+                    const metadataText = cue.text;
+                    const position = ivsPlayer.getPosition().toFixed(2);
                     console.log(
-                        `This stream is ${
-                            ivsPlayer.isLiveLowLatency() ? "" : "not "
-                        }playing in ultra low latency mode`
+                        `Player Event - TEXT_METADATA_CUE: "${metadataText}". Observed ${position}s after playback started.`
                     );
-                    console.log(`Stream Latency: ${ivsPlayer.getLiveLatency()}s`);
-                }, 3000);
+                });
+
+                videoJSPlayer.enableIVSQualityPlugin();
+
+                videoJSPlayer.volume(0.5);
+                videoJSPlayer.src(DEFAULT_STREAM);
+            };
+
+            videoJSPlayer.ready(readyCallback);
+        })();
+
+        /*
+        (function () {
+            const containerEl = document.querySelector(".video-container");
+            const directSrcFormEl = containerEl.querySelector(".src-container-direct");
+            const directSrcInputEl = containerEl.querySelector(".src-input");
+            directSrcFormEl.addEventListener("submit", (e) => {
+                e.preventDefault();
+                videoJSPlayer.src(directSrcInputEl.value);
             });
+        })(); */
+        const username = "[[${member.getMemail()}]]";
+        const websocket = new WebSocket("ws://localhost:8080/ws/chat");
 
-            // Log errors
-            const PlayerEventType = videoJSPlayer.getIVSEvents().PlayerEventType;
-            ivsPlayer.addEventListener(PlayerEventType.ERROR, (type, source) => {
-                console.warn("Player Event - ERROR: ", type, source);
-            });
+        websocket.onmessage = onMessage;
+        websocket.onopen = onOpen;
+        websocket.onclose = onClose;
 
-            ivsPlayer.addEventListener(PlayerEventType.TEXT_METADATA_CUE, (cue) => {
-                const metadataText = cue.text;
-                const position = ivsPlayer.getPosition().toFixed(2);
-                console.log(
-                    `Player Event - TEXT_METADATA_CUE: "${metadataText}". Observed ${position}s after playback started.`
-                );
-            });
+        function send() {
+            console.log("SEND");
+            let msg = document.getElementById("msg");
 
-            videoJSPlayer.enableIVSQualityPlugin();
+            console.log(username + ":" + msg.value);
+            websocket.send(username + ":" + msg.value);
+            msg.value = "";
+        }
 
-            videoJSPlayer.volume(0.5);
-            videoJSPlayer.src(DEFAULT_STREAM);
-        };
+        //채팅창에 들어왔을 때
+        function onOpen(evt) {
+            var str = username + ": 님이 입장하셨습니다.";
+            websocket.send(str);
+        }
 
-        videoJSPlayer.ready(readyCallback);
-    })();
+        //채팅창에서 나갔을 때
+        function onClose(evt) {
+            var str = username + ": 님이 방을 나가셨습니다.";
+            websocket.send(str);
+        }
 
-    /* 
-    (function () {
-        const containerEl = document.querySelector(".video-container");
-        const directSrcFormEl = containerEl.querySelector(".src-container-direct");
-        const directSrcInputEl = containerEl.querySelector(".src-input");
-        directSrcFormEl.addEventListener("submit", (e) => {
-            e.preventDefault();
-            videoJSPlayer.src(directSrcInputEl.value);
-        });
-    })(); */
+        function onMessage(msg) {
+            //console.log(msg);
+            var data = msg.data;
+            var sessionId = null;
+            //데이터를 보낸 사람
+            var message = null;
+            var arr = data.split(":");
 
+            for (var i = 0; i < arr.length; i++) {
+                console.log("arr[" + i + "]: " + arr[i]);
+            }
+
+            var cur_session = username;
+
+            //현재 세션에 로그인 한 사람
+            console.log("cur_session : " + cur_session);
+
+            sessionId = arr[0];
+            message = arr[1];
+
+            console.log("sessionID : " + sessionId);
+            console.log("cur_session : " + cur_session);
+
+            if (arr[1] == " 님이 입장하셨습니다." || arr[1] == " 님이 방을 나가셨습니다.") {
+                var str = "<div class='col-6'>";
+                str += "<li class='alert alert-secondary'>";
+                str += "<b style='color: #3f729b'>" + sessionId + message + "</b>";
+                str += "</li</div>";
+                $("#msgArea").append(str);
+            } else {
+                //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+                if (sessionId == cur_session) {
+                    var str = "<div class='col-6'>";
+                    str += "<li class='alert alert-secondary'>";
+                    str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
+                    str += "</li></div>";
+                    $("#msgArea").append(str);
+                } else {
+                    var str = "<div class='col-6'>";
+                    str += "<li class='alert alert-warning'>";
+                    str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
+                    str += "</li></div>";
+                    $("#msgArea").append(str);
+                }
+            }
+        }
     </script>
 </div>
 </html>
