@@ -56,6 +56,9 @@ $(document).ready(function(){
         	document.getElementById("image1").src=result.cimage1;
         	document.getElementById("image2").src=result.cimage2;
         	document.getElementById("image3").src=result.cimage3;
+			document.getElementById("zoomimage1").src=result.cimage1;
+			document.getElementById("zoomimage2").src=result.cimage2;
+			document.getElementById("zoomimage3").src=result.cimage3;
         	document.getElementById("pname").innerHTML = result.pname;
         	document.getElementById("bname").innerHTML = result.bname;
         	document.getElementById("pprice").innerHTML = '₩' + numWithComma(result.pprice);
@@ -656,9 +659,9 @@ function prevImgMove(){
 	</div>
 	<div class="item_visual" id="imageDivW" style="display:none">
         <ul>
-            <li><img id="image1" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
-            <li><img id="image2" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
-            <li><img id="image3" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
+            <li><img id="zoomimage1" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
+            <li><img id="zoomimage2" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
+            <li><img id="zoomimage3" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
         </ul>
     </div>
     </div>
