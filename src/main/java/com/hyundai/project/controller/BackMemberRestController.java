@@ -43,7 +43,7 @@ public class BackMemberRestController {
 		ResponseEntity<List<MemberJoinDTO>> mem = null;
 		try {
 			mem = new ResponseEntity<List<MemberJoinDTO>>(service.getMemberInfo(email), HttpStatus.OK);
-			log.info(mem);
+			//log.info(mem);
 		} catch (Exception e) {
 			e.printStackTrace();
 			mem = new ResponseEntity<List<MemberJoinDTO>>(HttpStatus.BAD_REQUEST);

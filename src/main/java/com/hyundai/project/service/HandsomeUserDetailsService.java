@@ -45,8 +45,8 @@ public class HandsomeUserDetailsService implements UserDetailsService {
 		
 		MemberJoinDTO memberJoinDTO = result;
 		log.info("************************** MEMBERJOINDTO ******************************");
-		log.info(memberJoinDTO);
-		log.info(memberJoinDTO.getRole_set().toString());
+		//log.info(memberJoinDTO);
+		//log.info(memberJoinDTO.getRole_set().toString());
 		
 		List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + memberJoinDTO.getRole_set()));
@@ -58,8 +58,8 @@ public class HandsomeUserDetailsService implements UserDetailsService {
         		memberJoinDTO.getMemail_info(), memberJoinDTO.getModdate(), memberJoinDTO.getRegdate(), memberJoinDTO.getMpoint(),
 				memberJoinDTO.getGno(), memberJoinDTO.getMsleep());
         
-        log.info(authMemberDTO);
-        log.info(authMemberDTO.getAuthorities().toString());
+        //log.info(authMemberDTO);
+        //log.info(authMemberDTO.getAuthorities().toString());
         
         try {
 			memberDAO.insertLoginLog(memberJoinDTO.getMemail());

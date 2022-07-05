@@ -24,20 +24,13 @@ public class BackController {
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
 	
-	// !!! 임시 페이지 나중에 지울것
-	@GetMapping("/temp")
-	public String temp() {
-		log.info("매장관리 페이지 요청");
-		return "/back/form3temp";
-	}
-	
 	@Autowired
 	private MailService mail;
 	
 	// 회원관리 페이지 이동
 	@GetMapping("/form")
 	public void form(Model model) throws Exception {
-		System.out.println(service.showAllMember());
+		//System.out.println(service.showAllMember());
 		model.addAttribute("userList", service.showAllMember());
 		model.addAttribute("userTotal", service.getTotalMember());
 		model.addAttribute("amountTotal", service.getTotalAmount());
