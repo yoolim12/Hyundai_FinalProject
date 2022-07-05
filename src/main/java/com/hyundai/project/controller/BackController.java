@@ -28,8 +28,8 @@ public class BackController {
 	private MailService mail;
 	
 	// 회원관리 페이지 이동
-	@GetMapping("/form")
-	public void form(Model model) throws Exception {
+	@GetMapping("/memberBO")
+	public void memberBO(Model model) throws Exception {
 		//System.out.println(service.showAllMember());
 		model.addAttribute("userList", service.showAllMember());
 		model.addAttribute("userTotal", service.getTotalMember());
@@ -85,18 +85,11 @@ public class BackController {
 		return "/back/test2";
 	}
 	
-	// 상품관리 페이지 이동
-	@GetMapping("/form2")
-	public String form2() {
-		log.info("상품관리 페이지 요청");
-		return "/back/form2";
-	}
-	
 	// 매장관리 페이지 이동
-	@GetMapping("/form3")
-	public String form3() {
+	@GetMapping("/productBO")
+	public String productBO() {
 		log.info("매장관리 페이지 요청");
-		return "/back/form3";
+		return "/back/productBO";
 	}
 	
 	// 차트 페이지 이동
@@ -104,6 +97,13 @@ public class BackController {
 	public String chart() {
 		log.info("상품관리 페이지 요청");
 		return "/back/chart";
+	}
+	
+	// 스트리밍 페이지 이동
+	@GetMapping("/streamingBO")
+	public String streamingBO() {
+		log.info("스트리밍 페이지 요청");
+		return "/back/streamingBO";
 	}
 		
 }
