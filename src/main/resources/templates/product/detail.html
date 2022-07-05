@@ -13,6 +13,7 @@ var intervalLoopCnt = 0;
 var colorArray = [];
 var sizeArray = [];
 var fileIdx = 1;
+var pprice;
 var cartQuantity = {};
 var obj;
 var Arr1 = location.href.split('detail/');
@@ -53,6 +54,7 @@ $(document).ready(function(){
             console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
         }, 
         success : function( result ) {
+   			pprice = result.pprice;
         	document.getElementById("image1").src=result.cimage1;
         	document.getElementById("image2").src=result.cimage2;
         	document.getElementById("image3").src=result.cimage3;
@@ -327,6 +329,7 @@ function fn_qtySubtraction()
     GA_Event('상품_상세','수량','-');
     
     $("#txtqty").val(parseInt(qty)-1);
+	$("#totalprice").text('₩'+numWithComma((qty-1)*pprice));
     fn_sumPriceCal();
 }
 
@@ -338,6 +341,7 @@ function fn_qtyAdd(){
     var qty = parseInt($("#txtqty").val());
     if(qty + 1 > 2){
     	$("#txtqty").val("2");
+    	$("#totalprice").text('₩'+numWithComma(2*pprice));
     	var la = new layerAlert('동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.');
         return;	
     }
@@ -352,7 +356,8 @@ function fn_qtyAdd(){
 
     GA_Event('상품_상세','수량','+');
     
-    $("#txtqty").val(qty+1)
+    $("#txtqty").val(qty+1);
+	$("#totalprice").text('₩'+numWithComma(2*pprice));
     fn_sumPriceCal();
     
 }
