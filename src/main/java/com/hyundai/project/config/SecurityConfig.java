@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                .antMatchers("/mypage").hasRole("USER")
                .antMatchers("/cart").hasRole("USER")
                .antMatchers("/order").hasRole("USER")
+               .antMatchers("/chat").hasRole("USER")
                .antMatchers("/back/form").hasRole("ADMIN")
                .antMatchers("/mypage/personInformationChange").hasRole("USER")
                ;
