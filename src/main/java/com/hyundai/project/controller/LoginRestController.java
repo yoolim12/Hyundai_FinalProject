@@ -97,8 +97,6 @@ public class LoginRestController {
 //	@ResponseBody
 	public ResponseEntity<MemberJoinDTO> duplicateCheck(@RequestBody HashMap<String, String> map, HttpServletResponse response) throws IOException {
 		String memail = map.get("memail");
-		System.out.println(memail);
-		System.out.println("memberDAO.findByEmail(memail, 0): " + memberDAO.findByEmail(memail, 0));
 		MemberJoinDTO memberJoinDTO = new MemberJoinDTO();
 		memberJoinDTO.setMemail("0");
 		ResponseEntity<MemberJoinDTO> mem = null;
@@ -115,6 +113,27 @@ public class LoginRestController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			mem = new ResponseEntity<MemberJoinDTO>(HttpStatus.BAD_REQUEST);
+		} // end try
+		return mem;
+	}
+	
+	@RequestMapping("/dupCheckEmailInfo")
+	public ResponseEntity<String> dupCheckEmailInfo(@RequestBody HashMap<String, String> map, HttpServletResponse response) throws IOException {
+		String memailinfo = map.get("memailinfo");
+		ResponseEntity<String> mem = null;
+		try {
+			String a = memberDAO.findEmailInfo(memailinfo);
+			System.out.println(a);
+			if(a == null) {
+				mem = new ResponseEntity<String>("ok", HttpStatus.OK);
+			}
+			else {
+				mem = new ResponseEntity<String>("dup", HttpStatus.OK);
+			}
+			log.info(mem);
+		} catch (Exception e) {
+			e.printStackTrace();
+			mem = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		} // end try
 		return mem;
 	}

@@ -114,6 +114,10 @@
 		on c1.memail = c2.memail
 		where c1.memail = #{memail} and c1.from_social=#{from_social}
 	</select>
+	
+	<select id="findEmailInfo" parameterType="String" resultType="String">
+		select memail_info from member where memail_info = #{memail_info}
+	</select>
 
 	<!-- 정민 -->
 	<update id="pointApply">

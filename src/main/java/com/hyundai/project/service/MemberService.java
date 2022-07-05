@@ -11,6 +11,9 @@ public interface MemberService {
 	// 이메일로 회원 정보 가져오기
 	public List<MemberJoinDTO> getMemberInfo(String email) throws Exception;
 	
+	// 정보 수신용 이메일 주소 가져오기
+	public String findEmailInfo(String memail_info);
+	
 	// 회원 수정
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception;
 	
