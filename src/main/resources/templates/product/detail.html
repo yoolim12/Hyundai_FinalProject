@@ -67,9 +67,7 @@ $(document).ready(function(){
         	document.getElementById("totalprice").innerHTML = '₩' + (numWithComma(result.pprice*$("#txtqty").val()));
         	
         	let rt = result.pprice*$("#txtqty").val();
-        	$("#mile").html(numWithComma(rt*0.05)+' M (5%)');
-        	$("#hp").html(numWithComma(Math.ceil(rt*0.001))+' P (0.1%)');
-        	
+        	$("#mile").html(numWithComma(rt*0.05)+' P (5%)');
         }
     });
    
@@ -692,13 +690,8 @@ function prevImgMove(){
                  <div class="info_sect">
 			<ul class="point_delivery">
 				<li>
-					<span class="title">한섬마일리지</span>
+					<span class="title">H.Point</span>
 					<span class="txt" id="mile"></span>
-				</li>
-				<li>
-                    <span class="title">H.Point</span>
-                     <span class="txt" id="hp"></span>
-                        <a href="javascript:fn_cardBenefit();" id="cardbenef" class="etc_info" onclick="GA_Event('상품_상세','카드사_혜택안내','클릭');">카드사 혜택안내</a>
 				</li>
 				
 				<li>
