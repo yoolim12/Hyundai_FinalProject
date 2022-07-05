@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/common}">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/common}">
 <th:block layout:fragment="css">
-    <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video-js.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/resources/_ui/desktop/common/css/stream.css}"/>
+	<link rel="stylesheet" type="text/css"
+		th:href="@{https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video-js.css}" />
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/resources/_ui/desktop/common/css/stream.css}" />
 </th:block>
 <th:block layout:fragment="script">
-    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video.min.js}"></script>
-    <script th:src="@{https://player.live-video.net/1.10.0/amazon-ivs-videojs-tech.min.js}"></script>
-    <script th:src="@{https://player.live-video.net/1.10.0/amazon-ivs-quality-plugin.min.js}"></script>
-</th:block>
-<div layout:fragment="content">     
-		<script type="text/javascript">
+	<script
+		th:src="@{https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video.min.js}"></script>
+	<script
+		th:src="@{https://player.live-video.net/1.10.0/amazon-ivs-videojs-tech.min.js}"></script>
+	</th:block>
+<div layout:fragment="content">
+	<script type="text/javascript">
         
         
         $(document).ready(function(){
@@ -56,31 +59,44 @@
     }
 	</script>
 
-<div id="bodyWrap" style="padding-bottom:0;">
-        <div class="video_main_wrap" style="line-height:0;">
-        	<h3 class="cnts_title ou1804">
-			    <span>
-			        H-DAY STREAMING
-			    </span>
+	<div id="bodyWrap" style="padding-bottom: 0;">
+		<div class="video_main_wrap" style="line-height: 0;">
+			<h3 class="cnts_title ou1804">
+				<span> H-DAY STREAMING </span>
 			</h3>
-					<h4 class="tit"><spring:theme code="main.video.title" /></h4>
-					<div class="video_area1903" id="videoDiv1903">
-						<a href="javascript:void(0);">
-							<!-- <div class="video_main" style="display: block;">
+			
+			<div class="container">
+			  <div class="row">
+			    <div class="col-2">col-2</div>
+			    <div class="col-8">col-8</div>
+			    <div class="col-2">col-2</div>
+			  </div>
+			</div>
+
+			<!-- <h4 class="tit">
+				<spring:theme code="main.video.title" />
+			</h4>
+			<div class="video_area1903" id="videoDiv1903">
+				<a href="javascript:void(0);"> <div class="video_main" style="display: block;">
 								<span class="play_btn"></span>
 								<img src="/resources/medias/220610-D-awesome-03.jpg?context=bWFzdGVyfGltYWdlc3w4NjUzM3xpbWFnZS9qcGVnfGltYWdlcy9oMWUvaGRjLzkzMDQ4OTk3ODA2MzguanBnfDRjODEzNTQ3NDgxYzhmNDZhNGY2ZWRjMWY4OWVjOTNhOTY4NWFkMTM5ZDViMzQyYjgzOWFiMjdhZmI4YzY1NzY" alt="poster">
-							</div> -->
-							<video id="amazon-ivs-videojs" class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay playsinline>
-        					</video>
-						</a>
-					</div>
-					<div class="txt">
-						<p class="tit">aweSOME life 7.<br>HANESOME-E</p>
-						<p class="s_t">변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택</p>
-					</div>
-        </div>
-</div>
-<script>
+							</div> <video id="amazon-ivs-videojs"
+						class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay
+						playsinline>
+					</video>
+				</a>
+			</div>
+			<div class="txt">
+				<p class="tit">
+					aweSOME life 7.<br>HANESOME-E
+				</p>
+				<p class="s_t">
+					변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택
+				</p>
+			</div> -->
+		</div>
+	</div>
+	<script>
     const DEFAULT_STREAM = "https://cff34ca342b3.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.328322480690.channel.hhsMUbOq5NC6.m3u8";
     (function () {
         registerIVSTech(videojs); 
