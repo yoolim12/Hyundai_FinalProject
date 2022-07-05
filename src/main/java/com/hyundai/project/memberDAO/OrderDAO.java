@@ -26,4 +26,12 @@ public interface OrderDAO {
 	public void updateOrderList(int oid) throws Exception;
 
 	public OrderListDTO getOrderDetail(int oid) throws Exception;
+	// 총 회원 수
+	public long getTotalMember() throws Exception;
+	// 상품 총 판매량
+	public long getTotalAmount() throws Exception;
+	// 이번 주의 주문 건수
+	public long getOrderAmountOfWeek() throws Exception;
+	// 총 매출
+	public long getTotalRevenue() throws Exception;
 }

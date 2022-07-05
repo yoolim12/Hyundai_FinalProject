@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hyundai.project.mail.MailService;
 import com.hyundai.project.service.MemberService;
+import com.hyundai.project.service.ProductService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -31,6 +32,10 @@ public class BackController {
 	public void form(Model model) throws Exception {
 		//System.out.println(service.showAllMember());
 		model.addAttribute("userList", service.showAllMember());
+		model.addAttribute("userTotal", service.getTotalMember());
+		model.addAttribute("amountTotal", service.getTotalAmount());
+		model.addAttribute("amountWeek", service.getOrderAmountOfWeek());
+		model.addAttribute("revenueTotal", service.getTotalRevenue());
 	}
 	
 	// 회원 조회 ajax + thymleaf

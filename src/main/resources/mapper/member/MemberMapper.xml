@@ -127,4 +127,20 @@
 	<update id="pointSaving">
 		update member set mpoint = mpoint + #{savingpoint} where memail = #{memail}
 	</update>
+	
+	<select id="getTotalMember" resultType="long">
+		select count(memail) from member
+	</select>
+	
+	<select id="getTotalAmount" resultType="long">
+		select sum(qty) from orderitem
+	</select>
+	
+	<select id="getOrderAmountOfWeek" resultType="long">
+		select count(*) from orderlist where to_char(sysdate,'WW')= to_char(odate,'WW')
+	</select>
+	
+	<select id="getTotalRevenue" resultType="long">
+		select sum(oprice) from orderlist
+	</select>
 </mapper>

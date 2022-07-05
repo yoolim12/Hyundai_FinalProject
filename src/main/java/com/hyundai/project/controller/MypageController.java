@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hyundai.project.dto.AuthMemberDTO;
@@ -55,5 +56,28 @@ public class MypageController {
 		model.addAttribute("memail", authMemberDTO.getMemail());
 		model.addAttribute("mname",authMemberDTO.getMname());
 		model.addAttribute("birth", authMemberDTO.getBirth());
+	}
+	
+	@GetMapping("/grade")
+	public String gradePage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) {
+		model.addAttribute("memail", authMemberDTO.getMemail());
+		model.addAttribute("mname",authMemberDTO.getMname());
+		model.addAttribute("birth", authMemberDTO.getBirth());
+		int grade = memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getGno();
+		String rank = "";
+		if(grade == 1) {
+			rank = "FRIEND";
+		}else if (grade == 2) {
+			rank = "CREW";
+		}else if (grade == 3) {
+			rank = "MANIA";
+		}else if (grade == 4) {
+			rank = "STAR";
+		}else {
+			rank = "THE STAR";
+		}
+		model.addAttribute("rank", rank);
+		model.addAttribute("grade",grade);
+		return "/mypage/grade";
 	}
 }

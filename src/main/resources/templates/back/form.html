@@ -309,7 +309,21 @@
 			console.log('check')
         	$("#deletemodal").modal();
        }
-
+		
+       function numWithComma(num) {
+    	  	  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    	  	}
+       
+       $(document).ready(function () {
+    	   const mem = numWithComma([[${userTotal}]]);
+    	   const totAmount = numWithComma([[${amountTotal}]]);
+    	   const wAmount = numWithComma([[${amountWeek}]]);
+    	   const revenue = numWithComma([[${revenueTotal}]]);
+    	   $("#userTotal").html(mem);
+    	   $("#amountTotal").html(totAmount);
+    	   $("#amountWeek").html(wAmount);
+    	   $("#revenueTotal").html("₩" +revenue);
+       })
     </script>
    
     <div class="page-wrapper">
@@ -679,7 +693,7 @@
                        <div class="row">
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item">
-                                    <h2 class="number">10,368</h2>
+                                    <h2 class="number" id="userTotal"></h2>
                                     <span class="desc">members</span>
                                     <div class="icon">
                                         <i class="zmdi zmdi-account-o"></i>
@@ -688,7 +702,7 @@
                             </div>
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item">
-                                    <h2 class="number">388,688</h2>
+                                    <h2 class="number" id="amountTotal"></h2>
                                     <span class="desc">items sold</span>
                                     <div class="icon">
                                         <i class="zmdi zmdi-shopping-cart"></i>
@@ -697,7 +711,7 @@
                             </div>
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item">
-                                    <h2 class="number">1,086</h2>
+                                    <h2 class="number" id="amountWeek"></h2>
                                     <span class="desc">this week</span>
                                     <div class="icon">
                                         <i class="zmdi zmdi-calendar-note"></i>
@@ -706,7 +720,7 @@
                             </div>
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item">
-                                    <h2 class="number">$1,060,386</h2>
+                                    <h2 class="number" id="revenueTotal"></h2>
                                     <span class="desc">total earnings</span>
                                     <div class="icon">
                                         <i class="zmdi zmdi-money"></i>
