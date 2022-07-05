@@ -42,4 +42,12 @@ public interface MemberService {
 	public List<MemberJoinDTO> getEmployeeInfo(String memail);
 
 	public List<MemberJoinDTO> SfindEmployee(String memail);
+	// 총 회원수
+	public long getTotalMember() throws Exception;
+	// 상품 총 판매량
+	public long getTotalAmount() throws Exception;
+	// 이번 주의 주문 건수
+	public long getOrderAmountOfWeek() throws Exception;
+	// 총 매출
+	public long getTotalRevenue() throws Exception;
 }

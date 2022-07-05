@@ -58,4 +58,12 @@ public interface MemberDAO {
 	
 	// 임직원 검색 조회
 	public List<MemberJoinDTO> SfindEmployee(String memail);
+	
+	public long getTotalMember();
+	
+	public long getTotalAmount();
+	
+	public long getOrderAmountOfWeek();
+	
+	public long getTotalRevenue();
 }
