@@ -1,0 +1,23 @@
+        .blsmflw1 {
+        	animation: target_image 1.5s;
+        	animation-iteration-count: 2;
+        	transform-origin: 50% 50%;
+        }
+
+		div, span {
+			line-height: unset;
+		}
+		
+		video::-webkit-media-controls-time-remaining-display {
+			display: none;
+		}
+		
+		body {
+            margin: 0;
+        }
+
+        .video-js.vjs-4-3 {
+		    padding-top: 60%;
+		}
+		
+		
