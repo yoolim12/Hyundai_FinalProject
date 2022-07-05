@@ -1,5 +1,6 @@
 package com.hyundai.project.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void admodifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno, int msleep) throws Exception{
+	public void admodifyMember(String memail, String mname, Date birth, String telnum, String maddress, int gno, int msleep) throws Exception{
 		mapper.admodifyMember(memail, mname, birth, telnum, maddress, gno, msleep);
+	}
+	
+	// 회원 권한 수정(관리자)
+	@Override
+	public void admodifyAuth(String memail, String role) throws Exception{
+		mapper.admodifyAuth(memail, role);
 	}
 
 	// 회원 포인트 조회

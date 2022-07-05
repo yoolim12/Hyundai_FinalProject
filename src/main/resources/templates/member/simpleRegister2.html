@@ -119,6 +119,15 @@
 //<![CDATA[ 
 $(document).ready(function(){
 	console.log(getCsrfHeaderName(), getYCsrfToken());
+	
+	$("#id, #uidDomain, #uidDomainSel").change(function(){
+		if($('#uidDomainSel').val() === ""){
+            $('#uidDomain').show();
+        }
+        else{
+            $('#uidDomain').hide();
+        }
+	});
     
     var dclick = $('#idDubChkBtn').click(function(){
 		var emailDomain = '';

@@ -1,5 +1,6 @@
 package com.hyundai.project.memberDAO;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -23,8 +24,11 @@ public interface MemberDAO {
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception;
 	
 	// 회원 수정 (관리자)
-	public void admodifyMember(String memail, String mname, String birth, String telnum, String maddress, int gno, int msleep) throws Exception;
+	public void admodifyMember(String memail, String mname, Date birth, String telnum, String maddress, int gno, int msleep) throws Exception;
 		
+	// 회원 권한 수정(관리자)
+	public void admodifyAuth(String memail, String role) throws Exception;
+	
 	// 회원 탈퇴
 	public void delMember(String email) throws Exception;
 		
