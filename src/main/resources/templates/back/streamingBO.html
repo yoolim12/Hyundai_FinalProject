@@ -54,17 +54,13 @@
 <body class="animsition">
 <form id="CSRFForm" method="post">
     <div>
-        <input type="hidden" name="CSRFHeadername"
-               th:value="${_csrf.headerName}" /> <input type="hidden"
-                                                        name="CSRFToken" th:value="${_csrf.token}" /> <input type="hidden"
-                                                                                                             name="CSRFParameterName" th:value="${ _csrf.parameterName }" />
+        <input type="hidden" name="CSRFHeadername" th:value="${_csrf.headerName}" /> 
+        <input type="hidden" name="CSRFToken" th:value="${_csrf.token}" /> 
+        <input type="hidden" name="CSRFParameterName" th:value="${ _csrf.parameterName }" />
     </div>
 </form>
 
 <script>
-    let category_obj = [], depth1 = [], depth2 = [], depth3 = [], size_obj = [];
-    let idx = 0;
-
     function getCsrfHeaderName() {
         return $("#CSRFForm [name='CSRFHeadername']").val();
     }
@@ -77,282 +73,8 @@
         return $("#CSRFForm [name='CSRFParameterName']").val();
     }
 
-    function getDepth2() {
-        let depth1 = $("#depth1").val();
-        for (var i = 0; i < category_obj.length; i++) {
-            if (category_obj[i].clarge == depth1) {
-                if (depth2.includes(category_obj[i].cmedium)) continue;
-                depth2.push(category_obj[i].cmedium);
-            }
-        }
-        var depth2html = `<option value="0">상품 중분류</option>`;
-        for (var i = 0; i < depth2.length; i++) {
-            depth2html += `<option value="${depth2[i]}">${depth2[i]}</option>`;
-        }
-        document.getElementById("depth2").innerHTML = depth2html;
-        depth2 = [];
-    }
-
-    function getDepth3() {
-        let depth1 = $("#depth1").val();
-        let depth2 = $("#depth2").val();
-        for (var i = 0; i < category_obj.length; i++) {
-            if (category_obj[i].clarge == depth1 && category_obj[i].cmedium == depth2) {
-                if (depth3.includes(category_obj[i].csmall)) continue;
-                depth3.push(category_obj[i].csmall);
-            }
-        }
-        var depth3html = `<option value="0">상품 소분류</option>`;
-        for (var i = 0; i < depth3.length; i++) {
-            depth3html += `<option value="${depth3[i]}">${depth3[i]}</option>`;
-        }
-        document.getElementById("depth3").innerHTML = depth3html;
-        depth3 = [];
-    }
-
-    function deleteSize(idx) {
-        document.getElementById("size" + idx).style.display = "none";
-        var target = document.getElementById("size" + idx).innerText;
-        var arr = target.split(' ');
-        console.log(arr);
-        for (var i = 0; i < size_obj.length; i++) {
-            if (size_obj[i] === arr[2]) {
-                size_obj.splice(i, 1);
-                i--;
-            }
-        }
-        console.log(size_obj);
-    }
-
-    function addSize() {
-        var ssize = $("#ssize").val();
-        console.log(ssize);
-        size_obj.push(ssize);
-        var shtml = `<p style="height: 45px; color: #3f729b;" id="size${idx}">사이즈 : ${ssize} <button style="float: right;" class="btn btn-secondary mb-1" onclick="deleteSize(${idx})">삭제</button></p>`;
-        document.getElementById("sizeDiv").innerHTML += shtml;
-        idx += 1;
-    }
-
-    function insertProduct() {
-        var ssize = [];
-        var pid = $("#pid").val();
-        var bname = $("#bname").val();
-        var clarge = $("#depth1").val();
-        var cmedium = $("#depth2").val();
-        var csmall = $("#depth3").val();
-        var pname = $("#ipname").val();
-        var pprice = $("#pprice").val();
-        var pdetail = $("#pdetail").val();
-        var ccolorcode = $("#ccolorcode").val();
-        var ccolorimage = $("#ccolorimage").val();
-        var cmatchpid = $("#cmatchpid").val();
-        var samount = 0; // !!! 나중에 재고 입력받기
-        for (var i = 0; i < size_obj.length; i++) {
-            var temp = {
-                pid: pid,
-                ccolorcode: ccolorcode,
-                samount: samount,
-                ssize: size_obj[i]
-            }
-            ssize.push(temp);
-        }
-        var data = {
-            pid: pid,
-            bname: bname,
-            clarge: clarge,
-            cmedium: cmedium,
-            csmall: csmall,
-            pname: pname,
-            pprice: pprice,
-            pdetail: pdetail,
-            ccolorcode: ccolorcode,
-            ccolorimage : ccolorimage,
-            cmatchpid : cmatchpid,
-            ssize: ssize
-        }
-        var formData = new FormData();
-        var fileInput = $('#cimage');
-        var fileInput2 = $('#ccolorimage');
-        console.log(fileInput2);
-        // fileInput 개수를 구한다.
-        for (var i = 0; i < fileInput.length; i++) {
-            if (fileInput[i].files.length > 0) {
-                for (var j = 0; j < fileInput[i].files.length; j++) {
-                    console.log(" fileInput[i].files[j] :::"+ fileInput[i].files[j]);
-                    // formData에 'file'이라는 키값으로 fileInput 값을 append 시킨다.
-                    formData.append('cimage', $('#cimage')[i].files[j]);
-                }
-            }
-        }
-        console.log(fileInput2);
-        formData.append("ccolorimage",fileInput2[0].files[0]);
-        formData.append('key', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
-        console.log(data);
-        $.ajax({
-            url: "/back/product",
-            method: "post",
-            data: formData,
-            contentType: false,               // * 중요 *
-            processData: false,               // * 중요 *
-            enctype : 'multipart/form-data',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-            },
-            cache: false,
-            success: function (data) {
-                showList();
-            },
-            error: function (request, status, error) {
-                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            }
-        });
-    }
 </script>
 
-<div class="modal fade" id="productinsertmodal" tabindex="-1" role="dialog" aria-labelledby="productinsertmodalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="productinsertmodalLabel">신상품 입력</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="card-body card-block">
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">상품 ID</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="pid" name="text-input" class="form-control">
-                            <small class="form-text text-muted">상품 pid를 입력해주세요</small>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="select" class=" form-control-label">상품 카테고리</label>
-                        </div>
-                        <div class="col-12 col-md-9" style="float: inherit">
-                            <div class="noti-wrap">
-                                <select name="select" id="depth1" class="form-control"
-                                        style="width: 150px; margin-right:20px;" onchange="getDepth2()">
-                                    <option value="0">상품 대분류</option>
-                                </select>
-                                <select name="select" id="depth2" class="form-control"
-                                        style="width: 150px; margin-right:20px;" onchange="getDepth3()">
-                                    <option value="0">상품 중분류</option>
-                                </select>
-                                <select name="select" id="depth3" class="form-control" style="width: 150px;">
-                                    <option value="0">상품 소분류</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">브랜드 이름</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="bname" name="text-input" class="form-control">
-                            <small class="form-text text-muted">브랜드를 입력해주세요</small>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">상품 이름</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="ipname" name="text-input" class="form-control">
-                            <small class="form-text text-muted">상품명을 입력해주세요</small>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">상품 가격</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="pprice"
-                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                   class="form-control">
-                            <small class="form-text text-muted">상품 가격을 입력해주세요</small>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">상품 상세</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <textarea name="textarea-input" id="pdetail" rows="9" class="form-control"></textarea>
-                            <small class="form-text text-muted">상품 상세 내용을 입력해주세요</small>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">상품 색상코드</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="ccolorcode" class="form-control">
-                            <small class="form-text text-muted">색상코드를 입력해주세요</small>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">상품 이미지</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="file" id="cimage" name="file-multiple-input" multiple class="form-control-file">
-                            <small class="form-text text-muted">상품 이미지를 입력해주세요</small>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">컬러칩 이미지</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="file" id="ccolorimage" name="file-multiple-input" class="form-control-file">
-                            <small class="form-text text-muted">컬러칩 이미지를 입력해주세요</small>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">상품 사이즈</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text" id="ssize" name="text-input" class="form-control">
-                        </div>
-                        <button onclick="addSize()" class="btn btn-secondary btn-sm" style="height: 38px;">사이즈 추가
-                        </button>
-                        <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label"></label>
-                        </div>
-                        <div class="col-md-7">
-                            <small class="form-text text-muted" style="margin-bottom: 20px;">사이즈를 추가 해주세요</small>
-                        </div>
-                        <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label"></label>
-                        </div>
-                        <div class="col-md-7">
-                            <div id="sizeDiv"></div>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">함께 코디한 상품</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="cmatchpid" class="form-control">
-                            <small class="form-text text-muted">함께 코디한 상품을 입력해주세요</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-            <button type="button" class="btn btn-primary" onclick="openInsertModal()" data-dismiss="modal">상품 등록</button>
-        </div>
-    </div>
-</div>
 <div class="page-wrapper">
     <!-- HEADER MOBILE-->
     <header class="header-mobile d-block d-lg-none">
@@ -420,9 +142,7 @@
             </div>
         </nav>
     </header>
-    <!-- END HEADER MOBILE-->
 
-    <!-- MENU SIDEBAR-->
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
             <a href="#"> <img src="images/icon/handsome-logo.png" alt="Cool Admin" />
@@ -478,10 +198,10 @@
                               <i class="zmdi zmdi-search"></i>
                            </button>
                         </form> -->
-                        <div class="form-header" action="" method="">
+                        <div class="form-header" action="" method="" style="visibility:hidden">
                             <input onkeyup="enterkey();" id="pname"
                                    class="au-input au-input--xl" type="text" name="search"
-                                   placeholder="상품명을 검색하세요." />
+                                   placeholder="검색" />
                             <button id="productSearch" class="au-btn--submit">
                                 <i class="zmdi zmdi-search"></i>
                             </button>
@@ -548,7 +268,7 @@
                                                 <img src="images/icon/avatar-04.jpg" alt="Cynthia Harvey" />
                                             </div>
                                             <div class="content">
-                                                <p>지난달 메인페이지 이벤트...</p>
+                                                <p>점심 뭐 드실래요?</p>
                                                 <span>문혁, 04.07.2022</span>
                                             </div>
                                         </div>
@@ -652,7 +372,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="title-5 m-b-35">상품 정보</h3>
+                            <h3 class="title-5 m-b-35">스트리밍 목록</h3>
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
                                     <div class="rs-select2--light rs-select2--md">
@@ -677,7 +397,7 @@
                                 </div>
                                 <div class="table-data__tool-right">
                                     <button type="button" class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#productinsertmodal">
-                                        상품 등록
+                                        목록 추가
                                     </button>
                                 </div>
                             </div>
@@ -685,12 +405,12 @@
                                 <table class="table table-data2">
                                     <thead>
                                     <tr>
-                                        <th>상품 아이디</th>
+                                        <th>컨텐츠 이름</th>
                                         <th>카테고리</th>
-                                        <th>브랜드</th>
-                                        <th>상품 이름</th>
-                                        <th>상품 상태</th>
-                                        <th>가격</th>
+                                        <th>담당자</th>
+                                        <th>방송 일자</th>
+                                        <th>시청자 수</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                     </thead>
