@@ -70,18 +70,21 @@ public class ProductServiceImpl implements ProductService {
         // 이미 product 테이블에 존재하는 Pid인데 새로운 컬러만 추가하는 경우 처리
         // product 테이블에서 pid 검색 후 없으면 product에도 입력, 있으면 product 생략
         log.info(pi);
-        ProductDTO product = new ProductDTO();
-        product.setPid(pi.getPid());
-        product.setClarge(pi.getClarge());
-        product.setCmedium(pi.getCmedium());
-        product.setCsmall(pi.getCsmall());
-        product.setBname(pi.getBname());
-        product.setPname(pi.getPname());
-        product.setPprice(pi.getPprice());
-        product.setPdetail(pi.getPdetail());
-        product.setCcolorcode(pi.getCcolorcode());
-        log.info(product);
-        productDAO.insertProduct(product);
+        int cnt = productDAO.getProductExist(pi.getPid());
+        if(cnt < 1) {
+            ProductDTO product = new ProductDTO();
+            product.setPid(pi.getPid());
+            product.setClarge(pi.getClarge());
+            product.setCmedium(pi.getCmedium());
+            product.setCsmall(pi.getCsmall());
+            product.setBname(pi.getBname());
+            product.setPname(pi.getPname());
+            product.setPprice(pi.getPprice());
+            product.setPdetail(pi.getPdetail());
+            product.setCcolorcode(pi.getCcolorcode());
+            log.info(product);
+            productDAO.insertProduct(product);
+        }
 
         ProductColorDTO pcolor = new ProductColorDTO();
         pcolor.setPid(pi.getPid());

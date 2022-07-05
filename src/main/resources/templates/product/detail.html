@@ -56,6 +56,9 @@ $(document).ready(function(){
         	document.getElementById("image1").src=result.cimage1;
         	document.getElementById("image2").src=result.cimage2;
         	document.getElementById("image3").src=result.cimage3;
+			document.getElementById("zoomimage1").src=result.cimage1;
+			document.getElementById("zoomimage2").src=result.cimage2;
+			document.getElementById("zoomimage3").src=result.cimage3;
         	document.getElementById("pname").innerHTML = result.pname;
         	document.getElementById("bname").innerHTML = result.bname;
         	document.getElementById("pprice").innerHTML = '₩' + numWithComma(result.pprice);
@@ -64,9 +67,7 @@ $(document).ready(function(){
         	document.getElementById("totalprice").innerHTML = '₩' + (numWithComma(result.pprice*$("#txtqty").val()));
         	
         	let rt = result.pprice*$("#txtqty").val();
-        	$("#mile").html(numWithComma(rt*0.05)+' M (5%)');
-        	$("#hp").html(numWithComma(Math.ceil(rt*0.001))+' P (0.1%)');
-        	
+        	$("#mile").html(numWithComma(rt*0.05)+' P (5%)');
         }
     });
    
@@ -656,9 +657,9 @@ function prevImgMove(){
 	</div>
 	<div class="item_visual" id="imageDivW" style="display:none">
         <ul>
-            <li><img id="image1" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
-            <li><img id="image2" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
-            <li><img id="image3" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
+            <li><img id="zoomimage1" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
+            <li><img id="zoomimage2" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
+            <li><img id="zoomimage3" src=""  class="respon_image" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'" /></li>
         </ul>
     </div>
     </div>
@@ -689,13 +690,8 @@ function prevImgMove(){
                  <div class="info_sect">
 			<ul class="point_delivery">
 				<li>
-					<span class="title">한섬마일리지</span>
+					<span class="title">H.Point</span>
 					<span class="txt" id="mile"></span>
-				</li>
-				<li>
-                    <span class="title">H.Point</span>
-                     <span class="txt" id="hp"></span>
-                        <a href="javascript:fn_cardBenefit();" id="cardbenef" class="etc_info" onclick="GA_Event('상품_상세','카드사_혜택안내','클릭');">카드사 혜택안내</a>
 				</li>
 				
 				<li>

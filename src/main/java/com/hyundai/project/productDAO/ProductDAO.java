@@ -57,4 +57,6 @@ public interface ProductDAO {
 	public List<ProductBackDTO> backProductList(String pid);
 
 	public int productModify(ProductBackDTO productBackDTO);
+
+	public int getProductExist(String pid);
 }
