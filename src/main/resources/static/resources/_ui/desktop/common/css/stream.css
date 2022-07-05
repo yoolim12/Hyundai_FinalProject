@@ -20,4 +20,10 @@
 		    padding-top: 60%;
 		}
 		
-		
+		.video_main_wrap {
+		    padding-top: unset;
+		}
+		.cnts_title {
+		    padding-top: 10px;
+		    padding-bottom: 10px;
+		}
