@@ -31,12 +31,12 @@
 	});
 	$(document).ready(function () {
 		let rank = [[${membergno}]];
-		let grade = '';
-		if (rank === 1) grade ='FRIEND';
-		else if (rank === 2) grade = 'CREW';
-		else if (rank === 3) grade = 'MANIA';
-		else if (rank === 4) grade = 'STAR';
-		else grade = 'THESTAR';
+		let grade = '', rate;
+		if (rank === 1) grade ='FRIEND', rate = 5;
+		else if (rank === 2) grade = 'CREW', rate = 6;
+		else if (rank === 3) grade = 'MANIA', rate = 7;
+		else if (rank === 4) grade = 'STAR', rate = 8;
+		else grade = 'THESTAR', rate = 5;
 		$("#mrank").html(grade);
 		
 	    const hpoint = numWithComma([[${memberpoint}]]);
@@ -81,9 +81,11 @@
                         	} else if (result[i].ostatus === 4){
                         		status = '배송 완료'
                         	}
-                        	let tprice = '₩'+numWithComma(result[i].oprice);
+                        	let tprice = '₩ '+numWithComma(result[i].oprice);
+                        	let discounted = '(-' + rate + '% ' + numWithComma(result[i].odiscounted) + ')';
                             let usedpoint = '( -'+numWithComma(result[i].ousedpoint)+' P )';
-                            let rprice = result[i].oprice - result[i].ousedpoint;
+                            let realprice = '₩ ' + numWithComma(result[i].oprice - result[i].odiscounted - result[i].ousedpoint);
+                            let rprice = result[i].oprice - result[i].ousedpoint - result[i].odiscounted;
                         	let point = numWithComma(Math.ceil(rprice*0.05));
                         	ohtml += `<tr>
                         			<td class="al_middle">
@@ -121,8 +123,10 @@
 	                                	${tot}
 	                                </td>
 	                                <td class="al_middle">
-	                                	<span>${tprice}</span><br>
-                                        <span style="font-size: 8px; color:#c69c6d;">${usedpoint}</span>
+	                                	<span style="font-size: 11px; color:#999">${tprice}</span><br>
+	                                	<span style="font-size: 8px; color:lightslategrey;">${discounted}</span><br>
+                                        <span style="font-size: 8px; color:#c69c6d;">${usedpoint}</span><br><br>
+                                        <span><strong>${realprice}</strong></span>
 	                                </td>
 	                                <td class="al_middle">
 	                                ${status} <br>`
@@ -134,7 +138,6 @@
                         				${point} P
                         			</td>
                        			</tr>
-                       			<!-- 주문 상세조회 -->
                        			<tr>
                         		<td colspan="6" class="basket_wrap">
                         	    <!-- Info -->

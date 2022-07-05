@@ -20,7 +20,7 @@
 	    var token = $("meta[name='_csrf']").attr("content");
 	    var header = $("meta[name='_csrf_header']").attr("content");
         const mpoint = "[[${mpoint}]]";
-        var checktHandsomepointUsableAmount;
+        var checktHandsomepointUsableAmount, discountTotalPrice, discountedPrice, paymentPrice;
         var res_data = JSON.parse(localStorage.getItem("station-item"));
         console.log(res_data);
         let order_name = "", address, zipcode;
@@ -41,11 +41,23 @@
             var res_data = JSON.parse(localStorage.getItem("station-item"));
             console.log(res_data);
             checktHandsomepointUsableAmount = res_data.totalPrice;
-            const final_tot = numWithComma(checktHandsomepointUsableAmount);
-            const final_hpoint = numWithComma(checktHandsomepointUsableAmount*0.05);
-            $('#txtAccumulationHPoint').text('H.Point ' + final_hpoint + ' P');
-            $('#totalPrice').text('₩'+final_tot);
-            $('#subTotal').text('₩'+final_tot);
+            let rank = [[${member.gno}]];
+            let discounted_rate, discounted_rate_int;
+            if (rank === 1) discounted_rate = 0.05, discounted_rate_int = 5;
+            else if (rank === 2) discounted_rate = 0.06, discounted_rate_int = 6;
+            else if (rank === 3) discounted_rate = 0.07, discounted_rate_int = 7;
+            else if (rank === 4) discounted_rate = 0.08, discounted_rate_int = 8;
+            else discounted_rate = 0.1, discounted_rate_int = 10;
+            const distcounted_price = Math.round(checktHandsomepointUsableAmount * discounted_rate); // 할인 금액
+            const final_tot = checktHandsomepointUsableAmount - distcounted_price; // 총 가격 - 할인 금액
+            const final_hpoint = Math.ceil(final_tot*0.05); // 총 가격 - 할인 금액의 5%
+            discountTotalPrice = final_tot;
+            discountedPrice = distcounted_price;
+            $('#txtAccumulationHPoint').text('H.Point ' + numWithComma(final_hpoint) + ' P');
+            $('#subTotal').text('₩'+ numWithComma(res_data.totalPrice));
+            $('#totalPrice').text('₩'+numWithComma(final_tot));
+            $('#discounted_rate').text(discounted_rate_int);
+            $('#discounted').text('₩'+numWithComma(distcounted_price));
             $('#userpoint').text(numWithComma(mpoint));
             var html = "";
             var mprice = 1;
@@ -98,30 +110,30 @@
                 if(up > mpoint) {
                     $("#ousedpoint").val(mpoint);
                 }
-                if(parseInt($('#ousedpoint').val()) < res_data.totalPrice) {
-                    var remain = parseInt(mpoint) - up;
+                if(up < discountTotalPrice) { // 사용할 포인트가 결제할 금액보다 작을 때
+                    var remain = mpoint - up;
                     if(remain < 0) remain = 0;
+                    $("#ousedpoint").val(up);
                     $('#userpoint').text(numWithComma(remain));
-                } else {
-                    $("#ousedpoint").val(res_data.totalPrice);
+                } else { // 사용할 포인트가 결제해야할 금액보다 클 때
+                    $("#ousedpoint").val(discountTotalPrice);
                     $('#userpoint').text(numWithComma(mpoint - parseInt($('#ousedpoint').val())));
+                    checktHandsomepointUsableAmount = 0;
                 }
-
-
-                checktHandsomepointUsableAmount = res_data.totalPrice - parseInt($("#ousedpoint").val());
-                const final_tot = numWithComma(checktHandsomepointUsableAmount);
-                const final_hpoint = numWithComma(Math.ceil(checktHandsomepointUsableAmount*0.05));
-
+                const final_tot = numWithComma(discountTotalPrice - parseInt($("#ousedpoint").val()));
+                const final_hpoint = numWithComma(Math.ceil((discountTotalPrice - parseInt($("#ousedpoint").val()))*0.05));
+                paymentPrice = discountTotalPrice - up;
                 $('#txtAccumulationHPoint').text('H.Point ' + final_hpoint + ' P');
                 $('#totalPrice').text('₩'+final_tot);
-                $('#subTotal').text('₩'+final_tot);
-
 
                 var la = new layerAlert('포인트 적용이 완료되었습니다.');
             }
             function cancelUseHPoint() {
+                checktHandsomepointUsableAmount = discountTotalPrice;
+                paymentPrice = discountTotalPrice;
                 $("#ousedpoint").val(0);
                 $("#userpoint").text(numWithComma(mpoint));
+                $("#totalPrice").text(numWithComma(discountTotalPrice));
             }
             function getOtel(h1, h2, h3) {
                 return h1 + h2 + h3;
@@ -167,7 +179,7 @@
                             pay_method: "card",
                             merchant_uid: mer_uid, // 주문번호
                             name: order_name, // 2건 이상 : _ 외 1건, 1건 : pname
-                            amount: checktHandsomepointUsableAmount, // 가격 총 합
+                            amount: paymentPrice, // 가격 총 합
                             buyer_email: "[[${member.memail}]]",
                             buyer_name: "[[${member.mname}]]",
                             buyer_tel: "[[${member.telnum}]]",
@@ -218,6 +230,7 @@
                 const otel = getOtel(hp_num1, hp_num2, hp_num3);
                 const ousedpoint = $("#ousedpoint").val();
                 const ousedcoupon = 0;
+                const odiscounted = discountedPrice;
                 let opayment;
                 if(checktHandsomepointUsableAmount == 0) {
                     opayment = 2;
@@ -239,6 +252,7 @@
                     otel: otel,
                     ousedpoint: ousedpoint,
                     ousedcoupon: ousedcoupon,
+                    odiscounted: odiscounted,
                     opayment: opayment,
                     oprice : oprice,
                     ostatus: ostatus,
@@ -572,7 +586,7 @@
                                         <!-- point wrap -->
                                         <div class="point_wrap">
 
-                                            <input title="H.Point 결제" class="inpput" type="text"
+                                            <input title="H.Point 결제" type="text"
                                                    id="ousedpoint" name="useHPoint" numberOnly="true"/>
 
                                             <p class="p_txt">
@@ -914,6 +928,8 @@
                                 <dl class="clearfix">
                                     <dt>상품 합계</dt>
                                     <dd id="subTotal"></dd>
+                                    <dt>할인율 (<span id="discounted_rate"></span>%)</dt>
+                                    <dd id="discounted"></dd>
                                     <dt>배송비</dt>
                                     <dd id="deliveryCost">₩ 0</dd>
                                 </dl>
@@ -972,15 +988,6 @@
                        value="fdcc9003-3927-481c-9d6d-70be0aba5887"/>
             </div>
         </form>
-        <form method="post" action="/kakaoPay">
-            <button onclick="goKakao()">카카오페이 결제 두번째 방법</button>
-            <input type='hidden' id='oid' name='oid' value="">
-            <input type='hidden' id='memail' name='memail' th:value="${member.getMemail()}">
-            <input type='hidden' id='oitem' name='item' value="">
-            <input type='hidden' id='totalqty' name='totalqty' value="">
-            <input type='hidden' id='totalprice' name='totalprice' value="">
-        </form>
-        <button onclick="payment()">KG</button>
 
         <!--layer pop-->
         <div class="popwrap w_type_3" id="popwrap" style="display: none">
