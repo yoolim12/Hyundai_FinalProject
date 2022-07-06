@@ -124,7 +124,7 @@
     <!-- 정민 -->
     <insert id="insertProduct">
         insert into product(pid, clarge, cmedium, csmall, bname, pname, pprice, pdetail, pstatus)
-        values(#{pid}, #{clarge}, #{cmedium}, #{csmall}, #{bname}, #{pname}, #{pprice}, #{pdetail}, 0)
+        values(#{pid}, #{clarge}, #{cmedium}, #{csmall}, #{bname}, #{pname}, #{pprice}, #{pdetail}, 1)
     </insert>
 
     <insert id="insertProductColor" parameterType="com.hyundai.project.dto.ProductColorDTO">
