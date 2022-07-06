@@ -36,6 +36,5 @@ build/
 **/src/main/resources/application-oauth.properties
 
 /.metadata/
-/.mvn/wrapper/
 
 .DS_Store
