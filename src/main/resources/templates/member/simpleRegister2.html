@@ -9,6 +9,7 @@
 	<script type="text/javascript">
 	
 	function go_join(memail){
+		var check = 0
 		var vc = new ValidationCheck(); 
         vc.checkIdList = ['pw', 'pwc', 'name', 'selYear', 'selMonth', 'selDay'];
 
@@ -57,6 +58,9 @@
                 return;
             }
         }
+        if($("#emailReceiveYn").is(':checked')){
+        	var check = 1;
+        }
         
         $("#cancleBtn").attr("disabled", true);
         $("#joinBtn").attr("disabled", true);
@@ -95,6 +99,7 @@
               "telnum": $('[name="telnum1"]').val() + '-' 
                   + $('[name="telnum2"]').val() + '-' 
                   + $('[name="telnum3"]').val(),
+              "mail_check" : check,
               "CSRFToken": getYCsrfToken()
           }),
           beforeSend: function(xhr){

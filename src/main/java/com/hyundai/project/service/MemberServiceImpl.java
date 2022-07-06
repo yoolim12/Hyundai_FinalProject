@@ -90,6 +90,12 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.SfindEmployee(memail);
 	}
 	
+	// 이메일 수신 동의한 멤버 조회
+	@Override
+	public List<MemberJoinDTO> mailMember() throws Exception {
+		return mapper.mailMember();
+	}
+	
 	@Override
 	public long getTotalMember() throws Exception {
 		return mapper.getTotalMember();
