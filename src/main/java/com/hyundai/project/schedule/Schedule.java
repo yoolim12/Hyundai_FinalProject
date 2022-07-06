@@ -9,13 +9,13 @@ public class Schedule {
 	@Autowired
 	ScheduleService service;
 	
-	@Scheduled(fixedDelay = 500000)
+	@Scheduled(fixedDelay = 600000)
 	public void updateGrade() {
 		// 등급 갱신
 		service.jobUpdateMemberGrade();
 	}
 	
-	@Scheduled(fixedDelay = 500000)
+	@Scheduled(fixedDelay = 600000)
 	public void updateSleep() {
 		// 휴면 갱신
 		service.jobUpdateMemberSleep();
