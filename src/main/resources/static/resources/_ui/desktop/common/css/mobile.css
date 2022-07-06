@@ -14,7 +14,9 @@
     background-color: #00bfff;
 }
 
-
+div, span {
+    line-height: unset;
+}
 
 .txt .tit {
     float: left;
