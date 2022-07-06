@@ -556,7 +556,6 @@
         }
 
         function GA_Event(action, label, category){
- 	       alert("test");
  	       gtag('event', action, {
  	              'event_label': label,
  	              'event_category': category,
@@ -565,9 +564,7 @@
     </script>
     <script>
 
-            // 얘도 이벤트 같은데 변화 없으면 지우기. 여기 확인
          $(document).ready(function(){
-            //아울렛 하위브랜드 없을시 이름 숨김처리
             $(".outlet_brand1803 .sm_dep1 .liDep1").each(function(){
                 if($(this).find('ul li').length == 0) {
                     $(this).remove();
@@ -629,19 +626,9 @@
 
 
         function goLogin(){
-            location.href='/ko/member/login';
+            location.href='/member/login';
         }
 
-
-        /**
-         * 2020.03.31 hmk
-         *
-         * 입력하려는 productId가 배열에 있는지 확인해서
-         * 있을 경우에는 해당 배열 항목 삭제하고 입력하려는
-         * productId가 key인 js object 생성하여 삽입. (한마디로 replace)
-         * value : 신규 항목일 때
-         * oldValue : 기존 항목이 있어서 교체할 때
-         */
         // 여기 확인
         function mapSet( array, key, value, oldValue ) {
             var isKeyExist = false ;
@@ -664,8 +651,6 @@
                 } ) ;
             }
         }
-
-
         try{
             // 여기 확인. 로그인시 회원 생일, 성별 정보등으로 고객 특별 추천
             // 비로그인 확인
@@ -674,8 +659,6 @@
             var gender   = 'MALE';
 
               gender   = 'M';
-
-
 
             (function(w,d,n,s,e,o) {
               w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)};
@@ -687,25 +670,6 @@
 
                 var cookieUid = getCookie("searchUID");
                 if(cookieUid == false){
-                    //setting
-                    /* $.ajax({
-                        url: '/ko/intro/getCookieValue',
-                        dataType:"json",
-                        type: "get",
-                        cache : false,
-                        dataType : "json",
-                        async : false,
-                        contentType : "application/json",
-                        success:function(data){
-                            if(getCookie("searchUID") != false){
-                                recoPick('setMID', getCookie("searchUID"));
-                                recoPick('setUserInfo',{ birthyear: splitBirthday , gender: gender});
-                            }
-                        },
-                        error:function(e){
-                            //
-                        }
-                    }); */
                 }else{
                     recoPick('setMID', cookieUid);
                     recoPick('setUserInfo',{ birthyear: splitBirthday , gender: gender});
