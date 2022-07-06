@@ -18,4 +18,11 @@ public class StreamingController {
 		model.addAttribute("member", authMemberDTO);
 
 	}
+	
+	@GetMapping("/mobile")
+	public void mobilestream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model){
+		log.info("@StreamingController, GET()");
+		model.addAttribute("member", authMemberDTO);
+
+	}
 }

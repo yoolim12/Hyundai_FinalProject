@@ -15,19 +15,9 @@
     <script th:src="@{https://player.live-video.net/1.10.0/amazon-ivs-quality-plugin.min.js}"></script>
 </th:block>
 <div layout:fragment="content">
-    <style>
-        input {
-            width: 500px;
-            height: 32px;
-            font-size: 15px;
-            border: 0;
-            border-radius: 15px;
-            outline: none;
-            padding-left: 10px;
-            background-color: rgb(233, 233, 233);
-        }
-    </style>
     <script type="text/javascript">
+
+
         $(document).ready(function () {
             var todayDate = new Date();
 
@@ -101,13 +91,13 @@
                             <div id="msgArea" class="col"></div>
                             <div class="col-6">
                                 <div class="input-group mb-3">
-                                    <input style="width: 80%; background-color: white" type="text" id="msg"
-                                           class="form-control" aria-label="Recipient's username"
-                                           aria-describedby="button-addon2"
-                                           onkeyup="if(window.event.keyCode==13){send()}"/>
-                                    <button class="btn btn-outline-secondary" type="button" id="button-send"
-                                            onclick="send()">전송
-                                    </button>
+                                    <input type="text" id="msg" class="form-control" aria-label="Recipient's username"
+                                           aria-describedby="button-addon2"/>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="button-send"
+                                                onclick="send()">전송
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +194,6 @@
         websocket.onclose = onClose;
 
         function send() {
-            if ($("#msg").val() == "") return;
             console.log("SEND");
             let msg = document.getElementById("msg");
 

@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                .antMatchers("/order").hasRole("USER")
                .antMatchers("/chat").hasRole("USER")
                .antMatchers("/streaming").hasRole("USER")
+               .antMatchers("/mobile").hasRole("USER")
                .antMatchers("/back/form").hasRole("ADMIN")
                .antMatchers("/back/form3").hasRole("ADMIN")
                .antMatchers("/mypage/personInformationChange").hasRole("USER")
