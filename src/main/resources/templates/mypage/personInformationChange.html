@@ -108,7 +108,8 @@ $(document).ready(function(){
 					if(response){
 					    location.href = '/mypage/modifyPage';
 					}else{
-						alert('wrong password');
+						$('#errMsg').html('입력하신 비밀번호가 일치하지 않습니다.');
+						//alert('wrong password');
 					    //location.href="/mypage/personInfomationChange?error";
 					}
 				},
@@ -162,8 +163,7 @@ $(document).ready(function(){
                             <input type="password" id="j_password" name="j_password" title="비밀번호"/>
                         </div>
                     </div>
-                    <p class="guide_comment ml50">
-                    <!— 입력하신 아이디 혹은 비밀번호가 일치하지 않습니다. —></p>
+                    <p id="errMsg" class="guide_comment ml50"></p>
                 </div>
             </fieldset>
         </form>

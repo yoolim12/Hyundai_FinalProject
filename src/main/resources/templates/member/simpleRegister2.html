@@ -6,23 +6,31 @@
 <div layout:fragment="content"> 
 
 <!-- yoolim don't erase!!! -->
-	<script type="text/javascript">
+<script type="text/javascript">
+        function emailValid(id, domain){
+            // 이메일 주소를 올바르게 입력했을 경우
+            if(id != '' && domain != ''){
+                $("#emailDuplChk").val();
+                return true;
+            }
+            return false;
+        }
 	
 	function go_join(memail){
-		var check = 0
-		var vc = new ValidationCheck(); 
-        vc.checkIdList = ['pw', 'pwc', 'name', 'selYear', 'selMonth', 'selDay'];
-
-        if(!vc.isValid()){
-            return;
-        }
+        var emailDomain = '';
+        if($('[name="memail_info2"]').val() === ""){
+			emailDomain += $('#emailDomain').val();
+		}
+		else{
+			emailDomain += $('[name="memail_info2"]').val();
+		}
         
         var pwTypeChk = $("#pwTypeChk").val();
         var pwConfirmChk = $("#pwConfirmChk").val();
         var emailDuplChk = $("#emailDuplChk").val();
-        var memailDuplChk = $("#memailDuplChk").val();
+        // var memailDuplChk = $("#memailDuplChk").val();
         emailDuplChk = "Y";
-        memailDuplChk = "Y";
+        // memailDuplChk = "Y";
         if ( pwTypeChk !== "Y") {
             layerAlert("비밀번호는 8~15자리 이하로 영문/숫자/특수문자를 혼합해주세요 ");
             return;
@@ -37,7 +45,9 @@
         if(memail!=""){
 			console.log($("#email").val())
 			console.log(emailDuplChk);
-            if (memailDuplChk !== 'Y' || emailDuplChk !== 'Y') {
+            if (
+                // memailDuplChk !== 'Y' || 
+                emailDuplChk !== 'Y') {
                 layerAlert("E-mail 중복확인이 되지 않았습니다.");
                 return;
             }
@@ -62,64 +72,83 @@
         	var check = 1;
         }
         
-        $("#cancleBtn").attr("disabled", true);
-        $("#joinBtn").attr("disabled", true);
+        // $("#cancleBtn").attr("disabled", true);
+        // $("#joinBtn").attr("disabled", true);
         
         $("#collectionAgreementYN").val("N");
-        $("#emailAddress").val($("#email").val()+"@"+$("#emailDomain").val());
+        console.log('efnjefwnjkfwebk',emailDomain)
+        $("#emailAddress").val($("#email").val()+"@"+emailDomain);
         
-        if($("#email").val()==""){
+        if($("#email").val()=="" || emailDomain ==""){
+            console.log('empty')
             $("#emailAddress").val("");
         }
         $("#sBirthday").val($("#selYear").val() + $("#selMonth").val() + $("#selDay").val());
         
         console.log('birthday', $("#sBirthday").val());
-        
-        var emailDomain = '';
-        if($('[name="memail2"]').val() === ""){
-				emailDomain += $('#uidDomain').val();
-			}
-			else{
-				emailDomain += $('[name="memail2"]').val();
-			}
-        
-        $.ajax({
-          type: 'POST',
-          url: '/member/registerPost',
-          dataType: 'JSON',
-          contentType : "application/json",
-          data: JSON.stringify({
-              "memail": memail,
-              "mpassword": $('[name="mpassword"]').val(),
-              "memail_info": $('[name="memail_info1"]').val() + '@' + $('[name="memail_info2"]').val(),
-              "mname": $('[name="mname"]').val(),
-              "birth": $('[name="myear"]').val() + '-' 
-                  + $('[name="mmonth"]').val() + '-' 
-                  + $('[name="mday"]').val(),
-              "telnum": $('[name="telnum1"]').val() + '-' 
-                  + $('[name="telnum2"]').val() + '-' 
-                  + $('[name="telnum3"]').val(),
-              "mail_check" : check,
-              "CSRFToken": getYCsrfToken()
-          }),
-          beforeSend: function(xhr){
-				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-			},
-          success:function(response){
-				if(response){
-                  // var la = new layerAlert("회원가입이 완료 되었습니다.");
-                  console.log('register success!!!')
-					location.href = '/member/simpleRegister3';
-				}else{
-					// var la = new layerAlert("회원가입에 실패하였습니다.");
-					console.log('register fail.......')
-					location.href='/member/simpleRegister';
-				}
-			},
-			error:function(e){
-				console.log(e);
-			}
-        });
+
+        console.log($("#emailAddress").val())
+        // 아무것도 안 적었거나 적었지만 중복이 아닐 때
+        if(($("#emailAddress").val() == "" 
+        || (emailValid($("#email").val(), emailDomain) && $("#emailDuplChk").val() == 'Y'))
+        && ($('#phone1').val() != "" && $('#phone2').val() != "" && $('#phone3').val() != "")){
+            var emailAddress = '0';
+            if($('#emailAddress').val() !== null){
+                emailAddress += $('#emailAddress').val();
+            }
+            $.ajax({
+            type: 'POST',
+            url: '/member/registerPost',
+            dataType: 'JSON',
+            contentType : "application/json",
+            data: JSON.stringify({
+                "memail": memail,
+                "mpassword": $('[name="mpassword"]').val(),
+                "memail_info": emailAddress,
+                "mname": $('[name="mname"]').val(),
+                "birth": $('[name="myear"]').val() + '-' 
+                    + $('[name="mmonth"]').val() + '-' 
+                    + $('[name="mday"]').val(),
+                "telnum": $('[name="telnum1"]').val() + '-' 
+                    + $('[name="telnum2"]').val() + '-' 
+                    + $('[name="telnum3"]').val(),
+                "CSRFToken": getYCsrfToken()
+            }),
+            beforeSend: function(xhr){
+                    xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+                },
+            success:function(response){
+                    if(response){
+                    // var la = new layerAlert("회원가입이 완료 되었습니다.");
+                    console.log('register success!!!')
+                        location.href = '/member/simpleRegister3';
+                    }else{
+                        // var la = new layerAlert("회원가입에 실패하였습니다.");
+                        console.log('register fail.......')
+                        location.href='/member/simpleRegister';
+                    }
+                },
+                error:function(e){
+                    console.log(e);
+                }
+            });
+        }
+
+        // 뭔가 적었고 이메일 형식은 맞았지만 중복일 때
+        else if($("#emailAddress").val() != "" 
+        && emailValid($("#email").val(), emailDomain) && $("#emailDuplChk").val() != 'Y'){
+            //여기여기
+            layerAlert('E-mail 중복확인이 되지 않았습니다.');
+        }
+
+        else if($('#phone1').val() == "" || $('#phone2').val() == "" || $('#phone3').val() == ""){
+            layerAlert('필수데이터가 입력되지 않았습니다.');
+        }
+
+        // 뭔가 적었지만 이메일 형식이 안 맞을 때
+        // else if($("#emailAddress").val() != "" && !emailValid($("#email").val(), emailDomain)){
+        //     layerAlert('이메일 형식이 올바르지 않습니다.');
+        // }
 	}
 //<![CDATA[ 
 $(document).ready(function(){
@@ -134,87 +163,97 @@ $(document).ready(function(){
         }
 	});
     
-    var dclick = $('#idDubChkBtn').click(function(){
-		var emailDomain = '';
-		if($('[name="memail2"]').val() === ""){
-			console.log($('#uidDomain').val());
-			emailDomain += $('#uidDomain').val();
-		}
-		else{
-			emailDomain += $('[name="memail2"]').val();
-		}
+    // var dclick = $('#idDubChkBtn').click(function(){
+	// 	var emailDomain = '';
+	// 	if($('[name="memail2"]').val() === ""){
+	// 		console.log($('#uidDomain').val());
+	// 		emailDomain += $('#uidDomain').val();
+	// 	}
+	// 	else{
+	// 		emailDomain += $('[name="memail2"]').val();
+	// 	}
 		
-		$.ajax({
-			type: 'POST',
-			url:'/member/duplicateCheck',
-			dataType: 'JSON',
-			contentType: "application/json",
-			data: JSON.stringify({
-				'memail': $('[name="memail1"]').val() + '@' + emailDomain,
-				"CSRFToken": getYCsrfToken()
-			}),
-			beforeSend: function(xhr){
-				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-			},
-			success: function(response){
-				if(response.memail === '0'){
-					console.log('yes');
-					$('#idDubMsg').text('사용 가능한 이메일입니다.');
-					//$("#emailMsg").text('사용 가능한 이메일입니다.');
-					$("#memailDuplChk").val('Y');
-				}
-				else{
-					console.log('no');
-					$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
-					//$("#emailMsg").text('이미 사용 중인 이메일입니다.');
-				}
-			},
-			error:function(e){
-				console.log('err');
-				console.log(e);
-			}
-		});
-	});
+	// 	$.ajax({
+	// 		type: 'POST',
+	// 		url:'/member/duplicateCheck',
+	// 		dataType: 'JSON',
+	// 		contentType: "application/json",
+	// 		data: JSON.stringify({
+	// 			'memail': $('[name="memail1"]').val() + '@' + emailDomain,
+	// 			"CSRFToken": getYCsrfToken()
+	// 		}),
+	// 		beforeSend: function(xhr){
+	// 			xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+	// 		},
+	// 		success: function(response){
+	// 			if(response.memail === '0'){
+	// 				console.log('yes');
+	// 				$('#idDubMsg').text('사용 가능한 이메일입니다.');
+	// 				//$("#emailMsg").text('사용 가능한 이메일입니다.');
+	// 				$("#memailDuplChk").val('Y');
+	// 			}
+	// 			else{
+	// 				console.log('no');
+	// 				$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
+	// 				//$("#emailMsg").text('이미 사용 중인 이메일입니다.');
+	// 			}
+	// 		},
+	// 		error:function(e){
+	// 			console.log('err');
+	// 			console.log(e);
+	// 		}
+	// 	});
+	// });
 	
 	$('#emailDubChkBtn').click(function(){
 		var emailDomain = '';
-		if($('[name="memail2"]').val() === ""){
-			emailDomain += $('#uidDomain').val();
+		if($('[name="memail_info2"]').val() === ""){
+			emailDomain += $('#emailDomain').val();
 		}
 		else{
-			emailDomain += $('[name="memail2"]').val();
+			emailDomain += $('[name="memail_info2"]').val();
 		}
+        console.log($('#email').val())
+        console.log(emailDomain)
 		
-		$.ajax({
-			type: 'POST',
-			url:'/member/duplicateCheck',
-			dataType: 'JSON',
-			contentType: "application/json",
-			data: JSON.stringify({
-				'memail': $('[name="memail_info1"]').val() + '@' + emailDomain,
-				"CSRFToken": getYCsrfToken()
-			}),
-			beforeSend: function(xhr){
-				xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-			},
-			success: function(response){
-				if(response.memail === '0'){
-					console.log('yes');
-					$('#emailMsg').text('사용 가능한 이메일입니다.');
-					//$("#emailMsg").text('사용 가능한 이메일입니다.');
-					$("#emailDuplChk").val('Y');
-				}
-				else{
-					console.log('no');
-					$('#emailMsg').text('이미 사용 중인 이메일입니다.');
-					//$("#emailMsg").text('이미 사용 중인 이메일입니다.');
-				}
-			},
-			error:function(e){
-				console.log('err');
-				console.log(e);
-			}
-		});
+        if(emailValid($('#email').val(), emailDomain)){
+            $.ajax({
+                type: 'POST',
+                url:'/member/duplicateCheck',
+                dataType: 'JSON',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    'memail': $('[name="memail_info1"]').val() + '@' + emailDomain,
+                    "CSRFToken": getYCsrfToken()
+                }),
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+                },
+                success: function(response){
+                    if(response.memail === '0'){
+                        console.log('yes');
+                        $('#emailMsg').text('사용 가능한 이메일입니다.');
+                        //$("#emailMsg").text('사용 가능한 이메일입니다.');
+                        $("#emailDuplChk").val('Y');
+                    }
+                    else{
+                        console.log('no');
+                        $('#emailMsg').text('이미 사용 중인 이메일입니다.');
+                        $("#emailDuplChk").val('N');
+                        //$("#emailMsg").text('이미 사용 중인 이메일입니다.');
+                    }
+                },
+                error:function(e){
+                    console.log('err');
+                    console.log(e);
+                }
+            });
+        }
+
+        else{
+            $('#emailMsg').text('필수데이터가 입력되지 않았습니다.');
+            $("#emailDuplChk").val('N');
+        }
 	})
 
      var nowYear = parseInt('2008');
@@ -541,7 +580,7 @@ function validateEmail(email) {
 </script>
 
 <form id="memberJoinForm">
-		<input type="hidden" id="memailDuplChk" value="" title="이메일(아이디) 중복" />
+		<!-- <input type="hidden" id="memailDuplChk" value="" title="이메일(아이디) 중복" /> -->
 		<input type="hidden" id="emailDuplChk" value="" title="이메일 중복" />
         <input type="hidden" name="pwTypeChk" id="pwTypeChk" value="" title="비밀번호 형식" />
         <input type="hidden" name="pwConfirmChk" id="pwConfirmChk" value="" title="비밀번호 일치" />
@@ -712,7 +751,7 @@ function validateEmail(email) {
                                             <th scope="row"><strong class="reqd">*</strong><label for="phone">핸드폰 번호</label></th>
                                             <td>
                                                 <!-- 연락처 첫번째 자리 선택 -->
-                                                <select id="phone" class="input_select counsel_phone1"
+                                                <select id="phone1" class="input_select counsel_phone1"
                                                     required="true" name="telnum1" title="연락처 첫번째 자리">
                                                     <option value="">선택</option>
                                                     <option value="010">010</option>
@@ -723,10 +762,10 @@ function validateEmail(email) {
                                                     <option value="019">019</option>
                                                 </select>
                                                 <!-- 연락처 두,세번째 자리 입력 -->
-                                                - <input type="text" id="phone"
+                                                - <input type="text" id="phone2"
                                                     class="input_text counsel_phone2" title="연락처 두번째 자리"
                                                     required="true" format="number" maxlength="4" minlength="3"
-                                                    name="telnum2" /> - <input type="text" id="phone"
+                                                    name="telnum2" /> - <input type="text" id="phone3"
                                                     class="input_text counsel_phone3" title="연락처 세번째 자리"
                                                     required="true" format="number" maxlength="4" minlength="4"
                                                     name="telnum3" />

@@ -25,6 +25,12 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.getMemberInfo(email);
 	}
 	
+	// 정보 수신용 이메일 주소 가져오기
+	@Override
+	public String findEmailInfo(String memail_info) {
+		return mapper.findEmailInfo(memail_info);
+	}
+	
 	// 회원 수정
 	@Override
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception {
