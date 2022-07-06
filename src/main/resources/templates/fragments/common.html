@@ -111,6 +111,15 @@
     <script type="text/javascript" src="/resources/_ui/desktop/common/js/unorm.js"></script>
 
     <script type="text/javascript" src="/resources/_ui/desktop/common/js/appboy.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+  	<script async src="https://www.googletagmanager.com/gtag/js?id=G-D99PM3RKWZ"></script>
+    <script>
+	     window.dataLayer = window.dataLayer || [];
+	     function gtag(){dataLayer.push(arguments);}
+	     gtag('js', new Date());
+	   
+	     gtag('config', 'G-D99PM3RKWZ');
+   </script>
     <script type="text/javascript">
         var setDimensionData = function () {
             //GA 설정 sessionStorage 페이지 이동시 초기화
@@ -149,23 +158,6 @@
             pageviewObj.dimension16 = entrySite; //채널_언어 - #2846 삭제요청 hychung, #2846 복원요청 hychung
             pageviewObj.dimension18 = oneDepthPage; //페이지_1Depth (페이지depth 없는경우 undefined처리)
             pageviewObj.title = pageTitle; //페이지제목     (페이지제목 없는경우 document.title 입력)
-
-            //로그인 했을경우만 추가 dimension 세팅
-            // 이거 살려놔야하나 일단 주석
-            //    pageviewObj.dimension2 = "40540384";                  //고객_회원번호
-            //    pageviewObj.dimension3 = "통합";                  //고객_회원구분
-            //    pageviewObj.dimension4 = "서울 은평구";                  //고객_지역
-            //    pageviewObj.dimension5 = "M";                  //고객_성별
-            //    pageviewObj.dimension6 = "25";                  //고객_연령대
-            //    pageviewObj.dimension7 = "qhohH4FVgGoKh4yDfU1TAg==";                  //고객_생년 => 고객_통합멤버십번호 변경됨
-            //    pageviewObj.dimension8 = "FRIEND";                  //고객_온라인등급
-            //    pageviewObj.dimension9 = "";                  //고객_한섬통합등급
-            //    pageviewObj.dimension10 = "0";                //고객_구매횟수
-            //    pageviewObj.dimension11 = "";                //고객_구매금액대
-            //    pageviewObj.dimension12 = "";                //고객_첫구매일자
-            //    pageviewObj.dimension13 = "";                //고객_최종구매일자
-            //    pageviewObj.dimension14 = "20220425";                //고객_회원가입일
-            //    pageviewObj.userId = "40540384";                      //사용자ID
 
             // 검색 결과 페이지 일 경우만 처리
             if (window.location.pathname.indexOf("/hssearch/searchCount") > -1) {
@@ -563,30 +555,13 @@
             };
         }
 
-        function GA_Event(Category, Action, Label) {
-            Label = unescape(Label).replace(/\&#039;/gi, "'");
-
-            var v_Label = Label;
-            var v_Category = Category;
-            var v_Action = Action;
-            //공백처리을  _ 처리
-            if (Category != null) {
-                v_Category = Category.replace(/\s{2,}/gi, " ")
-                    .trim()
-                    .replace(/\s/gi, "_");
-            }
-            if (Action != null) {
-                v_Action = Action.replace(/\s{2,}/gi, " ")
-                    .trim()
-                    .replace(/\s/gi, "_");
-            }
-            if (Label != null) {
-                v_Label = Label.replace(/\s{2,}/gi, " ")
-                    .trim()
-                    .replace(/\s/gi, "_");
-            }
-            //ga("gp.send", "event", v_Category, v_Action, v_Label);
-        }
+        function GA_Event(action, label, category){
+ 	       alert("test");
+ 	       gtag('event', action, {
+ 	              'event_label': label,
+ 	              'event_category': category,
+ 	          });
+ 	    }
     </script>
     <script>
 
