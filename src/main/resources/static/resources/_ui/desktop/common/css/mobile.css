@@ -95,8 +95,9 @@ video#amazon-ivs-videojs {
 	padding-top: 3%;
 	margin-left: 8%;
 }
-#fixInput{
+#fixInput{	
 	margin-left: 15px;
+}
 
 .watchagain {
     white-space:nowrap;
@@ -109,6 +110,7 @@ video#amazon-ivs-videojs {
     width: 300px;
     height: 200px;
     margin-right: 30px;
+}
 
 @media (max-width:840px){ /*가로 너비가 840px 이하일 때 아래 스타일 적용*/
     #main {
