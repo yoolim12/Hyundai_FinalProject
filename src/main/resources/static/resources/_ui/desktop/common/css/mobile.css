@@ -1,3 +1,38 @@
+@font-face {
+    font-family: 'Vitro_core';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Vitro_core.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ROKAFSansBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts2201-3@1.0/ROKAFSansBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.head {
+    /* padding-top: 30px; */
+}
+
+.logo {
+    text-indent: -999em;
+    display: block;
+    height: 40px;
+    margin: 21px 0 18px 21px;
+    background: url(/resources/_ui/desktop/common/images/main/top-header-handsome-logo.png) 0 7px no-repeat;
+    width: 190px;
+}
+
+.cnts_title {
+    margin-bottom: 18px;
+}
+
+.title {
+    font-family: 'ROKAFSansBold';
+}
+
 #main {
     display: grid;
     grid-template-columns: 3fr 1fr;    
@@ -46,6 +81,18 @@ video#amazon-ivs-videojs {
     margin-right: 3.39%;
 }
 
+.watchagain {
+    white-space:nowrap;
+    overflow-x:scroll;
+}
+
+.again{
+    display: inline-block;
+    background-color: aqua;
+    width: 300px;
+    height: 200px;
+    margin-right: 30px;
+}
 
 @media (max-width:840px){ /*가로 너비가 840px 이하일 때 아래 스타일 적용*/
     #main {
@@ -58,6 +105,18 @@ video#amazon-ivs-videojs {
     }
     #main #chating {
         min-height: 0;
+    }
+
+    .head {
+        text-align: center;
+    }
+
+    .logo {
+        display: inline-block;
+    }
+
+    .cnts_title {
+        display: inline-block;
     }
     
     .txt .tit {
@@ -87,4 +146,16 @@ video#amazon-ivs-videojs {
         margin-right: 20.39%;
     }
 
+    .watchagain {
+        /* white-space:nowrap; */
+        overflow-y:scroll;
+    }
+    
+    .again{
+        /* display: inline-block; */
+        background-color: aqua;
+        width: 300px;
+        height: 200px;
+        margin-left: 30px;
+    }
 }
