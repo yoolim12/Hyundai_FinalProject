@@ -190,5 +190,65 @@
             }
         }
     </script>
+    <div class="head">
+        <div class="logo"></div>
+        <h3 class="cnts_title ou1804" style="text-align: center;">
+            <span class="title">
+                H-DAY STREAMING
+            </span>
+        </h3>
+    </div>
+   <div id="main">
+      <!-- 스트리밍 -->
+      <div id="streaming">
+           <video id="amazon-ivs-videojs" class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay playsinline></video>
+       </div>
+
+      <!-- 채팅방 -->
+      <div id="chating">
+         <div class="col-6">
+            <label><b>채팅방</b></label>
+         </div>
+         <div>
+            <div id="msgArea" class="col"></div>
+            <div class="col-6">
+               <div class="input-group mb-3">
+                  <input style="width: 80%; background-color: white" type="text"
+                     id="msg" class="form-control" aria-label="Recipient's username"
+                     aria-describedby="button-addon2"
+                     onkeyup="if(window.event.keyCode==13){send()}" />
+                  <button class="btn btn-outline-secondary" type="button"
+                     id="button-send" onclick="send()">전송</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="txt">
+        <p class="tit">aweSOME life 7.<br>HANESOME-E</p>
+        <p class="s_t">변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택</p>
+    </div>
+    <div class="watchagain">
+        <div class="again again1">다시보기1</div>
+        <div class="again again2">다시보기2</div>
+        <div class="again again3">다시보기3</div>
+        <div class="again again4">다시보기4</div>
+        <div class="again again5">다시보기5</div>
+        <div class="again again6">다시보기6</div>
+        <div class="again again7">다시보기7</div>
+        <div class="again again8">다시보기8</div>
+    </div>
+    
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .video-container {
+            width: 640px;
+            height: 480px;
+            margin: 15px;
+        }
+    </style>
 </body>
 </html>
