@@ -38,7 +38,7 @@ public class MypageController {
 			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getEmail()));
 			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getEmail(), 1).getGno());
 		}
-		return "/mypage/mypage";
+		return "mypage/mypage";
 	}
 	
 	@RequestMapping("/personInformationChange")
@@ -78,6 +78,6 @@ public class MypageController {
 		}
 		model.addAttribute("rank", rank);
 		model.addAttribute("grade",grade);
-		return "/mypage/grade";
+		return "mypage/grade";
 	}
 }
