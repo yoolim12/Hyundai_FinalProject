@@ -16,6 +16,6 @@ public class ChatController {
 
         log.info("@ChatController, chat GET()");
         model.addAttribute("member", authMemberDTO);
-        return "/streamingchat/chat";
+        return "streamingchat/chat";
     }
 }

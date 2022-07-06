@@ -22,7 +22,7 @@ public class ProductListController {
 		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal(clarge, cmedium, csmall)));
 		System.out.println(cri);
 		System.out.println(service.getTotal(clarge, cmedium, csmall));
-		return "/product/list";
+		return "product/list";
 	}
 
 }
