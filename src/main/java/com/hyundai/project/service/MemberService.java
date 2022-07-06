@@ -8,6 +8,8 @@ import com.hyundai.project.dto.MemberJoinDTO;
 
 public interface MemberService {
 	
+	public List<MemberJoinDTO> mailMember() throws Exception;
+	
 	// 이메일로 회원 정보 가져오기
 	public List<MemberJoinDTO> getMemberInfo(String email) throws Exception;
 	
@@ -42,6 +44,7 @@ public interface MemberService {
 	public List<MemberJoinDTO> getEmployeeInfo(String memail);
 
 	public List<MemberJoinDTO> SfindEmployee(String memail);
+
 	// 총 회원수
 	public long getTotalMember() throws Exception;
 	// 상품 총 판매량

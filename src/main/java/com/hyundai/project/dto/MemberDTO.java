@@ -26,4 +26,5 @@ public class MemberDTO {
     private int mpoint;
     private int gno;
     private int msleep;
+    private int mail_check;
 }

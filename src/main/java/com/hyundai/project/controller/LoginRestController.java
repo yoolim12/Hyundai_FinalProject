@@ -64,6 +64,9 @@ public class LoginRestController {
 		String mname = map.get("mname");
 		Date birth = Date.valueOf(map.get("birth"));
 		String telnum = map.get("telnum"); // js로 null인 것들 걸러내
+		
+		int mail_check = Integer.parseInt(map.get("mail_check"));
+		
 		memberdto.setMemail(memail);
 		memberRoleDTO.setMemail(memail);
 		
@@ -78,6 +81,8 @@ public class LoginRestController {
 		memberdto.setMgender("0");
 		
 		memberdto.setGno(1);
+		memberdto.setMail_check(mail_check);
+		
 		
 		try {
     		service.simpleRegister(memberdto);
