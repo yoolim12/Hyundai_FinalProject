@@ -6,8 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css"
 	href="/resources/_ui/desktop/common/css/mobile.css">
-<link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video-js.css"/>
+	
+<link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video-js.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video.min.js"></script>
+    <script src="https://player.live-video.net/1.10.0/amazon-ivs-videojs-tech.min.js"></script>
 
 <!-- Bootstrap CSS -->
 <link
@@ -21,136 +23,27 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video.min.js"></script>
-    <script src="https://player.live-video.net/1.10.0/amazon-ivs-videojs-tech.min.js"></script>
-    <script src="https://player.live-video.net/1.10.0/amazon-ivs-quality-plugin.min.js"></script>
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							var todayDate = new Date();
-
-							var getUrlParameter = function getUrlParameter(
-									sParam) {//URL에 포함된 파라미터 이용하기
-								var sPageURL = window.location.search
-										.substring(1), sURLVariables = sPageURL
-										.split('&'), sParameterName, i;
-								for (i = 0; i < sURLVariables.length; i++) {
-									sParameterName = sURLVariables[i]
-											.split('=');
-									if (sParameterName[0] === sParam) {
-										return sParameterName[1] === undefined ? true
-												: decodeURIComponent(sParameterName[1]);
-									}
-								}
-							};
-
-						});
-
-		function videoWidth() {
-			var target = $('.video_area1903').attr('id');
-			var idx = 0;
-			var width = $("#" + target + " div:eq(" + idx + ")").width();
-			var height = $("#" + target + "  div:eq(" + idx + ")").height();
-			$('#' + target).find('video').css({
-				'width' : width + 'px',
-				'height' : height + 'px'
-			});
-			$('#' + target).css({
-				'width' : width + 'px',
-				'height' : height + 'px'
-			});
-		}
-
-		function videoPlay1903() {
-			$('.video_area1903').children('a').on('click', function() {
-				$(this).find('.video_main').next('video').show();
-				$(this).find('.video_main').hide();
-				$('#video')[0].play();
-			});
-		}
-
-		function videoEnded(target, idx) {
-			$("#" + target + " video").hide();
-			$("#" + target + " div:eq(" + idx + ")").show();
-		}
-	</script>
+		
 	<script>
-        const DEFAULT_STREAM = "https://cff34ca342b3.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.328322480690.channel.hhsMUbOq5NC6.m3u8";
-        (function () {
+        (function play() {
+            // Get playback URL from Amazon IVS API
+            var PLAYBACK_URL = '';
+            
+            // Register Amazon IVS as playback technology for Video.js
             registerIVSTech(videojs);
-            registerIVSQualityPlugin(videojs);
 
-            const videoJSPlayer = videojs("amazon-ivs-videojs", {
-                techOrder: ["AmazonIVS"],
-                controlBar: {
-                    playToggle: {
-                        replay: false
-                    },
-                    pictureInPictureToggle: false
-                }
+            // Initialize player
+            var player = videojs('amazon-ivs-videojs', {
+               techOrder: ["AmazonIVS"]
+            }, () => {
+               console.log('Player is ready to use!');
+               // Play stream
+               player.src(PLAYBACK_URL);
             });
-
-            const readyCallback = function () {
-                window.videoJSPlayer = videoJSPlayer;
-
-                const ivsPlayer = videoJSPlayer.getIVSPlayer();
-
-                const videoContainerEl = document.querySelector("#amazon-ivs-videojs");
-                videoContainerEl.addEventListener("click", () => {
-                    if (videoJSPlayer.paused()) {
-                        videoContainerEl.classList.remove("vjs-has-started");
-                    } else {
-                        videoContainerEl.classList.add("vjs-has-started");
-                    }
-                });
-
-                const PlayerState = videoJSPlayer.getIVSEvents().PlayerState;
-                ivsPlayer.addEventListener(PlayerState.PLAYING, () => {
-                    console.log("Player State - PLAYING");
-                    setTimeout(() => {
-                        console.log(
-                            `This stream is ${
-                                ivsPlayer.isLiveLowLatency() ? "" : "not "
-                            }playing in ultra low latency mode`
-                        );
-                        console.log(`Stream Latency: ${ivsPlayer.getLiveLatency()}s`);
-                    }, 3000);
-                });
-
-                // Log errors
-                const PlayerEventType = videoJSPlayer.getIVSEvents().PlayerEventType;
-                ivsPlayer.addEventListener(PlayerEventType.ERROR, (type, source) => {
-                    console.warn("Player Event - ERROR: ", type, source);
-                });
-
-                ivsPlayer.addEventListener(PlayerEventType.TEXT_METADATA_CUE, (cue) => {
-                    const metadataText = cue.text;
-                    const position = ivsPlayer.getPosition().toFixed(2);
-                    console.log(
-                        `Player Event - TEXT_METADATA_CUE: "${metadataText}". Observed ${position}s after playback started.`
-                    );
-                });
-
-                videoJSPlayer.enableIVSQualityPlugin();
-
-                videoJSPlayer.volume(0.5);
-                videoJSPlayer.src(DEFAULT_STREAM);
-            };
-
-            videoJSPlayer.ready(readyCallback);
         })();
-
-        /*
-        (function () {
-            const containerEl = document.querySelector(".video-container");
-            const directSrcFormEl = containerEl.querySelector(".src-container-direct");
-            const directSrcInputEl = containerEl.querySelector(".src-input");
-            directSrcFormEl.addEventListener("submit", (e) => {
-                e.preventDefault();
-                videoJSPlayer.src(directSrcInputEl.value);
-            });
-        })(); */
+    </script>
+	
+	<script>
         const username = "[[${member.getMemail()}]]";
         const websocket = new WebSocket("ws://localhost:8080/ws/chat");
 
@@ -230,15 +123,8 @@
 	<div id="main">
 		<!-- 스트리밍 -->
 		<div id="streaming">
-			<a href="javascript:void(0);"> <!-- <div class="video_main" style="display: block;">
-                                <span class="play_btn"></span>
-                                <img src="/resources/medias/220610-D-awesome-03.jpg?context=bWFzdGVyfGltYWdlc3w4NjUzM3xpbWFnZS9qcGVnfGltYWdlcy9oMWUvaGRjLzkzMDQ4OTk3ODA2MzguanBnfDRjODEzNTQ3NDgxYzhmNDZhNGY2ZWRjMWY4OWVjOTNhOTY4NWFkMTM5ZDViMzQyYjgzOWFiMjdhZmI4YzY1NzY" alt="poster">
-                            </div> --> <video id="amazon-ivs-videojs"
-					class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay
-					playsinline>
-				</video>
-			</a>
-		</div>
+	        <video id="amazon-ivs-videojs" class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay playsinline></video>
+	    </div>
 
 		<!-- 채팅방 -->
 		<div id="chating">
@@ -264,5 +150,17 @@
         <p class="tit">aweSOME life 7.<br>HANESOME-E</p>
         <p class="s_t">변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택</p>
     </div>
+    
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .video-container {
+            width: 640px;
+            height: 480px;
+            margin: 15px;
+        }
+    </style>
 </body>
 </html>
