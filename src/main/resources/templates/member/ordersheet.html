@@ -20,7 +20,7 @@
 	    var token = $("meta[name='_csrf']").attr("content");
 	    var header = $("meta[name='_csrf_header']").attr("content");
         const mpoint = "[[${mpoint}]]";
-        var checktHandsomepointUsableAmount, discountTotalPrice, discountedPrice, paymentPrice;
+        var checktHandsomepointUsableAmount, discountTotalPrice, discountedPrice, paymentPrice, finalPoint, finalTotal;
         var res_data = JSON.parse(localStorage.getItem("station-item"));
         console.log(res_data);
         let order_name = "", address, zipcode;
@@ -53,6 +53,7 @@
             const final_hpoint = Math.ceil(final_tot*0.05); // 총 가격 - 할인 금액의 5%
             discountTotalPrice = final_tot;
             discountedPrice = distcounted_price;
+            finalPoint = final_hpoint, finalTotal = final_tot;
             $('#txtAccumulationHPoint').text('H.Point ' + numWithComma(final_hpoint) + ' P');
             $('#subTotal').text('₩'+ numWithComma(res_data.totalPrice));
             $('#totalPrice').text('₩'+numWithComma(final_tot));
@@ -101,6 +102,8 @@
             });
         });
             function doUseHPoint() {
+                discountTotalPrice = finalTotal;
+                checktHandsomepointUsableAmount = finalTotal;
                 var up = $("#ousedpoint").val();
                 if(up < 100 || mpoint < 100) {
                     var la = new layerAlert('100 포인트 이상부터 사용이 가능합니다.');
@@ -122,7 +125,10 @@
                 }
                 const final_tot = numWithComma(discountTotalPrice - parseInt($("#ousedpoint").val()));
                 const final_hpoint = numWithComma(Math.ceil((discountTotalPrice - parseInt($("#ousedpoint").val()))*0.05));
-                paymentPrice = discountTotalPrice - up;
+                paymentPrice = discountTotalPrice - $("#ousedpoint").val();
+                console.log("discountTotalPrice" + discountTotalPrice);
+                console.log("discountTotalPrice" + discountTotalPrice);
+                console.log(paymentPrice);
                 $('#txtAccumulationHPoint').text('H.Point ' + final_hpoint + ' P');
                 $('#totalPrice').text('₩'+final_tot);
 
@@ -131,9 +137,11 @@
             function cancelUseHPoint() {
                 checktHandsomepointUsableAmount = discountTotalPrice;
                 paymentPrice = discountTotalPrice;
+                console.log(paymentPrice);
                 $("#ousedpoint").val(0);
                 $("#userpoint").text(numWithComma(mpoint));
                 $("#totalPrice").text(numWithComma(discountTotalPrice));
+                $('#txtAccumulationHPoint').text('H.Point ' + numWithComma(finalPoint) + ' P');
             }
             function getOtel(h1, h2, h3) {
                 return h1 + h2 + h3;
