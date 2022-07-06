@@ -4,18 +4,19 @@
 }
 
 #main #streaming {
-    min-height: 500px; 
+    min-height: 300px; 
     background-color:#00ffff; 
     margin-right: 10px;
 }
 
 #main #chating {
-    min-height: 500px; 
+    min-height: 300px; 
     background-color: #00bfff;
 }
 
-div, span {
-    line-height: unset;
+video#amazon-ivs-videojs {
+    width: 100%;
+    height: 100%;
 }
 
 .txt .tit {
@@ -45,7 +46,8 @@ div, span {
     margin-right: 3.39%;
 }
 
-@media (max-width:600px){ /*가로 너비가 600px 이하일 때 아래 스타일 적용*/
+
+@media (max-width:840px){ /*가로 너비가 840px 이하일 때 아래 스타일 적용*/
     #main {
         display: block;    
     }
@@ -57,7 +59,7 @@ div, span {
     #main #chating {
         min-height: 0;
     }
-
+    
     .txt .tit {
         float: left;
         color: #0b0b0b;
@@ -84,4 +86,5 @@ div, span {
         line-height: 15px;
         margin-right: 20.39%;
     }
+
 }
