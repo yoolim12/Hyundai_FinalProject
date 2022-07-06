@@ -197,7 +197,7 @@
             });
         })(); */
         const username = "[[${member.getMemail()}]]";
-        const websocket = new WebSocket("ws://localhost:8080/ws/chat");
+        const websocket = new WebSocket("ws://localhost/ws/chat");
 
         websocket.onmessage = onMessage;
         websocket.onopen = onOpen;
