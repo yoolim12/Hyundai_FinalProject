@@ -7,7 +7,6 @@
 
 <!-- yoolim don't erase!!! -->
 <script type="text/javascript">
-
         function emailValid(id, domain){
             // 이메일 주소를 올바르게 입력했을 경우
             if(id != '' && domain != ''){
@@ -69,6 +68,9 @@
                 return;
             }
         }
+        if($("#emailReceiveYn").is(':checked')){
+        	var check = 1;
+        }
         
         // $("#cancleBtn").attr("disabled", true);
         // $("#joinBtn").attr("disabled", true);
@@ -84,6 +86,7 @@
         $("#sBirthday").val($("#selYear").val() + $("#selMonth").val() + $("#selDay").val());
         
         console.log('birthday', $("#sBirthday").val());
+
         console.log($("#emailAddress").val())
         // 아무것도 안 적었거나 적었지만 중복이 아닐 때
         if(($("#emailAddress").val() == "" 

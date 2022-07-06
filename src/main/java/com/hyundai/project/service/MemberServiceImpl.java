@@ -95,5 +95,32 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberJoinDTO> SfindEmployee(String memail) {
 		return mapper.SfindEmployee(memail);
 	}
-
+	
+	// 이메일 수신 동의한 멤버 조회
+	@Override
+	public List<MemberJoinDTO> mailMember() throws Exception {
+		return mapper.mailMember();
+	}
+	
+	@Override
+	public long getTotalMember() throws Exception {
+		return mapper.getTotalMember();
+	}
+	
+	@Override
+	public long getTotalAmount() throws Exception {
+		return mapper.getTotalAmount();
+	}
+	
+	@Override
+	public long getOrderAmountOfWeek() throws Exception {
+		return mapper.getOrderAmountOfWeek();
+	}
+	@Override
+	
+	public long getTotalRevenue() throws Exception {
+		return mapper.getTotalRevenue();
+	}
+	
+	
 }

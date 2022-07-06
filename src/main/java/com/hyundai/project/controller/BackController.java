@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hyundai.project.mail.MailService;
 import com.hyundai.project.service.MemberService;
+import com.hyundai.project.service.ProductService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -22,22 +23,19 @@ import lombok.extern.log4j.Log4j2;
 public class BackController {
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
-
-	// !!! 임시 페이지 나중에 지울것
-	@GetMapping("/temp")
-	public String temp() {
-		log.info("매장관리 페이지 요청");
-		return "/back/form3temp";
-	}
 	
 	@Autowired
 	private MailService mail;
 	
 	// 회원관리 페이지 이동
-	@GetMapping("/form")
-	public void form(Model model) throws Exception {
-		System.out.println(service.showAllMember());
+	@GetMapping("/memberBO")
+	public void memberBO(Model model) throws Exception {
+		//System.out.println(service.showAllMember());
 		model.addAttribute("userList", service.showAllMember());
+		model.addAttribute("userTotal", service.getTotalMember());
+		model.addAttribute("amountTotal", service.getTotalAmount());
+		model.addAttribute("amountWeek", service.getOrderAmountOfWeek());
+		model.addAttribute("revenueTotal", service.getTotalRevenue());
 	}
 	
 	// 회원 조회 ajax + thymleaf
@@ -79,7 +77,7 @@ public class BackController {
 		log.info("스트리밍 페이지 요청");
 		return "/back/test";
 	}
-	
+		
 	// 스트리밍 페이지 이동
 	@GetMapping("/test2")
 	public String st2() {
@@ -87,18 +85,11 @@ public class BackController {
 		return "/back/test2";
 	}
 	
-	// 상품관리 페이지 이동
-	@GetMapping("/form2")
-	public String form2() {
-		log.info("상품관리 페이지 요청");
-		return "/back/form2";
-	}
-	
 	// 매장관리 페이지 이동
-	@GetMapping("/form3")
-	public String form3() {
+	@GetMapping("/productBO")
+	public String productBO() {
 		log.info("매장관리 페이지 요청");
-		return "/back/form3";
+		return "/back/productBO";
 	}
 	
 	// 차트 페이지 이동
@@ -106,6 +97,13 @@ public class BackController {
 	public String chart() {
 		log.info("상품관리 페이지 요청");
 		return "/back/chart";
+	}
+	
+	// 스트리밍 페이지 이동
+	@GetMapping("/streamingBO")
+	public String streamingBO() {
+		log.info("스트리밍 페이지 요청");
+		return "/back/streamingBO";
 	}
 		
 }

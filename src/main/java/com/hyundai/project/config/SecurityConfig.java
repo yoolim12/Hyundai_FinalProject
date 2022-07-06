@@ -48,8 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                .antMatchers("/mypage").hasRole("USER")
                .antMatchers("/cart").hasRole("USER")
                .antMatchers("/order").hasRole("USER")
+               .antMatchers("/chat").hasRole("USER")
+               .antMatchers("/streaming").hasRole("USER")
                .antMatchers("/back/form").hasRole("ADMIN")
+               .antMatchers("/back/form3").hasRole("ADMIN")
                .antMatchers("/mypage/personInformationChange").hasRole("USER")
+               .antMatchers("/mypage/grade").hasRole("USER")
                ;
 
        //인가 인증 문제시 로그인 화면

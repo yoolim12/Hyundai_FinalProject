@@ -31,12 +31,12 @@
 	});
 	$(document).ready(function () {
 		let rank = [[${membergno}]];
-		let grade = '';
-		if (rank === 1) grade ='FRIEND';
-		else if (rank === 2) grade = 'CREW';
-		else if (rank === 3) grade = 'MANIA';
-		else if (rank === 4) grade = 'STAR';
-		else grade = 'THESTAR';
+		let grade = '', rate;
+		if (rank === 1) grade ='FRIEND', rate = 5;
+		else if (rank === 2) grade = 'CREW', rate = 6;
+		else if (rank === 3) grade = 'MANIA', rate = 7;
+		else if (rank === 4) grade = 'STAR', rate = 8;
+		else grade = 'THESTAR', rate = 5;
 		$("#mrank").html(grade);
 		
 	    const hpoint = numWithComma([[${memberpoint}]]);
@@ -81,9 +81,11 @@
                         	} else if (result[i].ostatus === 4){
                         		status = '배송 완료'
                         	}
-                        	let tprice = '₩'+numWithComma(result[i].oprice);
+                        	let tprice = '₩ '+numWithComma(result[i].oprice);
+                        	let discounted = '(-' + rate + '% ' + numWithComma(result[i].odiscounted) + ')';
                             let usedpoint = '( -'+numWithComma(result[i].ousedpoint)+' P )';
-                            let rprice = result[i].oprice - result[i].ousedpoint;
+                            let realprice = '₩ ' + numWithComma(result[i].oprice - result[i].odiscounted - result[i].ousedpoint);
+                            let rprice = result[i].oprice - result[i].ousedpoint - result[i].odiscounted;
                         	let point = numWithComma(Math.ceil(rprice*0.05));
                         	ohtml += `<tr>
                         			<td class="al_middle">
@@ -121,8 +123,10 @@
 	                                	${tot}
 	                                </td>
 	                                <td class="al_middle">
-	                                	<span>${tprice}</span><br>
-                                        <span style="font-size: 8px; color:#c69c6d;">${usedpoint}</span>
+	                                	<span style="font-size: 11px; color:#999">${tprice}</span><br>
+	                                	<span style="font-size: 8px; color:lightslategrey;">${discounted}</span><br>
+                                        <span style="font-size: 8px; color:#c69c6d;">${usedpoint}</span><br><br>
+                                        <span><strong>${realprice}</strong></span>
 	                                </td>
 	                                <td class="al_middle">
 	                                ${status} <br>`
@@ -134,7 +138,6 @@
                         				${point} P
                         			</td>
                        			</tr>
-                       			<!-- 주문 상세조회 -->
                        			<tr>
                         		<td colspan="6" class="basket_wrap">
                         	    <!-- Info -->
@@ -323,7 +326,7 @@
                 <dl>
                     <dt>혜택관리</dt>
                     <dd>
-                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
+                        <a href="/mypage/grade" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
                     </dd>
                     <dd>
                         <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 한섬마일리지');">나의 H.POINT</a>
@@ -377,11 +380,11 @@
                         </div>
                         <div class="point">
                             <p class="title">회원 등급</p>
-                            <a class="count" href="/mypage" onclick="GA_Event('마이페이지','회원정보','RANK');" id="mrank"></a>
+                            <a class="count" href="/mypage/grade" onclick="GA_Event('마이페이지','회원정보','RANK');" id="mrank"></a>
                         </div>
                         <div class="point review">
                             <p class="title">총 주문</p>
-                            <a href="/mypage/myreview" class="count" id="ocount" onclick="GA_Event('마이페이지','회원정보','상품평');"></a>
+                            <a href="/mypage" class="count" id="ocount" onclick="GA_Event('마이페이지','회원정보','상품평');"></a>
                         </div>
                     </div>
                 </div>

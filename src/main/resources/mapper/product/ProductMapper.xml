@@ -121,6 +121,7 @@
         where pid = #{pid}
     </update>
 
+    <!-- 정민 -->
     <insert id="insertProduct">
         insert into product(pid, clarge, cmedium, csmall, bname, pname, pprice, pdetail, pstatus)
         values(#{pid}, #{clarge}, #{cmedium}, #{csmall}, #{bname}, #{pname}, #{pprice}, #{pdetail}, 0)
@@ -153,6 +154,10 @@
 
     <select id="getCategory" resultType="com.hyundai.project.dto.ProductCategoryDTO">
         select clarge, cmedium, csmall from category order by clarge desc
+    </select>
+
+    <select id="getProductExist" resultType="int">
+        select nvl(count(*), 0) cnt from product where pid=#{pid}
     </select>
 
 </mapper>

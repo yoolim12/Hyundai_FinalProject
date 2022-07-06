@@ -39,6 +39,16 @@
     
     <!-- jquery -->
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-D99PM3RKWZ"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'G-D99PM3RKWZ');
+	</script>
 </head>
 
 <body class="animsition">
@@ -309,7 +319,21 @@
 			console.log('check')
         	$("#deletemodal").modal();
        }
-
+		
+       function numWithComma(num) {
+    	  	  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    	  	}
+       
+       $(document).ready(function () {
+    	   const mem = numWithComma([[${userTotal}]]);
+    	   const totAmount = numWithComma([[${amountTotal}]]);
+    	   const wAmount = numWithComma([[${amountWeek}]]);
+    	   const revenue = numWithComma([[${revenueTotal}]]);
+    	   $("#userTotal").html(mem);
+    	   $("#amountTotal").html(totAmount);
+    	   $("#amountWeek").html(wAmount);
+    	   $("#revenueTotal").html("₩" +revenue);
+       })
     </script>
    
     <div class="page-wrapper">
@@ -445,10 +469,12 @@
                             <a href="chart.html">
                                 <i class="fas fa-chart-bar"></i>차트</a>
                         </li>
-                        <li class="active"><a href="form"> <i
+                        <li class="active"><a href="memberBO"> <i
                         class="far fa-check-square"></i>회원 관리
                   </a></li>
-                  <li><a href="form3"> <i class="fas fa-table"></i>매장 관리
+                  <li><a href="productBO"> <i class="fas fa-table"></i>매장 관리
+                  </a></li>
+                  <li><a href="streamingBO"> <i class="fas fa-tv"></i>스트리밍 관리
                   </a></li>
                         
                         <li class="has-sub">
@@ -503,7 +529,7 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                            <form class="form-header" action="" method="POST">
+                            <form class="form-header" action="" method="POST" style="visibility:hidden">
                                 <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit" type="submit">
                                     <i class="zmdi zmdi-search"></i>
@@ -679,8 +705,8 @@
                        <div class="row">
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item">
-                                    <h2 class="number">10,368</h2>
-                                    <span class="desc">members</span>
+                                    <h2 class="number" id="userTotal"></h2>
+                                    <span class="desc">총 회원 수</span>
                                     <div class="icon">
                                         <i class="zmdi zmdi-account-o"></i>
                                     </div>
@@ -688,8 +714,8 @@
                             </div>
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item">
-                                    <h2 class="number">388,688</h2>
-                                    <span class="desc">items sold</span>
+                                    <h2 class="number" id="amountTotal"></h2>
+                                    <span class="desc">총 판매량</span>
                                     <div class="icon">
                                         <i class="zmdi zmdi-shopping-cart"></i>
                                     </div>
@@ -697,8 +723,8 @@
                             </div>
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item">
-                                    <h2 class="number">1,086</h2>
-                                    <span class="desc">this week</span>
+                                    <h2 class="number" id="amountWeek"></h2>
+                                    <span class="desc">이번주 주문건수</span>
                                     <div class="icon">
                                         <i class="zmdi zmdi-calendar-note"></i>
                                     </div>
@@ -706,8 +732,8 @@
                             </div>
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item">
-                                    <h2 class="number">$1,060,386</h2>
-                                    <span class="desc">total earnings</span>
+                                    <h2 class="number" id="revenueTotal"></h2>
+                                    <span class="desc">총 매출액</span>
                                     <div class="icon">
                                         <i class="zmdi zmdi-money"></i>
                                     </div>
@@ -759,12 +785,12 @@
                                                                     <span class="au-checkmark"></span>
                                                                 </label>
                                                             </th>
-                                                            <th>name</th>
-                                                            <th>email</th>
-                                                            <th>description</th>
-                                                            <th>date</th>
-                                                            <th>status</th>
-                                                            <th>grade</th>
+                                                            <th>이름</th>
+                                                            <th>이메일</th>
+                                                            <th>권한</th>
+                                                            <th>가입일</th>
+                                                            <th>상태</th>
+                                                            <th>등급</th>
                                                             <th>
                                                                
                                                                <!-- <input type="text" name="search" placeholder="Email" id = "inputEmail"/> -->

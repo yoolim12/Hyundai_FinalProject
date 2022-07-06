@@ -4,6 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.project.memberDAO.MemberDAO">
 	
+	<select id = "mailMember" resultType ="com.hyundai.project.dto.MemberJoinDTO">
+		select memail from member where mail_check = 1
+	</select>
+	
 	<select id="showAllMember"
 		resultType="com.hyundai.project.dto.MemberJoinDTO">
 		select memail, mname, role_set, msleep, regdate, gname from (select memail, mname, role_set, msleep, regdate, gno from member natural join memberrole) natural join grade
@@ -94,10 +98,10 @@
 	<!-- 유림 -->
 	<insert id="simpleRegister" parameterType="com.hyundai.project.dto.MemberDTO">
 		insert into member
-		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social, gno, mpoint)
+		(memail, mname, birth, telnum, maddress, mgender, mpassword, memail_info, moddate, regdate, from_social, gno, mpoint, mail_check)
 		values (#{memail}, #{mname}, #{birth}, #{telnum}
 			   , #{maddress}, #{mgender}, #{mpassword}, #{memail_info}
-			   , sysdate, sysdate, #{from_social}, #{gno}, 10000)
+			   , sysdate, sysdate, #{from_social}, #{gno}, 10000, #{mail_check})
 	</insert>
 	
 	<insert id="registerRole" parameterType="com.hyundai.project.dto.MemberRoleDTO">
@@ -131,4 +135,20 @@
 	<update id="pointSaving">
 		update member set mpoint = mpoint + #{savingpoint} where memail = #{memail}
 	</update>
+	
+	<select id="getTotalMember" resultType="long">
+		select count(memail) from member
+	</select>
+	
+	<select id="getTotalAmount" resultType="long">
+		select sum(qty) from orderitem
+	</select>
+	
+	<select id="getOrderAmountOfWeek" resultType="long">
+		select count(*) from orderlist where to_char(sysdate,'WW')= to_char(odate,'WW')
+	</select>
+	
+	<select id="getTotalRevenue" resultType="long">
+		select sum(oprice) from orderlist
+	</select>
 </mapper>
