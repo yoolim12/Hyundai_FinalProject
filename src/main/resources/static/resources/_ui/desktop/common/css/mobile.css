@@ -39,7 +39,6 @@
 }
 
 #main #streaming {
-    background-color:#00ffff; 
     margin-right: 20px;
     margin-left: 10px
 }
@@ -47,12 +46,12 @@
 #main #chating {
 	margin-right: 10px;
 	margin-height: 730px; 
-    background-color: rgb(236, 184, 149);
+    background-color: #f5f5f5;
     border-radius: 10px;
     padding-top: 8px;
     padding-bottom: 8px;
     margin-left: 0px;
-    max-height: 1200px;
+    max-height: 1127px;
     overflow: scroll;
 }
 
@@ -94,6 +93,8 @@ video#amazon-ivs-videojs {
 #msgArea{
 	padding-top: 3%;
 	margin-left: 8%;
+	overflow:scroll;
+	height : 66rem;
 }
 #fixInput{	
 	margin-left: 15px;
@@ -110,6 +111,32 @@ video#amazon-ivs-videojs {
     width: 300px;
     height: 200px;
     margin-right: 30px;
+}
+
+li#welcome {
+	padding: revert;
+    padding: 3%;
+   	text-align: center;
+    background-color: lavender;
+    list-style: none;
+}
+
+li#chatUI {
+    list-style: none;
+    padding: revert;
+    padding: 1%;
+    padding-left: 3%;
+    border: 2px solid lemonchiffon;
+    background-color: antiquewhite;
+}
+
+#msg{
+	width: 80%; 
+	background-color: white;
+}
+
+span {
+    word-break: break-all;
 }
 
 @media (max-width:840px){ /*가로 너비가 840px 이하일 때 아래 스타일 적용*/
@@ -176,4 +203,19 @@ video#amazon-ivs-videojs {
         height: 200px;
         margin-left: 30px;
     }
+    li#welcome {
+	    font-size: 13px;
+	}
+	li#chatUI {
+		font-size: 12px;
+	}
+	#chating{
+		height: 330px;
+	}
+	#msgArea{
+		padding-top: 3%;
+		margin-left: 8%;
+		overflow:scroll;
+		height : 17rem;
+	}
 }
