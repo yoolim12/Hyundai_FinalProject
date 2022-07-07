@@ -17,8 +17,9 @@ public class MainController {
 	@Autowired
 	MailService mail;
 	
-	@GetMapping("/main")
-	public void main() throws Exception {
+	@GetMapping("")
+	public String main() throws Exception {
 		log.info("메인페이지 요청");
+		return "main";
 	}
 }
