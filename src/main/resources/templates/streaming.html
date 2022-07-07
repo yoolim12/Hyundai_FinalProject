@@ -197,6 +197,7 @@
             });
         })(); */
         const username = "[[${member.getMemail()}]]";
+        console.log(username);
         const websocket = new WebSocket("ws://43.200.81.238/ws/chat");
 
         websocket.onmessage = onMessage;
