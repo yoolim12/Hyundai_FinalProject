@@ -333,7 +333,15 @@
     	   $("#amountTotal").html(totAmount);
     	   $("#amountWeek").html(wAmount);
     	   $("#revenueTotal").html("₩" +revenue);
-       })
+       });
+       
+       // ga tag
+       function search(){
+   	    gtag('event', '검색', {
+   	        'event_label': '멤버',
+   	        'event_category': 'backoffice',
+   	    });
+   	}
     </script>
    
     <div class="page-wrapper">
@@ -466,13 +474,15 @@
                     <ul class="list-unstyled navbar__list">
                         
                         <li>
-                            <a href="chart.html">
+                            <a href="chart">
                                 <i class="fas fa-chart-bar"></i>차트</a>
                         </li>
                         <li class="active"><a href="memberBO"> <i
                         class="far fa-check-square"></i>회원 관리
                   </a></li>
                   <li><a href="productBO"> <i class="fas fa-table"></i>매장 관리
+                  </a></li>
+                  <li><a href="sendMail"> <i class="zmdi zmdi-email"></i>메일 보내기
                   </a></li>
                   <li><a href="streamingBO"> <i class="fas fa-tv"></i>스트리밍 관리
                   </a></li>
@@ -774,17 +784,11 @@
                                                    <div class="input-group-btn">
                                                       <input type="text" id="inputEmail" name="input-small" placeholder="Email" class="input-sm form-control-sm form-control">
                                                    </div>
-                                                   <button type="button" class="btn btn-primary btn-sm" onclick = "findUser();">검색</button>
+                                                   <button type="button" class="btn btn-primary btn-sm" onclick = "findUser(); search();">검색</button>
                                                 </div>   
                                                        </tr>
                                                           
                                                         <tr>
-                                                            <th>
-                                                                <label class="au-checkbox">
-                                                                    <input type="checkbox">
-                                                                    <span class="au-checkmark"></span>
-                                                                </label>
-                                                            </th>
                                                             <th>이름</th>
                                                             <th>이메일</th>
                                                             <th>권한</th>
@@ -799,12 +803,6 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr class="tr-shadow" th:each = "user : ${userList}">
-                                                            <td>
-                                                                <label class="au-checkbox">
-                                                                    <input type="checkbox">
-                                                                    <span class="au-checkmark"></span>
-                                                                </label>
-                                                            </td>
                                                             <td th:text = "${user.mname}"></td>
                                                             <td>
                                                                 <span class="block-email" th:text = "${user.memail}"></span>
@@ -857,12 +855,6 @@
                                                 </div>   
                                                           </tr>
                                                            <tr>
-                                                               <th>
-                                                                   <label class="au-checkbox">
-                                                                       <input type="checkbox">
-                                                                       <span class="au-checkmark"></span>
-                                                                   </label>
-                                                               </th>
                                                                <th>name</th>
                                                                <th>email</th>
                                                                <th>description</th>
@@ -875,12 +867,7 @@
                                                        </thead>
                                                        <tbody>
                                                            <tr class="tr-shadow" th:each = "user : ${userList}">
-                                                               <td>
-                                                                   <label class="au-checkbox">
-                                                                       <input type="checkbox">
-                                                                       <span class="au-checkmark"></span>
-                                                                   </label>
-                                                               </td>
+                                                               
                                                                <td th:text = "${user.mname}"></td>
                                                                <td>
                                                                    <span class="block-email" th:text = "${user.memail}"></span>

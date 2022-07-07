@@ -36,7 +36,7 @@ public class OrderRestController {
                 memail = authMemberDTO.getMemail();
             }
             else {
-                memail = oauthMemberDTO.getEmail();
+                memail = oauthMemberDTO.getMemail();
             }
             olist.setMemail(memail);
             service.insertOrder(olist);
@@ -65,7 +65,7 @@ public class OrderRestController {
             if (oauthMemberDTO == null) {
                 memail = authMemberDTO.getMemail();
             } else {
-                memail = oauthMemberDTO.getEmail();
+                memail = oauthMemberDTO.getMemail();
             }
             entry = new ResponseEntity<List<OrderResDTO>>(service.getOrder(memail), HttpStatus.OK);
             //log.info(entry);
