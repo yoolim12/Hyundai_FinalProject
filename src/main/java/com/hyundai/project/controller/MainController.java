@@ -16,10 +16,9 @@ import lombok.extern.log4j.Log4j2;
 public class MainController {
 	@Autowired
 	MailService mail;
-	
+
 	@GetMapping("")
-	public String main() throws Exception {
-		log.info("메인페이지 요청");
+	public String main() throws Exception{
 		return "main";
 	}
 }
