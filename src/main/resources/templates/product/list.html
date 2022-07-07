@@ -2,6 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/common}">
+<head>
+	<title>[[${clarge}]]|[[${cmedium}]]|[[${csmall}]]</title>
+</head>
 <div layout:fragment="content">
 	<script type="text/javascript">
 	function numWithComma(num) {
@@ -21,8 +24,10 @@
 			success: function (result) {
 				if (result.length > 0) {
 					for (var i = 0; i < result.length; i++) {
- 						chtml += '<a class="beige" style="background:url('+result[i].ccolorimage+')" ></a>';
- 						chtml += '  <span>&nbsp;</span>';
+ 						chtml += `
+ 						<a class="beige" style="background:url(${result[i].ccolorimage})" ></a>
+ 						<span>&nbsp;</span>
+ 						`;
 					}
 				}
 			}
