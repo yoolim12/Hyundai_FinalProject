@@ -39,7 +39,7 @@ public class CartRestController {
                 memail = authMemberDTO.getMemail();
             }
             else {
-                memail = oauthMemberDTO.getEmail();
+                memail = oauthMemberDTO.getMemail();
             }
             entry = new ResponseEntity<List<CartDTO>>(service.getCart(memail), HttpStatus.OK);
             log.info(entry);
@@ -58,7 +58,7 @@ public class CartRestController {
                 memail = authMemberDTO.getMemail();
             }
             else {
-                memail = oauthMemberDTO.getEmail();
+                memail = oauthMemberDTO.getMemail();
             }
             service.insertCart(memail, cart);
         } catch (Exception e) {
@@ -75,7 +75,7 @@ public class CartRestController {
                 memail = authMemberDTO.getMemail();
             }
             else {
-                memail = oauthMemberDTO.getEmail();
+                memail = oauthMemberDTO.getMemail();
             }
             log.info(memail, cart);
             service.deleteCart(memail, cart);
@@ -93,7 +93,7 @@ public class CartRestController {
                 memail = authMemberDTO.getMemail();
             }
             else {
-                memail = oauthMemberDTO.getEmail();
+                memail = oauthMemberDTO.getMemail();
             }
             service.deleteAllCart(memail);
         } catch (Exception e) {
@@ -110,7 +110,7 @@ public class CartRestController {
                 memail = authMemberDTO.getMemail();
             }
             else {
-                memail = oauthMemberDTO.getEmail();
+                memail = oauthMemberDTO.getMemail();
             }
             log.info(cart);
             service.updateCart(memail, cart);
@@ -133,7 +133,7 @@ public class CartRestController {
             memail = authMemberDTO.getMemail();
         }
         else {
-            memail = oauthMemberDTO.getEmail();
+            memail = oauthMemberDTO.getMemail();
         }
         return service.getCartTotal(memail);
     }
