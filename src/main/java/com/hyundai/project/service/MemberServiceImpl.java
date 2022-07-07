@@ -25,6 +25,12 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.getMemberInfo(email);
 	}
 	
+	// 정보 수신용 이메일 주소 가져오기
+	@Override
+	public String findEmailInfo(String memail_info) {
+		return mapper.findEmailInfo(memail_info);
+	}
+	
 	// 회원 수정
 	@Override
 	public void modifyMember(AuthMemberDTO authMemberDTO) throws Exception {
@@ -88,6 +94,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<MemberJoinDTO> SfindEmployee(String memail) {
 		return mapper.SfindEmployee(memail);
+	}
+	
+	// 이메일 수신 동의한 멤버 조회
+	@Override
+	public List<MemberJoinDTO> mailMember() throws Exception {
+		return mapper.mailMember();
 	}
 	
 	@Override

@@ -41,7 +41,7 @@ public class LoginController {
 	@RequestMapping("/loginfail")
 	public String loginfail() {
 		System.out.println("Login Fail");
-		return "/member/login";
+		return "member/login";
 	}
 	
 	@RequestMapping("/simpleRegisterEmail")
@@ -55,7 +55,7 @@ public class LoginController {
 		MemberDTO dto = new MemberDTO();
 		dto.setMemail(memail);
 		model.addAttribute("mail", dto);
-		return "/member/simpleRegister";
+		return "member/simpleRegister";
 	}
 
 	@RequestMapping("/simpleRegister2/{memail}")
@@ -63,7 +63,7 @@ public class LoginController {
 		MemberDTO dto = new MemberDTO();
 		dto.setMemail(memail);
 		model.addAttribute("mail", dto);
-		return "/member/simpleRegister2";
+		return "member/simpleRegister2";
 	}
 	
 	@RequestMapping("/simpleRegister3")

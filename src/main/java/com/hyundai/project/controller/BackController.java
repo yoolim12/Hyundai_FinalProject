@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hyundai.project.mail.MailService;
 import com.hyundai.project.service.MemberService;
-import com.hyundai.project.service.ProductService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -46,7 +45,7 @@ public class BackController {
 		System.out.println(service.getMemberInfo(memail));
 		model.addAttribute("userList", service.getMemberInfo(memail));
 		
-		return "/back/form :: #memberInfo";
+		return "back/form :: #memberInfo";
 	}
 	
 	// 임직원 조회 ajax + thymleaf
@@ -57,7 +56,7 @@ public class BackController {
 		System.out.println(service.getEmployeeInfo(memail));
 		model.addAttribute("userList", service.getEmployeeInfo(memail));
 		
-		return "/back/form :: #employeeInfo";
+		return "back/form :: #employeeInfo";
 	}
 	
 	// 임직원 검색 조회 ajax + thymleaf
@@ -68,42 +67,42 @@ public class BackController {
 		System.out.println(service.SfindEmployee(memail));
 		model.addAttribute("userList", service.SfindEmployee(memail));
 			
-		return "/back/form :: #employeeInfo";
+		return "back/form :: #employeeInfo";
 	}
 	
 	// 스트리밍 페이지 이동
 	@GetMapping("/test")
 	public String st() {
 		log.info("스트리밍 페이지 요청");
-		return "/back/test";
+		return "back/test";
 	}
 		
 	// 스트리밍 페이지 이동
 	@GetMapping("/test2")
 	public String st2() {
 		log.info("스트리밍 페이지 요청");
-		return "/back/test2";
+		return "back/test2";
 	}
 	
 	// 매장관리 페이지 이동
 	@GetMapping("/productBO")
 	public String productBO() {
 		log.info("매장관리 페이지 요청");
-		return "/back/productBO";
+		return "back/productBO";
 	}
 	
 	// 차트 페이지 이동
 	@GetMapping("/chart")
 	public String chart() {
 		log.info("상품관리 페이지 요청");
-		return "/back/chart";
+		return "back/chart";
 	}
 	
 	// 스트리밍 페이지 이동
 	@GetMapping("/streamingBO")
 	public String streamingBO() {
 		log.info("스트리밍 페이지 요청");
-		return "/back/streamingBO";
+		return "back/streamingBO";
 	}
 		
 }

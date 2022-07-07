@@ -44,55 +44,45 @@
         <div class="sub_container">
             <!-- lnb -->
             <div class="lnb_wrap">
-            <h4>
-                <a href="/mypage">마이페이지<!-- 마이페이지 --></a>
-            </h4>
-            <div class="lnb">
-                <dl>
-                    <dt>주문조회</dt>
-                    <dd>
-                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','주문/배송/반품/취소');">주문/배송/반품/취소</a>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>혜택관리</dt>
-                    <dd>
-                        <a href="/mypage/grade" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
-                    </dd>
-                    <dd>
-                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 한섬마일리지');">나의 H.POINT</a>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>나의 정보관리</dt>
-                    <dd>
-                        <a href="/mypage/personInformationChange" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>나의 활동관리</dt>
-                    <!-- <dd><a href="#">회원등급</a></dd> -->
-                    <dd>
-                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a>
-                    </dd>
-                    <!-- <dd><a href="#">이벤트 참여현황</a></dd> -->
-                </dl>
-            </div>
-            <!-- ph_guide -->
-            <div class="ph_guide">
-                <p class="tlt">고객센터 운영 안내</p>
-                <p class="phone" style="font-size:18px;">1800-5700<span style="color: #c69c6d;" class="txt"><br>(유료)</span></p>
-                <p class="txt">
-                    평일(월~금)<br />
-                    am 09:00 ~ pm 18:00<span>토/일, 공휴일 휴무</span>
-                </p>
-                <a href="mailto:shophelp@thehandsome.com">
-                    shophelp<br />
-                    @thehandsome.com
-                </a>
-            </div>
-            <!-- //ph_guide -->
-        </div>
+                <h4><a href="/ko/mypage" >마이페이지<!-- 마이페이지 --></a></h4>
+                <div class="lnb">
+                            <dl>
+                                <dt>주문조회</dt>
+                                <dd><a href="/ko/mypage/order/myorders" onclick="GA_Event('마이페이지','LNB','주문/배송/반품/취소');">주문/배송/반품/취소</a></dd>
+                                </dl>
+                            <dl>
+                                <dt>혜택관리</dt>
+                                <dd><a href="/ko/mypage/voucher" onclick="GA_Event('마이페이지','LNB','나의 쿠폰');">나의 쿠폰<!-- 쿠폰함 --></a></dd>
+                                </dl>
+                            <dl>
+                                <dt>나의 상품관리</dt>
+                                <dd><a href="/ko/mypage/myWish" onclick="GA_Event('마이페이지','LNB','위시리스트');">위시리스트<!-- 위시리스트 --></a></dd>
+                                <dd><a href="/ko/mypage/rsalarm" onclick="GA_Event('마이페이지','LNB','재입고 알림');">재입고 알림<!-- 재입고알림 --></a></dd>
+                                </dl>
+                            <dl>
+                                <dt>나의 정보관리</dt>
+                                <dd><a href="/ko/mypage/personInfomationChangePWCheck" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a></dd>
+                                <dd><a href="/ko/mypage/shoppingAddressPWCheck" onclick="GA_Event('마이페이지','LNB','배송지 관리');">배송지 관리</a></dd>
+                                <dd><a href="/ko/mypage/oneClick" onclick="GA_Event('마이페이지','LNB','원클릭 결제 관리');">원클릭 결제 관리</a></dd>
+                                </dl>
+                            <dl>
+                                <dt>나의 활동관리</dt>
+                                <!-- <dd><a href="#">회원등급</a></dd> -->
+                                <dd><a href="/ko/mypage/myreview" onclick="GA_Event('마이페이지','LNB','내 상품평');">내 상품평</a></dd>
+                                <dd><a href="/ko/mypage/myqna" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a></dd>
+                                <dd><a href="/ko/mypage/mymantomaninquiry" onclick="GA_Event('마이페이지','LNB','1:1 문의');">1:1 문의</a></dd>
+                                <!-- <dd><a href="#">이벤트 참여현황</a></dd> -->
+                            </dl>
+                            </div>
+                        <!-- ph_guide -->
+                        <div class="ph_guide">
+                            <p class="tlt">고객센터 운영 안내</p>
+                            <p class="phone">1800-5700<span style="color:#c69c6d;" class="txt">(유료)</span></p>
+                            <p class="txt">평일(월~금)<br>am 09:00 ~ pm 18:00<span>토/일, 공휴일 휴무</span></p>
+                            <a href="mailto:shophelp@thehandsome.com">shophelp<br>@thehandsome.com</a>
+                        </div>
+                        <!-- //ph_guide -->
+                    </div>
             <!-- //lnb -->
             <!-- cnts -->
             <div class="sub_cnts">
@@ -102,6 +92,18 @@
                 <script type="text/javascript">
     //<![CDATA[ 
     $(document).ready(function(){
+        function emailValid(id, domain){
+            var pattern = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; //한글
+         console.log('id: ',id, 'domain: ', domain);
+            if(id !== "" && domain !== "" && !pattern.test(id+domain)){
+                console.log('id is', id, 'domain is', domain);
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
 		$('#emailDubChkBtn').click(function(){
 			var emailDomain = '';
 			if($('#emailDomainSel').val() === ""){
@@ -112,61 +114,118 @@
 				emailDomain += $('#emailDomainSel').val();
 			}
 			console.log($('#email').val() + '@' + emailDomain)
-			$.ajax({
-				type: 'POST',
-				url:'/member/duplicateCheck',
-				dataType: 'JSON',
-				contentType: "application/json",
-				data: JSON.stringify({
-					'memail': $('#email').val() + '@' + emailDomain,
-					"CSRFToken": getYCsrfToken()
-				}),
-				beforeSend: function(xhr){
-					xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-				},
-				success: function(response){
-					if(response.memail === '0'){
-						console.log('yes');
-						//$('#idDubMsg').text('사용 가능한 이메일입니다.');
-						$("#emailMsg").text('사용 가능한 이메일입니다.');
-						$("#emailDuplChk").val('Y');
-					}
-					else{
-						console.log('no');
-						//$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
-						$("#emailMsg").text('이미 사용 중인 이메일입니다.');
-					}
-				}
-			});
+            if(emailValid($('#email').val(), emailDomain)){
+                console.log('valid!!')
+                $.ajax({
+                    type: 'POST',
+                    url:'/member/dupCheckEmailInfo',
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        'memailinfo': $('#email').val() + '@' + emailDomain,
+                        "CSRFToken": getYCsrfToken()
+                    }),
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+                    },
+                    success: function(response){
+                        console.log(response);
+                        if(response === "ok"){
+                            $("#emailMsg").text('사용 가능한 이메일입니다.');
+                            $("#emailDuplChk").val('Y');
+                        }
+                        else if(response === "dup"){
+                            $("#emailMsg").text('이미 사용중인 이메일입니다.');
+                            $("#emailDuplChk").val('N');
+                        }
+                    },
+                    error: function(e){
+                        console.log(e);
+                    }
+                });
+            }
+            else{
+                console.log('not valid..');
+                $("#emailMsg").text('필수 데이터가 입력되지 않았습니다.');
+                $("#emailDuplChk").val('N');
+            }
+		});
 		
     	$("#go_save").click(function(){
+            var emailDomain = '';
+			if($('#emailDomainSel').val() === ""){
+				console.log($('#uidDomain').val());
+				emailDomain += $('#emailDomain').val();
+			}
+			else{
+				emailDomain += $('#emailDomainSel').val();
+			}
+
             var birth = $("#selYear").val() + "-" + $("#selMonth").val() + "-" + $("#selDay").val();
-            var memail_info = $("#email").val()+"@"+$("#emailDomain").val();
+            var memail_info = $("#email").val()+"@"+emailDomain;
             var mname = $("#name").val();
-                
-            $.ajax({
-                   type:"POST",
-                   url:"/mypage/updatecomplete",
-                   dataType: 'JSON',
-                   contentType : "application/json",
-                   data:JSON.stringify({
-                	   'mname' : mname,
-                	   'birth' : birth,
-                	   'memail_info' : memail_info,
-                	   "CSRFToken": getYCsrfToken()
-                   }),
-                   beforeSend: function(xhr){
-						xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-					},
-                   error : function( request, status, error ){
-                       layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
-                       console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
-                   },
-                   success:function(result){
-                	   location.href = "/mypage";
-                	}
-	            });
-	        });
+
+
+            if($("#emailDuplChk").val() == 'N'){
+                console.log('hi')
+                //$('#emailDupPopup').attr('style', 'z-index: 150; margin-top: 35px !important; display:block;'); 
+                // $('#emailDupPopup').attr('display', 'block');
+                $('#popMsg').html('이메일의 중복확인이 필요합니다.');
+                $t = layerChangPopup('emailDupPopup');
+                $t.find('.btn_close').click(function(){
+                    $('#emailDupPopup').attr('style', 'z-index: 150; margin-top: 35px !important; display:none;'); 
+                })
+                $t.find('#dupConfirm').click(function(){
+                    $t.find('.btn_close').click();
+                });
+                // $('#layerDiv').attr('style', 'z-index: 1110; display: block;')
+                // $('#emailDupPopup').attr('style', 'z-index: 150; margin-top: 357px; display:block;'); 
+            }
+
+            else if($("#emailDuplChk").val() == 'Y' && $('#name').val() != '' 
+            && $('#selYear').val() != '' && $('#selMonth').val() != '' && $('#selDay').val() != ''){
+                $.ajax({
+                    type:"POST",
+                    url:"/mypage/updatecomplete",
+                    dataType: 'JSON',
+                    contentType : "application/json",
+                    data:JSON.stringify({
+                        'mname' : mname,
+                        'birth' : birth,
+                        'memail_info' : memail_info,
+                        "CSRFToken": getYCsrfToken()
+                    }),
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+                    },
+                    error : function( request, status, error ){
+                        layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
+                        console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
+                    },
+                    success:function(result){
+                        $('#popMsg').html('입력하신 정보가 변경완료 되었습니다.');
+                        $t = layerChangPopup('emailDupPopup');
+                        $t.find('.btn_close').click(function(){
+                            location.href = "/mypage"; 
+                        })
+                        $t.find('#dupConfirm').click(function(){
+                            $t.find('.btn_close').click();
+                        });
+                    }
+                });
+            }
+
+            else{
+                $('#popMsg').html('필수 데이터가 입력되지 않았습니다.');
+                $t = layerChangPopup('emailDupPopup');
+                $t.find('.btn_close').click(function(){
+                    $('#emailDupPopup').attr('style', 'z-index: 150; margin-top: 35px !important; display:none;'); 
+                })
+                $t.find('#dupConfirm').click(function(){
+                    $t.find('.btn_close').click();
+                });
+            }
+            
+	    });
 	        
         if("ko" == "ko"){
             var pwRegExp = /^(?=.*[a-zA-Z])(?=.*[\?\<\>\;\:\'\"\`\(\)\{\}\[\]\|\\\~\,\.!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
@@ -211,10 +270,14 @@
             	console.log(arr[2]);
             	console.log(arr);
             	
-                $("#selDay").val(arr[2]);
-                $("#selMonth").val(arr[1]);
+            	console.log('뭐야이거', arr[0], arr[1], arr[2])
+            	
+                
                 $("#selYear").val(arr[0]);
-            
+                $("#selMonth").val(arr[1]);
+                $("#selDay").val(arr[2]);
+                console.log($("#selDay").val());
+
             $("#selYear").change(function(){
 
                     var selYear1 = $('#selYear').val();
@@ -339,43 +402,22 @@
             $('input[name="emailReceiveYN"]:radio:input[value="false"]').attr('checked', 'checked');
                 
                 //이메일 중복 확인
-                $('#emailDubChkBtn').click(function(){
+                // $('#emailDubChkBtn').click(function(){
                     
-                    var vc = new ValidationCheck();
-                    vc.checkIdList = ['email','emailDomain'];
-                    vc.msgFn = function(msg){
-                        $("#emailMsg").text(msg);
-                    };
+                //     var vc = new ValidationCheck();
+                //     vc.checkIdList = ['email','emailDomain'];
+                //     vc.msgFn = function(msg){
+                //         $("#emailMsg").text(msg);
+                //     };
                     
-                    var email = $("#email").val()+"@"+$("#emailDomain").val();
+                //     var email = $("#email").val()+"@"+$("#emailDomain").val();
                     
-                    if(""+"@"+"" == email){
-                        $("#emailMsg").text('이미 사용중인 이메일입니다.');
-                        $("#emailDuplChk").val('Y'); 
-                        return;
-                    }
-                    
-                    if(vc.isValid() && $("#emailDuplChk").val() != 'N'){
-                        $.ajax({
-                            type:"GET",
-                            url:"/ko/member/isduplemail?email="+email,
-                            success:function(response){
-                                if(response==true){
-                                    $("#emailMsg").text('이미 사용중인 이메일입니다.');
-                                    $("#emailDuplChk").val('');
-                                }else{
-                                    $("#emailMsg").text('사용 가능한 이메일입니다.');
-                                    $("#emailDuplChk").val('Y');
-                                    
-                                }
-                            },
-                            error:function(e){
-                                console.log(e);
-                            }
-                        });
-                    }
-                    
-                });
+                //     if(""+"@"+"" == email){
+                //         $("#emailMsg").text('이미 사용중인 이메일입니다.');
+                //         $("#emailDuplChk").val('Y'); 
+                //         return;
+                //     }                    
+                // });
                 
                 
                 $("#email, #emailDomain, #emailDomainSel").change(function() {
@@ -408,64 +450,7 @@
                     };
                 });
                 
-                if(hPointConnectYn == "N") {
-                    $("#saveBtn").click(function(){
-                        var la = new layerAlert("통합멤버십 작업으로 인해 일시적으로 사용이 제한 됩니다.불편을 드려 죄송합니다.");
-                        return false;
-                    });
-                    
-                    $("#memberSecessionBtn").click(function(){
-                        var la = new layerAlert("통합멤버십 작업으로 인해 일시적으로 사용이 제한 됩니다.불편을 드려 죄송합니다.");
-                        return false;
-                    });
-                } else {
-                    $("#saveBtn").click(function(){
-                        var birth = $("#selYear").val() + "-" + $("#selMonth").val() + "-" + $("#selDay").val();
-                        var memail_info = $("#email").val()+"@"+$("#emailDomain").val();
-                        var mname = $("#name").val();
-                            
-                        $.ajax({
-                               type:"POST",
-                               url:"/mypage/updatecomplete",
-                               datatype:"json",
-                               data:{
-                            	   'mname' : mname,
-                            	   'birth' : birth,
-                            	   'memail_info' : memail_info,
-                            	   "CSRFToken": getYCsrfToken()
-                               },
-                               beforeSend: function(xhr){
-									xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-					    		},
-                               error : function( request, status, error ){
-                                   layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
-                                   console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
-                               },
-                               success:function(result){
-                            	   alert(result);
-                            }
-                        });
-                    });
-                    
-                    $("#memberSecessionBtn").click(function(){
-                        $.ajax({
-                            type: "POST",
-                            url: "/ko/mypage/setSessionAuth",
-                            dataType: "json",
-                            async : false,
-                            cache : false,          
-                            data: $("#sessionAuthForm").serialize(),
-                            success: function(data){
-                                if(data == "true") {
-                                    location.href="/ko/mypage/memberSecession";
-                                }
-                            },
-                            error: function(xhr,  Status, error) {
-                                alert('sendRequest error : ' + xhr.status + " ( " + error + " ) " );
-                            }
-                        });
-                    });
-                }//else
+                
             
             }else{  //easyMember != Y 
                 //일반
@@ -496,49 +481,28 @@
                 });
                 
                 //이메일 중복 확인
-                $('#emailDubChkBtn').click(function(){
+                // $('#emailDubChkBtn').click(function(){
                     
-                    var vc = new ValidationCheck();
-                    vc.checkIdList = ['email','emailDomain'];
-                    vc.msgFn = function(msg){
-                        $("#emailMsg").text(msg);
-                    };
+                //     var vc = new ValidationCheck();
+                //     vc.checkIdList = ['email','emailDomain'];
+                //     vc.msgFn = function(msg){
+                //         $("#emailMsg").text(msg);
+                //     };
                     
-                    var email = $("#email").val()+"@"+$("#emailDomain").val();
+                //     var email = $("#email").val()+"@"+$("#emailDomain").val();
                     
-                    if(""+"@"+"" == email){
-                        $("#emailMsg").text('이미 사용중인 이메일입니다.');
-                        $("#emailDuplChk").val('Y'); 
-                        return;
-                    }
+                //     if(""+"@"+"" == email){
+                //         $("#emailMsg").text('이미 사용중인 이메일입니다.');
+                //         $("#emailDuplChk").val('Y'); 
+                //         return;
+                //     }
                     
-                    if(email.indexOf("*") > -1){
-                        $("#emailMsg").text('이미 사용중인 이메일입니다.');
-                        $("#emailDuplChk").val('');
-                        return;
-                    }
-                    
-                    if(vc.isValid() && $("#emailDuplChk").val() != 'N'){
-                        $.ajax({
-                            type:"GET",
-                            url:"/ko/member/isduplemail?email="+email,
-                            success:function(response){
-                                if(response==true){
-                                    $("#emailMsg").text('이미 사용중인 이메일입니다.');
-                                    $("#emailDuplChk").val('');
-                                }else{
-                                    $("#emailMsg").text('사용 가능한 이메일입니다.');
-                                    $("#emailDuplChk").val('Y');
-                                    
-                                }
-                            },
-                            error:function(e){
-                                console.log(e);
-                            }
-                        });
-                    }
-                    
-                });
+                //     if(email.indexOf("*") > -1){
+                //         $("#emailMsg").text('이미 사용중인 이메일입니다.');
+                //         $("#emailDuplChk").val('');
+                //         return;
+                //     }                    
+                // });
                 
                 
                 $("#email, #emailDomain, #emailDomainSel").change(function(){
@@ -682,7 +646,6 @@
 
         //if(nowYear < 2000) nowYear += 1900;
         
-        
         //년도 
         for(var i=nowYear; i>=1900; i--) {
             $('#selYear').append("<option value='" + i + "'>" + i + "</option>");
@@ -825,26 +788,6 @@
                         $("#emailAddressMsg").text("");
                         $("#emailDuplChk").val('Y'); 
                         return;
-                    }
-                    
-                    
-                    if(vc.isValid() && emailCheck == 'Y'){
-                        $.ajax({
-                            type:"GET",
-                            url:"/ko/member/isduplemail?email="+$("#email").val(),
-                            success:function(response){
-                                if(response==true){
-                                    $("#emailAddressMsg").text("이미 사용중인 이메일입니다.");
-                                }else{
-                                    $("#emailAddressMsg").text("사용 가능한 이메일입니다.");
-                                    $("#emailDuplChk").val('Y');
-                                    
-                                }
-                            },
-                            error:function(e){
-                                console.log(e);
-                            }
-                        });
                     }
                 }
             });
@@ -1286,7 +1229,7 @@
     
     </form>
     <form id="updateProfileForm" action="/ko/mypage/personInfomationChange" method="post"><input type="hidden" name="prk" id="prk" value="8929295794180" />
-            <input type="hidden" name="emailDuplChk" id="emailDuplChk" value="Y" title="이메일 중복" />
+            <input type="hidden" name="emailDuplChk" id="emailDuplChk" value="" title="이메일 중복" />
             <input type="hidden" id="emailAddress" name="emailAddress" value="" />
             <input type="hidden" id="sBirthday" name="sBirthday" value="" />
         <!-- //lnbWrap -->
@@ -1450,67 +1393,79 @@
         </div>
     <div>
     <input type="hidden" name="CSRFToken" value="d421ae74-247e-4f1d-9c6a-0cb17756def3" />
-    </div></form><!-- 다국어 한국 이외의 언어에서 사용 -->
     </div>
+</form><!-- 다국어 한국 이외의 언어에서 사용 -->
             <!-- //cnts -->
-    </div>
-    </div>
+<!-- layer pop 1 -->
 </body>
 </div>
 </html>
-<!-- layer pop 1 -->
 <div class="popwrap w_type_5" id="pwSearchPop" style="display:none;">
-	<input type="hidden" id="passWordConfirmCheck" name="passWordConfirmCheck" value="N" />
-	<!-- Title1 -->
-	<div class="pop_tltwrap2">
-		<h3>비밀번호 변경</h3>
-	</div>
-	<!-- //Title1 -->
-	<div class="pop_cnt">
-		<form id="pwChangeForm" action="#" method="post">
-			<fieldset>
-				<legend>비밀번호 변경 입력항목</legend>
-				<div class="tblwrap">
-					<table class="tbl_wtype1">
-						<caption>비밀번호 입력항목</caption>
-						<colgroup>
-							<col style="width:160px" />
-							<col />
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row"><strong class="reqd">*</strong><label for="oldPassword">기존 비밀번호 입력</label></th>
-								<td>
-									<input type="password" id="oldPassword" style="width:187px" title="기존 비밀번호 입력"/>
-									<span class="guide_comment" id="oldPasswordCheckMsg" ></span>
-									<!-- <span class="guide_comment">기존 비밀번호가 일치 하지 않습니다.</span> -->
-								</td>
-							</tr>
-							<tr>
-								<th scope="row"><strong class="reqd">*</strong> <label for="newPassword">새 비밀번호 입력</label></th>
-								<td>
-									<input type="password" id="newPassword" style="width:187px" title="새 비밀번호 입력"/>
-									<span class="guide_comment" id="newPasswordDubMsg" ></span>
-									<!-- <span class="guide_comment">비밀번호는 8~15자리 이하로 영문/숫자/특수문자를 혼합해주세요.</span> -->
-								</td>
-							</tr>
-							<tr>
-								<th scope="row"><strong class="reqd">*</strong> <label for="newPasswordConfirm">새 비밀번호 확인</label></th>
-								<td>
-									<input type="password" id="newPasswordConfirm" style="width:187px" title="새 비밀번호 확인"/>
-									<span class="guide_comment" id="newPasswordConfirmDubMsg" ></span>
-									<!-- <span class="guide_comment">&lt;Caps Lock&gt;이 켜져 있습니다.</span> -->
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="btnwrap">
-					<input type="button" class="btn wt_s" id="cancelBtn" value="취소" />
-					<input type="button" class="btn gray_s" id="confirmBtn" value="확인" />
-				</div>
-			</fieldset>
-		</form>
-	</div>
-	<a href="#" class="btn_close" id="closeLayerPop"><img src="/_ui/desktop/common/images/popup/ico_close.png" alt="memberInfoChange.lang.change.password.close"></a>
+    <input type="hidden" id="passWordConfirmCheck" name="passWordConfirmCheck" value="N" />
+    <!-- Title1 -->
+    <div class="pop_tltwrap2">
+        <h3>비밀번호 변경</h3>
+    </div>
+    <!-- //Title1 -->
+    <div class="pop_cnt">
+        <form id="pwChangeForm" action="#" method="post">
+            <fieldset>
+                <legend>비밀번호 변경 입력항목</legend>
+                <div class="tblwrap">
+                    <table class="tbl_wtype1">
+                        <caption>비밀번호 입력항목</caption>
+                        <colgroup>
+                            <col style="width:160px" />
+                            <col />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th scope="row"><strong class="reqd">*</strong><label for="oldPassword">기존 비밀번호 입력</label></th>
+                                <td>
+                                    <input type="password" id="oldPassword" style="width:187px" title="기존 비밀번호 입력"/>
+                                    <span class="guide_comment" id="oldPasswordCheckMsg" ></span>
+                                    <!-- <span class="guide_comment">기존 비밀번호가 일치 하지 않습니다.</span> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong class="reqd">*</strong> <label for="newPassword">새 비밀번호 입력</label></th>
+                                <td>
+                                    <input type="password" id="newPassword" style="width:187px" title="새 비밀번호 입력"/>
+                                    <span class="guide_comment" id="newPasswordDubMsg" ></span>
+                                    <!-- <span class="guide_comment">비밀번호는 8~15자리 이하로 영문/숫자/특수문자를 혼합해주세요.</span> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong class="reqd">*</strong> <label for="newPasswordConfirm">새 비밀번호 확인</label></th>
+                                <td>
+                                    <input type="password" id="newPasswordConfirm" style="width:187px" title="새 비밀번호 확인"/>
+                                    <span class="guide_comment" id="newPasswordConfirmDubMsg" ></span>
+                                    <!-- <span class="guide_comment">&lt;Caps Lock&gt;이 켜져 있습니다.</span> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="btnwrap">
+                    <input type="button" class="btn wt_s" id="cancelBtn" value="취소" />
+                    <input type="button" class="btn gray_s" id="confirmBtn" value="확인" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <a href="#" class="btn_close" id="closeLayerPop">
+        <img src="/_ui/desktop/common/images/popup/ico_close.png" alt="memberInfoChange.lang.change.password.close">
+    </a>	
+</div>
+
+<div class="popwrap w_type_1 " id="emailDupPopup" style="z-index: 150; margin-top: 35px !important; display: none;" tabindex="-1" > 
+    <div class="pop_cnt">
+        <h3 class="pop_tlt copy" id="popMsg"></h3>
+        <div class="btnwrap">
+            <input type="button" id="dupConfirm" class="btn gray_s mr0" value="확인">
+        </div>
+    </div>
+    <a href="javascript:void(0);" class="btn_close">
+        <img src="/_ui/desktop/common/images/popup/ico_close.png" alt="닫기">
+    </a>
 </div>
