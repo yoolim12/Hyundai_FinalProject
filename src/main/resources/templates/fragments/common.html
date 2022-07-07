@@ -276,7 +276,7 @@
                 returnDepth = "상품";
             } else if (target_url.indexOf("/globalMain") > -1) {
                 returnDepth = "메인";
-            } else if (target_url.indexOf("/main") > -1) {
+            } else if (target_url.indexOf("/") > -1) {
                 returnDepth = "메인";
             } else {
                 returnDepth = "";
@@ -536,7 +536,7 @@
                 returnTitle = oneDepthPage;
             } else if (target_url.indexOf("/globalMain") > -1) {
                 returnTitle = oneDepthPage;
-            } else if (target_url.indexOf("/main") > -1) {
+            } else if (target_url.indexOf("/") > -1) {
                 returnTitle = oneDepthPage;
             }
 

@@ -19,7 +19,6 @@ public class MainController {
 
 	@GetMapping("")
 	public String main() throws Exception{
-		log.info("메인페이지 요청");
 		return "main";
 	}
 }
