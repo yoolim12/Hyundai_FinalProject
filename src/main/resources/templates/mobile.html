@@ -5,7 +5,8 @@
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
 <link rel="stylesheet" type="text/css"
    href="/resources/_ui/desktop/common/css/mobile.css">
 
@@ -83,7 +84,7 @@
             <p class="s_t">변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택</p>      
         </div>
         <div class="profile">
-            <img class="profileimg" src="/resources/_ui/desktop/common/images/유림.jpeg" />
+            <img class="profileimg" src="/resources/_ui/desktop/common/images/유림.jpeg" />
             <p class="profilename">더한섬닷컴</p>
         </div>
 
@@ -189,12 +190,13 @@
                         $("#msgArea").append(str);
                     } else {
                         var str = "<div class='col-11'>";
-                        str += "<li class='alert alert-warning'>";
+                        str += "<li class='alert alert-warning' id='tachatUI'>";
                         str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
                         str += "</li></div>";
                         $("#msgArea").append(str);
                     }
                 }
+            $('#msgArea').scrollTop($('#msgArea').height()*10);
             }
 
         </script>
