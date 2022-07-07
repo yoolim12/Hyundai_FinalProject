@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
 <link rel="stylesheet" type="text/css"
-   href="/resources/_ui/desktop/common/css/mobile.css">
+	href="/resources/_ui/desktop/common/css/mobile.css">
 
-<link rel="stylesheet" type="text/css" href="/resources/_ui/desktop/common/css/jquery-ui.min.css" media="all" />  
-<link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video-js.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video.min.js"></script>
-    <script src="https://player.live-video.net/1.10.0/amazon-ivs-videojs-tech.min.js"></script>
-<script type="text/javascript" src="/resources/_ui/desktop/common/js/jquery-1.11.2.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="/resources/_ui/desktop/common/css/jquery-ui.min.css" media="all" />
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video-js.css"
+	rel="stylesheet">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video.min.js"></script>
+<script
+	src="https://player.live-video.net/1.10.0/amazon-ivs-videojs-tech.min.js"></script>
+<script type="text/javascript"
+	src="/resources/_ui/desktop/common/js/jquery-1.11.2.min.js"></script>
 
 <!-- Bootstrap CSS -->
 <link
-   href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-   rel="stylesheet"
-   integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-   crossorigin="anonymous">
-   
-   
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
-   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D99PM3RKWZ"></script>
-   <script>
+<script async
+	src="https://www.googletagmanager.com/gtag/js?id=G-D99PM3RKWZ"></script>
+<script>
   
    
      window.dataLayer = window.dataLayer || [];
@@ -35,8 +43,8 @@
    
      gtag('config', 'G-D99PM3RKWZ');
    </script>
-   
-   <script>
+
+<script>
    function GA_Event(action, label, category){
        alert("test");
        gtag('event', action, {
@@ -47,64 +55,55 @@
    </script>
 </head>
 <body>
-    <div class="head">
-        <div class="logo"></div>
-        <h3 class="cnts_title ou1804" style="text-align: center;">
-            <span class="title">
-                H-DAY STREAMING
-            </span>
-        </h3>
-    </div>
-   <div id="main">
-      <!-- 스트리밍 -->
-      <div id="streaming">
-           <video id="amazon-ivs-videojs" class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay playsinline></video>
-       </div>
+	<div class="head">
+		<div class="logo"></div>
+		<h3 class="cnts_title ou1804" style="text-align: center;">
+			<span class="title"> H-DAY STREAMING </span>
+		</h3>
+	</div>
+	<div id="main">
+		<!-- 스트리밍 -->
+		<div id="streaming">
+			<video id="amazon-ivs-videojs"
+				class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay
+				playsinline></video>
+		</div>
 
-      <!-- 채팅방 -->
-      <div id="chating">
-            <div id="msgArea" class="col">
-            
-            </div>
-            <div class="col-11">
-               <div class="input-group mb-3" id="fixInput">
-                  <input type="text"
-                     id="msg" class="form-control" aria-label="Recipient's username"
-                     aria-describedby="button-addon2"
-                     onkeyup="if(window.event.keyCode==13){send()}" />
-                  <button class="btn btn-outline-secondary" type="button"
-                     id="button-send" onclick="send(); ">전송</button>
-               </div>
-            </div>
-      </div>
-   </div>
-   <div class="bottom">
-    <div class="txt">
-            <p class="tit">aweSOME life 7.<br>HANESOME-E</p>
-            <p class="s_t">변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택</p>      
-        </div>
-        <div class="profile">
-            <img class="profileimg" src="/resources/_ui/desktop/common/images/유림.jpeg" />
-            <p class="profilename">더한섬닷컴</p>
-        </div>
+		<!-- 채팅방 -->
+		<div id="chating">
+			<div id="msgArea" class="col"></div>
+			<div class="col-11">
+				<div class="input-group mb-3" id="fixInput">
+					<input type="text" id="msg" class="form-control"
+						aria-label="Recipient's username" aria-describedby="button-addon2"
+						onkeyup="if(window.event.keyCode==13){send()}" />
+					<button class="btn btn-outline-secondary" type="button"
+						id="button-send" onclick="send(); ">전송</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bottom">
+		<div class="txt">
+			<p class="tit">
+				aweSOME life 7.<br>HANESOME-E
+			</p>
+			<p class="s_t">
+				변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택
+			</p>
+		</div>
+		<div class="profile">
+			<img class="profileimg"
+				src="/resources/_ui/desktop/common/images/유림.jpeg" />
+			<p class="profilename">더한섬닷컴</p>
+		</div>
 
-        <!-- <style>
-            body {
-                margin: 0;
-            }
-            .video-container {
-                width: 640px;
-                height: 480px;
-                margin: 15px;
-            }
-        </style> -->
-        
-        <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-        
-    <script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+			crossorigin="anonymous"></script>
+
+		<script>
             (function play() {
                 // Get playback URL from Amazon IVS API
                 var PLAYBACK_URL = 'const DEFAULT_STREAM = "https://65cd6d00bb9f.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.293546108023.channel.lt4D0GzSMPEs.m3u8";';
@@ -122,8 +121,8 @@
                 });
             })();
         </script>
-    
-    <script>
+
+		<script>
             const username = "[[${member.getMemail()}]]";
             const websocket = new WebSocket("ws://localhost:80/ws/chat");
 
@@ -200,57 +199,43 @@
             }
 
         </script>
-        <div class="description">
-            * 본 영상은 공식 계약을 맺은 뒤 협의하에 제작되었습니다.<br>
-            * 영상의 2차 가공을 금합니다<br>
-            <br>
-            #유미의세포들 #유미의세포들시즌2 #티빙<br>
-            <br>
-            #유미2 #유미1 #유미의세포들몰아보기 #유미의세포들요약<br>
-            #유미의세포들2요약  #박진영 #김고은<br>
-            <br>
-            제작도움 : 티빙 TVING
-            <br>
-            🎬챕터안내<br>
-            5화 0:00<br>
-            6화 10:40<br>
-            <br>
-            사용된 BGM<br>
-            -  사월 - 그대와 함께 춤을.mp3<br>
-            <br>
-            ▶ 자취방남자 후원하기 : http://twip.kr/imalone1234<br>
-            ▶ 자취방남자의 무비코멘트 : https://url.kr/yuadCG<br>
-            ▶ 문의 주소 : honzanam2017@naver.com<br>
-            <br>
-            ––––––––––––––––––––––––––––––––––––––––––––––––––<br>
-            [Video Source Support]<br>
-            Youtube channel "freeticon" : https://www.youtube.com/c/Freeticon<br>
-            ––––––––––––––––––––––––––––––––––––––––––––––––––
-        </div>
-        <div class="watchagain" style="display: block !important;">
-            <p> 다시보기 </p>
-            <div class="again again1">다시보기1</div>
-            <div class="again again2">다시보기2</div>
-            <div class="again again3">다시보기3</div>
-            <div class="again again4">다시보기4</div>
-            <div class="again again5">다시보기5</div>
-            <div class="again again6">다시보기6</div>
-            <div class="again again7">다시보기7</div>
-            <div class="again again8">다시보기8</div>
-        </div>
-        
-        <style>
-            body {
-                margin: 0;
-            }
+		<div class="description">
+			* 본 영상은 공식 계약을 맺은 뒤 협의하에 제작되었습니다.<br> * 영상의 2차 가공을 금합니다<br>
+			<br> #유미의세포들 #유미의세포들시즌2 #티빙<br> <br> #유미2 #유미1
+			#유미의세포들몰아보기 #유미의세포들요약<br> #유미의세포들2요약 #박진영 #김고은<br> <br>
+			제작도움 : 티빙 TVING <br> 🎬챕터안내<br> 5화 0:00<br> 6화 10:40<br>
+			<br> 사용된 BGM<br> - 사월 - 그대와 함께 춤을.mp3<br> <br> ▶
+			자취방남자 후원하기 : http://twip.kr/imalone1234<br> ▶ 자취방남자의 무비코멘트 :
+			https://url.kr/yuadCG<br> ▶ 문의 주소 : honzanam2017@naver.com<br>
+			<br> ––––––––––––––––––––––––––––––––––––––––––––––––––<br>
+			[Video Source Support]<br> Youtube channel "freeticon" :
+			https://www.youtube.com/c/Freeticon<br>
+			––––––––––––––––––––––––––––––––––––––––––––––––––
+		</div>
+		<div class="watchagain" style="display: block !important;">
+			<p>다시보기</p>
+			<div class="again again1">다시보기1</div>
+			<div class="again again2">다시보기2</div>
+			<div class="again again3">다시보기3</div>
+			<div class="again again4">다시보기4</div>
+			<div class="again again5">다시보기5</div>
+			<div class="again again6">다시보기6</div>
+			<div class="again again7">다시보기7</div>
+			<div class="again again8">다시보기8</div>
+		</div>
 
-            .video-container {
-                width: 640px;
-                height: 480px;
-                margin: 15px;
-            }
-        </style>
+		<style>
+body {
+	margin: 0;
+}
 
-    </div>
+.video-container {
+	width: 640px;
+	height: 480px;
+	margin: 15px;
+}
+</style>
+
+	</div>
 </body>
 </html>
