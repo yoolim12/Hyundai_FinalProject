@@ -38,8 +38,9 @@ body {
     border-radius: 7px;
 }
 #msg{
-	width: 80%; 
+	width: 91%; 
 	background-color: white;
+	padding: 1%;
 }
 #chating {
 	margin-right: 10px;
@@ -88,11 +89,23 @@ li#tachatUI {
     margin-top: 3px;
 }
 button#submitBtn {
-    background: darkgrey;
     border-radius: 8px;
-    padding: 1.5%;
+    padding: 2%;
     border: none;
+    cursor: pointer;
 }
 #fixInput {
     margin-top: 7px;
+}
+
+.btnOrange.btnPush {
+  box-shadow: 0px 5px 0px 0px #A66615;
+}
+
+.btnPush:hover {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+.btnOrange.btnPush:hover {
+  box-shadow: 0px 0px 0px 0px #A66615;
 }
