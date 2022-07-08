@@ -3,7 +3,9 @@ package com.hyundai.project.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,23 +27,33 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @RequestMapping("/streaming")
 public class StreamS3Controller {
+	@Value("${cloud.aws.credentials.accessKey2}")
+    private String accessKey;
 	
-    private String accessKey = "AKIAUIWFWER34G3FXTMD";
-
-    private String secretKey = "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";
-
-    private String folderName = "ivs/v1/293546108023/lt4D0GzSMPEs";
+	@Value("${cloud.aws.credentials.secretKey2}")
+    private String secretKey;
+	
+    @Value("${cloud.aws.s3.bucket2}")
+    private String bucketName;
     
-    private String bucketName = "handsomeday";
+    @Value("${cloud.aws.s3.path}")
+    private String folderName;
     
     
 	@GetMapping("/list")
     public void ListS3(){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
-		Date now = new Date();
-		
-		String path = sdf.format(now).replace('-','/');
-		String folderPath = folderName + "/"+ path;
+//		Date now = new Date();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
+//		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+//	    Date gmt = new Date(sdf.format(now));
+//	    log.info(gmt);
+	    
+//		String year, month, day;
+//		String[] utc = sdf.format(now).split("-");
+//		year = utc[0];
+//		month = utc[1];
+//		day = (Integer.parseInt(utc[2])) + "";  
+//		String folderPath = folderName + "/"+ year + "/"+ month + "/" + day;
 		
         AWSCredentials crd = new BasicAWSCredentials(accessKey, secretKey);
         AmazonS3 s3Client = AmazonS3ClientBuilder
@@ -57,7 +69,7 @@ public class StreamS3Controller {
 //             }
 //             objects = s3Client.listNextBatchOfObjects(objects); // 1000개 단위로만 가져옴
 //        } while (objects.isTruncated());
-        ListObjectsV2Result result = s3Client.listObjectsV2(bucketName,folderPath);
+        ListObjectsV2Result result = s3Client.listObjectsV2(bucketName,folderName);
         List<S3ObjectSummary> objects = result.getObjectSummaries();
         for (S3ObjectSummary os : objects) {
             System.out.println("* " + os.getKey());
