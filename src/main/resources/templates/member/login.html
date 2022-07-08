@@ -3,6 +3,10 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
+      
+<head>
+	<title>로그인</title>
+</head>
 <div layout:fragment="content"> 
 		
 	<script type="text/javascript">
@@ -233,7 +237,7 @@ function easyMemJoin() {
 	                                    <input type="password" id="j_password" name="mpassword" placeholder="비밀번호를 입력하세요." title="비밀번호" />
 	                                </div>
 	                            </div>
-	                            <button type="submit" class="btn_login" id="login_btn"><!--<a href="javascript:void(0);" class="btn_login" id="login_btn">-->로그인<!--</a>--></button>
+	                            <button type="submit" class="btn_login" id="login_btn" onclick="GA_Event('로그인', '로그인', '간편 로그인');">로그인</button>
 	                            <div class="id_save">
 	                               <input type="checkbox" id="id_save" name="id_save" value="Y"> <label for="id_save">아이디 저장</label>
 	                            </div>
@@ -264,7 +268,7 @@ function easyMemJoin() {
                     <div class="title_wrap">
                         <a href="/oauth2/authorization/naver" onclick="easyMemJoin();GA_Event('로그인', '가입', '간편회원_가입');" class="btn add_ss join" style="width:366px">네이버 소셜 가입</a>
                     </div>   
-                    <a href="javascript:void(0);" id="hpoinJoinBtn" class="btn add_ss join" style="margin-bottom:40px" onclick="GA_Event('로그인', '가입', '통합회원_가입');">구글 소셜 로그인</a>
+                    <a href="javascript:void(0);" id="hpoinJoinBtn" class="btn add_ss join" style="margin-bottom:40px" onclick="GA_Event('로그인', '가입', '구글소셜_가입');">구글 소셜 로그인</a>
 	                <div class="title_wrap">
 	                    <h4 class="tlt_typ1">더한섬닷컴 간편회원 가입</h4>
 	                    <p class="txt" style=" line-height: 1.5;">본인인증 절차 없이, 더한섬닷컴에서 제공하는 서비스만 제한적으로<br/>이용할 수 있는 ID를 만듭니다.</p>
@@ -272,7 +276,7 @@ function easyMemJoin() {
 	                </div>                      
 	                <div class="title_wrap hide" id="eg_block">
 	                    <a onclick="easyMemJoin();GA_Event('로그인', '가입', '간편회원_가입');" class="btn add_ss join" style="width:366px">간편회원 가입</a>
-	                    <a href="/oauth2/authorization/kakao" onclick="GA_Event('로그인', '가입', '간편회원_가입');" class="btn add_ss join" style="width:366px">카카오 소셜 가입</a>
+	                    <a href="/oauth2/authorization/kakao" onclick="GA_Event('로그인', '가입', '카카오소셜_가입');" class="btn add_ss join" style="width:366px">카카오 소셜 가입</a>
 	                    
 	                    <p class="join_txt2 mt20">
 	                        <span>※ 간편회원은 e-Gift Card 구매 및 등록이 불가능합니다.<br>통합회원 가입 후 이용해 주세요.</span>
