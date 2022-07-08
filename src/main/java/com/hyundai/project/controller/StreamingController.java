@@ -25,6 +25,7 @@ public class StreamingController {
         	model.addAttribute("member", oauthMemberDTO);
         }
 
+
 	}
 	
 	@GetMapping("/mobile")
