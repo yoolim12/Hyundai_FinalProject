@@ -1,5 +1,6 @@
 package com.hyundai.project.dto;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,21 +31,24 @@ public class ClubAuthMemberDTO extends User implements OAuth2User {
 	private String role;
 	private int msleep;
 	private int gno;
+	private Date birth;
 
 	// ClubOAuth2UserDetailsService 용 구성자
 	public ClubAuthMemberDTO(String username, String password, int fromSocial, List<GrantedAuthority> authorities,
-			Map<String, Object> OA2_attr, int msleep, int gno) {
-		this(username, password, fromSocial, authorities, msleep, gno);
+			Map<String, Object> OA2_attr, int msleep, int gno, Date birth, String name) {
+		this(username, password, fromSocial, authorities, msleep, gno, birth, username);
 		this.OA2_attr = OA2_attr;
 	}// end ClubAuthMemberDTO
 
 	// 구성자 설정
-	public ClubAuthMemberDTO(String username, String password, int fromSocial, List<GrantedAuthority> authorities, int msleep, int gno) {
+	public ClubAuthMemberDTO(String username, String password, int fromSocial, List<GrantedAuthority> authorities, int msleep, int gno, Date birth, String name) {
 		super(username, password, authorities); // password는 부모클래스 사용
 		this.memail = username;
 		this.fromSocial = fromSocial;
 		this.msleep = msleep;
 		this.gno = gno;
+		this.birth = birth;
+		this.name = username;
 	}// end ClubAuthMemberDTO
 
 	// OAuth2User 정보 저장
