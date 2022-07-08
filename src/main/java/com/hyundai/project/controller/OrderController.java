@@ -21,8 +21,8 @@ public class OrderController {
 
 	@GetMapping("/order")
 	public String orderView(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) throws Exception {
-		log.info(authMemberDTO);
-		log.info(oauthMemberDTO);
+		//log.info(authMemberDTO);
+		//log.info(oauthMemberDTO);
 		//int mpoint = service.getPoint(authMemberDTO.getMemail());
 		
 		if (oauthMemberDTO == null) {
