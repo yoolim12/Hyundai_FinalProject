@@ -75,6 +75,77 @@
 
 </script>
 
+<div class="modal fade" id="streaminginsertmodal" tabindex="-1" role="dialog" aria-labelledby="streaminginsertmodalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="streaminginsertmodalLabel">스트리밍 정보</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body card-block">
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">방송 제목</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="sname" name="text-input" class="form-control">
+                            <small class="form-text text-muted">방송 제목을 입력해주세요</small>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">컨텐츠</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="scontent" name="text-input" class="form-control">
+                            <small class="form-text text-muted">컨텐츠를 입력해주세요</small>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">방송 URL</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="scontent" name="text-input" class="form-control">
+                            <small class="form-text text-muted">방송 URL을 입력해주세요</small>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">이미지 URL</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="scontent" name="text-input" class="form-control">
+                            <small class="form-text text-muted">이미지 URL을 입력해주세요</small>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">담당자</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="smanager" name="text-input" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">방송 날짜</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="sdate" name="text-input" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" onclick="openInsertModal()" data-dismiss="modal">상품 등록</button>
+        </div>
+    </div>
+</div>
 <div class="page-wrapper">
     <!-- HEADER MOBILE-->
     <header class="header-mobile d-block d-lg-none">
@@ -396,7 +467,7 @@
                                     </button>
                                 </div>
                                 <div class="table-data__tool-right">
-                                    <button type="button" class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#productinsertmodal">
+                                    <button type="button" class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#streaminginsertmodal">
                                         목록 추가
                                     </button>
                                 </div>
@@ -405,11 +476,11 @@
                                 <table class="table table-data2">
                                     <thead>
                                     <tr>
-                                        <th>컨텐츠 이름</th>
-                                        <th>카테고리</th>
+                                    	<th>번호</th>
+                                        <th>방송 제목</th>
+                                        <th>컨텐츠</th>
                                         <th>담당자</th>
                                         <th>방송 일자</th>
-                                        <th>시청자 수</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -430,7 +501,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">상품 등록</h5>
+                <h5 class="modal-title">스트리밍 등록</h5>
                 <button type="button" class="close" id="insert-ico-cancle" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -439,7 +510,7 @@
             <div class="modal-body">
                 <div class="card-body card-block">
                     <div class="row form-group">
-                        상품 등록이 완료되었습니다.
+                        목록 추가가 완료되었습니다.
                     </div>
                 </div>
                 <div class="card-footer">
@@ -470,7 +541,7 @@
             <div class="modal-body">
                 <div class="card-body card-block">
                     <div class="row form-group">
-                        해당 상품을 삭제하시겠습니까?
+                        해당 방송 기록을 삭제하시겠습니까?
                     </div>
                 </div>
                 <div class="card-footer">
@@ -678,19 +749,13 @@
 
     $(document).ready(function () {
         $("#searchRes").html('<div class="alert alert-light">'
-            + '<h4 class="alert-heading">관리자 페이지에 오신 것을 환영합니다!</h4>'
+            + '<h4 class="alert-heading"><a href="https://us-east-1.console.aws.amazon.com/s3/buckets/handsomeday?prefix=ivs/v1/293546108023/lt4D0GzSMPEs/&region=ap-northeast-2" target="_blank">스트리밍 내역 찾기</a></h4>'
             + '<hr>'
             + '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
             + '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
             + '</div>');
 
-
-        $("#searchRes").html('<div class="alert alert-light">'
-            + '<h4 class="alert-heading">관리자 페이지에 오신 것을 환영합니다!</h4>'
-            + '<hr>'
-            + '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
-            + '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
-            + '</div>');
+		$(#"")
 
 
     })
@@ -727,30 +792,6 @@
             }
         });
     }
-    $(document).ready(function () {
-        $.ajax({
-            url: "/back/category",
-            method: "get",
-            contentType: "application/json",
-            cache: false,
-            success: function (data) {
-                category_obj = data;
-                console.log(data);
-                for (var i = 0; i < category_obj.length; i++) {
-                    if (depth1.includes(category_obj[i].clarge)) continue;
-                    depth1.push(category_obj[i].clarge);
-                }
-                var depth1html = `<option value="0">상품 대분류</option>`;
-                for (var i = 0; i < depth1.length; i++) {
-                    depth1html += `<option value="${depth1[i]}">${depth1[i]}</option>`;
-                }
-                document.getElementById("depth1").innerHTML = depth1html;
-            },
-            error: function (request, status, error) {
-                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            }
-        })
-    });
 </script>
 
 

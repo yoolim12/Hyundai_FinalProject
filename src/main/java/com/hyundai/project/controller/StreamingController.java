@@ -1,6 +1,8 @@
 package com.hyundai.project.controller;
 
 import com.hyundai.project.dto.AuthMemberDTO;
+import com.hyundai.project.dto.ClubAuthMemberDTO;
+
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,16 +14,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class StreamingController {
 
 	@GetMapping("/streaming")
-	public void stream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model){
+	public void stream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
 
 		log.info("@StreamingController, GET()");
-		model.addAttribute("member", authMemberDTO);
+		
+		if (oauthMemberDTO == null) {
+        	model.addAttribute("member", authMemberDTO);
+        }
+        else {
+        	model.addAttribute("member", oauthMemberDTO);
+        }
+
 
 	}
 	
 	@GetMapping("/mobile")
-	public void mobilestream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model){
+	public void mobilestream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
 		log.info("@StreamingController, GET()");
-		model.addAttribute("member", authMemberDTO);
+		if (oauthMemberDTO == null) {
+        	model.addAttribute("member", authMemberDTO);
+        }
+        else {
+        	model.addAttribute("member", oauthMemberDTO);
+        }
 	}
 }
