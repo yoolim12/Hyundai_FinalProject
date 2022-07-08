@@ -76,7 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        		;
        
        // 구글 소셜 로그인
-       http.oauth2Login().successHandler(successHandler());
+       http.oauth2Login().successHandler(successHandler())
+               .defaultSuccessUrl("/");
        
        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
        
