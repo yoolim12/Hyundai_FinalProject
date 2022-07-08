@@ -13,8 +13,12 @@
 }
 
 body {
-    padding: 50px;
-    background-color: red;
+    padding: 10px;
+}
+
+html, body {
+max-width: 100%;
+overflow-x: hidden;
 }
 
 .logo {
@@ -45,17 +49,17 @@ body {
         margin-left: 10px
     }
 
-    #main #chating {
-        margin-right: 10px;
-        margin-height: 730px; 
-        background-color: #f5f5f5;
-        border-radius: 10px;
-        padding-top: 8px;
-        padding-bottom: 8px;
-        margin-left: 0px;
-        max-height: 1127px;
-        overflow: scroll;
-    }
+#main #chating {
+	margin-right: 10px;
+	margin-height: 730px; 
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-left: 0px;
+    max-height: 1120px;
+    overflow: scroll;
+}
 
     ::-webkit-scrollbar {
     display: none;
@@ -172,6 +176,7 @@ body {
         width: 100%;
     }
 
+
     .againprofileimg {
         /* display: inline-block; */
         width: 50px;
@@ -237,6 +242,15 @@ body {
         width: 80%; 
         background-color: white;
     }
+
+li#tachatUI {
+    list-style: none;
+    padding: revert;
+    padding: 1%;
+    padding-left: 3%;
+    border: 2px solid lemonchiffon;
+}
+
 
     span {
         word-break: break-all;
@@ -444,14 +458,21 @@ body {
 	li#chatUI {
 		font-size: 12px;
 	}
+	li#tachatUI {
+		font-size: 12px;
+	}
 	#chating{
-		height: 330px;
+		height: 250px;
 	}
 	#msgArea{
 		padding-top: 3%;
 		margin-left: 8%;
 		overflow:scroll;
-		height : 17rem;
+		height : 12rem;
 	}
+	#msg{
+	width: 40%; 
+	background-color: white;
+}
 
 }

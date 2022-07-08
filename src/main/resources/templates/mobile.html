@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
 <link rel="stylesheet" type="text/css"
-   href="/resources/_ui/desktop/common/css/mobile.css">
+	href="/resources/_ui/desktop/common/css/mobile.css">
 
-<link rel="stylesheet" type="text/css" href="/resources/_ui/desktop/common/css/jquery-ui.min.css" media="all" />  
-<link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video-js.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video.min.js"></script>
-    <script src="https://player.live-video.net/1.10.0/amazon-ivs-videojs-tech.min.js"></script>
-<script type="text/javascript" src="/resources/_ui/desktop/common/js/jquery-1.11.2.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="/resources/_ui/desktop/common/css/jquery-ui.min.css" media="all" />
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video-js.css"
+	rel="stylesheet">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video.min.js"></script>
+<script
+	src="https://player.live-video.net/1.10.0/amazon-ivs-videojs-tech.min.js"></script>
+<script type="text/javascript"
+	src="/resources/_ui/desktop/common/js/jquery-1.11.2.min.js"></script>
 
 <!-- Bootstrap CSS -->
 <link
-   href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-   rel="stylesheet"
-   integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-   crossorigin="anonymous">
-   
-   
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
-   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D99PM3RKWZ"></script>
-   <script>
+<script async
+	src="https://www.googletagmanager.com/gtag/js?id=G-D99PM3RKWZ"></script>
+<script>
   
    
      window.dataLayer = window.dataLayer || [];
@@ -34,8 +43,8 @@
    
      gtag('config', 'G-D99PM3RKWZ');
    </script>
-   
-   <script>
+
+<script>
    function GA_Event(action, label, category){
        alert("test");
        gtag('event', action, {
@@ -118,6 +127,7 @@
         crossorigin="anonymous"></script>
         
     <script>
+
             (function play() {
                 // Get playback URL from Amazon IVS API
                 var PLAYBACK_URL = 'const DEFAULT_STREAM = "https://65cd6d00bb9f.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.293546108023.channel.lt4D0GzSMPEs.m3u8";';
@@ -135,10 +145,10 @@
                 });
             })();
         </script>
-    
-    <script>
+
+		<script>
             const username = "[[${member.getMemail()}]]";
-            const websocket = new WebSocket("ws://localhost:80/ws/chat");
+            const websocket = new WebSocket("ws://43.200.81.238/ws/chat");
 
             websocket.onmessage = onMessage;
             websocket.onopen = onOpen;
@@ -203,12 +213,13 @@
                         $("#msgArea").append(str);
                     } else {
                         var str = "<div class='col-11'>";
-                        str += "<li class='alert alert-warning'>";
+                        str += "<li class='alert alert-warning' id='tachatUI'>";
                         str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
                         str += "</li></div>";
                         $("#msgArea").append(str);
                     }
                 }
+            $('#msgArea').scrollTop($('#msgArea').height()*10);
             }
 
         </script>
@@ -471,7 +482,6 @@
                 margin: 15px;
             }
         </style>
-
     </div>
 </body>
 </html>

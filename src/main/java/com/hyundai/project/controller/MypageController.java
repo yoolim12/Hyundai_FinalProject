@@ -33,10 +33,10 @@ public class MypageController {
 		}
 		else {
       		model.addAttribute("member", oauthMemberDTO);
-			model.addAttribute("memberemail", oauthMemberDTO.getEmail());
+			model.addAttribute("memberemail", oauthMemberDTO.getMemail());
 			model.addAttribute("membername", oauthMemberDTO.getName());
-			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getEmail()));
-			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getEmail(), 1).getGno());
+			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getMemail()));
+			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getGno());
 		}
 		return "mypage/mypage";
 	}
@@ -47,7 +47,7 @@ public class MypageController {
 			model.addAttribute("memail", authMemberDTO.getMemail());
 		}
 		else {
-			model.addAttribute("memail", oauthMemberDTO.getEmail());
+			model.addAttribute("memail", oauthMemberDTO.getMemail());
 		}
 	}
 
