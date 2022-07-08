@@ -4,6 +4,9 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
+<head>
+	<title>마이페이지 | 주문조회</title>
+</head>
 <div layout:fragment="content">
 <script>
 	var token = $("meta[name='_csrf']").attr("content");
@@ -40,7 +43,7 @@
 		$("#mrank").html(grade);
 		
 	    const hpoint = numWithComma([[${memberpoint}]]);
-        var hhtml = `<br><a class="count" href="https://www.h-point.co.kr/cu/myh/myPnt.shd" target="_blank" onclick="GA_Event('마이페이지','회원정보','H.POINT');"><span>`+hpoint+`P</span></a>`;
+        var hhtml = `<br><a class="count" href="javascript:void(0)" onclick="GA_Event('마이페이지','회원정보','H.POINT');"><span>`+hpoint+`P</span></a>`;
         document.getElementById("hpoint").innerHTML += hhtml;
 		const memail = "[[${member.memail}]]";
 		let o_arr = []; /* 주문(번호) 개수. 중복제거 */
@@ -94,12 +97,12 @@
                        				<td class='pt_list_wrap'>
 		                                <div class="pt_list_all">
 		                                <a href="/detail/${pid}_${ccode}"
-		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('주문내역','상품','${result[i].pname}');">
 		                                <img src="${result[i].cimage1}" alt="" onclick="location.href='/detail/${pid}_${ccode}" style="position:absolute;width:98px;height:98px;"/>
 		                                </a>
 		                                <div class="tlt_wrap">
 		                                <a href="/detail/${pid}_${ccode}" class="basket_tlt"
-		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('주문내역','상품','${result[i].pname}');">
 		                                <span class="tlt">${result[i].bname}</span>
 		                                <span class="sb_tlt" id="${i}" style="white-space:normal;">
 		                                `
@@ -131,7 +134,7 @@
 	                                <td class="al_middle">
 	                                ${status} <br>`
                                 if(result[i].ostatus === 1) {	
-                                	ohtml += `<button onclick="cancelOrder(${result[i].oid})" class="btn gray_ss">주문취소</button>`
+                                	ohtml += `<button onclick="cancelOrder(${result[i].oid});GA_Event('주문내역','주문취소','${result[i].pname}');" class="btn gray_ss">주문취소</button>`
                                 }        
                               	 	ohtml += `</td>
                         			<td class="al_middle">
@@ -147,12 +150,12 @@
                         	            <!-- Products -->
                         	            <div class="pt_list_all">
 		                                <a href="/detail/${pid}_${ccode}"
-		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('주문내역','상품','${result[i].pname}');">
 		                                <img src="${result[i].cimage1}" alt="" onclick="location.href='/detail/${pid}_${ccode}" style="position:absolute;width:98px;height:98px;"/>
 		                                </a>
 		                                <div class="tlt_wrap">
 		                                <a href="/detail/${pid}_${ccode}" class="basket_tlt"
-		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+		                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('주문내역','상품','${result[i].pname}');">
 		                                <span class="tlt">${result[i].bname}</span><br>
 		                                <span class="sb_tlt" id="${i}" style="width:350px; max-width:350px; white-space:normal;">
 		                                ${result[i].pname}</span>
@@ -178,12 +181,12 @@
                         	ohtml += `	<div class="info">
 		                        	            <div class="pt_list_all">
 					                                <a href="/detail/${pid}_${ccode}"
-					                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+					                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('주문내역','상품','${result[i].pname}');">
 					                                <img src="${result[i].cimage1}" alt="" onclick="location.href='/detail/${pid}_${ccode}" style="position:absolute;width:98px;height:98px;"/>
 					                                </a>
 					                                <div class="tlt_wrap">
 					                                <a href="/detail/${pid}_${ccode}" class="basket_tlt"
-					                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','${result[i].pname}');">
+					                                onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('주문내역','상품','${result[i].pname}');">
 					                                <span class="tlt">${result[i].bname}</span><br>
 					                                <span class="sb_tlt" id="${i}" style="width:350px; max-width:350px;white-space:normal;">
 					                                ${result[i].pname}</span>
@@ -320,7 +323,7 @@
                 <dl>
                     <dt>주문조회</dt>
                     <dd>
-                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','주문/배송/반품/취소');">주문/배송/반품/취소</a>
+                        <a href="javascript:void(0)" onclick="GA_Event('마이페이지','LNB','주문/배송/취소');">주문/배송/취소</a>
                     </dd>
                 </dl>
                 <dl>
@@ -329,7 +332,7 @@
                         <a href="/mypage/grade" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
                     </dd>
                     <dd>
-                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 한섬마일리지');">나의 H.POINT</a>
+                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 H-POINT');">나의 H.POINT</a>
                     </dd>
                 </dl>
                 <dl>
@@ -342,7 +345,7 @@
                     <dt>나의 활동관리</dt>
                     <!-- <dd><a href="#">회원등급</a></dd> -->
                     <dd>
-                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a>
+                        <a href="javacript:void(0)" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a>
                     </dd>
                     <!-- <dd><a href="#">이벤트 참여현황</a></dd> -->
                 </dl>
@@ -355,7 +358,7 @@
                     평일(월~금)<br />
                     am 09:00 ~ pm 18:00<span>토/일, 공휴일 휴무</span>
                 </p>
-                <a href="mailto:shophelp@thehandsome.com">
+                <a href="mailto:shophelp@GKMCC.com" onclick="GA_Event('마이페이지','LNB','이메일 문의');">
                     shophelp<br />
                     @thehandsome.com
                 </a>
@@ -384,7 +387,7 @@
                         </div>
                         <div class="point review">
                             <p class="title">총 주문</p>
-                            <a href="/mypage" class="count" id="ocount" onclick="GA_Event('마이페이지','회원정보','상품평');"></a>
+                            <a href="javascript:void(0)" class="count" id="ocount" onclick="GA_Event('마이페이지','회원정보','총 주문조회');"></a>
                         </div>
                     </div>
                 </div>
@@ -395,7 +398,7 @@
                 <p class="txt_line">고객님의 문의를 등록하시면 빠른 시일 내 답변 드리겠습니다.</p>
                 <!--   <img id="imgsrc2" src="${imgsrc }" alt="thumimg" class="tlt"/> -->
                 <div class="btn_wrap">
-                    <a href="/mypage/QNA" class="btn add_ss mr0">문의하기</a>
+                    <!-- <a href="/mypage/QNA" class="btn add_ss mr0">문의하기</a> -->
                 </div>
             </div>
             <!-- Table -->
