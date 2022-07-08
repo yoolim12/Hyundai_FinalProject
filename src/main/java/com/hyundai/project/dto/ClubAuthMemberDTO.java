@@ -1,5 +1,6 @@
 package com.hyundai.project.dto;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,27 +23,32 @@ import lombok.ToString;
 public class ClubAuthMemberDTO extends User implements OAuth2User {
 
 	private static final long serialVersionUID = 1L;
-	private String email;
+	private String memail;
 	private String name;
 	private int fromSocial;
 	private String password;
 	private Map<String, Object> OA2_attr;
 	private String role;
 	private int msleep;
+	private int gno;
+	private Date birth;
 
 	// ClubOAuth2UserDetailsService 용 구성자
 	public ClubAuthMemberDTO(String username, String password, int fromSocial, List<GrantedAuthority> authorities,
-			Map<String, Object> OA2_attr, int msleep) {
-		this(username, password, fromSocial, authorities, msleep);
+			Map<String, Object> OA2_attr, int msleep, int gno, Date birth, String name) {
+		this(username, password, fromSocial, authorities, msleep, gno, birth, username);
 		this.OA2_attr = OA2_attr;
 	}// end ClubAuthMemberDTO
 
 	// 구성자 설정
-	public ClubAuthMemberDTO(String username, String password, int fromSocial, List<GrantedAuthority> authorities, int msleep) {
+	public ClubAuthMemberDTO(String username, String password, int fromSocial, List<GrantedAuthority> authorities, int msleep, int gno, Date birth, String name) {
 		super(username, password, authorities); // password는 부모클래스 사용
-		this.email = username;
+		this.memail = username;
 		this.fromSocial = fromSocial;
 		this.msleep = msleep;
+		this.gno = gno;
+		this.birth = birth;
+		this.name = username;
 	}// end ClubAuthMemberDTO
 
 	// OAuth2User 정보 저장

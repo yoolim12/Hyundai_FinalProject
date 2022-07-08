@@ -33,10 +33,10 @@ public class MypageController {
 		}
 		else {
       		model.addAttribute("member", oauthMemberDTO);
-			model.addAttribute("memberemail", oauthMemberDTO.getEmail());
+			model.addAttribute("memberemail", oauthMemberDTO.getMemail());
 			model.addAttribute("membername", oauthMemberDTO.getName());
-			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getEmail()));
-			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getEmail(), 1).getGno());
+			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getMemail()));
+			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getGno());
 		}
 		return "mypage/mypage";
 	}
@@ -47,23 +47,45 @@ public class MypageController {
 			model.addAttribute("memail", authMemberDTO.getMemail());
 		}
 		else {
-			model.addAttribute("memail", oauthMemberDTO.getEmail());
+			model.addAttribute("memail", oauthMemberDTO.getMemail());
 		}
 	}
 
 	@RequestMapping("/modifyPage")
 	public void modifyPage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) {
-		model.addAttribute("memail", authMemberDTO.getMemail());
-		model.addAttribute("mname",authMemberDTO.getMname());
-		model.addAttribute("birth", authMemberDTO.getBirth());
+		
+		
+		if (oauthMemberDTO == null) {
+			model.addAttribute("memail", authMemberDTO.getMemail());
+			model.addAttribute("mname",authMemberDTO.getMname());
+			model.addAttribute("birth", authMemberDTO.getBirth());
+        }
+        else {
+        	model.addAttribute("memail", oauthMemberDTO.getMemail());
+    		model.addAttribute("mname", oauthMemberDTO.getName());
+    		model.addAttribute("birth", oauthMemberDTO.getBirth());
+        }
 	}
 	
 	@GetMapping("/grade")
 	public String gradePage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) {
-		model.addAttribute("memail", authMemberDTO.getMemail());
-		model.addAttribute("mname",authMemberDTO.getMname());
-		model.addAttribute("birth", authMemberDTO.getBirth());
-		int grade = memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getGno();
+		
+		int grade;
+		
+		if (oauthMemberDTO == null) {
+			model.addAttribute("memail", authMemberDTO.getMemail());
+			model.addAttribute("mname",authMemberDTO.getMname());
+			model.addAttribute("birth", authMemberDTO.getBirth());
+			grade = memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getGno();
+        }
+        else {
+        	model.addAttribute("memail", oauthMemberDTO.getMemail());
+    		model.addAttribute("mname", oauthMemberDTO.getName());
+    		model.addAttribute("birth", oauthMemberDTO.getBirth());
+    		grade = memberDAO.findByEmail(oauthMemberDTO.getMemail(), 0).getGno();
+        }
+		
+		
 		String rank = "";
 		if(grade == 1) {
 			rank = "FRIEND";

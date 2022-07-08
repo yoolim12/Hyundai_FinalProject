@@ -147,8 +147,12 @@ extends DefaultOAuth2UserService {
                        1,
                        authorities,
                        oAuth2User.getAttributes(),
-                       clubMember2.getMsleep()
+                       clubMember2.getMsleep(),
+                       clubMember2.getGno(),
+                       clubMember2.getBirth(),
+                       clubMember2.getMemail()
                );
+            	clubAuthMemberDTO.setMemail(clubMember2.getMemail());
                clubAuthMemberDTO.setName(clubMember2.getMname());
                clubAuthMemberDTO.setPassword(clubMember2.getMpassword());
                clubAuthMemberDTO.setMsleep(clubMember2.getMsleep());

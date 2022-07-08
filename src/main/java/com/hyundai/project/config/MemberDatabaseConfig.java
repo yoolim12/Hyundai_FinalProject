@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.batch.BatchDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
@@ -22,11 +23,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class MemberDatabaseConfig {
 
 	@Bean(name = "memberDataSource")
+	@BatchDataSource
 	@ConfigurationProperties(prefix = "spring.datasource.member")
 	public DataSource memberDataSource() {
 		return DataSourceBuilder.create().build();
 	}
-
+	
 	@Bean(name = "memberSqlSessionFactory")
 	public SqlSessionFactory sqlSessionFactory(@Qualifier("memberDataSource") DataSource memberDataSource,
 			ApplicationContext applicationContext) throws Exception {
