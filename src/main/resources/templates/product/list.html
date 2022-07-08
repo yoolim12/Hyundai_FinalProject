@@ -25,7 +25,7 @@
 				if (result.length > 0) {
 					for (var i = 0; i < result.length; i++) {
  						chtml += `
- 						<a class="beige" style="background:url(${result[i].ccolorimage})" ></a>
+ 						<a class="beige" style="background:url(${result[i].ccolorimage})" onclick="GA_Event('상품목록','색상변경','${pid}')"></a>
  						<span>&nbsp;</span>
  						`;
 					}
@@ -89,7 +89,7 @@
 							html += '<li>'
 						}
 						html += '<div class="item_box">';
-						html += '   <a href="/detail/' + result[i].pid + '_' + result[i].ccolorcode + '" class="item_info1">';
+						html += `   <a href="/detail/${result[i].pid}_${result[i].ccolorcode}" class="item_info1" onclick="GA_Event('상품목록','상세보기','${result[i].pid}')">`;
 						html += '      <span class="item_img">';
 						html += '         <img src=' + result[i].cimage1 + ' id="T01_IMG_' +i+'" alt="' + result[i].pname + '" targetcode=' + result[i].pid + '_' + result[i].ccolorcode +' class="respon_image" onerror="this.src=' + '"http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg">';
 						html += '         <img src=' + result[i].cimage2 + ' id="T02_IMG_' +i+'" alt="' + result[i].pname + '" targetcode=' + result[i].pid + '_' + result[i].ccolorcode +' class="respon_image on" onerror="this.src=' + '"http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg" style="display: none; opacity: 1;">';
@@ -100,7 +100,7 @@
 						html += s;
 						html += '      </span>';
 						html += '      </a>';
-						html += '      <a href="/detail/' + result[i].pid + '_' + result[i].ccolorcode +'" class="item_info2">';
+						html += `	   <a href="/detail/${result[i].pid}_${result[i].ccolorcode}" class="item_info2" onclick="GA_Event('상품목록','상세보기','${result[i].pid}')">`;
 						html += '      		<span class="brand">' + result[i].bname + '</span>';
 						html += '      		<span class="title">' + result[i].pname + '</span>';
 						html += '      		<span class="price">'
