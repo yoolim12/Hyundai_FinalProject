@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.memberDAO.StreamingDAO">
+
+	<!-- <select id="get"
+		resultType="com.hyundai.project.dto.StreamingDTO">
+	</select> -->
+
+	<insert id="insertStreaming">
+		insert into streaming values(sno_seq.nextval, #{sname}, #{scontent}, #{smanager}, #{sdate}, #{surl}, #{simg})
+	</insert>
+
+	<delete id="deleteStreaming">
+		delete streaming where sno=#{sno}
+	</delete>
+
+</mapper>
