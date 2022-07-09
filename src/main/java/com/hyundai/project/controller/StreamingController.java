@@ -16,7 +16,6 @@ public class StreamingController {
 	@GetMapping("/streaming")
 	public void stream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
 
-		log.info("@StreamingController, GET()");
 		log.info(authMemberDTO);
 		log.info(oauthMemberDTO);
 		if (oauthMemberDTO == null)
@@ -27,7 +26,6 @@ public class StreamingController {
 	
 	@GetMapping("/mobile")
 	public void mobilestream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
-		log.info("@StreamingController, GET()");
 		if (oauthMemberDTO == null) {
         	model.addAttribute("member", authMemberDTO);
         }
