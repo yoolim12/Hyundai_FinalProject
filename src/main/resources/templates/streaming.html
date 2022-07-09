@@ -4,6 +4,8 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragments/common}">
+
+<title>스트리밍</title>
 <th:block layout:fragment="css">
 	<link rel="stylesheet" type="text/css"
 		th:href="@{https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video-js.css}" />
@@ -103,8 +105,8 @@ input {
 									aria-label="Recipient's username"
 									aria-describedby="button-addon2"
 									onkeyup="if(window.event.keyCode==13){send()}" />
-								<button class="btn btn-outline-secondary" type="button"
-									id="submitBtn" onclick="send(); ">전송</button>
+								<!-- <button class="button btnPush btnOrange" type="button"
+									id="submitBtn" onclick="send(); ">전송</button> -->
 							</div>
 						</div>
 					</div>
@@ -198,7 +200,8 @@ input {
         })(); */
         const username = "[[${member.getMemail()}]]";
         console.log(username);
-        const websocket = new WebSocket("ws://43.200.81.238/ws/chat");
+        /* const websocket = new WebSocket("ws://43.200.81.238/ws/chat"); */
+        const websocket = new WebSocket("ws://localhost/ws/chat");
 
         websocket.onmessage = onMessage;
         websocket.onopen = onOpen;

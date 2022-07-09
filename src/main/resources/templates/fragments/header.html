@@ -2,45 +2,6 @@
 <html xmlns:sec="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-		<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-232962099-1"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-	
-	  gtag('config', 'UA-232962099-1');
-	</script>
-	
-		<!-- Google Tag Manager -->
-	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-N8D6M2Q');</script>
-	<!-- End Google Tag Manager -->
-	
-	<script>
-		function GA_Event(Category,Action,Label) {
-		    
-		    Label = unescape(Label).replace(/\&#039;/gi,"'");
-		    
-		    var v_Label = Label;
-		    var v_Category = Category;
-		    var v_Action = Action;
-		    //공백처리을  _ 처리
-		    if(Category != null){
-		        v_Category = Category.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
-		    }
-		    if(Action != null){
-		        v_Action = Action.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
-		    }
-		    if(Label != null){
-		        v_Label = Label.replace(/\s{2,}/gi,' ').trim().replace(/\s/gi,'_');
-		    }
-		    ga('gp.send','event',v_Category,v_Action,v_Label);
-		}
-	</script>
 </head>
 <div th:fragment="header">
     <body oncontextmenu="return false">
@@ -1248,9 +1209,10 @@
                             <!-- <li>
                                 <a href="javascript:void(0);"><span class="ico_sh">search</span></a>
                             </li> -->
-                            <li>
+                            <li style="padding-top: 5px;">
                                 <a href="/streaming" onclick="GA_Event('공통','유틸_메뉴','스트리밍');">
-								    <span class="ico wishlist">스트리밍</span>
+								    <!--<span class="ico wishlist">스트리밍</span>-->
+								    <img src="/resources/_ui/desktop/common/images/livetv.png" style="width: 20px;" />
 								</a>
                             </li>
                             <li>

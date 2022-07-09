@@ -4,6 +4,9 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
+<head>
+	<title id="title"></title>
+</head>
 <div layout:fragment="content"> 
 <script type="text/javascript">
     
@@ -21,8 +24,8 @@ var Arr2 = Arr1[1].split('_');
 var pid = Arr2[0];
 var ccolorcode = Arr2[1];
 var stock_amount = 0;
-    
 var selectSize = false;
+
 function setSize(size) {
 	selectSize = true;
 	$("#ssize").val(size);
@@ -36,7 +39,6 @@ $(document).ready(function(){
     reScroll();
     bodyReSize();
     resizeEtcImage();
-    
     $(window).resize(function(){
         reScroll();
         bodyReSize();
@@ -55,6 +57,7 @@ $(document).ready(function(){
         }, 
         success : function( result ) {
    			pprice = result.pprice;
+			$("#title").text(result.pname);
         	document.getElementById("image1").src=result.cimage1;
         	document.getElementById("image2").src=result.cimage2;
         	document.getElementById("image3").src=result.cimage3;
@@ -89,7 +92,7 @@ $(document).ready(function(){
         		html += '<ul class="color_chip clearfix">';
         		for(var i=0; i<result.length; i++) {
         			if(i==0) html += '<a href="#" class="beige on" style="background:url('+result[i].ccolorimage+')" style="width: 294px; height: 444px"></a>';
-        			else html += '<a href="/detail/'+pid+'_'+result[i].ccolorcode+'" class="beige" style="background:url('+result[i].ccolorimage+')" ></a>';
+        			else html += `<a href="/detail/${pid}_${result[i].ccolorcode}" class="beige" style="background:url(${result[i].ccolorimage})" onclick="GA_Event('상품 상세', '컬러칩', '${result[i].ccolorcode}')"></a>`;
         			$("#pcolor").val(ccolorcode);
         		}
         		html += '</ul>';
@@ -114,7 +117,7 @@ $(document).ready(function(){
         	if(result.length > 0){
         		for(var i=0; i<result.length; i++) {
         			var size = "'"+ result[i].ssize + "'";
-        			html += '<li id="'+pid+'"><a href="javascript:void(0)" onclick="setSize('+size+')">'+result[i].ssize+'<span class="ko_size1901" style="display:none;">&nbsp;(55)</span></a></li>';
+        			html += `<li id="${pid}"><a href="javascript:void(0)" onclick="setSize(${size}); GA_Event('상품 상세', '사이즈', '${result[i].ssize}')">${result[i].ssize}<span class="ko_size1901" style="display:none;">&nbsp;(55)</span></a></li>`;
         		}
         		html += '</ul>';
         	}
@@ -146,6 +149,7 @@ function addToCart()
         var ssize = $("#ssize").val();
         var qty  = $("#txtqty").val();
         // 장바구니 등록하는 ajax 호출
+		console.log(ssize);
         $.ajax({
             url: "/cart",
             method: "post",
@@ -326,7 +330,7 @@ function fn_qtySubtraction()
     }
     	
     //GA 이벤트 태깅
-    GA_Event('상품_상세','수량','-');
+    GA_Event('상품 상세','수량','-');
     
     $("#txtqty").val(parseInt(qty)-1);
 	$("#totalprice").text('₩'+numWithComma((qty-1)*pprice));
@@ -345,16 +349,8 @@ function fn_qtyAdd(){
     	var la = new layerAlert('동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.');
         return;	
     }
-        /*if (qty >= stockCnt) {
-            if("ko" == "ko"){
-                var la = new layerAlert("구매 가능한 재고 "+stockCnt+"개만 선택하실 수 있습니다.");
-        	}else{
-        	    var la = new layerAlert("재고가 부족합니다.");
-        	}
-            return;
-        }*/
 
-    GA_Event('상품_상세','수량','+');
+    GA_Event('상품 상세','수량','+');
     
     $("#txtqty").val(qty+1);
 	$("#totalprice").text('₩'+numWithComma(2*pprice));
@@ -408,7 +404,7 @@ function imageZoom(){
     layerTag +='<div id="imgLayerArea" class="layerBg" style="background:#FFFFFF; position: inherit;z-index:7;width:100%;height:auto;outline:none;">';
     layerTag +='    <div id="item_vsl_modal"> ';
     layerTag +='        <div class="gallery-wrapper" id="productImagePop"> ';
-    layerTag +='            <a class="close productImagePopClose" href="javascript:void(0);"/> ';
+    layerTag +='            <a class="close productImagePopClose" href="javascript:void(0);" onclick="GA_Event(\'상품 상세\',\'크게보기\',\'클릭\')"/> ';
     layerTag +='        </div>';
     layerTag +='    </div>';
     layerTag +='</div>';
@@ -649,7 +645,7 @@ function prevImgMove(){
         <div class="adaptive_wrap">
             <div class="clearfix prd_detail1905" id="clearfix">
 		<div class="clearfix image_view3">
-	<a href="javascript:imageZoom()" id="btn_zoom" class="btn_zoom" onclick="GA_Event('상품_상세','크게보기','클릭')">크게보기</a><!-- 버튼 클릭시 item_visual 에 zoom 클래스 추가 -->
+	<a href="javascript:imageZoom()" id="btn_zoom" class="btn_zoom" onclick="GA_Event('상품 상세','크게보기','클릭')">크게보기</a><!-- 버튼 클릭시 item_visual 에 zoom 클래스 추가 -->
 	<!-- 2021.08.18 동영상 재생 수정, 상품 imageDivisionCode에 VOD가 있는 경우 동영상 url 세팅 -->
 	<div class="image_view1" id="image_view1">
 		<div class="item_visual" id="imageDiv" style="margin-top: 20px;">
@@ -702,7 +698,7 @@ function prevImgMove(){
 				<li>
 					<span class="title">배송비</span>
 					<span class="txt">30,000원 이상 무료배송 (실결제 기준)</span>
-					   <a href="javascript:fn_popupDelivery();" class="etc_info" onclick="GA_Event('상품_상세','배송안내','클릭');">배송안내</a>
+					   <a href="javascript:fn_popupDelivery();" class="etc_info" onclick="GA_Event('상품 상세','배송안내','클릭');">배송안내</a>
 					<div class="popwrap w_type_2" id="popupDelivery" style="display:none;">
 	<div class="pop_tltwrap2">
 		<h3>배송비안내</h3>
@@ -1267,10 +1263,10 @@ function prevImgMove(){
 	<a href="javascript:void(0);" class="btn_close"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기" /></a>
 </div>
 <ul id="ssize" class="size_chip clearfix sizeChipKo1901">
-										
+
 									</ul>
 							</span>
-					<a href="javascript:fn_popupSizeQuickReference();" class="etc_info" onclick="GA_Event('상품_상세','사이즈_조건표','클릭')">사이즈 조견표</a>
+					<a href="javascript:fn_popupSizeQuickReference();" class="etc_info" onclick="GA_Event('상품 상세','사이즈_조건표','클릭')">사이즈 조견표</a>
                     </li>
 				<li>
 					<span class="title">수량</span>
@@ -1295,7 +1291,7 @@ function prevImgMove(){
 					    <div class="store_pickup" style="padding-bottom:0;border-bottom:0">
 							<div class="input_wrap">
 								
-							<input type="checkbox" id="storePickupCheck" name="storePickupCheck" onclick="GA_Event('상품_상세','수령','매장수령');"/><label for="storePickupCheck">매장수령</label>
+							<input type="checkbox" id="storePickupCheck" name="storePickupCheck" onclick="GA_Event('상품 상세','수령','매장수령');"/><label for="storePickupCheck">매장수령</label>
 							</div>
 							<img src="http://cdn.thehandsome.com/_ui/desktop/common/images/common/ico_ques2.png" alt="매장수령이란?" class="tlt"/>
 							<div class="text">
@@ -1334,7 +1330,7 @@ function prevImgMove(){
 			</div>
 			<!-- //st_store_wrap -->
 		<div class="btnwrap clearfix" style="position:absolute; width:473px;">
-			<input type="button" value="" class="btn wishlist1803 float_left ml0  " onclick="addWishListClick();GA_Event('상품_상세','하단 고정 버튼','좋아요');">
+			<input type="button" value="" class="btn wishlist1803 float_left ml0  " onclick="addWishListClick();GA_Event('상품 상세','하단 고정 버튼','좋아요');">
 		
 		    <div class="toast_popup">
                 <p style="display: none; top: -4.12381px; opacity: 0.031172;">위시리스트에서 삭제했습니다.</p>
@@ -1354,13 +1350,13 @@ function prevImgMove(){
 				<input type="hidden" id="ssize" name="ssize" value=""/>
 				<input type="hidden" id="pcolor" name="pcolor" value=""/>
 				<input type="hidden" id="samount" name="samount" value=""/>
-				<input type="button" value='쇼핑백 담기' class="btn cart1803 float_left ml0" id="addToCartButton" onClick="addToCart();"/>
+				<input type="button" value='쇼핑백 담기' class="btn cart1803 float_left ml0" id="addToCartButton" onClick="addToCart(); GA_Event('상품 상세','하단 고정 버튼','쇼핑백담기');"/>
         
         <!-- 이미 addToCart() 내의 ajax에서 csrftoken 처리해줌 -->
         <!--<div>
           <input type="hidden" name="CSRFToken" value="ec35065f-63f2-4b5d-8f20-aec5bd737cbc" />
         </div>-->
-      </form><input type="button" value="바로주문" class="btn order float_right mr0" id="addToCartBuyNowButton" onClick="GA_Event('상품_상세','하단 고정 버튼','바로주문');addToCart(true);">   
+      </form><input type="button" value="바로주문" class="btn order float_right mr0" id="addToCartBuyNowButton" onClick="GA_Event('상품 상세','하단 고정 버튼','바로주문');addToCart(true);">
 	                </div>
 		
 		<dl class="toggle_type1" style="margin-top:80px;">
@@ -1515,12 +1511,12 @@ function prevImgMove(){
 	
 	<div class="clearfix mt30">
 		<div class="btnwrap float_left">
-				<a href="/mypage" class="btn arrow mr0" onclick="GA_Event('상품_상세','Q&A','클릭');" style="cursor:hand;">Q&amp;A</a>
+				<a href="/mypage" class="btn arrow mr0" onclick="GA_Event('상품 상세','Q&A','클릭');" style="cursor:hand;">Q&amp;A</a>
 			</div>
 		<div class="float_right">
 <!-- AddToAny BEGIN -->
 <div class="a2a_kit a2a_kit_size_32 a2a_default_style" >
-<a href='javascript:fnSharePin("http://www.thehandsome.com/ko/HANDSOME/WOMEN/Top/Shirts/%EC%8B%9C%EC%8A%A4%EB%A3%A8-%ED%8C%A8%EB%84%90-%EC%BA%A1-%EC%8A%AC%EB%A6%AC%EB%B8%8C-%EC%85%94%EC%B8%A0/p/IL2C5WSH942W_DN");' class="pinterest" onclick="GA_Event('상품_상세','공유_SNS','PRINTEREST');"></a>
+<a href='javascript:fnSharePin("http://www.thehandsome.com/ko/HANDSOME/WOMEN/Top/Shirts/%EC%8B%9C%EC%8A%A4%EB%A3%A8-%ED%8C%A8%EB%84%90-%EC%BA%A1-%EC%8A%AC%EB%A6%AC%EB%B8%8C-%EC%85%94%EC%B8%A0/p/IL2C5WSH942W_DN");' class="pinterest" onclick="GA_Event('상품 상세','공유_SNS','PRINTEREST');"></a>
 <input type="hidden" id="url" value="http://www.thehandsome.com/ko/HANDSOME/WOMEN/Top/Shirts/%EC%8B%9C%EC%8A%A4%EB%A3%A8-%ED%8C%A8%EB%84%90-%EC%BA%A1-%EC%8A%AC%EB%A6%AC%EB%B8%8C-%EC%85%94%EC%B8%A0/p/IL2C5WSH942W_DN"/>
 </div>
 			</div>

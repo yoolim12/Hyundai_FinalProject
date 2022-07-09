@@ -3,6 +3,9 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
+<head>
+	<title>이메일 인증</title>
+</head>
 <div layout:fragment="content">
 <script>
    var token = $("meta[name='_csrf']").attr("content");
