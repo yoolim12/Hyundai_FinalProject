@@ -34,14 +34,14 @@ body {
 	overflow: scroll;
 	height: 45rem;
 	background: lightgray;
-	padding: 3%;
-	border-radius: 7px;
+    padding: 3%;
+    border-radius: 7px;
 }
 
 .productPopup {
     position: sticky;
     width: 100%;
-    height: 215px;
+    height: 260px;
     top: 0;
     background-color: rgb(178, 239, 234);
     opacity: 0.8;
@@ -96,7 +96,7 @@ body {
 #img {
     width: 33.5%;
     float: left;
-    padding-left: 5%;
+    padding-left: 7%;
 }
 
 .respon_image {
@@ -120,7 +120,7 @@ body {
 
 .pbtn{
     display:block;
-    width:90px;
+    width:83%;
     line-height:30px;
     text-align:center;
     background-color:#222;
@@ -140,152 +140,62 @@ body {
     opacity: 0.8;
 }
 
-#msg {
-	width: 91%;
+#msg{
+	width: 90%; 
 	background-color: white;
-	padding: 1%;
 }
-
 #chating {
 	margin-right: 10px;
-	margin-height: 730px;
-	background-color: #f5f5f5;
-	border-radius: 10px;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	margin-left: 0px;
-	max-height: 1120px;
-	overflow: scroll;
+	margin-height: 730px; 
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-left: 0px;
+    max-height: 1120px;
+    overflow: scroll;
 }
-
 ::-webkit-scrollbar {
-	display: none;
+display: none;
 }
 
 li#welcome {
 	padding: revert;
-	padding: 1%;
-	text-align: center;
-	background-color: lavender;
-	list-style: none;
-	border-radius: 5px;
+    padding: 1%;
+   	text-align: center;
+    background-color: lavender;
+    list-style: none;
+    border-radius: 5px;
 }
 
 li#chatUI {
-	list-style: none;
-	padding: revert;
-	padding: 1%;
-	border: 2px solid lemonchiffon;
-	background-color: antiquewhite;
-	border-radius: 10px;
-	text-align: left;
-	padding-left: 10px;
-	margin-bottom: 3px;
-	margin-top: 3px;
+    list-style: none;
+    padding: revert;
+    padding: 1%;
+    border: 2px solid lemonchiffon;
+    background-color: antiquewhite;
+    border-radius: 10px;
+    text-align: left;
+    padding-left: 10px;
+    margin-bottom: 3px;
+    margin-top: 3px;
 }
 
 li#tachatUI {
-	list-style: none;
-	padding: revert;
-	padding: 1%;
-	text-align: left;
-	padding-left: 10px;
-	margin-bottom: 3px;
-	margin-top: 3px;
-	border: 2px solid lemonchiffon;
-	border-radius: 10px;
+    list-style: none;
+    padding: revert;
+    padding: 1%;
+    text-align: left;
+    padding-left: 10px;
+    margin-bottom: 3px;
+    margin-top: 3px;
 }
-
 button#submitBtn {
-	border-radius: 8px;
-	padding: 2%;
-	border: none;
-	cursor: pointer;
+    background: darkgrey;
+    border-radius: 8px;
+    padding: 1.5%;
+    border: none;
 }
-
 #fixInput {
-	margin-top: 7px;
+    margin-top: 7px;
 }
-
-.btnOrange.btnPush {
-	box-shadow: 0px 5px 0px 0px #A66615;
-}
-
-.btnPush:hover {
-	margin-top: 15px;
-	margin-bottom: 5px;
-}
-
-.btnOrange.btnPush:hover {
-	box-shadow: 0px 0px 0px 0px #A66615;
-}
-
-.watchagain {
-	white-space: nowrap;
-	overflow-x: scroll;
-	height: 50%;
-}
-
-.again {
-	display: inline-block;
-	margin-right: 3%;
-	width: 30%;
-}
-
-#img {
-	width: 100%
-}
-
-.againdetail {
-	position: relative;
-	cursor: pointer;
-	margin-left: 0;
-	margin-top: 5%;
-	flex: auto;
-	display: flex;
-	flex-direction: row;
-	width: 100%;
-}
-
-.againprofileimg {
-	/* display: inline-block; */
-	width: 50px;
-	height: 50px;
-	object-fit: cover;
-	border-radius: 100%;
-	overflow: hidden;
-	/* margin-right: 20px; */
-}
-
-.titleNname {
-	overflow-x: hidden;
-	padding-left: 5%;
-	width: 100%;
-}
-
-.againtitle {
-	display: block;
-	font-size: 0.88em;
-	font-weight: bold;
-}
-
-.againtitlelink {
-	display: inline-block;
-	cursor: pointer;
-	text-decoration: none;
-	color: black;
-	font-family: "Roboto", "Arial", sans-serif;
-	/* font-size: 1.4rem;
-        line-height: 2rem; */
-	font-weight: 500;
-	max-height: 4rem;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: normal;
-	word-wrap: break-word;
-}
-
-.againprofilename {
-	font-size: 0.8em;
-}
-
