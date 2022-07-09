@@ -3,6 +3,8 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+<title>모바일</title>
+
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
@@ -80,8 +82,8 @@
                      id="msg" class="form-control" aria-label="Recipient's username"
                      aria-describedby="button-addon2"
                      onkeyup="if(window.event.keyCode==13){send()}" />
-                  <button class="btn btn-outline-secondary" type="button"
-                     id="button-send" onclick="send(); ">전송</button>
+                  <button class="custom-btn btn-2" type="button"
+                     id="submitBtn" onclick="send(); ">&#128172;</button>
                </div>
             </div>
       </div>
@@ -127,7 +129,7 @@
         crossorigin="anonymous"></script>
         
     <script>
-
+			// 라이브 스트리밍
             (function play() {
                 // Get playback URL from Amazon IVS API
                 var PLAYBACK_URL = 'const DEFAULT_STREAM = "https://65cd6d00bb9f.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.293546108023.channel.lt4D0GzSMPEs.m3u8";';
@@ -148,7 +150,7 @@
 
 		<script>
             const username = "[[${member.getMemail()}]]";
-            const websocket = new WebSocket("ws://43.200.81.238/ws/chat");
+            const websocket = new WebSocket("ws://3.34.216.148:8080/ws/chat");
 
             websocket.onmessage = onMessage;
             websocket.onopen = onOpen;
@@ -251,7 +253,7 @@
             ––––––––––––––––––––––––––––––––––––––––––––––––––
         </div>
         <p id="againtit"> 다시보기 </p>
-        <div class="watchagain" style="display: block !important;">
+        <div class="watchagain" id="slist" style="display: block !important;">
             <div class="again">
                 <!-- <div class="againvideo">다시보기1</div> -->
                 <a class="thumbnail" href="https://www.youtube.com/watch?v=mJJ2wolDEMU">
@@ -468,9 +470,7 @@
                     </div>                    
                 </div>
             </div>
-            
         </div>
-        
         <style>
             body {
                 margin: 0;
@@ -483,5 +483,45 @@
             }
         </style>
     </div>
+    <script>
+    	// 다시보기 목록 출력 
+   		$(document).ready(function () {
+            $.ajax({
+                url: "/back/streaming/list",
+                type: "GET",
+                dataType: "json",
+                async: false,
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+                success: function (res) {
+                    let html = ``;
+                    for (var i = 0; i < res.length; i++) {
+                        html += `
+                       	<div class="again">
+                            <!-- <div class="againvideo">다시보기1</div> -->
+                            <a class="thumbnail" href="/streaming">
+                                <img id="img" alt=""
+                                src="${res[i].simg}"/>
+                            </a>
+                            <div class="againdetail">
+                                <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
+                                <div class="titleNname">
+                                    <p class="againtitle">
+                                        <a class="againtitlelink" href="/streaming">
+                                            ${res[i].sname}
+                                        </a>
+                                    </p>
+                                    <p class="againprofilename">더한섬닷컴</p>
+                                </div>                    
+                            </div>
+                        </div>
+                        `;
+                    }
+                    $("#slist").html(html);
+                }
+            })
+   		})
+   </script>
 </body>
 </html>

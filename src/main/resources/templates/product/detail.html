@@ -117,7 +117,7 @@ $(document).ready(function(){
         	if(result.length > 0){
         		for(var i=0; i<result.length; i++) {
         			var size = "'"+ result[i].ssize + "'";
-        			html += `<li id="${pid}"><a href="javascript:void(0)" onclick="setSize('+size+'); GA_Event('상품 상세', '사이즈', '${result[i].ssize}')">${result[i].ssize}<span class="ko_size1901" style="display:none;">&nbsp;(55)</span></a></li>`;
+        			html += `<li id="${pid}"><a href="javascript:void(0)" onclick="setSize(${size}); GA_Event('상품 상세', '사이즈', '${result[i].ssize}')">${result[i].ssize}<span class="ko_size1901" style="display:none;">&nbsp;(55)</span></a></li>`;
         		}
         		html += '</ul>';
         	}
@@ -149,6 +149,7 @@ function addToCart()
         var ssize = $("#ssize").val();
         var qty  = $("#txtqty").val();
         // 장바구니 등록하는 ajax 호출
+		console.log(ssize);
         $.ajax({
             url: "/cart",
             method: "post",
@@ -1262,7 +1263,7 @@ function prevImgMove(){
 	<a href="javascript:void(0);" class="btn_close"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기" /></a>
 </div>
 <ul id="ssize" class="size_chip clearfix sizeChipKo1901">
-										
+
 									</ul>
 							</span>
 					<a href="javascript:fn_popupSizeQuickReference();" class="etc_info" onclick="GA_Event('상품 상세','사이즈_조건표','클릭')">사이즈 조견표</a>
