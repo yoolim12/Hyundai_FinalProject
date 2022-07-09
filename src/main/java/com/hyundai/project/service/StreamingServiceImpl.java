@@ -1,5 +1,7 @@
 package com.hyundai.project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,11 @@ public class StreamingServiceImpl implements StreamingService{
 	@Autowired
 	private StreamingDAO dao;
 	
+	@Override
+	public List<StreamingDTO> getList() throws Exception{
+		log.info("스트리밍 목록 조회");
+		return dao.getList();
+	}
 	// 메인 페이지 상품 리스트 조회
 	@Override
 	public void uploadStreaming(StreamingDTO dto) throws Exception{

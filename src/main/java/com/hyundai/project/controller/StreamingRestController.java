@@ -11,7 +11,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,11 +53,26 @@ public class StreamingRestController {
     @Value("${cloud.aws.s3.path}")
     private String folderName;
     
-    @Value("${cloud.aws.cdn")
+    @Value("${cloud.aws.cdn}")
     private String cdn;
     
     @Autowired
     private StreamingService service;
+    
+    @GetMapping("/list")
+	public ResponseEntity<List<StreamingDTO>> getStreaming() {
+        ResponseEntity<List<StreamingDTO>> entry = null;
+        
+        try {
+            entry = new ResponseEntity<List<StreamingDTO>>(service.getList(), HttpStatus.OK);
+            //log.info(entry);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entry = new ResponseEntity<List<StreamingDTO>>(HttpStatus.BAD_REQUEST);
+        } // end try
+        return entry;
+	}
+    
     
     @PostMapping("/upload")
 	public String uploadStreaming(@RequestBody StreamingDTO dto) {
