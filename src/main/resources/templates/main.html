@@ -200,7 +200,7 @@
                			html += '						<img src="'+result[i].t01imageUrl+'" alt="" name="'+result[i].productName+'" class="respon_image" onclick="GA_main(\'bestImg\',$(this))">';
                			html += '					</span>';
                			html += '				</a>';
-                		html += `				<a href="/detail/${result[i].productCode}" class="item_info1" onclick="javascript:GA_Event('메인','베스트','${result[i].productCode}'); GA_main('best',$(this));setEcommerceData('${i}', 'BEST',  '${categoryCode}');">`;
+                		html += `				<a href="/detail/${result[i].productCode}" class="item_info2" onclick="javascript:GA_Event('메인','베스트','${result[i].productCode}'); GA_main('best',$(this));setEcommerceData('${i}', 'BEST',  '${categoryCode}');">`;
                			html += '					<span class="brand">'+result[i].brandName+'</span>';
                			html += '					<span class="price">'+ getExchangePrice(result[i].price) +'</span>';
                			html += '				</a>';
