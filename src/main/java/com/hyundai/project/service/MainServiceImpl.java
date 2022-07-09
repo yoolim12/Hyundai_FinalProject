@@ -24,7 +24,6 @@ public class MainServiceImpl  implements MainService{
 	@Override
 	public List<MainListVO> getProductList(int pstatus, String category) throws Exception{
 		log.info("get Product List");
-		log.info(pstatus + " " + category);
 		return mapper.getProductList(pstatus, category);
 	};
 	

@@ -14,9 +14,10 @@
     <meta name="description" content="au theme template">
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
-
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	
     <!-- Title Page-->
-    <title>Forms</title>
+    <title>스트리밍BO</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -72,7 +73,41 @@
     function getCsrfParameterName() {
         return $("#CSRFForm [name='CSRFParameterName']").val();
     }
-
+    
+    function uploadStreaming(){
+    	$.ajax({
+            url:'/back/streaming/upload',
+            method:'POST',
+            contentType:'application/json;charset=utf-8',
+            data: JSON.stringify({
+                sname: $("#sname").val(),
+                scontent: $("#scontent").val(),
+                smanager: $("#smanager").val(),
+                sdate: $("#sdate").val(),
+                "CSRFToken": getYCsrfToken()
+            }),
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+            },
+            success:function() {
+                showList();
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            },
+        });
+    }
+    
+    $(document).ready(function () {
+    	let today = new Date();
+    	let year = today.getFullYear(); 
+    	let month = today.getMonth() + 1;  
+    	let date = today.getDate();  
+    	let uploadDate = year + '/' + month + '/' + date;
+    	$("#sdate").val(uploadDate);
+    	
+    });
+	
 </script>
 
 <div class="modal fade" id="streaminginsertmodal" tabindex="-1" role="dialog" aria-labelledby="streaminginsertmodalLabel"
@@ -107,24 +142,6 @@
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">방송 URL</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="scontent" name="text-input" class="form-control">
-                            <small class="form-text text-muted">방송 URL을 입력해주세요</small>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">이미지 URL</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="scontent" name="text-input" class="form-control">
-                            <small class="form-text text-muted">이미지 URL을 입력해주세요</small>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
                             <label for="text-input" class=" form-control-label">담당자</label>
                         </div>
                         <div class="col-12 col-md-9">
@@ -142,7 +159,7 @@
                 </div>
             </div>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-            <button type="button" class="btn btn-primary" onclick="openInsertModal()" data-dismiss="modal">상품 등록</button>
+            <button type="button" class="btn btn-primary" onclick="openInsertModal()" data-dismiss="modal">스트리밍 등록</button>
         </div>
     </div>
 </div>
@@ -532,7 +549,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="scrollmodalLabel">상품 삭제</h5>
+                <h5 class="modal-title" id="scrollmodalLabel">스트리밍 삭제</h5>
                 <button type="button" class="close" id="ico-cancle" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -586,19 +603,19 @@
     }
 
     function showList(){
-        var pname = document.getElementById("pname");
+        var pname = document.getElementById("sname");
         if(pname.value.length < 2){
-        	alert("상품명을 2글자 이상 입력해주세요.");
+        	alert("방송명을 2글자 이상 입력해주세요.");
         	return;
         }
 
         $.ajax({
             type: "POST",
-            url: "/back/productSearch",
+            url: "/back/streaming/search",
             dataType: "JSON",
             contentType: "application/json",
             data: JSON.stringify({
-                'pname': pname.value,
+                sno: pname.value,
                 "CSRFToken": getYCsrfToken()
             }),
             beforeSend: function(xhr){
@@ -755,28 +772,25 @@
             + '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
             + '</div>');
 
-		$(#"")
-
-
     })
 
     function openModal(pid){
         $("#deletemodal").modal("toggle");
-        document.getElementById("confirm").setAttribute("onclick","deleteProduct('"+pid+"')");
+        document.getElementById("confirm").setAttribute("onclick","deleteStreaming('"+sno+"')");
     }
 
     function openInsertModal() {
         $("#insertmodal").modal("toggle");
-        document.getElementById("insertconfirm").setAttribute("onclick","insertProduct()");
+        document.getElementById("insertconfirm").setAttribute("onclick","uploadStreaming()");
     }
 
-    function deleteProduct(pid) {
-        let url = "/back/delProduct";
+    function deleteStreaming(sno) {
+        let url = "/back/streaming/delete";
         $.ajax({
             url: url,
             method: "delete",
             data: JSON.stringify({
-                pid: pid,
+                sno: pid,
                 "CSRFToken": getYCsrfToken()
             }),
             contentType: "application/json",
