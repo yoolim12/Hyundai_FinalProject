@@ -60,7 +60,7 @@
 	}
 
 	function getProductList() {
-    var params = new URL(location).searchParams;
+    	var params = new URL(location).searchParams;
 		var page = params.get("pageNum") ?? 1;
 		var amount = params.get("amount") ?? 12;
 		var url = location.pathname;
