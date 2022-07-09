@@ -87,6 +87,8 @@ li#tachatUI {
     padding-left: 10px;
     margin-bottom: 3px;
     margin-top: 3px;
+    border: 2px solid lemonchiffon;
+    border-radius: 10px;
 }
 button#submitBtn {
     border-radius: 8px;
