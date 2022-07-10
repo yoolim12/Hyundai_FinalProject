@@ -38,4 +38,10 @@ public class StreamingServiceImpl implements StreamingService{
 		dao.deleteStreaming(sno);
 	}
 
+	@Override
+	public StreamingDTO getReplay(int sno) throws Exception{
+		log.info("다시보기");
+		return dao.getReplay(sno);
+	}
+
 }//end class

@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -125,5 +126,18 @@ public class StreamingRestController {
             e.printStackTrace();
         } // end try
         return "streaming delete success";
+	}
+	
+	@GetMapping("/replay/{sno}")
+	public ResponseEntity<StreamingDTO> getReplay(@PathVariable("sno") int sno) {
+		ResponseEntity<StreamingDTO> entry = null;
+		try {
+            entry = new ResponseEntity<StreamingDTO>(service.getReplay(sno), HttpStatus.OK);
+            //log.info(entry);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entry = new ResponseEntity<StreamingDTO>(HttpStatus.BAD_REQUEST);
+        } // end try
+        return entry;
 	}
 }
