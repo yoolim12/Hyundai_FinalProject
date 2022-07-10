@@ -131,28 +131,26 @@
     }
 
    // 게시물 삭제하는 ajax 호출
-   //  function deleteContent(qid) {
-   //      var url = "/mypage/deleteQNA?qid=" + qid;
-   //      if (confirm("해당 게시물을 삭제하시겠습니까?") == true) {
-   //          $.ajax({
-   //              url: url,
-   //              method: "post",
-   //              data:JSON.stringify({
-	// 				"CSRFToken": getYCsrfToken()
-	// 			}),
-	// 			beforeSend: function(xhr){
-	// 				 xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-	// 			},
-   //              success: function (data) {
-   //                  alert("완료되었습니다.");
-   //                  location.href='/member/mypage';
-   //              },
-   //              error : function( request, status, error ){
-   //                  console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
-   //              }
-   //          });
-   //      }
-   //  }
+    function deleteContent(qid) {
+        var url = "/mypage/deleteQNA?qid=" + qid;
+        var lc = new layerConfirm('해당 게시물을 삭제하시겠습니까?');
+        lc.confirmAction = function () {
+            $.ajax({
+                url: url,
+                method: "delete",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+                },
+                success: function (data) {
+                    alert("완료되었습니다.");
+                    location.href='/mypage/qna';
+                },
+                error : function( request, status, error ){
+                    console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
+                }
+            });
+        }
+    }
 </script>
 <div id="bodyWrap">
     <h3 class="cnts_title">

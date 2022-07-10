@@ -28,4 +28,8 @@ public class QnaServiceImpl implements QnaService {
 		qnaDAO.insertQna(qna);
 	}
 
+	@Override
+	public void deleteQna(int qid) throws Exception {
+		qnaDAO.deleteQna(qid);
+	}
 }

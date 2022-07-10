@@ -6,16 +6,16 @@
 
 	<select id="getQna"
 		resultType="com.hyundai.project.dto.QnaDTO">
-		select qtitle, qcontent, qdate, qimage, qkind, memail from qna where memail=#{memail}
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail from qna where memail=#{memail}
 	</select>
 
 	<insert id="insertQna">
 		insert into qna(memail, qtitle, qkind, qcontent, qdate, qimage)  values(#{memail}, #{qtitle}, #{qkind}, #{qcontent}, sysdate, #{qimage})
 	</insert>
 
-<!--	<delete id="deleteCart">-->
-<!--		delete cart where memail=#{memail} and pid = #{param2.pid} and ssize = #{param2.ssize} and ccolorcode = #{param2.ccolorcode}-->
-<!--	</delete>-->
+	<delete id="deleteQna">
+		delete qna where qid = #{qid}
+	</delete>
 
 <!--	<delete id="deleteAllCart">-->
 <!--		delete cart where memail=#{memail}-->

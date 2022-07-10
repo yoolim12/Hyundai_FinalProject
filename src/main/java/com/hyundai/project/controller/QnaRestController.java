@@ -67,4 +67,12 @@ public class QnaRestController {
         return qnaList; // 리스트 반환
     }
 
+    // QNA 삭제 기능
+    @DeleteMapping ("/deleteQNA")
+    public void qnaDelete(@RequestParam int qid) throws Exception {
+        log.info("QNA 삭제" + qid);
+        service.deleteQna(qid); // qid를 받아와 해당 게시물 삭제
+
+    }
+
 } // end class
