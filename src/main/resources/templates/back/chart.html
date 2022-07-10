@@ -32,11 +32,21 @@
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-PGSJCSLKXZ"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'G-PGSJCSLKXZ');
+	</script>
 
 </head>
 
 <body class="animsition">
-
+	
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
@@ -60,6 +70,11 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script type="text/javascript">
+	    function logoutClick() {
+			$('#logoutForm').submit();
+	  	}
+    </script>
     <div class="page-wrapper">
     	<!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">

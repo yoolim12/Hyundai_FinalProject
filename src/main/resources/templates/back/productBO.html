@@ -49,6 +49,16 @@
     <link href="css/theme.css" rel="stylesheet" media="all">
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-PGSJCSLKXZ"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'G-PGSJCSLKXZ');
+	</script>
 </head>
 
 <body class="animsition">
@@ -64,7 +74,11 @@
 <script>
     let category_obj = [], depth1 = [], depth2 = [], depth3 = [], size_obj = [];
     let idx = 0;
-
+	
+    function logoutClick() {
+		$('#logoutForm').submit();
+	}
+    
     function getCsrfHeaderName() {
         return $("#CSRFForm [name='CSRFHeadername']").val();
     }
