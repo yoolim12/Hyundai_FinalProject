@@ -35,7 +35,7 @@ public class StreamingServiceImpl implements StreamingService{
 	@Override
 	public void deleteStreaming(int sno) throws Exception{
 		log.info("스트리밍 목록 제거");
-		
+		dao.deleteStreaming(sno);
 	}
 
 }//end class

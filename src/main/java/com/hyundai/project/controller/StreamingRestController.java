@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -118,9 +118,9 @@ public class StreamingRestController {
     }
 	
 	@DeleteMapping("/delete")
-	public String deleteStreaming(@RequestParam int sno) {
+	public String deleteStreaming(@RequestBody StreamingDTO dto) {
 		try {
-			service.deleteStreaming(sno);
+			service.deleteStreaming(dto.getSno());
         } catch (Exception e) {
             e.printStackTrace();
         } // end try
