@@ -103,4 +103,30 @@ public class MypageController {
 		model.addAttribute("grade",grade);
 		return "mypage/grade";
 	}
+
+	@GetMapping("/qna")
+	public String qna(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) throws Exception {
+		if (oauthMemberDTO == null) {
+			model.addAttribute("member", authMemberDTO);
+			model.addAttribute("memberemail", authMemberDTO.getMemail());
+			model.addAttribute("membername", authMemberDTO.getMname());
+			model.addAttribute("memberpoint", memberDAO.getPoint(authMemberDTO.getMemail()));
+			log.info("============================point: " + memberDAO.getPoint(authMemberDTO.getMemail()));
+			model.addAttribute("membergno", memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getGno());
+		}
+		else {
+			model.addAttribute("member", oauthMemberDTO);
+			model.addAttribute("memberemail", oauthMemberDTO.getMemail());
+			model.addAttribute("membername", oauthMemberDTO.getName());
+			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getMemail()));
+			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getGno());
+		}
+		return "mypage/qna";
+	}
+
+	// QNA 작성 뷰로 이동
+	@GetMapping("/insertQna")
+	public void insertqna() {
+		log.info("Qna 작성페이지 진입");
+	}
 }
