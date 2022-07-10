@@ -111,7 +111,6 @@ public class MypageController {
 			model.addAttribute("memberemail", authMemberDTO.getMemail());
 			model.addAttribute("membername", authMemberDTO.getMname());
 			model.addAttribute("memberpoint", memberDAO.getPoint(authMemberDTO.getMemail()));
-			log.info("============================point: " + memberDAO.getPoint(authMemberDTO.getMemail()));
 			model.addAttribute("membergno", memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getGno());
 		}
 		else {

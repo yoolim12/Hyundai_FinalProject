@@ -50,75 +50,21 @@ public class QnaRestController {
         service.insertQna(qna);
     }
 
-//    @DeleteMapping
-//    public String deleteCart(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, @RequestBody CartDTO cart) throws Exception {
-//        String memail;
-//        try {
-//            if (oauthMemberDTO == null) {
-//                memail = authMemberDTO.getMemail();
-//            }
-//            else {
-//                memail = oauthMemberDTO.getMemail();
-//            }
-//            log.info(memail, cart);
-//            service.deleteCart(memail, cart);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "success";
-//    }
-//
-//    @DeleteMapping("/all")
-//    public String deleteALLCart(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO) throws Exception {
-//        String memail;
-//        try {
-//            if (oauthMemberDTO == null) {
-//                memail = authMemberDTO.getMemail();
-//            }
-//            else {
-//                memail = oauthMemberDTO.getMemail();
-//            }
-//            service.deleteAllCart(memail);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "success";
-//    }
-//
-//    @PutMapping
-//    public String updateCart(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, @RequestBody CartUpdateDTO cart) {
-//        String memail;
-//        try {
-//            if (oauthMemberDTO == null) {
-//                memail = authMemberDTO.getMemail();
-//            }
-//            else {
-//                memail = oauthMemberDTO.getMemail();
-//            }
-//            log.info(cart);
-//            service.updateCart(memail, cart);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "success";
-//    }
-//
-//    @PostMapping("/station")
-//    public OrderStationDTO orderStation(@RequestBody OrderStationDTO station) {
-//        return station;
-//    }
-//
-//    @GetMapping("/total")
-//    public int getCartTotal(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO) throws Exception {
-//        String memail;
-//        if(authMemberDTO == null && oauthMemberDTO == null) return 0;
-//        if (oauthMemberDTO == null) {
-//            memail = authMemberDTO.getMemail();
-//        }
-//        else {
-//            memail = oauthMemberDTO.getMemail();
-//        }
-//        return service.getCartTotal(memail);
-//    }
+    // ajax로 작성된 QNA 리스트를 받아오는 메소드 (페이징)
+    @GetMapping("/QNAList")
+    @ResponseBody
+    public List<QnaDTO> qnaListGet(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO) throws Exception {
+        String memail;
+        if (oauthMemberDTO == null) {
+            memail = authMemberDTO.getMemail();
+        }
+        else {
+            memail = oauthMemberDTO.getMemail();
+        }
+        log.info("QNA 리스트 ");
+        List<QnaDTO> qnaList = service.getQna(memail); // 로그인된 사용자와 현재 페이지, 페이지에 보여질 게시물 개수를 전달
+        log.info(qnaList);
+        return qnaList; // 리스트 반환
+    }
 
 } // end class

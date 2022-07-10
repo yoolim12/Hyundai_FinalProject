@@ -18,21 +18,70 @@
 	        $(this).parents('.basket_info').slideUp('fast');
 	    }
 	});
-	$(document).on("click", '.btn_option', function () {
-        //옵션변경 클릭시 모든 하위 레이어 닫기
-        $("[class^=store_info]").css("display", "none");
-        var checkIdx = $(".btn_option").index(this);
-        $(".basket_info").each(function (idx) {
-            if (idx != checkIdx) {
-                $(this).css("display", "none");
-            }
-        });
-
-        if ($(this).parents("tr").next("tr").find(".basket_info").prop('style') == 'display: block;') {
-            return;
-        }
-	});
-	$(document).ready(function () {
+    var obj, arr;
+    $(document).ready(function () {
+        console.log("Ready");
+        // var page = [[${(param.pageNum == "" || param.pageNum == null)?1:param.pageNum}]];
+        // console.log(param);
+        // var startNum = page-(page-1)%10;
+        // var total = "${qnaCount}";
+        // console.log(total);
+        // var lastNum = Math.ceil(total/10);
+        // /* console.log(startNum); */
+        // if ("${sessionScope.member.mid }" == "") location.href = "/member/login";
+        // else
+            $.ajax({ // 해당 사용자가 작성한 QNA 리스트 불러오는 ajax 호출
+                url: "/mypage/QNAList",
+                type: "get", //GET 방식으로 전달
+                async: false,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.length < 1) { // 게시물 없을 경우
+                        var listTag = "";
+                        listTag += "<tr>";
+                        listTag += "<td colspan='4' class='no_data'>";
+                        listTag += "등록된 게시글이 없습니다.";
+                        listTag += "</td>";
+                        listTag += "</tr>";
+                        document.getElementById("listBody").innerHTML = listTag;
+                    } else { // 게시물 있는 경우
+                        arr = new Array(data.length);
+                        obj = data;
+                        var listTag = "";
+                        for (var i = 0; i < data.length; i++) {
+                            var date = data[i].qdate.substr(0, 10);
+                            arr[i] = false;
+                            listTag += '<tr class="al_middle" cdlist="[]" pk="8919204155322" onClick="showContent(' + i + ')" >';
+                            listTag += "<td class='frt'>" + date + "</td><td>"+data[i].qkind+"</td><td class='al_left'><a href='javascript:void(0);'>" + data[i].qtitle + "</a></td><td>[답변대기]</td></tr>";
+                            listTag += '<tr id="qna' + i + '"></tr>';
+                        }
+                        document.getElementById("listBody").innerHTML = listTag;
+                    }
+                    // var phtml = "";
+                    //var prevPage = Math.floor([[${param.pageNum}]])-1;
+                    //phtml += '<a class="prev2" href="?pageNum=1&amount=10">처음 페이지로 이동</a><a href="?pageNum='+prevPage+'&amount=10" class="prev">이전 페이지로 이동</a><span class="num">';
+//                     for(var i = 0; i<10; i++){
+//                         if ((startNum+i) <= lastNum){
+//                             var pageNum = startNum+i;
+// //                     		phtml += '<li class = "page-number ${(param.pageIndex==(startNum+i))?'active':''}">';
+//                             if (pageNum == page){
+//                                 phtml += '<a href="?pageNum='+pageNum+'&amount=10" class="pageBtn on">'+pageNum+'</a>';
+//                             } else{
+//                                 phtml += '<a href="?pageNum='+pageNum+'&amount=10" class="pageBtn">'+pageNum+'</a>';
+//                             }
+//                             console.log(startNum  + " : " + i);
+//                         }
+//                     }
+                    //var nextPage = Math.ceil(${param.pageNum})+1;
+                    //phtml += '</span><a href="?pageNum='+nextPage+'&amount=10" class="next">다음 페이지로 이동</a><a href="?pageNum='+lastNum+'&amount=10" class="next2">마지막 페이지로 이동</a></div>';
+                    //document.getElementById("paging").innerHTML = phtml;
+                },
+                error: function () {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            });
         let rank = [[${membergno}]];
         let grade = '', rate;
         if (rank === 1) grade = 'FRIEND', rate = 5;
@@ -56,13 +105,13 @@
            if(obj[i].qcontent == null) qcontent = "";
            console.log(qcontent);
             listTag += '<tr><td class="qna_wrap" colspan="4"><div class="qna_box ch"><p></p><div class="qt"><span class="ico">quest</span>';
-            if(obj[i].qnaimg == null) {
+            if(obj[i].qimage == null) {
                 listTag += '<div class="txt"><p style="font-weight: 900; font-size:15px; word-wrap:break-word; margin-top:7px">' + obj[i].qtitle + '</p><br><br><br>';
                 listTag += '<p style="word-wrap:break-word">' + qcontent + '</p><br><br>';
             }
             else {
                 listTag += '<div class="txt"><p style="font-weight: 900; font-size:15px; word-wrap:break-word; margin-top:7px">' + obj[i].qtitle + '</p><br><br><br>';
-                listTag += '<p style="word-wrap:break-word">' + qcontent + '</p><br><br><img id="imgsrc2" src="/mypage/display?fileName='+obj[i].qnaimg+'" alt="thumimg" style="width:300px" class="tlt"/><br><br>';
+                listTag += '<p style="word-wrap:break-word">' + qcontent + '</p><br><br><img id="imgsrc2" src="'+obj[i].qimage+'" alt="thumimg" style="width:300px" class="tlt"/><br><br>';
             }
             listTag +=
                 '<p class="date" style="color:#999;">등록일 : ' +
@@ -82,28 +131,28 @@
     }
 
    // 게시물 삭제하는 ajax 호출
-    function deleteContent(qid) {
-        var url = "/mypage/deleteQNA?qid=" + qid;
-        if (confirm("해당 게시물을 삭제하시겠습니까?") == true) {
-            $.ajax({
-                url: url,
-                method: "post",
-                data:JSON.stringify({
-					"CSRFToken": getYCsrfToken()
-				}),
-				beforeSend: function(xhr){
-					 xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-				},
-                success: function (data) {
-                    alert("완료되었습니다.");
-                    location.href='/member/mypage';
-                },
-                error : function( request, status, error ){
-                    console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
-                }
-            });
-        }
-    }
+   //  function deleteContent(qid) {
+   //      var url = "/mypage/deleteQNA?qid=" + qid;
+   //      if (confirm("해당 게시물을 삭제하시겠습니까?") == true) {
+   //          $.ajax({
+   //              url: url,
+   //              method: "post",
+   //              data:JSON.stringify({
+	// 				"CSRFToken": getYCsrfToken()
+	// 			}),
+	// 			beforeSend: function(xhr){
+	// 				 xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+	// 			},
+   //              success: function (data) {
+   //                  alert("완료되었습니다.");
+   //                  location.href='/member/mypage';
+   //              },
+   //              error : function( request, status, error ){
+   //                  console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
+   //              }
+   //          });
+   //      }
+   //  }
 </script>
 <div id="bodyWrap">
     <h3 class="cnts_title">

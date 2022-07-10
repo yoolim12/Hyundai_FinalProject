@@ -78,33 +78,51 @@
             <!-- lnbWrap -->
             <div class="iframe_lnb">
                 <div class="lnb_wrap">
-                    <h4><a href="/svcenter/submain">고객센터<!-- 고객센터 --></a></h4>
+                    <h4><a href="/svcenter/submain">1 : 1 문의</a></h4>
                     <div class="lnb">
-                        <p><a href="/ko/svcenter/notice">공지사항<!-- 공지사항 --></a></p>
-                        <p><a href="/ko/svcenter/mantomaninquiry" >1:1 문의 등록<!-- 1:1 문의하기 --></a></p>
-                        <p><a href="/ko/svcenter/faq">FAQ<!-- FAQ; --></a></p>
-                        <p><a href="/ko/svcenter/mending">수선진행조회<!-- 수선진행조회; --></a></p>
-                        <p><a href="/ko/footer/vocProvision">고객의 소리</a></p>
-                        <!-- <p><a href="#;">APP 다운로드 소개</a></p> -->
                         <dl>
-                            <dt>쇼핑 가이드</dt>
-                            <dd><a href="/ko/svcenter/memberjoinguide">회원 가입</a></dd>
-                            <dd><a href="/ko/svcenter/theClubInfo" >온라인 멤버십</a></dd>
-                            <dd><a href="/ko/svcenter/memberbenefitguide" >한섬 VVIP 혜택</a></dd>
-                            <dd><a href="/ko/svcenter/pointguide">한섬마일리지 혜택</a></dd>
-                            <dd><a href="/ko/svcenter/couponguide">쿠폰</a></dd>
-                            <dd><a href="/ko/svcenter/paymentguide">주문/결제</a></dd>
-                            <dd><a href="/ko/svcenter/asguide">배송/교환/반품/AS</a></dd>
+                            <dt>주문조회</dt>
+                            <dd>
+                                <a href="javascript:void(0)" onclick="GA_Event('마이페이지','LNB','주문/배송/취소');">주문/배송/취소</a>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>혜택관리</dt>
+                            <dd>
+                                <a href="/mypage/grade" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
+                            </dd>
+                            <dd>
+                                <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 H-POINT');">나의 H.POINT</a>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>나의 정보관리</dt>
+                            <dd>
+                                <a href="/mypage/personInformationChange" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>나의 활동관리</dt>
+                            <!-- <dd><a href="#">회원등급</a></dd> -->
+                            <dd>
+                                <a href="/mypage/qna" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a>
+                            </dd>
+                            <!-- <dd><a href="#">이벤트 참여현황</a></dd> -->
                         </dl>
                     </div>
                     <!-- ph_guide -->
                     <div class="ph_guide">
                         <p class="tlt">고객센터 운영 안내</p>
-                        <p class="phone">1800-5700<span style="color:#c69c6d;" class="txt">(유료)</span></p>
-                        <p class="txt">평일(월~금)<br/>am 09:00 ~ pm 18:00<span>토/일, 공휴일 휴무</span></p>
-                        <a href="mailto:shophelp@thehandsome.com" >shophelp<br/>@thehandsome.com</a>
+                        <p class="phone" style="font-size:18px;">1800-5700<span style="color: #c69c6d;" class="txt"><br>(유료)</span></p>
+                        <p class="txt">
+                            평일(월~금)<br />
+                            am 09:00 ~ pm 18:00<span>토/일, 공휴일 휴무</span>
+                        </p>
+                        <a href="mailto:shophelp@GKMCC.com" onclick="GA_Event('마이페이지','LNB','이메일 문의');">
+                            shophelp<br />
+                            @thehandsome.com
+                        </a>
                     </div>
-                    <!-- //ph_guide -->
                 </div>
             </div><!-- //lnbWrap -->
             <div class="sub_cnts">

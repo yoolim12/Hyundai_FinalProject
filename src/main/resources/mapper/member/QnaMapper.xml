@@ -4,14 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.project.memberDAO.QnaDAO">
 
-<!--	<select id="getCart"-->
-<!--		resultType="com.hyundai.project.dto.CartDTO">-->
-<!--		select p.pid, p.bname, p.pname, p.pprice, c.ccolorcode,-->
-<!--		c.cimage1, mc.ssize, mc.qty from-->
-<!--		product.product p join product.color c on p.pid = c.pid-->
-<!--		join member.cart mc on p.pid = mc.pid and c.ccolorcode = mc.ccolorcode-->
-<!--		where memail = #{memail}-->
-<!--	</select>-->
+	<select id="getQna"
+		resultType="com.hyundai.project.dto.QnaDTO">
+		select qtitle, qcontent, qdate, qimage, qkind, memail from qna where memail=#{memail}
+	</select>
 
 	<insert id="insertQna">
 		insert into qna(memail, qtitle, qkind, qcontent, qdate, qimage)  values(#{memail}, #{qtitle}, #{qkind}, #{qcontent}, sysdate, #{qimage})

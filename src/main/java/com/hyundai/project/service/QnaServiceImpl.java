@@ -18,38 +18,14 @@ public class QnaServiceImpl implements QnaService {
 	@Autowired
 	private QnaDAO qnaDAO;
 
-//	@Override
-//	public List<CartDTO> getCart(String memail) throws Exception {
-//		return cartDAO.getCart(memail);
-//	}
+	@Override
+	public List<QnaDTO> getQna(String memail) throws Exception {
+		return qnaDAO.getQna(memail);
+	}
 
 	@Override
 	public void insertQna(QnaDTO qna) throws Exception {
 		qnaDAO.insertQna(qna);
 	}
-	
-//	@Override
-//	public void deleteCart(String memail, CartDTO cart) throws Exception {
-//		log.info("================================================");
-//		log.info(memail);
-//		log.info(cart);
-//		cartDAO.deleteCart(memail, cart);
-//		log.info("delete 완.");
-//	}
-//
-//	@Override
-//	public void deleteAllCart(String memail) throws Exception {
-//		cartDAO.deleteAllCart(memail);
-//	}
-//
-//	@Override
-//	public void updateCart(String memail, CartUpdateDTO cart) throws Exception {
-//		cartDAO.updateCart(memail, cart);
-//	}
-//
-//	@Override
-//	public int getCartTotal(String memail) throws Exception {
-//		return cartDAO.getCartTotal(memail);
-//	}
 
 }
