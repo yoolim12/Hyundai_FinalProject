@@ -239,7 +239,7 @@ function easyMemJoin() {
 	                                    <input type="password" id="j_password" name="mpassword" placeholder="비밀번호를 입력하세요." title="비밀번호" />
 	                                </div>
 	                            </div>
-	                            <button type="submit" class="btn_login" id="login_btn">로그인</button>
+	                            <button type="submit" class="btn_login" id="login_btn" onclick="GA_Event('로그인','로그인','간편 로그인');">로그인</button>
 	                        </div>
 	                    </fieldset>
 	                </form>
@@ -253,13 +253,13 @@ function easyMemJoin() {
 	                <div style="text-align: center;">
                         <div style="padding-top: 20px; ">
                             <div style="display: inline-block;">
-                                <a href="javascript:void(0);" id="hpoinJoinBtn" onclick="GA_Event('로그인', '가입', '통합회원_가입');">
+                                <a href="javascript:void(0);" id="hpoinJoinBtn" onclick="GA_Event('로그인', '가입', '구글소셜_가입');">
                                     <img src="/resources/_ui/desktop/common/images/googlelogin.png" />
                                 </a>
                             </div>
                                 
                             <div style="display: inline-block;">
-                                <a href="/oauth2/authorization/kakao" onclick="GA_Event('로그인', '가입', '간편회원_가입');" style="border: none;">
+                                <a href="/oauth2/authorization/kakao" onclick="GA_Event('로그인', '가입', '카카오소셜_가입');" style="border: none;">
                                     <img src="/resources/_ui/desktop/common/images/kakaologin.png" />
                                 </a>
                             </div>

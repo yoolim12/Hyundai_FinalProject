@@ -4,7 +4,9 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/common}">
-
+<head>
+	<title>주문하기</title>
+</head>
 <th:block layout:fragment="css">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/_ui/handsomemobile/css/handsomecss/swiper.css}"/>
 </th:block>
@@ -152,6 +154,7 @@
             IMP.init("imp12649976"); // Example: imp00000000
 
             function payment(){
+
             	var buyer_tel = 'test';
             	var buyer_name = 'test';
             	
@@ -228,6 +231,7 @@
                                 }).done(function (data){
                                     // 결제 성공 시 로직
                                     orderProcess();
+                                    
                                     var la = new layerAlert('결제에 성공하셨습니다.');
                                     la.confirmAction = function() {
                                         location.href = "/mypage";
@@ -300,6 +304,12 @@
                         console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                     }
                 });
+                
+             	// GA_Event() 결제 상품 정보 넘겨주기
+                for (var i = 0; i < res_data.item.length; i++) {
+                	var pid = res_data.item[i].pid;
+                	GA_Event('주문 내역', '결제', pid);		            
+		        }
             }
 
             function addrSearchFunc() {
@@ -480,13 +490,6 @@
                             <p class="reqd_txt none">
                                 <strong class="reqd">*</strong> 표시는 필수항목입니다.
                             </p>
-                            <div class="btn_wrap">
-                                <a href="#;" class="btn wt_ss" onclick="f_customerAddress();">주문고객과
-                                    동일</a> <a href="#;" class="btn wt_ss"
-                                              onclick="viewPopup('#popwrap');">배송지 선택</a> <a href="#;"
-                                                                                             class="btn wt_ss mr0"
-                                                                                             onclick="resetAddress();">새로작성하기</a>
-                            </div>
                         </div>
 
                         <div class="tblwrap" id="deliveryInfoTitle">
@@ -512,7 +515,7 @@
                                     </th>
                                     <td>
                                         <!-- address --> <input value="" title="우편번호" id="ozipcode"
-                                                                name="postcode" class="post" type="text"/>
+                                                                name="postcode" class="post" type="text" readonly/>
                                         <input
                                                 value="우편번호 조회" id="addrSearchBtn" class="btn add_s" onclick="addrSearchFunc()"
                                                 type="button"/> <br/>
@@ -561,54 +564,6 @@
                                 <li>선택사항을 미입력하더라도 불이익은 발생하지 않습니다.</li>
                             </ul>
                         </div>
-                        <!--//title_wrap & table wrap4-->
-                        <!--title_wrap & table wrap2-->
-                        <div class="title_wrap  mt40">
-                            <h4 class="float_left">쿠폰 및 혜택 적용</h4>
-                            <p class="guide_comment">쿠폰을 적용하셔야 할인 혜택이 가능합니다.</p>
-                        </div>
-
-                        <div class="tblwrap">
-                            <table class="tbl_wtype1">
-                                <colgroup>
-                                    <col style="width: 140px">
-                                    <col>
-                                </colgroup>
-                                <tbody>
-                                <tr>
-                                    <th scope="row" class="th_space">쿠폰 및 혜택<br>선택
-                                    </th>
-                                    <td>
-                                        <div class="vvip_td_wrap" id="select_voucher">
-                                            <div class="coupon_select_wrap" style="margin-top: 15px">
-                                                <input name="voucherCode" id="voucherCode" value=""
-                                                       title="쿠폰코드 직접입력" placeholder="쿠폰코드 직접입력" type="text"
-                                                       class="input"/>
-                                                <p>또는</p>
-                                                <select title="쿠폰을 선택해 주세요." id="selectVoucher"
-                                                        style="width: 190px;">
-                                                    <option value="">쿠폰을 선택해 주세요.</option>
-                                                    <option value="FW2-022-042-5HO-02W-BD1">[1만원]
-                                                        FRIEND 스페셜 바우처 / ₩ 10,000
-                                                    </option>
-                                                    <option value="FX2-022-042-5HO-VE6-PTZ">[10%]
-                                                        FRIEND 스페셜 바우처 / 10%
-                                                    </option>
-                                                </select>
-                                                <div class="btnwrap">
-                                                    <a href="#;" id="btnRedeemVoucher"
-                                                       class="btn add_s min_auto" onclick="redeemVoucher(this);">
-                                                        적용</a> <a href="#;"
-                                                                  id="btnReleaseVoucher" class="btn dis_s min_auto"
-                                                                  onclick="releaseVoucher();"> 적용취소</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
                         <!-- H.Point START ------------------------------------------------>
                         <!-- H.Point END -------------------------------------------->
 
@@ -647,9 +602,9 @@
                                                         for="hpoint_useall">모두사용</label></span>
                                                 </div>
                                                 <input id="btnUseHPoint" class="btn add_s min_auto"
-                                                       type="button" onclick="doUseHPoint();" value="적용"/>
+                                                       type="button" onclick="doUseHPoint(); GA_Event('주문서 작성','포인트','적용');" value="적용"/>
 
-                                                <input id="btnCancelUseHPoint" class="btn add_s min_auto" type="button" onclick="cancelUseHPoint();" value="적용취소">
+                                                <input id="btnCancelUseHPoint" class="btn add_s min_auto" type="button" onclick="cancelUseHPoint(); GA_Event('주문서 작성','포인트','적용취소');" value="적용취소">
                                             </div>
                                             <!-- //apply -->
                                             <p class="txt_guide">
