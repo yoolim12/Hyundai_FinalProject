@@ -14,5 +14,7 @@ public interface StreamingDAO {
 	public void insertStreaming(StreamingDTO dto) throws Exception;
 	
 	public void deleteStreaming(int sno) throws Exception;
+
+	public StreamingDTO getReplay(int sno);
 	
 }

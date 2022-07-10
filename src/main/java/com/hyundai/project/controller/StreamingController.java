@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Log4j2
 @Controller
@@ -26,7 +27,7 @@ public class StreamingController {
 	}
 	
 	@GetMapping("/mobile")
-	public String mobilestream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
+	public String mobileStream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
 		if (oauthMemberDTO == null) {
         	model.addAttribute("member", authMemberDTO);
         }
@@ -36,21 +37,14 @@ public class StreamingController {
 		return "streaming/mobile";
 	}
 	
-	@GetMapping("/streamingReplay")
-	public String replaystream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
-
-		log.info("@StreamingController, GET()");
-		log.info(authMemberDTO);
-		log.info(oauthMemberDTO);
-		if (oauthMemberDTO == null)
-			model.addAttribute("member", authMemberDTO);
-		else
-			model.addAttribute("member", oauthMemberDTO);
+	@GetMapping("/streamingReplay/{sno}")
+	public String replayStream(@PathVariable("sno") int sno){
+		
 		return "streaming/streamingReplay";
 	}
 	
 	@GetMapping("/streamingChat")
-	public void streamchat(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
+	public void streamChat(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
 
 		log.info("@StreamingController, GET()");
 		log.info(authMemberDTO);
