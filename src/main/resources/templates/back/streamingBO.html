@@ -497,55 +497,37 @@
     }
 
     function showList(){
-        var pname = document.getElementById("sname");
+        /* var pname = document.getElementById("sname");
         if(pname.value.length < 2){
         	alert("방송명을 2글자 이상 입력해주세요.");
         	return;
-        }
+        } */
 
         $.ajax({
-            type: "POST",
-            url: "/back/streaming/search",
-            dataType: "JSON",
-            contentType: "application/json",
-            data: JSON.stringify({
-                sno: pname.value,
-                "CSRFToken": getYCsrfToken()
-            }),
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-            },
+            url: "/back/streaming/list",
+            type: "GET",
+            dataType: "json",
+            async: false,
             error: function (request, status, error) {
                 console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
             },
             success: function(result){
                 let html = '';
                 if(result.length>0){
-
                     for(let i=0;i<result.length;i++){
-                        let price = numWithComma(result[i].pprice);
                         html += `
-                           <tr class="tr-shadow" data-id="${result[i].pid}" id="view_${result[i].pid}">
-                           <td>${result[i].pid}</td>
-                           <td>${result[i].category}</td>
-                           <td class="desc">${result[i].bname}</td>
-                           <td>${result[i].pname}</td>`
-
-                        if(result[i].pstatus === 1){
-                            html += `<td><span class="text-success" style="font-weight:bold">신상품</span></td>`
-                        }else if(result[i].pstatus === 2){
-                            html += `<td><span class="text-warning" style="font-weight:bold">베스트</span></td>`
-                        }else{
-                            html += `<td><span class="text-secondary">기본</span></td>`
-                        }
-
-                        html += `<td>₩${price}</td>
+                           <tr class="tr-shadow" data-id="${result[i].sno}" id="view_${result[i].sno}">
+                           <td>${result[i].sno}</td>
+                           <td>${result[i].sname}</td>
+                           <td class="desc">${result[i].scontent}</td>
+                           <td>${result[i].smanager}</td>
+						   <td>${result[i].sdate}</td>
                            <td>
                               <div class="table-data-feature">
-                                 <button class="item modiBtn" type="button" data-toggle="modal" data-target="#scrollmodal" data-placement="top" title="" data-original-title="Edit">
-                                     <i class="zmdi zmdi-edit"></i>
-                                  </button>
-                                 <button class="item" id="btn-modal" type="button" onclick="openModal('${result[i].pid}')" data-placement="top" title="" data-original-title="Delete" >
+	                             <button class="item modiBtn" type="button" data-toggle="modal" data-target="#scrollmodal" data-placement="top" title="" data-original-title="Edit" style="visibility:hidden;">
+	                             	<i class="zmdi zmdi-edit"></i>
+	                          	 </button>
+                                 <button class="item" id="btn-modal" type="button" onclick="openModal('${result[i].sno}')" data-placement="top" title="" data-original-title="Delete" >
                                     <i class="zmdi zmdi-delete"></i>
                                  </button>
                                  <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
@@ -554,55 +536,22 @@
                               </div>
                            </td>
                         </tr>
-
-
-
-                        <tr class="tr-shadow" data-id="${result[i].pid}" id="mview_${result[i].pid}" style="display: none;">
-                           <td>${result[i].pid}</td>
-                           <td>${result[i].category}</td>
-                           <td class="desc">${result[i].bname}</td>
-                           <td>${result[i].pname}</td>`
-
-                        if(result[i].pstatus === 1){
-                            html += `<td><input type="text" name="pstatus" id="pstatus${result[i].pid}" value="신상품" style="color: indianred; font-weight: 600; background: aliceblue; border-radius: 20px; padding: 7px;"></td>`
-                        }else if(result[i].pstatus === 2){
-                            html += `<td><input type="text" name="pstatus" id="pstatus${result[i].pid}" value="베스트" style="color: indianred; font-weight: 600; background: aliceblue; border-radius: 20px; padding: 7px;"></td>`
-                        }else{
-                            html += `<td><input type="text" name="pstatus" id="pstatus${result[i].pid}" value="기본" style="color: indianred; font-weight: 600; background: aliceblue; border-radius: 20px; padding: 7px;"></td>`
-                        }
-                        html += `<td><input type="text" name="pprice" id="pprice${result[i].pid}" value="${result[i].pprice}" style="color: indianred; font-weight: 600; background: aliceblue; border-radius: 20px; padding: 7px;"></td>
-                           <td>
-                              <div class="table-data-feature">
-                                 <button class="item modifyBtn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" style="background: lightsteelblue;">
-                                     <i class="zmdi zmdi-edit"></i>
-                                  </button>
-                                 <button class="item" id="btn-modal" type="button" onclick="openModal('${result[i].pid}')" data-placement="top" title="" data-original-title="Delete" >
-                                    <i class="zmdi zmdi-delete"></i>
-                                 </button>
-                                 <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
-                                    <i class="zmdi zmdi-more"></i>
-                                 </button>
-                              </div>
-                           </td>
-                        </tr>
-
                         <tr class="spacer"></tr>
                       `;
                     }
                 } else {
                     html += `
                          <div class="alert alert-warning" role="alert">
-                         <h4 class="alert-heading">해당 상품이 존재하지 않습니다!</h4>
+                         <h4 class="alert-heading">스트리밍 목록이 존재하지 않습니다!</h4>
                          <hr>
-                         <p>상품을 다시 검색하세요.</p>
+                         <p>목록을 등록해주세요.</p>
                          </div>
                       `;
                 }
                 $("#searchRes").html(html);
             }
-
         })
-    }
+    } // end showList
 
     var productBtn = document.getElementById("productSearch");
     productBtn.addEventListener("click", function(event){
@@ -665,7 +614,8 @@
             + '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
             + '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
             + '</div>');
-
+		
+        showList();
     })
 
     function openModal(pid){
