@@ -121,7 +121,7 @@ input {
                                 <div class="productInfo">
                                     <p class="tit" style="display: block;">상품 바로 보러가기</p>
                                     <div class="content">
-                                        <div id="img">
+                                        <div id="img1">
                                             <img class="respon_image" id="image1" src="http://newmedia.thehandsome.com/MW/2B/SS/MW2B3WTO508W_LB_W01.jpg/dims/resize/684x1032/" />
                                         </div>
                                         <div class="info">
@@ -322,6 +322,7 @@ input {
                         $("#msgArea").append(str);
                     }
             }
+            $('#msgArea').scrollTop($('#msgArea').height()*10);
         }
         
         /* const slider = document.querySelector('.again');
@@ -381,7 +382,7 @@ input {
                        	<div class="again">
                             <!-- <div class="againvideo">다시보기1</div> -->
                             <a class="thumbnail" href="/streaming">
-                                <img id="img" alt=""
+                                <img class="img" alt=""
                                 src="${res[i].simg}"/>
                             </a>
                             <div class="againdetail">
