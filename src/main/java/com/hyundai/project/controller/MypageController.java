@@ -87,6 +87,7 @@ public class MypageController {
 		
 		
 		String rank = "";
+		
 		if(grade == 1) {
 			rank = "FRIEND";
 		}else if (grade == 2) {

@@ -14,7 +14,9 @@ import com.hyundai.project.dto.MemberRoleDTO;
 public interface MemberDAO {
 
 	public void simpleRegister(MemberDTO member);
+	
 	public void registerRole(MemberRoleDTO member_role);
+	
 	public MemberJoinDTO findByEmail(String memail, int from_social);
 	
 	// 이메일로 회원 정보 가져오기

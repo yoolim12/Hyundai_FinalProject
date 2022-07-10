@@ -215,44 +215,32 @@
     </header>
 
     <aside class="menu-sidebar d-none d-lg-block">
-        <div class="logo">
-            <a href="#"> <img src="images/icon/handsome-logo.png" alt="Cool Admin" />
-            </a>
-        </div>
-        <div class="menu-sidebar__content js-scrollbar1">
-            <nav class="navbar-sidebar">
-                <ul class="list-unstyled navbar__list">
-
-                  <li><a href="chart.html"> <i class="fas fa-chart-bar"></i>차트
-                  </a></li>
-                  <li><a href="memberBO"> <i class="far fa-check-square"></i>회원
-                        관리
+            <div class="logo">
+                <a href="#">
+                    <img src="images/icon/handsome-logo.png" alt="Cool Admin" />
+                </a>
+            </div>
+            <div class="menu-sidebar__content js-scrollbar1">
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+                        
+                        <li>
+                            <a href="chart">
+                                <i class="fas fa-chart-bar"></i>차트</a>
+                        </li>
+                        <li><a href="memberBO"> <i
+                        class="far fa-check-square"></i>회원 관리
                   </a></li>
                   <li><a href="productBO"> <i class="fas fa-table"></i>매장 관리
                   </a></li>
+                  <li><a href="sendMail"> <i class="zmdi zmdi-email"></i>메일 보내기
+                  </a></li>
                   <li class="active"><a href="streamingBO"> <i class="fas fa-tv"></i>스트리밍 관리
                   </a></li>
-
-                  <li class="has-sub"><a class="js-arrow" href="#"> <i
-                        class="fas fa-desktop"></i>UI Elements
-                  </a>
-                     <ul class="list-unstyled navbar__sub-list js-sub-list">
-                        <li><a href="button.html">Button</a></li>
-                        <li><a href="badge.html">Badges</a></li>
-                        <li><a href="tab.html">Tabs</a></li>
-                        <li><a href="card.html">Cards</a></li>
-                        <li><a href="alert.html">Alerts</a></li>
-                        <li><a href="progress-bar.html">Progress Bars</a></li>
-                        <li><a href="modal.html">Modals</a></li>
-                        <li><a href="switch.html">Switchs</a></li>
-                        <li><a href="grid.html">Grids</a></li>
-                        <li><a href="fontawesome.html">Fontawesome Icon</a></li>
-                        <li><a href="typo.html">Typography</a></li>
-                     </ul></li>
-               </ul>
-            </nav>
-        </div>
-    </aside>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
     <!-- END MENU SIDEBAR-->
 
     <!-- PAGE CONTAINER-->
@@ -278,159 +266,53 @@
                             </button>
                         </div>
                         <div class="header-button">
-                            <div class="noti-wrap">
-                                <div class="noti__item js-item-menu">
-                                    <i class="zmdi zmdi-comment-more"></i> <span class="quantity">1</span>
-                                    <div class="mess-dropdown js-dropdown">
-                                        <div class="mess__title">
-                                            <p>새로운 메시지 2개가 도착했습니다.</p>
+                                <div class="account-wrap">
+                                    <div class="account-item clearfix js-item-menu">
+                                        <div class="image">
+                                            <img src="images/icon/avatar-01.jpg" alt="John Doe" />
                                         </div>
-                                        <div class="mess__item">
-                                            <div class="image img-cir img-40">
-                                                <img src="images/icon/avatar-06.jpg" alt="Michelle Moreno" />
-                                            </div>
-                                            <div class="content">
-                                                <h6>김승환</h6>
-                                                <p>상품 추가 부탁드립니다.</p>
-                                                <span class="time">3분 전</span>
-                                            </div>
+                                        <div class="content">
+                                            <a class="js-acc-btn" href="#">관리자</a>
                                         </div>
-                                        <div class="mess__item">
-                                            <div class="image img-cir img-40">
-                                                <img src="images/icon/avatar-04.jpg" alt="Diane Myers" />
+                                        <div class="account-dropdown js-dropdown">
+                                            <div class="info clearfix">
+                                                <div class="image">
+                                                    <a href="#">
+                                                        <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <h5 class="name">
+                                                        <a href="#">관리자</a>
+                                                    </h5>
+                                                    <span class="email" sec:authentication="principal.memail">johndoe@example.com</span>
+                                                </div>
                                             </div>
-                                            <div class="content">
-                                                <h6>최유림</h6>
-                                                <p>메인 페이지 신상품 목록 보여주세요.</p>
-                                                <span class="time">어제</span>
+                                            <!-- <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-account"></i>Account</a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
+                                                </div>
+                                            </div> -->
+                                            <div class="account-dropdown__footer">
+	                                            <form id="logoutForm" action="/member/logout" method="post">
+	                                            	<input type="hidden" th:name="${ _csrf.parameterName }" th:value="${ _csrf.token }">
+	                                            </form>
+                                                <a href="#" onclick = "logoutClick();">
+                                                    <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
-                                        </div>
-                                        <div class="mess__footer">
-                                            <a href="#">모든 메시지 보기</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="noti__item js-item-menu">
-                                    <i class="zmdi zmdi-email"></i> <span class="quantity">1</span>
-                                    <div class="email-dropdown js-dropdown">
-                                        <div class="email__title">
-                                            <p>새로운 메일 3개가 도착했습니다.</p>
-                                        </div>
-                                        <div class="email__item">
-                                            <div class="image img-cir img-40">
-                                                <img src="images/icon/avatar-06.jpg" alt="Cynthia Harvey" />
-                                            </div>
-                                            <div class="content">
-                                                <p>핸드메이드 슬릿 스커트 상품...</p>
-                                                <span>차은채, 3분 전</span>
-                                            </div>
-                                        </div>
-                                        <div class="email__item">
-                                            <div class="image img-cir img-40">
-                                                <img src="images/icon/avatar-05.jpg" alt="Cynthia Harvey" />
-                                            </div>
-                                            <div class="content">
-                                                <p>현재 고객님께서 문의하신 상품이...</p>
-                                                <span>고정민, 어제</span>
-                                            </div>
-                                        </div>
-                                        <div class="email__item">
-                                            <div class="image img-cir img-40">
-                                                <img src="images/icon/avatar-04.jpg" alt="Cynthia Harvey" />
-                                            </div>
-                                            <div class="content">
-                                                <p>점심 뭐 드실래요?</p>
-                                                <span>문혁, 04.07.2022</span>
-                                            </div>
-                                        </div>
-                                        <div class="email__footer">
-                                            <a href="#">모든 메일 보기</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="noti__item js-item-menu">
-                                    <i class="zmdi zmdi-notifications"></i> <span class="quantity">3</span>
-                                    <div class="notifi-dropdown js-dropdown">
-                                        <div class="notifi__title">
-                                            <p>You have 3 Notifications</p>
-                                        </div>
-                                        <div class="notifi__item">
-                                            <div class="bg-c1 img-cir img-40">
-                                                <i class="zmdi zmdi-email-open"></i>
-                                            </div>
-                                            <div class="content">
-                                                <p>You got a email notification</p>
-                                                <span class="date">April 12, 2018 06:50</span>
-                                            </div>
-                                        </div>
-                                        <div class="notifi__item">
-                                            <div class="bg-c2 img-cir img-40">
-                                                <i class="zmdi zmdi-account-box"></i>
-                                            </div>
-                                            <div class="content">
-                                                <p>Your account has been blocked</p>
-                                                <span class="date">April 12, 2018 06:50</span>
-                                            </div>
-                                        </div>
-                                        <div class="notifi__item">
-                                            <div class="bg-c3 img-cir img-40">
-                                                <i class="zmdi zmdi-file-text"></i>
-                                            </div>
-                                            <div class="content">
-                                                <p>You got a new file</p>
-                                                <span class="date">April 12, 2018 06:50</span>
-                                            </div>
-                                        </div>
-                                        <div class="notifi__footer">
-                                            <a href="#">All notifications</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="account-wrap">
-                                <div class="account-item clearfix js-item-menu">
-                                    <div class="image">
-                                        <img src="images/icon/avatar-01.jpg" alt="John Doe" />
-                                    </div>
-                                    <div class="content">
-                                        <a class="js-acc-btn" href="#">john doe</a>
-                                    </div>
-                                    <div class="account-dropdown js-dropdown">
-                                        <div class="info clearfix">
-                                            <div class="image">
-                                                <a href="#"> <img src="images/icon/avatar-01.jpg"
-                                                                  alt="John Doe" />
-                                                </a>
-                                            </div>
-                                            <div class="content">
-                                                <h5 class="name">
-                                                    <a href="#">john doe</a>
-                                                </h5>
-                                                <span class="email">johndoe@example.com</span>
-                                            </div>
-                                        </div>
-                                        <div class="account-dropdown__body">
-                                            <div class="account-dropdown__item">
-                                                <a href="#"> <i class="zmdi zmdi-account"></i>Account
-                                                </a>
-                                            </div>
-                                            <div class="account-dropdown__item">
-                                                <a href="#"> <i class="zmdi zmdi-settings"></i>Setting
-                                                </a>
-                                            </div>
-                                            <div class="account-dropdown__item">
-                                                <a href="#"> <i class="zmdi zmdi-money-box"></i>Billing
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="account-dropdown__footer">
-                                            <a href="#"> <i class="zmdi zmdi-power"></i>Logout
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

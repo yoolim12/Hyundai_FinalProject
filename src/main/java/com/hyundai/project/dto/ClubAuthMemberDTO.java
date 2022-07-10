@@ -32,11 +32,13 @@ public class ClubAuthMemberDTO extends User implements OAuth2User {
 	private int msleep;
 	private int gno;
 	private Date birth;
+	private String mname;
+	private String telnum;
 
 	// ClubOAuth2UserDetailsService 용 구성자
 	public ClubAuthMemberDTO(String username, String password, int fromSocial, List<GrantedAuthority> authorities,
-			Map<String, Object> OA2_attr, int msleep, int gno, Date birth, String name) {
-		this(username, password, fromSocial, authorities, msleep, gno, birth, username);
+			Map<String, Object> OA2_attr, int msleep, int gno, Date birth, String mname) {
+		this(username, password, fromSocial, authorities, msleep, gno, birth, mname);
 		this.OA2_attr = OA2_attr;
 	}// end ClubAuthMemberDTO
 
@@ -49,6 +51,7 @@ public class ClubAuthMemberDTO extends User implements OAuth2User {
 		this.gno = gno;
 		this.birth = birth;
 		this.name = username;
+		this.mname = username;
 	}// end ClubAuthMemberDTO
 
 	// OAuth2User 정보 저장
