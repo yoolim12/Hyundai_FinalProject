@@ -381,7 +381,7 @@ input {
                         html += `
                        	<div class="again">
                             <!-- <div class="againvideo">다시보기1</div> -->
-                            <a class="thumbnail" href="/streaming">
+                            <a class="thumbnail" href="/streamingReplay/${res[i].sno}">
                                 <img class="img" alt=""
                                 src="${res[i].simg}"/>
                             </a>
@@ -389,11 +389,11 @@ input {
                                 <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
                                 <div class="titleNname" style="text-align:left;">
                                     <p class="againtitle" style="font-size:14px">
-                                        <a class="againtitlelink" href="/streaming">
+                                        <a class="againtitlelink" href="/streamingReplay/${res[i].sno}">
                                             ${res[i].sname}
                                         </a>
                                     </p>
-                                    <p class="againprofilename"><strong>더한섬라이브</strong></p>
+                                    <p class="againprofilename"><strong>더현대라이브</strong></p>
                                 </div>                    
                             </div>
                         </div>
