@@ -27,7 +27,7 @@ public class AuthMemberDTO extends User {
     private Date moddate;
     private Date regdate;
     private int mpoint;
-    private int from_social;
+    private int fromSocial;
     private int gno;
     private int msleep;
  
@@ -39,7 +39,7 @@ public class AuthMemberDTO extends User {
         // password는 부모클래스 사용
         super(username, password, authorities);
         this.memail = username;
-        this.from_social = fromSocial;
+        this.fromSocial = fromSocial;
         this.mpassword = password;
 
         this.mname = mname;

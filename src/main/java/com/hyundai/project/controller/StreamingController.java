@@ -14,30 +14,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class StreamingController {
 
 	@GetMapping("/streaming")
-	public void stream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
+	public String stream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
 
-		log.info("@StreamingController, GET()");
 		log.info(authMemberDTO);
 		log.info(oauthMemberDTO);
 		if (oauthMemberDTO == null)
 			model.addAttribute("member", authMemberDTO);
 		else
 			model.addAttribute("member", oauthMemberDTO);
+		return "streaming/streaming";
 	}
 	
 	@GetMapping("/mobile")
-	public void mobilestream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
-		log.info("@StreamingController, GET()");
+	public String mobilestream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
 		if (oauthMemberDTO == null) {
         	model.addAttribute("member", authMemberDTO);
         }
         else {
         	model.addAttribute("member", oauthMemberDTO);
         }
+		return "streaming/mobile";
 	}
 	
 	@GetMapping("/streamingReplay")
-	public void replaystream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
+	public String replaystream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
 
 		log.info("@StreamingController, GET()");
 		log.info(authMemberDTO);
@@ -46,6 +46,7 @@ public class StreamingController {
 			model.addAttribute("member", authMemberDTO);
 		else
 			model.addAttribute("member", oauthMemberDTO);
+		return "streaming/streamingReplay";
 	}
 	
 	@GetMapping("/streamingChat")

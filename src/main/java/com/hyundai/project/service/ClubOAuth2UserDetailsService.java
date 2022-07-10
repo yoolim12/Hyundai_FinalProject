@@ -2,6 +2,7 @@ package com.hyundai.project.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,10 +33,11 @@ extends DefaultOAuth2UserService {
     @Autowired
     private  MemberDAO clubMemberDAO;
     // 패스워드 암호화
+    
     @Autowired
     private  PasswordEncoder passwordEncoder;
    
-    private MemberJoinDTO saveSocialMember(String email)
+    private MemberJoinDTO saveSocialMember(String email, String name)
             throws SQLException {
         log.info("saveSocialMember  시작");
         // 기본에 동일한 이메일로 가입한 회원인지 확인
@@ -56,14 +58,14 @@ extends DefaultOAuth2UserService {
         // 가입한적이 없다면 추가 패스워드 1111 이름은 이메일주소
         MemberDTO clubMember = new MemberDTO();
         clubMember.setMemail(email);
-        clubMember.setMname(email);
+        clubMember.setMname(name);
         clubMember.setMpassword(passwordEncoder.encode("1111"));
         
         String now = "2009-03-20"; // 형식을 지켜야 함
         java.sql.Date d = java.sql.Date.valueOf(now);
         
         clubMember.setBirth(d);
-        clubMember.setTelnum("1234");
+        clubMember.setTelnum("0");
         clubMember.setMaddress("1234");
         clubMember.setMemail_info(email);
         clubMember.setMgender("m");
@@ -107,30 +109,40 @@ extends DefaultOAuth2UserService {
  
         // 신규회원 테이블에 저장 시작
         String email = null;
+        String name = null;
+        
         Map<String, Object> map_email;
+        Map map_name = new HashMap();
+        
         
         if (clientName.equals("Google")) {// 구글 인증 확인
             email = oAuth2User.getAttribute("email");
+            name = oAuth2User.getAttribute("name");
+            
         } // end if
         if (clientName.equals("Kakao")) {// 카카오 인증 확인
             map_email = oAuth2User.getAttribute("kakao_account");
             email = map_email.get("email").toString();
+            name = ((HashMap) map_email.get("profile")).get("nickname").toString();
+            
             log.info("카카오 로그인 인증 확인");
             log.info(email);
+            log.info(name);
         } // end if
         if (clientName.equals("Naver")) {// 네이버 인증 확인
         	map_email = oAuth2User.getAttribute("response");
             email = map_email.get("email").toString();
+            
             log.info("네이버 로그인 인증 확인");
             log.info(email);
         } // end if
         
         
-        log.info("구글 인증 확인");
+        log.info("소셜 인증 확인");
         log.info("email : " + email);
      
         try {
-        	MemberJoinDTO clubMember2 = saveSocialMember(email);
+        	MemberJoinDTO clubMember2 = saveSocialMember(email, name);
             log.info("---saveSocialMember--");
             log.info(clubMember2);
             //ClubAuthMemberDTO 생성시 필요한 authorities
@@ -153,9 +165,12 @@ extends DefaultOAuth2UserService {
                        clubMember2.getMemail()
                );
             	clubAuthMemberDTO.setMemail(clubMember2.getMemail());
-               clubAuthMemberDTO.setName(clubMember2.getMname());
+               clubAuthMemberDTO.setMname(clubMember2.getMname());
                clubAuthMemberDTO.setPassword(clubMember2.getMpassword());
                clubAuthMemberDTO.setMsleep(clubMember2.getMsleep());
+               clubAuthMemberDTO.setTelnum(clubMember2.getTelnum());
+               
+               log.info(clubAuthMemberDTO.getMname());
                
                int sleep = clubMember2.getMsleep();
                if (sleep == 1) {

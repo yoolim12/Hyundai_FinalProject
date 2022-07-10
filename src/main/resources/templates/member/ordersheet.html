@@ -154,6 +154,20 @@
             IMP.init("imp12649976"); // Example: imp00000000
 
             function payment(){
+
+            	var buyer_tel = 'test';
+            	var buyer_name = 'test';
+            	
+            	if([[${member.fromSocial}]] == 1){
+            		buyer_name = $("#EinputName").val();
+            		const hp_num1 = $("#Shp_num1").val();
+                    const hp_num2 = $("#Shp_num2").val();
+                    const hp_num3 = $("#Shp_num3").val();
+                    var buyer_tel = getOtel(hp_num1, hp_num2, hp_num3);
+            	} else{
+            		buyer_tel = "[[${member.telnum}]]";
+            		buyer_name = "[[${member.mname}]]";
+            	}
             	
                 const ozipcode = $("#ozipcode").val();
                 const oaddress1 = $("#oaddress1").val();
@@ -194,8 +208,8 @@
                             name: order_name, // 2건 이상 : _ 외 1건, 1건 : pname
                             amount: paymentPrice, // 가격 총 합
                             buyer_email: "[[${member.memail}]]",
-                            buyer_name: "[[${member.mname}]]",
-                            buyer_tel: "[[${member.telnum}]]",
+                            buyer_name: buyer_name,
+                            buyer_tel: buyer_tel,
                             buyer_addr: address,
                             buyer_postcode: zipcode
                         }, function(rsp){ // callback
@@ -431,11 +445,33 @@
                                 <tbody>
                                 <tr>
                                     <th scope="row" class="th_space">주문자</th>
-                                    <td th:text="${member.getMname()}"></td>
+                                    <td th:if = "${member.fromSocial == 0}" th:text="${member.getMname()}"></td>
+                                    <td th:if = "${member.fromSocial == 1}">
+                                    	<input type="text" id="EinputName"/>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="th_space">휴대폰</th>
-                                    <td th:text="${member.getTelnum()}"></td>
+                                    <td th:if = "${member.fromSocial == 0}" th:text="${member.getTelnum()}"></td>
+                                    <td th:if = "${member.fromSocial == 1}">
+                                        <!-- hp --> <select id="Shp_num1" name="hp_num1" title="휴대폰 번호 앞자리"
+                                                            class="hp_num1">
+                                        <option value="010">010</option>
+                                        <option value="011">011</option>
+                                        <option value="016">016</option>
+                                        <option value="017">017</option>
+                                        <option value="018">018</option>
+                                        <option value="019">019</option>
+                                    </select>
+                                        <div class="form_hyphen">-</div>
+                                        <input title="휴대폰 번호 가운데자리"
+                                               name="hp_num2" id="Shp_num2" class="hp_num2" type="text"
+                                               maxlength="4" numberOnly="true"/>
+                                        <div class="form_hyphen">-</div>
+                                        <input title="휴대폰 번호 뒷자리"
+                                               name="hp_num3" id="Shp_num3" class="hp_num2" type="text"
+                                               maxlength="4" numberOnly="true"/> <!-- //hp -->
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="th_space">E-mail</th>
@@ -479,7 +515,7 @@
                                     </th>
                                     <td>
                                         <!-- address --> <input value="" title="우편번호" id="ozipcode"
-                                                                name="postcode" class="post" type="text"/>
+                                                                name="postcode" class="post" type="text" readonly/>
                                         <input
                                                 value="우편번호 조회" id="addrSearchBtn" class="btn add_s" onclick="addrSearchFunc()"
                                                 type="button"/> <br/>

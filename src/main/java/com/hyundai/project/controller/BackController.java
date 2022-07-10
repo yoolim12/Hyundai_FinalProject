@@ -45,7 +45,7 @@ public class BackController {
 		System.out.println(service.getMemberInfo(memail));
 		model.addAttribute("userList", service.getMemberInfo(memail));
 		
-		return "back/form :: #memberInfo";
+		return "back/memberBO :: #memberInfo";
 	}
 	
 	// 임직원 조회 ajax + thymleaf
@@ -56,7 +56,7 @@ public class BackController {
 		System.out.println(service.getEmployeeInfo(memail));
 		model.addAttribute("userList", service.getEmployeeInfo(memail));
 		
-		return "back/form :: #employeeInfo";
+		return "back/memberBO :: #employeeInfo";
 	}
 	
 	// 임직원 검색 조회 ajax + thymleaf
@@ -67,7 +67,7 @@ public class BackController {
 		System.out.println(service.SfindEmployee(memail));
 		model.addAttribute("userList", service.SfindEmployee(memail));
 			
-		return "back/form :: #employeeInfo";
+		return "back/memberBO :: #employeeInfo";
 	}
 	
 	// 스트리밍 페이지 이동
@@ -103,6 +103,13 @@ public class BackController {
 	public String streamingBO() {
 		log.info("스트리밍 페이지 요청");
 		return "back/streamingBO";
+	}
+	
+	// 스트리밍 페이지 이동
+	@GetMapping("/sendMail")
+	public String sendEmail() {
+		log.info("이메일 페이지 요청");
+		return "back/sendMail";
 	}
 		
 }
