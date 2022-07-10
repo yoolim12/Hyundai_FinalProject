@@ -16,10 +16,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.hyundai.project.dto.MailDTO;
 import com.hyundai.project.dto.MemberJoinDTO;
+import com.hyundai.project.mail.MailService;
+import com.hyundai.project.service.AwsS3Service;
 import com.hyundai.project.service.MemberService;
 
 import lombok.Setter;
@@ -32,6 +37,12 @@ public class BackMemberRestController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
+	
+	@Autowired
+	private AwsS3Service awsS3Service;
+	
+	@Autowired
+	private MailService mailService;
 	
 	// 회원 찾기
 	@PostMapping("/member")
@@ -124,4 +135,17 @@ public class BackMemberRestController {
     	}
     	return "success";
     } // end modify
+    
+    
+    
+    @PostMapping("/sendAllEmail")
+    public void sendAllEmail(@RequestPart(value = "key") MailDTO mail, @RequestPart(value = "cimage", required = false) List<MultipartFile> cimage) 
+    		throws Exception {
+        // S3 이미지 업로드 (Cimage1)
+    	System.out.println("mail send");
+        List<String> url = awsS3Service.uploadFile(cimage);
+        mailService.noticeMailSend(mail.getTitle(), mail.getCont(), url.get(0));
+        log.info("메일 send 완료.");
+        
+    }
 }
