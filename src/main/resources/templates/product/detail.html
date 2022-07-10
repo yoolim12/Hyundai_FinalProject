@@ -7,9 +7,9 @@
 <head>
 	<title id="title"></title>
 </head>
-<div layout:fragment="content"> 
+<div layout:fragment="content">
 <script type="text/javascript">
-    
+
 //<![CDATA[
 const memail = "[[${memberEmail}]]";
 var intervalLoopCnt = 0;
@@ -25,6 +25,7 @@ var pid = Arr2[0];
 var ccolorcode = Arr2[1];
 var stock_amount = 0;
 var selectSize = false;
+var cmatchpid;
 
 function setSize(size) {
 	selectSize = true;
@@ -33,6 +34,28 @@ function setSize(size) {
 
 function numWithComma(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function getProductColor(pid,colorcode){
+	var chtml = '';
+	$.ajax({
+		type: "get",
+		url: "/product/color/" + pid + "/" + colorcode,
+		dataType: "json",
+		async: false,
+		contentType: "application/json",
+		error: function (request, status, error) {
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		},
+		success: function (result) {
+			if (result.length > 0) {
+				for (var i = 0; i < result.length; i++) {
+					chtml += `<li><a class="beige" style="background:url(${result[i].ccolorimage})" onclick="GA_Event('상품목록','색상변경','${pid}')"></a></li>`;
+				}
+			}
+		}
+	})
+	return chtml;
 }
 
 $(document).ready(function(){
@@ -54,9 +77,11 @@ $(document).ready(function(){
    		async : false,
    		error : function( request, status, error ){
             console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
-        }, 
+        },
         success : function( result ) {
    			pprice = result.pprice;
+   			cmatchpid = result.cmatchpid;
+   			console.log(cmatchpid);
 			$("#title").text(result.pname);
         	document.getElementById("image1").src=result.cimage1;
         	document.getElementById("image2").src=result.cimage2;
@@ -70,12 +95,41 @@ $(document).ready(function(){
         	document.getElementById("pid").innerHTML = result.pid;
         	document.getElementById("pdetail").innerHTML = result.pdetail;
         	document.getElementById("totalprice").innerHTML = '₩' + (numWithComma(result.pprice*$("#txtqty").val()));
-        	
+        	////// cmatchpid
+			var cmatchArr = cmatchpid.split('_');
+			$.ajax({
+				url: "/detail/" + cmatchArr[0] + "/" + cmatchArr[1],
+				type: "GET",
+				dataType: "json",
+				async: false,
+				error: function (request, status, error) {
+					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				},
+				success: function (result1) {
+					var chtml = `<div class="together-codi-pic">
+    <a href="/detail/${cmatchpid}" onclick="GA_Event('상품 상세','코디상품','${result1.pid}');" class="pic">
+        <img src="${result1.cimage1}" alt="코디상품" class="respon_image" />
+    </a>
+</div>
+<span class="info_wrap item_info2">
+    <span class="brand BR07">${result1.bname}</span>
+    <span class="title" style="width: 145px">${result1.pname}</span>
+    <span class="price"> ₩`+numWithComma(result1.pprice)+`</span>
+</span>
+<div class="we-codi-colorchip">
+    <ul class="color_chip clearfix" id="chipbtn">
+
+    </ul>
+</div>
+`;				$("#cmatchpid").html(chtml);
+				$("#chipbtn").html(getProductColor(cmatchArr[0], cmatchArr[1]));
+				}
+			});
         	let rt = result.pprice*$("#txtqty").val();
         	$("#mile").html(numWithComma(rt*0.05)+' P (5%)');
         }
     });
-   
+
     // 상품 컬러 리스트 가져오는 ajax 호출
     $.ajax({
         url: "/color/" + pid + "/" + ccolorcode,
@@ -84,15 +138,15 @@ $(document).ready(function(){
         async : false,
         error : function( request, status, error ){
             console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
-        }, 
+        },
         success : function( result ) {
         	var html="";
         	obj = result;
         	if(result.length > 0){
         		html += '<ul class="color_chip clearfix">';
         		for(var i=0; i<result.length; i++) {
-        			if(i==0) html += '<a href="#" class="beige on" style="background:url('+result[i].ccolorimage+')" style="width: 294px; height: 444px"></a>';
-        			else html += `<a href="/detail/${pid}_${result[i].ccolorcode}" class="beige" style="background:url(${result[i].ccolorimage})" onclick="GA_Event('상품 상세', '컬러칩', '${result[i].ccolorcode}')"></a>`;
+        			if(i==0) html += '<li><a href="#" class="beige on" style="background:url('+result[i].ccolorimage+')" style="width: 294px; height: 444px"></a></li>';
+        			else html += `<li><a href="/detail/${pid}_${result[i].ccolorcode}" class="beige" style="background:url(${result[i].ccolorimage})" onclick="GA_Event('상품 상세', '컬러칩', '${result[i].ccolorcode}')"></a></li>`;
         			$("#pcolor").val(ccolorcode);
         		}
         		html += '</ul>';
@@ -100,7 +154,7 @@ $(document).ready(function(){
         	$("#getcolor").html(html);
         }
     });
-    
+
     // 상품 사이즈 가져오는 ajax 호출
     $.ajax({
         url: "/size/" + pid + "/" + ccolorcode,
@@ -109,7 +163,7 @@ $(document).ready(function(){
         async : false,
         error : function( request, status, error ){
             console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
-        }, 
+        },
         success : function( result ) { // ccolorcode, ssize, samount
         	var html="";
         	stock_amount = samount;
@@ -131,14 +185,14 @@ $(document).ready(function(){
         slidNext();
     });
 });
-        			
+
 // 장바구니에 추가하는 함수
 function addToCart()
 {
 	console.log('yoo');
 	console.log(getYCsrfToken());
 	console.log(getCsrfHeaderName());
-	console.log('lim');	
+	console.log('lim');
     //2019.09.09 주문 불가능한 상품 선택시
     if(selectSize == false){
         var la = new layerAlert('사이즈를 선택해 주세요.');
@@ -178,15 +232,15 @@ function addToCart()
                 console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
             }
         });
-        
+
     }
 }
 
 function btnPosition(){
-    
+
     var layerImgWidth = $(".gallery-wrapper ul li img").width();
     var layerBtn = $(".gallery-wrapper .close");
-    
+
     $(layerBtn).css("margin-right",-(layerImgWidth/2+60));
 
 };
@@ -206,12 +260,12 @@ var intervalId = -1;
 function bodyReSize(){
     var imgHeight = $("#imageDiv").height();        //상단 이미지
     var mainHeight = $("#clearfix").height();       //매인
-    
+
     //개별 이미지 높이
     var imageDivSize = 0;
     var imageDivMaxHeight = 0;
     $("#imageDiv > ul > li").each(function(index){
-        imageDivSize = index+1; 
+        imageDivSize = index+1;
         if(imageDivMaxHeight < $(this).height()) {
             imageDivMaxHeight = $(this).height();
         }
@@ -230,7 +284,7 @@ function bodyReSize(){
             return false;
         } else {
             clearTimeout(intervalId);
-//          clearInterval(intervalId);  
+//          clearInterval(intervalId);
         }
     }
 
@@ -239,20 +293,20 @@ function bodyReSize(){
 
     var contentHeight = $("#contentDiv").height();  //상단 detail 내용
     var offset = $("#imageDiv").offset();
-    
+
     if(imgHeight > contentHeight){
         $("#clearfix").height(imgHeight+50);
     }else if(imgHeight < contentHeight){
         $("#clearfix").height(contentHeight+50);
     }
-    
-    
+
+
     var outerWidth = $(window).outerWidth();
     var imgWidth = $("#imageDiv").width();
     var resizeWidth = $("#imageDiv").width() + $('#contentDiv').innerWidth();
     var leftWidth = (outerWidth - resizeWidth) / 2
     var contentWidth = leftWidth + imgWidth;
-    
+
     if($("#contentDiv").css('position') == 'absolute'){
         $("#contentDiv").css('left', imgWidth);
     }else{
@@ -274,19 +328,19 @@ function reScroll(){
     var imgWidth = $("#imageDiv").width();
     var leftWidth = $("#imageDiv").offset().left;
     var contentWidth = leftWidth + imgWidth;
-    
+
     $(window).scroll(function(){
-        
+
         var scrollTop = $(this).scrollTop();
         var outerHeight = $(window).outerHeight();
         var scrollHeight = parseFloat($("#imageDiv").height() - $('#contentDiv').height());
-        
+
         if(scrollHeight > 0){
-            
+
             if (scrollTop < 100) {
                 $('#contentDiv').css({'top':'0','left':imgWidth,'margin-top':'20px'});
                 $('#imageDiv').css({'margin-top':'20px'});
-                
+
             } else if ((scrollTop>=100) && (scrollTop<=scrollHeight)) {
                 //$('#contentDiv').css({'position': 'fixed', 'top':139,'left':contentWidth});
                 $('#contentDiv').css({'margin-top':'0px'});
@@ -300,7 +354,7 @@ function reScroll(){
             $('#contentDiv').css({'top':'0','left':imgWidth,'margin-top':'20px'});
             $('#imageDiv').css({'margin-top':'20px'});
         }
-        
+
         var btnwrapOffset = $btnwrap.offset();
         var curBtnwrapMarginTop = parseInt( $btnwrap.css('margin-top') );
         var btnwrapMarginTop = Math.min( scrollTop + outerHeight - btnwrapOffset.top - btnwrapHeight - btnMarginBottom + curBtnwrapMarginTop, 0);
@@ -309,17 +363,17 @@ function reScroll(){
             'margin-top': btnwrapMarginTop,
             'margin-bottom': -btnwrapMarginTop
         });
-        
-        
+
+
     }).trigger('scroll');
 }
 
 function fn_sumPriceCal(){
-    
+
     var productPrice = $("#productPrice").val() == null || $("#productPrice").val() == 0 ? 0 : $("#productPrice").val();
     var qty = $("#txtqty").val();
     var sumPrice = parseFloat(productPrice * qty);
-    
+
 }
 
 function fn_qtySubtraction()
@@ -328,10 +382,10 @@ function fn_qtySubtraction()
     if(qty < 2){
         return;
     }
-    	
+
     //GA 이벤트 태깅
     GA_Event('상품 상세','수량','-');
-    
+
     $("#txtqty").val(parseInt(qty)-1);
 	$("#totalprice").text('₩'+numWithComma((qty-1)*pprice));
     fn_sumPriceCal();
@@ -347,44 +401,44 @@ function fn_qtyAdd(){
     	$("#txtqty").val("2");
     	$("#totalprice").text('₩'+numWithComma(2*pprice));
     	var la = new layerAlert('동일 상품(사이즈/컬러)은<br/>최대 2개까지 선택 가능합니다.');
-        return;	
+        return;
     }
 
     GA_Event('상품 상세','수량','+');
-    
+
     $("#txtqty").val(qty+1);
 	$("#totalprice").text('₩'+numWithComma(2*pprice));
     fn_sumPriceCal();
-    
+
 }
 var addToCartProcess = true;
 
 
 // 기존로직
 function addtoCartProcessFunction(){
-    
+
     var productCode = $('form[name=addToCartForm] input[name=productCodePost]').val();
     var productType = $('form[name=addToCartForm] input[name=productCodeType]').val();
     var qty = $("#txtqty").val();
-    
-    	
+
+
     if(qty < 1){
         var la = new layerAlert('productdetail.basket.errormag.qty');
         addToCartProcess = true;
         return;
     }
-    
+
     $('form[name=addToCartForm] input[name=qty]').val(qty);
-    
-    
+
+
     $('#workOrder').val($('#erpWorkOrderNumber').val());
-    
-    //추천상품 
+
+    //추천상품
 
     if('' != null) {
         $('#recommendProduct').val("recommendProd");
     }
-    
+
     if($("#storePickupCheck").is(":checked") && $("#fourpmCheck").is(":checked")){
         var scrollTop = $(document).scrollTop();
         var la = new layerAlert('매장수령과 {0}PM는 동시에 선택할 수 없습니다.');
@@ -399,7 +453,7 @@ function addtoCartProcessFunction(){
     }
 }
 function imageZoom(){
-    
+
     var layerTag = '<div class="layerArea" style="z-index:8;">';
     layerTag +='<div id="imgLayerArea" class="layerBg" style="background:#FFFFFF; position: inherit;z-index:7;width:100%;height:auto;outline:none;">';
     layerTag +='    <div id="item_vsl_modal"> ';
@@ -409,16 +463,16 @@ function imageZoom(){
     layerTag +='    </div>';
     layerTag +='</div>';
     layerTag +='</div>';
-    
+
     var thisLayer = $(layerTag).appendTo($('.item_detail > .adaptive_wrap'));
-    
+
     $("#productImagePop").append($("#imageDivW ul").clone());
     btnPosition();
-    
+
     thisLayer.find(".layerBg").css("width", $('.item_detail > .adaptive_wrap').width() + 4);
     var height = $("#bodyWrap").height();
     $("#bodyWrap").height($("#item_vsl_modal").height());
-    
+
     thisLayer.find('.productImagePopClose').click(function(){
         thisLayer.remove();
         $("#bodyWrap").css("height", "");
@@ -427,9 +481,9 @@ function imageZoom(){
     });
 }
 function fn_parentLayer(){
-    
+
     $("#productLayer .layerBg").addClass("white");
-    
+
     $("#productLayer").show();
 }
 
@@ -437,7 +491,7 @@ function showProductLayer(backgroud) {
     $("#productLayer").show();
 }
 function hideProductLayer() {
-	
+
 	$("#customerReviewWriteDiv #reviewFileCd").val('');
 	$("#customerReviewWriteDiv #reviewFileCd1").val('');
 	$("#customerReviewWriteDiv #reviewFileCd2").val('');
@@ -445,12 +499,12 @@ function hideProductLayer() {
 	$("#customerReviewWriteDiv #reviewFileCd4").val('');
     $("#productLayer .layerBg").removeClass("white");
     $("#productLayer").hide();
-    
+
 }
 
 var layerAlertNew = function(msg){
     var t = this;
-    
+
     this.confirmAction = function(){};
 
     var scrollTop = $(window).scrollTop()+"px";
@@ -475,44 +529,44 @@ var layerAlertNew = function(msg){
         $alertLayer.remove();
         t.confirmAction();
     });
-    
+
     $alertLayer.find('.btn.wt_s, .btn_close').click(function(){
         $alertLayer.remove();
     });
 }
 
 function slidPrev(){
-    
+
     var objDiv;
-    
+
     if(status == 1 ){
         return;
     }
     status = 1;
     $("#productDetailEtc .productEtcDiv").each(function(){
-        
+
         if( $(this).css('display') == 'block' ){
             objDiv = $(this);
         }
     });
-    
+
     var slidUl = objDiv.find("ul");
-    
-    //상품평이 아닐 때 
+
+    //상품평이 아닐 때
     if(document.getElementById("customerReviewDiv").style.display == "none"){
       //추천상품,최근본상품
         var liWidth = slidUl.find("li").width()*6;
         var max = (slidUl.find("li").size()) * slidUl.find("li").width();
-        
+
         var marginLeft = slidUl.css("marginLeft").replace("px", "");
-        
+
         var rest = slidUl.find("li").size()%6;
-        
+
         if((marginLeft*-1)<liWidth){
             liWidth = slidUl.find("li").width()*rest;
         }
         //추천상품,최근본상품끝
-        
+
         //룩북
         $("#productEctTab ul li").each(function(){
             if($(this).find("a").text().indexOf("룩북") > -1 && $(this).find("a").attr('class') == 'on'){
@@ -522,51 +576,51 @@ function slidPrev(){
         });
         //룩북끝
     }
-    
+
     if( marginLeft >= 0 ){
         status = 0;
         return false;
     }
     slidUl.stop().animate({'marginLeft': '+='+liWidth+'px'}, 'normal', function(){status = 0;});
-    
+
     return false;
 }
 
 
 function slidNext(){
-    
+
     var objDiv;
-    
+
     if(status == 1 ){
         return;
     }
     status = 1;
     $("#productDetailEtc .productEtcDiv").each(function(){
-        
+
         if( $(this).css('display') == 'block' ){
             objDiv = $(this);
         }
     });
-    
+
     var slidUl = objDiv.find("ul");
-    
-    //상품평이 아닐 때 
+
+    //상품평이 아닐 때
     if(document.getElementById("customerReviewDiv").style.display == "none") {
         //추천상품,최근본상품
         var liWidth = slidUl.find("li").width()*6;
         var max = (slidUl.find("li").size()) * slidUl.find("li").width();
-        
+
         var marginLeft = slidUl.css("marginLeft").replace("px", "");
-        
+
         marginLeft = parseFloat(marginLeft)-liWidth;
-          
+
         var rest = slidUl.find("li").size()%6;
-        
+
         if((max+marginLeft)<liWidth){
             liWidth = slidUl.find("li").width()*rest;
         }
         //추천상품끝
-        
+
         //룩북
         $("#productEctTab ul li").each(function(){
             if($(this).find("a").text().indexOf("룩북") > -1 && $(this).find("a").attr('class') == 'on'){
@@ -577,14 +631,14 @@ function slidNext(){
         });
         //룩북끝
      }
-    
+
     if( (parseFloat(max) + parseFloat(marginLeft)) <= 0 ){
         status = 0;
         return;
     }
-    
+
     slidUl.stop().animate({'marginLeft': '-='+liWidth+'px'}, 'normal', function(){status = 0;});
-    
+
     return false;
 }
 function lastImgMove(){
@@ -592,14 +646,14 @@ function lastImgMove(){
 		var isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 		var viewpordWidth = $('#lookbookListContent .bx-viewport').width();
 		var viewpordOffsetRight = $('#lookbookListContent .bx-viewport').offset().left + viewpordWidth;
-	
+
 		var liLastWidth = $('#lookbookListContent .productSlide li:last').width();
 		var liLastOffsetRight = $('#lookbookListContent .productSlide li:last').offset().left + liLastWidth;
-		
+
 		var moveImageWidth = liLastOffsetRight - viewpordOffsetRight;
-		
+
 		if(moveImageWidth > 5){
-			if($.browser.msie == true && Number($.browser.version) <= 9) { 
+			if($.browser.msie == true && Number($.browser.version) <= 9) {
 				var nowSlider = parseInt(lookBookbxslider.css('left'));
 				prevMoveImageWidth = nowSlider;
 				lookBookbxslider.stop().animate({'left':(nowSlider-moveImageWidth)+'px'});
@@ -609,23 +663,23 @@ function lastImgMove(){
 				}else{
 					var nowSlider = parseInt(lookBookbxslider.css('transform').split(',').reverse()[3]);
 				}
-				
+
 				prevMoveImageWidth = nowSlider;
-			
+
 				lookBookbxslider.css('transition-duration','0.5s');
 				lookBookbxslider.css('transform','translate3d('+(nowSlider-moveImageWidth)+'px,0px,0px)');
 			}
 			$(".bx-prev").hide();
 			$(".lookbook_prev").show();
-			
+
 			moveYn=false;
 		}
 	}
 }
 function prevImgMove(){
-	if($.browser.msie == true && Number($.browser.version) <= 9) { 
+	if($.browser.msie == true && Number($.browser.version) <= 9) {
 		lookBookbxslider.stop().animate({'left':prevMoveImageWidth+'px'});
-	
+
 	}else{
 		lookBookbxslider.css('transition-duration','0.5s');
 		lookBookbxslider.css('transform','translate3d('+prevMoveImageWidth+'px,0px,0px)');
@@ -1507,6 +1561,26 @@ function prevImgMove(){
 				</dd>
         
         </dl>
+		<div class="related_evt">
+			<div class="cd-n-lb-tab" id="codi_lookbook_tab" style="">
+				<ul>
+					<li class="on"><a href="#cd-n-lb-tab-01" onclick="GA_Event('상품_상세','함께 코디한 상품','함께 코디한 상품');">함께 코디한 상품</a></li>
+				</ul>
+			</div>
+			<!-- box1 -->
+			<div class="cd-n-lb-content-box" id="cd-n-lb-tab-01" style="display: block;">
+				<div class="matches_list together-codi-list" id="referencesListContent">
+					<ul class="clearfix slides">
+						<li id="cmatchpid">
+
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- //box1 -->
+		</div>
+
+		<!--코디상품 end -->
 	</div>
 	
 	<div class="clearfix mt30">
