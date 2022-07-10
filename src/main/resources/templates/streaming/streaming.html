@@ -166,7 +166,7 @@ input {
 					변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택
 				</p>
 			</div>
-			<p id="againtit"> 다시보기 </p>
+			<br><br>
         <div class="watchagain" id="slist" style="display: block !important;">
         </div>
       </div>
@@ -302,7 +302,7 @@ input {
 
             if (arr[1] == " 님이 입장하셨습니다." || arr[1] == " 님이 방을 나가셨습니다.") {
                 var str = "<div class='col-11'>";
-                str += "<li class='alert alert-secondary' id='welcome'>";
+                str += "<li class='alert alert-secondary' id='welcome' style='margin-bottom: 3px;'>";
                 str += "<b style='color: #3f729b'>" + sessionId + message + "</b>";
                 str += "</li></div>";
                 $("#msgArea").append(str);
