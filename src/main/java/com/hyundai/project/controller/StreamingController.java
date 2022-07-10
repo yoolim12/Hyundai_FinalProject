@@ -47,4 +47,16 @@ public class StreamingController {
 		else
 			model.addAttribute("member", oauthMemberDTO);
 	}
+	
+	@GetMapping("/streamingChat")
+	public void streamchat(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
+
+		log.info("@StreamingController, GET()");
+		log.info(authMemberDTO);
+		log.info(oauthMemberDTO);
+		if (oauthMemberDTO == null)
+			model.addAttribute("member", authMemberDTO);
+		else
+			model.addAttribute("member", oauthMemberDTO);
+	}
 }
