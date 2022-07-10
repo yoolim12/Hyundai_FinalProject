@@ -109,8 +109,7 @@ input {
 							 <video id="amazon-ivs-videojs"
 								class="video-js vjs-4-3 vjs-big-play-centered"  controls preload="auto" data-setup="{}">
 								<source
-								id="replay"
-				                src="https://d1uizj3c0a660l.cloudfront.net/ivs/v1/293546108023/lt4D0GzSMPEs/2022/7/8/0/6/tgMGtCVwKfWK/media/hls/master.m3u8"
+								th:src="@{{surl}(surl=${video.surl})}"
 				                type="application/x-mpegURL"
 				            />
 							</video>
@@ -170,6 +169,7 @@ input {
                                         </a>
                                     </p>
                                     <p class="againprofilename"><strong>더현대라이브</strong></p>
+                                    <p>${res[i].sdate}</p>
                                 </div>                    
                             </div>
                         </div>
