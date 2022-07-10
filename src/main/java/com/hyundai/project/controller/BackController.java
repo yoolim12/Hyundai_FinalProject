@@ -105,7 +105,7 @@ public class BackController {
 		return "back/streamingBO";
 	}
 	
-	// 스트리밍 페이지 이동
+	// 이메일 보내기 페이지 이동
 	@GetMapping("/sendMail")
 	public String sendEmail() {
 		log.info("이메일 페이지 요청");

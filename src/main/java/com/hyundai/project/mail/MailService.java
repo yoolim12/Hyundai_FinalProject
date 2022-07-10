@@ -226,7 +226,7 @@ public class MailService {
 	}
 	
 	
-	public void noticeMailSend(String title, String content) throws Exception {
+	public void noticeMailSend(String title, String content, String url) throws Exception {
 		// 메일 설정 정보
 		Properties prop = System.getProperties();
 		prop.put("mail.smtp.starttls.enable", "true");
@@ -314,6 +314,7 @@ public class MailService {
 					+ "        <tr>\r\n"
 					+ "            <td style=\"color:#222;font-size:12px;line-height:20px;font-family:Dotum,sans-serif;font-weight:normal;text-align:center;border:0;padding:30px 0 0\">\r\n"
 					+ content + "\r\n"
+					+ "            <img src=\" "+ url+" \" alt=\"THEHANDSOME.COM\" border=\"0\" class=\"CToWUd\">\r\n"
 					+ "            </td>\r\n"
 					+ "        </tr>\r\n"
 					+ "        <tr>\r\n"
@@ -321,7 +322,7 @@ public class MailService {
 					+ "        </tr>\r\n"
 					+ "        <tr>\r\n"
 					+ "            <td style=\"text-align:center;padding:20px 0 0\">\r\n"
-					+ "                <a href=\"http://www.handsomeday.shop/back/test\" style=\"display:inline-block;color:#ffffff;font-size:14px;line-height:14px;font-family:Dotum,sans-serif;font-weight:bold;text-decoration:none;background-color:#474747;border:0;padding:14px 25px;margin:0\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=http://www.thehandsome.com/ko/member/authenticationMail?joincode%3DjD9GvPtEmsbgwNS8jxa1,yoolo0212@gmail.com&amp;source=gmail&amp;ust=1656730271867000&amp;usg=AOvVaw1eMl-WsmRTb0yx1T1c5Bne\">방송 시청하기</a>\r\n"
+					+ "                <a href=\"http://handsomeday.shop/mobile\" style=\"display:inline-block;color:#ffffff;font-size:14px;line-height:14px;font-family:Dotum,sans-serif;font-weight:bold;text-decoration:none;background-color:#474747;border:0;padding:14px 25px;margin:0\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=http://www.thehandsome.com/ko/member/authenticationMail?joincode%3DjD9GvPtEmsbgwNS8jxa1,yoolo0212@gmail.com&amp;source=gmail&amp;ust=1656730271867000&amp;usg=AOvVaw1eMl-WsmRTb0yx1T1c5Bne\">방송 시청하기</a>\r\n"
 					+ "            </td>\r\n"
 					+ "        </tr>\r\n"
 					+ "        <tr>\r\n"
