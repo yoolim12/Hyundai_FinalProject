@@ -190,7 +190,7 @@
                 console.log("cur_session : " + cur_session);
             if (arr[1] == " 님이 입장하셨습니다." || arr[1] == " 님이 방을 나가셨습니다.") {
                 var str = "<div class='col-12'>";
-                str += "<li class='alert alert-secondary' id='welcome'>";
+                str += "<li id='welcome'>";
                 str += "<b>" + sessionId + message + "</b>";
                 str += "</li</div>";
                 $("#msgArea").append(str);
