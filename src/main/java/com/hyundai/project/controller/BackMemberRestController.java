@@ -137,7 +137,7 @@ public class BackMemberRestController {
     } // end modify
     
     
-    
+    // 이메일 보내기
     @PostMapping("/sendAllEmail")
     public void sendAllEmail(@RequestPart(value = "key") MailDTO mail, @RequestPart(value = "cimage", required = false) List<MultipartFile> cimage) 
     		throws Exception {

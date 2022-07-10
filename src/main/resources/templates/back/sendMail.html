@@ -79,76 +79,48 @@
     }
 	var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    	
-		/* function send_mail(){
-			var title = $("#text-input").val();
-			var cont = $("#textarea-input").val();
-			
-			alert(cont);
-	          
-	          $.ajax({
-	             url : '/back/sendEmail',
-	             type: 'POST',
-	             data: JSON.stringify({
-	                'title' : title,
-	                'cont' : cont
-	             }),
-	             contentType: "application/json",
-	             beforeSend: function(xhr) {
-	                    xhr.setRequestHeader(header, token);
-	             },
-	             async : false,
-	             cache : false,
-	             success: function(res){
-	            	alert(res);
-	             },
-	             error: function(){
-	                alert("error")
-	             }
-	          });
-		} */
 		
-		function send_mail() {
-			var title = $("#text-input").val();
-			var cont = $("#textarea-input").val();
-			
-			var data = {
-	            title: title,
-	            cont: cont
-	        }
-	        
-	        var formData = new FormData();
-	        var fileInput = $('#cimage');
-	        // fileInput 개수를 구한다.
-	        for (var i = 0; i < fileInput.length; i++) {
-	            if (fileInput[i].files.length > 0) {
-	                for (var j = 0; j < fileInput[i].files.length; j++) {
-	                    console.log(" fileInput[i].files[j] :::"+ fileInput[i].files[j]);
-	                    // formData에 'file'이라는 키값으로 fileInput 값을 append 시킨다.
-	                    formData.append('cimage', $('#cimage')[i].files[j]);
-	                }
-	            }
-	        }
-	        formData.append('key', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
-	        $.ajax({
-	            url: "/back/sendAllEmail",
-	            method: "post",
-	            data: formData,
-	            contentType: false,               // * 중요 *
-	            processData: false,               // * 중요 *
-	            enctype : 'multipart/form-data',
-	            beforeSend: function (xhr) {
-	                xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-	            },
-	            cache: false,
-	            success: function (data) {
-	               	alert("메일 보내기 성공");
-	            },
-	            error: function (request, status, error) {
-	                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-	            }
-	        });
+	function send_mail() {
+		var title = $("#text-input").val();
+		var cont = $("#textarea-input").val();
+		
+		var data = {
+	         title: title,
+	         cont: cont
 	    }
+	        
+	    var formData = new FormData();
+	    var fileInput = $('#cimage');
+	    // fileInput 개수를 구한다.
+	    for (var i = 0; i < fileInput.length; i++) {
+	         if (fileInput[i].files.length > 0) {
+	             for (var j = 0; j < fileInput[i].files.length; j++) {
+	                 console.log(" fileInput[i].files[j] :::"+ fileInput[i].files[j]);
+	                 // formData에 'file'이라는 키값으로 fileInput 값을 append 시킨다.
+	                 formData.append('cimage', $('#cimage')[i].files[j]);
+	             }
+	         }
+	    }
+	    formData.append('key', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
+	    $.ajax({
+	        url: "/back/sendAllEmail",
+	        method: "post",
+	        data: formData,
+	        contentType: false,               // * 중요 *
+	        processData: false,               // * 중요 *
+	        enctype : 'multipart/form-data',
+	        beforeSend: function (xhr) {
+	            xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+	        },
+	        cache: false,
+	        success: function (data) {
+	            alert("메일 보내기 성공");
+	        },
+	        error: function (request, status, error) {
+	            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+	}
 	</script>
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
