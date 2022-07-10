@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragments/common}">
+
+<title>스트리밍</title>
+<th:block layout:fragment="css">
+   <link rel="stylesheet" type="text/css"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video-js.css}" />
+   <link rel="stylesheet" type="text/css"
+      th:href="@{/resources/_ui/desktop/common/css/stream.css}" />
+</th:block>
+<th:block layout:fragment="script">
+   <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.6/video.min.js}"></script>
+   <script
+      th:src="@{https://player.live-video.net/1.10.0/amazon-ivs-videojs-tech.min.js}"></script>
+   <script
+      th:src="@{https://player.live-video.net/1.10.0/amazon-ivs-quality-plugin.min.js}"></script>
+</th:block>
+<div layout:fragment="content">
+   <style>
+input {
+   width: 500px;
+   height: 32px;
+   font-size: 15px;
+   border: 0;
+   border-radius: 15px;
+   outline: none;
+   padding-left: 10px;
+   background-color: rgb(233, 233, 233);
+}
+</style>
+   <script type="text/javascript">
+        $(document).ready(function () {
+            $('#fold').click(function(){
+                $('#productPopup').attr('style', 'display: none;');
+                $('#productFold').attr('style', 'display: block;');
+            });
+
+            $('#upArrow').click(function(){
+                $('#productFold').attr('style', 'display: none;');
+                $('#productPopup').attr('style', 'display: block;');
+            });
+            var todayDate = new Date();
+
+            var getUrlParameter = function getUrlParameter(sParam) {//URL에 포함된 파라미터 이용하기
+                var sPageURL = window.location.search.substring(1),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                    }
+                }
+            };
+
+        });
+
+        function videoWidth() {
+            var target = $('.video_area1903').attr('id');
+            var idx = 0;
+            var width = $("#" + target + " div:eq(" + idx + ")").width();
+            var height = $("#" + target + "  div:eq(" + idx + ")").height();
+            $('#' + target).find('video').css({'width': width + 'px', 'height': height + 'px'});
+            $('#' + target).css({'width': width + 'px', 'height': height + 'px'});
+        }
+
+        function videoPlay1903() {
+            $('.video_area1903').children('a').on('click', function () {
+                $(this).find('.video_main').next('video').show();
+                $(this).find('.video_main').hide();
+                $('#video')[0].play();
+            });
+        }
+
+        function videoEnded(target, idx) {
+            $("#" + target + " video").hide();
+            $("#" + target + " div:eq(" + idx + ")").show();
+        }
+    </script>
+
+   <div id="bodyWrap" style="padding-bottom: 0;">
+      <div class="video_main_wrap" style="line-height: 0;">
+         <h3 class="cnts_title ou1804">
+            <span> H-DAY STREAMING </span>
+         </h3>
+         <div>
+            <h4 class="tit">
+               <spring:theme code="main.video.title" />
+            </h4>
+            <div style="height: auto">
+               <div class="video_area1903" id="videoDiv1903"
+                  style="float: left; width: 68%; margin-left: 2%;">
+                  <a href="javascript:void(0);"> <!-- <div class="video_main" style="display: block;">
+                                <span class="play_btn"></span>
+                                <img src="/resources/medias/220610-D-awesome-03.jpg?context=bWFzdGVyfGltYWdlc3w4NjUzM3xpbWFnZS9qcGVnfGltYWdlcy9oMWUvaGRjLzkzMDQ4OTk3ODA2MzguanBnfDRjODEzNTQ3NDgxYzhmNDZhNGY2ZWRjMWY4OWVjOTNhOTY4NWFkMTM5ZDViMzQyYjgzOWFiMjdhZmI4YzY1NzY" alt="poster">
+                            </div> --> <video id="amazon-ivs-videojs"
+								class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay
+								playsinline>
+							</video>
+						</a>
+					</div>
+					<div class="container" id="chating"
+						style="float: right; width: 26%; margin-left: 2%; margin-right: 2%; height: 70%">
+						<div id="msgArea" class="col">
+                            <div class="productPopup" id="productPopup">
+                                <div style="width: 100%; height: 30px;">
+                                    
+                                    <a href="javascript:void(0);" class="fold" id="fold">
+                                    <!-- <a href="javascript:void(0);" class="btn_close" id="closeLayerPop"> -->
+                                        <!-- <img src="/_ui/desktop/common/images/popup/ico_close.png" alt=""> -->
+                                        <img class="upArrow" src="/resources/_ui/desktop/common/images/uparrow.png" alt="">
+                                    </a>
+                                    <p class="foldMsg">접기</p>
+                                </div>
+                                <div class="productInfo">
+                                    <p class="tit" style="display: block;">상품 바로 보러가기</p>
+                                    <div class="content">
+                                        <div id="img">
+                                            <img class="respon_image" id="image1" src="http://newmedia.thehandsome.com/MW/2B/SS/MW2B3WTO508W_LB_W01.jpg/dims/resize/684x1032/" />
+                                        </div>
+                                        <div class="info">
+                                            <p class="bname">CLUB MONACO</p>
+                                            <p class="pname">[21SS] 3/4 슬리브 탑</p>
+                                            <p class="pprice">₩138,600</p>
+                                            <a href="/detail/MW2B3WTO508W_LB" class="pbtn">상품 보러가기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="productFold" id="productFold" style="display: none;">
+                                <div style="width: 100%; height: 30px;">
+                                    
+                                    <a href="javascript:void(0);" class="fold" id="fold">
+                                    <!-- <a href="javascript:void(0);" class="btn_close" id="closeLayerPop"> -->
+                                        <!-- <img src="/_ui/desktop/common/images/popup/ico_close.png" alt=""> -->
+                                        <img class="upArrow" id="upArrow" src="/resources/_ui/desktop/common/images/dropdown.png" alt="">
+                                    </a>
+                                    <p class="foldMsg">펼치기</p>
+                                </div>
+                            </div>
+                        </div>
+						<div class="col-11">
+							<div class="input-group mb-3" id="fixInput">
+								<input type="text" id="msg" class="form-control"
+									aria-label="Recipient's username"
+									aria-describedby="button-addon2"
+									onkeyup="if(window.event.keyCode==13){send()}" />
+								<!-- <button class="button btnPush btnOrange" type="button"
+									id="submitBtn" onclick="send(); ">전송</button> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="txt">
+				<p class="tit">
+					aweSOME life 7.<br>HANESOME-E
+				</p>
+				<p class="s_t">
+					변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택
+				</p>
+			</div>
+			<p id="againtit"> 다시보기 </p>
+        <div class="watchagain" id="slist" style="display: block !important;">
+        </div>
+      </div>
+   </div>
+   <script>
+        const DEFAULT_STREAM = "https://65cd6d00bb9f.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.293546108023.channel.lt4D0GzSMPEs.m3u8";
+        (function () {
+            registerIVSTech(videojs);
+            registerIVSQualityPlugin(videojs);
+
+            const videoJSPlayer = videojs("amazon-ivs-videojs", {
+                techOrder: ["AmazonIVS"],
+                controlBar: {
+                    playToggle: {
+                        replay: false
+                    },
+                    pictureInPictureToggle: false
+                }
+            });
+
+            const readyCallback = function () {
+                window.videoJSPlayer = videoJSPlayer;
+
+                const ivsPlayer = videoJSPlayer.getIVSPlayer();
+
+                const videoContainerEl = document.querySelector("#amazon-ivs-videojs");
+                videoContainerEl.addEventListener("click", () => {
+                    if (videoJSPlayer.paused()) {
+                        videoContainerEl.classList.remove("vjs-has-started");
+                    } else {
+                        videoContainerEl.classList.add("vjs-has-started");
+                    }
+                });
+
+                const PlayerState = videoJSPlayer.getIVSEvents().PlayerState;
+                ivsPlayer.addEventListener(PlayerState.PLAYING, () => {
+                    console.log("Player State - PLAYING");
+                    setTimeout(() => {
+                        console.log(
+                            `This stream is ${
+                                ivsPlayer.isLiveLowLatency() ? "" : "not "
+                            }playing in ultra low latency mode`
+                        );
+                        console.log(`Stream Latency: ${ivsPlayer.getLiveLatency()}s`);
+                    }, 3000);
+                });
+
+                // Log errors
+                const PlayerEventType = videoJSPlayer.getIVSEvents().PlayerEventType;
+                ivsPlayer.addEventListener(PlayerEventType.ERROR, (type, source) => {
+                    console.warn("Player Event - ERROR: ", type, source);
+                });
+
+                ivsPlayer.addEventListener(PlayerEventType.TEXT_METADATA_CUE, (cue) => {
+                    const metadataText = cue.text;
+                    const position = ivsPlayer.getPosition().toFixed(2);
+                    console.log(
+                        `Player Event - TEXT_METADATA_CUE: "${metadataText}". Observed ${position}s after playback started.`
+                    );
+                });
+
+                videoJSPlayer.enableIVSQualityPlugin();
+
+                videoJSPlayer.volume(0.5);
+                videoJSPlayer.src(DEFAULT_STREAM);
+            };
+
+            videoJSPlayer.ready(readyCallback);
+        })();
+
+        /*
+        (function () {
+            const containerEl = document.querySelector(".video-container");
+            const directSrcFormEl = containerEl.querySelector(".src-container-direct");
+            const directSrcInputEl = containerEl.querySelector(".src-input");
+            directSrcFormEl.addEventListener("submit", (e) => {
+                e.preventDefault();
+                videoJSPlayer.src(directSrcInputEl.value);
+            });
+        })(); */
+        const username = "[[${member.getMemail()}]]";
+        console.log(username);
+        const websocket = new WebSocket("ws://3.34.216.148:8080/ws/chat");
+
+        websocket.onmessage = onMessage;
+        websocket.onopen = onOpen;
+        websocket.onclose = onClose;
+
+        function send() {
+            if ($("#msg").val() == "") return;
+            console.log("SEND");
+            let msg = document.getElementById("msg");
+
+            console.log(username + ":" + msg.value);
+            websocket.send(username + ":" + msg.value);
+            msg.value = "";
+        }
+
+        //채팅창에 들어왔을 때
+        function onOpen(evt) {
+            var str = username + ": 님이 입장하셨습니다.";
+            websocket.send(str);
+        }
+
+        //채팅창에서 나갔을 때
+        function onClose(evt) {
+            var str = username + ": 님이 방을 나가셨습니다.";
+            websocket.send(str);
+        }
+
+        function onMessage(msg) {
+            //console.log(msg);
+            var data = msg.data;
+            var sessionId = null;
+            //데이터를 보낸 사람
+            var message = null;
+            var arr = data.split(":");
+
+            for (var i = 0; i < arr.length; i++) {
+                console.log("arr[" + i + "]: " + arr[i]);
+            }
+
+            var cur_session = username;
+
+            //현재 세션에 로그인 한 사람
+            console.log("cur_session : " + cur_session);
+
+            sessionId = arr[0];
+            message = arr[1];
+
+            console.log("sessionID : " + sessionId);
+            console.log("cur_session : " + cur_session);
+
+            if (arr[1] == " 님이 입장하셨습니다." || arr[1] == " 님이 방을 나가셨습니다.") {
+                var str = "<div class='col-11'>";
+                str += "<li class='alert alert-secondary' id='welcome'>";
+                str += "<b style='color: #3f729b'>" + sessionId + message + "</b>";
+                str += "</li></div>";
+                $("#msgArea").append(str);
+            } else {
+                //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+                if (sessionId == cur_session) {
+                    var str = "<div class='col-11'>";
+                    str += "<li class='alert alert-secondary' id='chatUI'>";
+                    str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
+                    str += "</li></div>";
+                        $("#msgArea").append(str);
+                    } else {
+                        var str = "<div class='col-11'>";
+                        str += "<li class='alert alert-warning' id='tachatUI'>";
+                        str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
+                        str += "</li></div>";
+                        $("#msgArea").append(str);
+                    }
+            }
+        }
+        
+        /* const slider = document.querySelector('.again');
+        let isMouseDown = false;
+        let startX, scrollLeft;
+        
+        slider.addEventListener('mousedown', (e) => {
+           isMouseDown = true;
+           slider.classList.add('active');
+           
+           startX = e.pageX - slider.offsetLeft;
+           scrollLeft = slider.scrollLeft;
+        });
+        
+        slider.addEventListener('mouseleave', () => {
+           isMouseDown = false;
+           slider.classList.remove('active');
+        });
+        
+        slider.addEventListener('mouseup', () => {
+           isMouseDown = false;
+           slider.classList.remove('active');
+        });
+        
+        slider.addEventListener('mousemove', (e) => {
+           if(!isMouseDown) return;
+           
+           e.preventDefault();
+           const x = e.pageX - slider.offsetLeft;
+           const walk = (x - startX) * 1;
+           slider.scrollLeft = scrollLeft - walk;
+        }); */
+        
+        const list = document.querySelector('.watchagain');
+        const listScrollWidth = list.scrollWidth;
+        const listClientWidth = list.clientWidth;
+        
+        let startX = 0;
+        let nowX = 0;
+        let endX = 0;
+        let listX = 0;
+        
+    	// 다시보기 목록 출력 
+   		$(document).ready(function () {
+            $.ajax({
+                url: "/back/streaming/list",
+                type: "GET",
+                dataType: "json",
+                async: false,
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+                success: function (res) {
+                    let html = ``;
+                    for (var i = 0; i < res.length; i++) {
+                        html += `
+                       	<div class="again">
+                            <!-- <div class="againvideo">다시보기1</div> -->
+                            <a class="thumbnail" href="/streaming">
+                                <img id="img" alt=""
+                                src="${res[i].simg}"/>
+                            </a>
+                            <div class="againdetail">
+                                <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
+                                <div class="titleNname">
+                                    <p class="againtitle">
+                                        <a class="againtitlelink" href="/streaming">
+                                            ${res[i].sname}
+                                        </a>
+                                    </p>
+                                    <p class="againprofilename">더한섬닷컴</p>
+                                </div>                    
+                            </div>
+                        </div>
+                        `;
+                    }
+                    $("#slist").html(html);
+                }
+            })
+   		})
+  
+    </script>
+</div>
+</html>
