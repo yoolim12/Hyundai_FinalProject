@@ -14,6 +14,7 @@ public class QnaDTO {
 	private String qimage;
 	private String qreplydate;
 	private String qreplycontent;
+	private String qemail;
 	private int qstatus;
 
 }
