@@ -6,12 +6,12 @@
 
 	<select id="getQna"
 		resultType="com.hyundai.project.dto.QnaDTO">
-		select qid, qtitle, qcontent, qdate, qimage, qkind, memail from qna where memail=#{memail} order by qdate desc
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where memail=#{memail} order by qdate desc
 	</select>
 
 	<select id="getQnaDetail"
 			resultType="com.hyundai.project.dto.QnaDTO">
-		select qid, qtitle, qcontent, qdate, qimage, qkind, memail from qna where qid=#{qid}
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where qid=#{qid}
 	</select>
 
 	<insert id="insertQna">
