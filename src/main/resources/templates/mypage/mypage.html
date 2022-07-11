@@ -244,63 +244,6 @@
         };
 
         }
-	
-   // 리스트에서 제목 클릭 시 내용이 펼쳐지도록
-    function showContent(i) {
-        var listTag = "";
-        if (arr[i] == false) {
-           var qcontent = obj[i].qcontent;
-           if(obj[i].qcontent == null) qcontent = "";
-           console.log(qcontent);
-            listTag += '<tr><td class="qna_wrap" colspan="4"><div class="qna_box ch"><p></p><div class="qt"><span class="ico">quest</span>';
-            if(obj[i].qnaimg == null) {
-                listTag += '<div class="txt"><p style="font-weight: 900; font-size:15px; word-wrap:break-word; margin-top:7px">' + obj[i].qtitle + '</p><br><br><br>';
-                listTag += '<p style="word-wrap:break-word">' + qcontent + '</p><br><br>';
-            }
-            else {
-                listTag += '<div class="txt"><p style="font-weight: 900; font-size:15px; word-wrap:break-word; margin-top:7px">' + obj[i].qtitle + '</p><br><br><br>';
-                listTag += '<p style="word-wrap:break-word">' + qcontent + '</p><br><br><img id="imgsrc2" src="/mypage/display?fileName='+obj[i].qnaimg+'" alt="thumimg" style="width:300px" class="tlt"/><br><br>';
-            }
-            listTag +=
-                '<p class="date" style="color:#999;">등록일 : ' +
-                obj[i].qdate +
-                '</p><a onclick="deleteContent(' +
-                obj[i].qid +
-                ')" style="float:right" class="btn add_ss mr0">삭제</a><a href="/mypage/modifyQNA?qid=' +
-                obj[i].qid +
-                '" style="float:right" class="btn add_ss mr0">수정</a></div></div><div class="an"><span class="ico">answer</span>';
-            listTag += '<div class="txt"><p style="word-wrap: break-word">안녕하세요, 고객님. 더한섬닷컴 여경민 파트너입니다.</p><p class="date">답변일 : </p></div></div></div></td></tr>';
-            arr[i] = true;
-        } else {
-            listTag = "";
-            arr[i] = false;
-        }
-        document.getElementById("qna" + i).innerHTML = listTag;
-    }
-
-   // 게시물 삭제하는 ajax 호출
-    function deleteContent(qid) {
-        var url = "/mypage/deleteQNA?qid=" + qid;
-        if (confirm("해당 게시물을 삭제하시겠습니까?") == true) {
-            $.ajax({
-                url: url,
-                method: "post",
-                data:JSON.stringify({
-					"CSRFToken": getYCsrfToken()
-				}),
-				beforeSend: function(xhr){
-					 xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-				},
-                success: function (data) {
-                    alert("완료되었습니다.");
-                    location.href='/member/mypage';
-                },
-                error : function( request, status, error ){
-                    console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
-                }
-            });
-        }
-    }
 </script>
 <div id="bodyWrap">
     <h3 class="cnts_title">
