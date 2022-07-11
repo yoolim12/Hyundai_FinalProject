@@ -26,4 +26,8 @@
 		update qna set qtitle=#{qtitle}, qcontent=#{qcontent}, qimage=#{qimage} where qid = #{qid}
 	</update>
 
+	<select id="getQnaCount" resultType="int">
+		select count(*) count from qna where memail=#{memail}
+	</select>
+
 </mapper>
