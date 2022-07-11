@@ -129,6 +129,9 @@
                                               </div>`);
                       $("#qreplydate").text(res.qreplydate);
                   }
+                  $("#qemail").val(res.qemail);
+                  var temp = $("#qemail").val();
+                  console.log(temp);
               },
               error: function(res){
                   console.log(res)
@@ -184,12 +187,13 @@
           console.log("QNA REPLY");
           console.log($("#input_qid").val());
           $.ajax({
-             url : '/mypage/qnaReply',
+             url : '/back/qnaReply',
              type: 'PUT',
              contentType : "application/json",
              data : JSON.stringify({
-                qid : $("#input_qid").val(),
-                 qreplycontent : $("#qreplycontent").val()
+                 qid : $("#input_qid").val(),
+                 qreplycontent : $("#qreplycontent").val(),
+                 qemail : $("#qemail").val()
              }),
              beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
@@ -197,11 +201,11 @@
                 async: false,
                 cache: false,
              success: function(res){
-                location.href = "/back/qnaBO"
+                location.href = "/back/qnaBO";
              },
-             error: function(res){
-                alert("수정 실패");
-             }
+              error: function (request, status, error) {
+                  console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+              }
           });
        }
        
@@ -669,13 +673,20 @@
                                                       <p id="qcontent"></p>
                                                   </div>
                                               </div>
-
                                               <div class="row form-group">
                                                   <div class="col col-md-3">
                                                       <label for="selectSm" class=" form-control-label">첨부 파일</label>
                                                   </div>
                                                   <div class="col-12 col-md-9">
                                                       <div id="qimagediv"></div>
+                                                  </div>
+                                              </div>
+                                              <div class="row form-group">
+                                                  <div class="col col-md-3">
+                                                      <label for="selectSm" class=" form-control-label">수신 이메일</label>
+                                                  </div>
+                                                  <div class="col-12 col-md-9">
+                                                      <div id="qemail"></div>
                                                   </div>
                                               </div>
                                                 <hr>
