@@ -152,7 +152,8 @@ input {
                 },
                 success: function (res) {
                     let html = ``;
-                    for (var i = 0; i < res.length; i++) {
+                    for (let i = 0; i < res.length; i++) {
+                    	if([[${video.sno}]] != res[i].sno)
                         html += `
                        	<div class="again">
                             <!-- <div class="againvideo">다시보기1</div> -->
