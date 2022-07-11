@@ -62,6 +62,7 @@
     </div>
 </form>
 	<script type="text/javascript">
+	
 	function logoutClick() {
 		$('#logoutForm').submit();
   	}
@@ -88,6 +89,20 @@
 	         title: title,
 	         cont: cont
 	    }
+		
+		if(!document.getElementById("text-input").value){
+	        alert("제목을 입력해 주세요");
+	        return;
+	    }
+		if(!document.getElementById("textarea-input").value){
+	        alert("내용을 첨부해 주세요");
+	        return;
+	    }
+	    if(!document.getElementById("cimage").value){
+	        alert("파일을 첨부해 주세요");
+	        return;
+	    }
+	    
 	        
 	    var formData = new FormData();
 	    var fileInput = $('#cimage');
