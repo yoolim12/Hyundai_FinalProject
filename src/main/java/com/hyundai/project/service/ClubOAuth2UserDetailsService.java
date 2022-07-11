@@ -42,7 +42,20 @@ extends DefaultOAuth2UserService {
         log.info("saveSocialMember  시작");
         // 기본에 동일한 이메일로 가입한 회원인지 확인
         MemberJoinDTO result = clubMemberDAO.findByEmail(email, 1);
-         
+        
+        MemberJoinDTO normal_result = clubMemberDAO.findByEmail(email, 0);
+        
+        if (!(normal_result == null)) {
+        	try {
+				clubMemberDAO.insertLoginLog(email);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            log.info("기존 회원");
+            return  result;
+        }
+        
         // 기본 회원이면 정보 반환
         if (!(result == null)) {
         	try {
@@ -55,11 +68,11 @@ extends DefaultOAuth2UserService {
             return  result;
         } // end if
  
-        // 가입한적이 없다면 추가 패스워드 1111 이름은 이메일주소
+        // 가입한적이 없다면 추가 패스워드 dfdzvxcbsdgsd 이름은 이메일주소
         MemberDTO clubMember = new MemberDTO();
         clubMember.setMemail(email);
         clubMember.setMname(name);
-        clubMember.setMpassword(passwordEncoder.encode("1111"));
+        clubMember.setMpassword(passwordEncoder.encode("dfdzvxcbsdgsd"));
         
         String now = "2009-03-20"; // 형식을 지켜야 함
         java.sql.Date d = java.sql.Date.valueOf(now);
