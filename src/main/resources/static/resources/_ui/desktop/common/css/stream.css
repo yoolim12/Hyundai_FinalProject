@@ -45,6 +45,7 @@ body {
     top: 0;
     background-color: rgb(178, 239, 234);
     opacity: 0.8;
+    border-radius: 10px;
 }
 
 .fold {
