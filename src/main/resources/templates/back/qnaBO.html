@@ -60,7 +60,7 @@
       
       function confirm(){
     	  $("#deletemodal").modal("toggle");
-		  document.getElementById("confirm").setAttribute("onclick","delMember()");
+		  document.getElementById("confirm").setAttribute("onclick","delQna()");
       }
       
       $(function(){
@@ -69,13 +69,13 @@
          
       });
       
-      function go_edit(memail) {
+      function go_edit(qid) {
           $('#home-tab').removeClass('active');
           document.getElementById("modify-tab").click();
           $('#modify-tab').addClass('active');
-          $('#input_email').val(memail);
-          $('#findUser2').click();
-
+          $('#input_qid').val(qid);
+          //$('#getQna').click();
+          getQna();
       }
       
       // 회원 검색 조회
@@ -95,7 +95,46 @@
                  $('#memberInfo').replaceWith(fragment);
              });
       }
-       
+
+      function getQna() {
+          var qid = $("#input_qid").val();
+          console.log("GET QNA : " + qid);
+          $.ajax({
+              url : '/mypage/qnaDetail?qid=' + qid,
+              type: 'get',
+              dataType: 'JSON',
+              beforeSend: function(xhr) {
+                  xhr.setRequestHeader(header, token);
+              },
+              cache: false,
+              success: function(res){
+                  $("#qid").text(res.qid);
+                  $("#memail").text(res.memail);
+                  $("#qtitle").text(res.qtitle);
+                  $("#qcontent").text(res.qcontent);
+                  $("#qkind").text(res.qkind);
+                  $("#qdate").text(res.qdate);
+                  if(res.qimage != null) {
+                      $("#qimagediv").html(`<img id="qimage" src="${res.qimage}" alt="thumimg" style="width:300px" class="tlt"/>`)
+                  }
+                  $("#qstatus").text(res.qstatus);
+                  $("#qreplycontent").text(res.qreplycontent);
+                  if(res.qreplydate != null) {
+                      $("#qdatediv").html(`<div class="row form-group">
+                                                  <div class="col col-md-3">
+                                                      <label for="selectSm" class=" form-control-label">답글 등록 시간</label>
+                                                  </div>
+                                                  <div class="col-12 col-md-9"><p id="qreplydate"></p>
+                        </div>
+                                              </div>`);
+                      $("#qreplydate").text(res.qreplydate);
+                  }
+              },
+              error: function(res){
+                  console.log(res)
+              }
+          });
+      }
        // 회원 검색
        function findUser2(){
           var email = $("#input_email").val();
@@ -140,47 +179,17 @@
           });
        }
        
-       // 회원 정보 수정
+       // 게시글 답변
        function modify(){
-          console.log($('#selectAuth option:selected').val());
-          var memail = $("#input_email").val();
-          var mname = $("#mname").val();
-          var birth = $("#birth").val();
-          var telnum = $("#telnum").val();
-          var maddress = $("#maddress").val();
-          var gno = $("#SelectLm option:selected").val();
-          var auth = $('#selectAuth option:selected').val();
-          var msleep = $("#SelectSleep option:selected").val();
-          
-          if (msleep == 2){
-             msleep = 0;
-          }
-          
-          if(gno == 0){
-             alert("다시 선택해주세요.");
-             return;
-          }
-          console.log(gno);
-          
-          if(auth == 0){
-             alert("다시 선택해주세요.");
-             return;
-          }
-          console.log(auth);
-          
+          console.log("QNA REPLY");
+          console.log($("#input_qid").val());
           $.ajax({
-             url : '/back/member',
+             url : '/mypage/qnaReply',
              type: 'PUT',
              contentType : "application/json",
              data : JSON.stringify({
-                'memail' : memail,
-                'mname' : mname,
-                'birth' : birth,
-                'telnum' : telnum,
-                'maddress' : maddress,
-                'gno' : gno,
-                'auth': auth,
-                'msleep' : msleep
+                qid : $("#input_qid").val(),
+                 qreplycontent : $("#qreplycontent").val()
              }),
              beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
@@ -188,9 +197,7 @@
                 async: false,
                 cache: false,
              success: function(res){
-                //alert("수정 성공");
-                $("#staticModal").modal();
-                console.log(res);
+                location.href = "/back/qnaBO"
              },
              error: function(res){
                 alert("수정 실패");
@@ -198,50 +205,37 @@
           });
        }
        
-       // 회원 정보 탈퇴
-       function delMember2(email){
-		console.log('delMember(email)');
-          console.log(email);
-          
-          $.ajax({
-             url : '/back/member',
-             type: 'DELETE',
-             data: JSON.stringify({
-                'email' : email
-                }),
-             contentType: "application/json",
-             beforeSend: function(xhr) {
-                    xhr.setRequestHeader(header, token);
-                 },
-                async : false,
-                cache: false,
-             success: function(res){
-            	
-                //$("#staticModal").modal();
-                
-                //alert("탈퇴 성공");
-                console.log(res);
-                $("#mname").val('');
-                $("#birth").val('');
-                $("#telnum").val('');
-                $("#maddress").val('');
-             },
-             error: function(){
-                alert("error")
-             }
-          });
+       // 게시글 삭제
+       function delQna2(qid){
+		console.log('delQna2(qid)');
+          console.log(qid);
+
+           $.ajax({
+               url : "/mypage/deleteQNA?qid=" + qid,
+               type: 'DELETE',
+               contentType: "application/json",
+               beforeSend: function(xhr) {
+                   xhr.setRequestHeader(header, token);
+               },
+               async : false,
+               cache: false,
+               success: function(res){
+                   location.href="/back/qnaBO";
+               },
+               error: function(){
+                   alert("error")
+               }
+           });
        }
        
-       // 회원 정보 탈퇴(this)
-       function delMember(){
-          var email = $("#input_email").val();
-          
+       // 게시글 삭제
+       function delQna(){
+          console.log("DEL QNA");
+          var qid = $("#input_qid").val();
+          console.log(qid);
           $.ajax({
-             url : '/back/member',
+             url : "/mypage/deleteQNA?qid=" + qid,
              type: 'DELETE',
-             data: JSON.stringify({
-                'email' : email
-                }),
              contentType: "application/json",
              beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
@@ -249,15 +243,7 @@
                 async : false,
                 cache: false,
              success: function(res){
-            	 
-            	 //$("#staticModal").modal();
-                
-                //alert("탈퇴 성공");
-                console.log(res);
-                $("#mname").val('');
-                $("#birth").val('');
-                $("#telnum").val('');
-                $("#maddress").val('');
+            	 location.href="/back/qnaBO";
              },
              error: function(){
                 alert("error")
@@ -271,11 +257,10 @@
        }
        
        // delete modal
-       function delModal(memail){
+       function delModal(qid){
 			console.log('delmodal');
-			// $('#delWho').val(memail);
-			console.log('delMember2(' + "'" + memail + "'" + ')');
-			$('#confirm').attr('onclick', 'delMember2(' + "'" + memail + "'" + ')');
+			console.log('delQna2(' + qid + ')');
+			$('#confirm').attr('onclick', 'delQna2(' + qid + ')');
 			console.log('check')
         	$("#deletemodal").modal();
        }
@@ -285,14 +270,14 @@
     	  	}
        
        $(document).ready(function () {
-			const mem = numWithComma([[${userTotal}]]);
-    	   const totAmount = numWithComma([[${amountTotal}]]);
-    	   const wAmount = numWithComma([[${amountWeek}]]);
-    	   const revenue = numWithComma([[${revenueTotal}]]);
-    	   $("#userTotal").html(mem);
-    	   $("#amountTotal").html(totAmount);
-    	   $("#amountWeek").html(wAmount);
-    	   $("#revenueTotal").html("₩" +revenue);
+           // const mem = numWithComma([[${userTotal}]]);
+    	   // const totAmount = numWithComma([[${amountTotal}]]);
+    	   // const wAmount = numWithComma([[${amountWeek}]]);
+    	   // const revenue = numWithComma([[${revenueTotal}]]);
+    	   // $("#userTotal").html(mem);
+    	   // $("#amountTotal").html(totAmount);
+    	   // $("#amountWeek").html(wAmount);
+    	   // $("#revenueTotal").html("₩" +revenue);
        });
        
        // ga tag
@@ -485,7 +470,7 @@
                                                     <h5 class="name">
                                                         <a href="#">관리자</a>
                                                     </h5>
-                                                    <span class="email" sec:authentication="principal.memail">johndoe@example.com</span>
+<!--                                                    <span class="email" sec:authentication="principal.memail">johndoe@example.com</span>-->
                                                 </div>
                                             </div>
                                             <!-- <div class="account-dropdown__body">
@@ -569,16 +554,13 @@
                             <div class="col-md-12">
                                <div class="card">
                            <div class="card-header">
-                              <h4>회원 조회 / 수정 / 탈퇴</h4>
+                              <h4>문의 관리</h4>
                            </div>
                            <div class="card-body">
                               
                               <ul class="nav nav-tabs" id="myTab" role="tablist">
                                  <li class="nav-item">
-                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" >멤버 조회</a>
-                                 </li>
-                                 <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" onclick = "findEmployee();">임직원 관리</a>
+                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" >문의 조회</a>
                                  </li>
                                  <li class="nav-item" hidden>
                                     <a class="nav-link" id="modify-tab" data-toggle="tab" href="#modify" role="tab" aria-controls="modify" >Menu 2</a>
@@ -596,16 +578,17 @@
                                                       <input type="text" id="inputEmail" name="input-small" placeholder="Email" class="input-sm form-control-sm form-control">
                                                    </div>
                                                    <button type="button" class="btn btn-primary btn-sm" onclick = "findUser(); search();">검색</button>
+                                                              <input type="hidden" id="input_qid" name="input_qid"  placeholder="Email" class="form-control">
                                                 </div>   
                                                        </tr>
                                                           
                                                         <tr>
-                                                            <th>이름</th>
-                                                            <th>이메일</th>
-                                                            <th>권한</th>
-                                                            <th>가입일</th>
+                                                            <th>문의 번호</th>
+                                                            <th>작성자</th>
+                                                            <th>분류</th>
+                                                            <th>제목</th>
+                                                            <th>등록 날짜</th>
                                                             <th>상태</th>
-                                                            <th>등급</th>
                                                             <th>
                                                                
                                                                <!-- <input type="text" name="search" placeholder="Email" id = "inputEmail"/> -->
@@ -613,33 +596,27 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr class="tr-shadow" th:each = "user : ${userList}">
-                                                            <td th:text = "${user.mname}"></td>
+                                                        <tr class="tr-shadow" th:each = "qna : ${qnaList}">
+                                                            <td th:text = "${qna.qid}"></td>
                                                             <td>
-                                                                <span class="block-email" th:text = "${user.memail}"></span>
+                                                                <span class="block-email" th:text = "${qna.memail}"></span>
                                                             </td>
-                                                            <td th:if = "${user.role_set == 'ADMIN'}">
-                                                                 <span class="role admin" th:text = "${user.role_set}"></span>
+                                                            <td th:text = "${qna.qkind}"></td>
+                                                            <td th:text = "${qna.qtitle}"></td>
+                                                            <td th:text = "${qna.qdate}"></td>
+                                                            <td th:if = "${qna.qstatus == 0}">
+                                                                <span class="role admin">답변 대기</span>
                                                             </td>
-                                                            <td th:if = "${user.role_set == 'USER'}">
-                                                                 <span class="role user" th:text = "${user.role_set}"></span>
+                                                            <td th:if = "${qna.qstatus == 1}">
+                                                                <span class="role user">답변 완료</span>
                                                             </td>
-                                                            <td th:if = "${user.role_set == 'EMPLOYEE'}">
-                                                                 <span class="role member" th:text = "${user.role_set}"></span>
-                                                            </td>
-                                                            <td th:text = "${user.regdate}"></td>
-                                                            <td>
-                                                                <span class="status--denied" th:if = "${user.msleep == 1}">휴면</span>
-                                                                <span class="status--process" th:unless = "${user.msleep == 1}">비휴면</span>
-                                                            </td>
-                                                            <td th:text = "${user.gname}"></td>
                                                             <td>
                                                                 <div class="table-data-feature">
                                                                     
-                                                                    <button class="item" id="editMember" data-toggle="tooltip" data-placement="top" title="Edit" th:onclick = "go_edit([[${user.memail}]]);">
+                                                                    <button class="item" id="editQna" data-toggle="tooltip" data-placement="top" title="Edit" th:onclick = "go_edit([[${qna.qid}]]);">
                                                                         <i class="zmdi zmdi-edit"></i>
                                                                     </button>
-                                                                    <button class="item" id="delMember" data-toggle="tooltip" data-placement="top" title="Delete" th:onclick="delModal([[${user.memail}]])">
+                                                                    <button class="item" id="delQna" data-toggle="tooltip" data-placement="top" title="Delete" th:onclick="delModal([[${qna.qid}]])">
                                                                         <i class="zmdi zmdi-delete"></i>
                                                                     </button>
                                                                 </div>
@@ -650,166 +627,103 @@
                                                 </table>
                                             </div>
                                  </div>
-                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                       <div class="table-responsive table-responsive-data2" id = "employeeInfo">
-                                                   <table class="table table-data2">
-                                                       <thead>
-                                                          <tr>
-                                                          <div class="input-group">
-                                                   <div class="input-group-btn">
-                                                      <input type="text" id="EinputEmail" name="input-small" placeholder="Email" class="input-sm form-control-sm form-control">
-                                                   </div>
-                                                   <button type="button" class="btn btn-primary btn-sm" onclick = "SfindEmployee();">검색</button>
-                                                </div>   
-                                                          </tr>
-                                                           <tr>
-                                                               <th>name</th>
-                                                               <th>email</th>
-                                                               <th>description</th>
-                                                               <th>date</th>
-                                                               <th>status</th>
-                                                               <th>grade</th>
-                                                               
-                                                               <th></th>
-                                                           </tr>
-                                                       </thead>
-                                                       <tbody>
-                                                           <tr class="tr-shadow" th:each = "user : ${userList}">
-                                                               
-                                                               <td th:text = "${user.mname}"></td>
-                                                               <td>
-                                                                   <span class="block-email" th:text = "${user.memail}"></span>
-                                                               </td>
-                                                               <td th:if = "${user.role_set == 'ADMIN'}">
-                                                                    <span class="role admin" th:text = "${user.role_set}"></span>
-                                                               </td>
-                                                               <td th:if = "${user.role_set == 'USER'}">
-                                                                    <span class="role user" th:text = "${user.role_set}"></span>
-                                                               </td>
-                                                               <td th:if = "${user.role_set == 'EMPLOYEE'}">
-                                                                    <span class="role member" th:text = "${user.role_set}"></span>
-                                                               </td>
-                                                               <td th:text = "${user.regdate}"></td>
-                                                               <td>
-                                                                   <span class="status--denied" th:if = "${user.msleep == 1}">휴면</span>
-                                                                   <span class="status--process" th:unless = "${user.msleep == 1}">비휴면</span>
-                                                               </td>
-                                                               <td th:text = "${user.gname}"></td>
-                                                               <td>
-                                                                   <div class="table-data-feature">
-                                                                       <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                                           <i class="zmdi zmdi-mail-send"></i>
-                                                                       </button>
-                                                                       <button class="item" data-toggle="tooltip" data-placement="top" title="Edit" th:onclick = "go_edit([[${user.memail}]]);">
-                                                                           <i class="zmdi zmdi-edit"></i>
-                                                                       </button>
-                                                                       <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" th:onclick = "delMember([[${user.memail}]]);">
-                                                                           <i class="zmdi zmdi-delete"></i>
-                                                                       </button>
-                                                                   </div>
-                                                               </td>
-                                                           </tr>
-                                                           <tr class="spacer"></tr>
-                                                       </tbody>
-                                                   </table>
-                                               </div>
-                                    </div>
-                                 </div>
-                                 <div class="tab-pane fade" id="modify" role="tabpanel" aria-labelledby="modify-tab">
-                                    <div class="card">
-                                                <div class="card-header">
-                                                    <strong>회원 정보 검색</strong>
-                                                    <small> Form</small>
-                                                </div>
-                                                
-                                                
-                                                <div class="card-body card-block">
-                                                   <div class="from-group">
-                                                       <div class="input-group">
-                                                           <div class="input-group-btn">
-                                                              <button type = "button" hidden class="btn btn-primary" onclick="findUser2()" id = "findUser2">
-                                                                 <i class="fa fa-search">Search</i> 
-                                                                </button>
-                                                            </div>
-                                                        <input type="hidden" id="input_email" name="input_email"  placeholder="Email" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group">
-                                                       <div class="col col-md-11">
-                                                           <label for="company" class=" form-control-label">이름</label>
-                                                           <input type="text" id="mname" placeholder="이름" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group">
-                                                        <div class="col col-md-11">
-                                                           <label for="vat" class=" form-control-label">생년월일</label>
-                                                           <input type="text" id="birth" placeholder="생년월일" class="form-control">
-                                                       </div>
-                                                    </div>
-                                                    
-                                                    <div class="row form-group">
-                                                       <div class="col col-md-11">
-                                                           <label for="street" class=" form-control-label">전화 번호</label>
-                                                           <input type="text" id="telnum" placeholder="전화 번호" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="row form-group">
-                                                        <div class="col col-md-11">
-                                                           <label for="country" class=" form-control-label">주소</label>
-                                                           <input type="text" id="maddress" placeholder="주소" class="form-control">
-                                                       </div>
-                                                    </div>
-                                                    
-                                                    <div class="row form-group">
-                                                       <div class="col col-md-11">
-                                                           <label for="selectSm" class=" form-control-label">등급</label>
-                                                             <select name="selectSm" id="SelectLm" class="form-control-sm form-control">
-                                                                <option value="0">등급</option>
-                                                                <option value="1">Friend</option>
-                                                                <option value="2">Crew</option>
-                                                                <option value="3">Mania</option>
-                                                                <option value="4">Star</option>
-                                                                <option value="5">The Star</option>
-                                                             </select>
-                                                          </div>
-                                                   </div>
-                                                   
-                                                   <div class="row form-group">
-                                                       <div class="col col-md-11">
-                                                           <label for="selectAuth" class=" form-control-label">권한</label>
-                                                             <select name="selectAuth" id="selectAuth" class="form-control-sm form-control">
-                                                                <option value="0">권한</option>
-                                                                <option value="1">USER</option>
-                                                                <option value="2">EMPLOYEE</option>
-                                                                <option value="3">ADMIN</option>
-                                                             </select>
-                                                          </div>
-                                                   </div>
-                                                   
-                                                   <div class="row form-group">
-                                                          <div class="col col-md-11">
-                                                           <label for="selectSm" class=" form-control-label">휴면/비휴면</label>
-                                                            <select name="selectSm" id="SelectSleep" class="form-control-sm form-control">
-                                                                <option value="0">휴면/비휴면</option>
-                                                                <option value="1">휴면</option>
-                                                                <option value="2">비휴면</option>
-                                                            </select>
-                                                         </div>
-                                                   </div>
-                                                    <div class="card-footer">
-                                                       <button class="btn btn-primary btn-sm" onclick = "modify();">
-                                                           <i class="fa fa-dot-circle-o"></i> 수정하기
-                                                       </button>
-                                                       <button class="btn btn-danger btn-sm" onclick = "confirm();">
-                                                           <i class="fa fa-ban"></i> 탈퇴
-                                                       </button>
-                                                   </div>
-                                                </div>
-                                            </div>
-                                 </div>
-                              </div>
+                                  <div class="tab-pane fade" id="modify" role="tabpanel" aria-labelledby="modify-tab">
+                                      <div class="card">
+                                          <div class="card-header">
+                                              <strong>게시글 조회</strong>
+                                          </div>
+
+                                          <div class="card-body card-block">
+                                              <div class="from-group">
+                                                  <div class="input-group">
+                                                      <div class="input-group-btn">
+                                                          <button type = "button" hidden class="btn btn-primary" onclick="findUser2()" id = "findUser2">
+                                                              <i class="fa fa-search">Search</i>
+                                                          </button>
+                                                      </div>
+                                                      <input type="hidden" id="input_email" name="input_email"  placeholder="Email" class="form-control">
+                                                  </div>
+                                              </div>
+                                              <div class="row form-group">
+                                                  <div class="col col-md-3">
+                                                      <label for="company" class=" form-control-label">문의 번호</label>
+                                                  </div>
+                                                  <div class="col-12 col-md-9">
+                                                      <p id="qid"></p>
+                                                  </div>
+                                              </div>
+                                              <div class="row form-group">
+                                                  <div class="col col-md-3">
+                                                      <label for="vat" class=" form-control-label">작성자</label>
+                                                  </div>
+                                                  <div class="col-12 col-md-9">
+                                                      <p id="memail"></p>
+                                                  </div>
+                                              </div>
+
+                                              <div class="row form-group">
+                                                  <div class="col col-md-3">
+                                                      <label for="street" class=" form-control-label">분류</label>
+                                                  </div>
+                                                  <div class="col-12 col-md-9">
+                                                      <p id="qkind"></p>
+                                                  </div>
+                                              </div>
+
+                                              <div class="row form-group">
+                                                  <div class="col col-md-3">
+                                                      <label for="country" class=" form-control-label">제목</label>
+                                                  </div>
+                                                  <div class="col-12 col-md-9">
+                                                      <p id="qtitle"></p>
+                                                  </div>
+                                              </div>
+
+                                              <div class="row form-group">
+                                                  <div class="col col-md-3">
+                                                      <label for="selectSm" class=" form-control-label">등록 날짜</label>
+                                                  </div>
+                                                  <div class="col-12 col-md-9">
+                                                      <p id="qdate"></p>
+                                                  </div>
+                                              </div>
+
+                                              <div class="row form-group">
+                                                  <div class="col col-md-3">
+                                                      <label for="country" class=" form-control-label">내용</label>
+                                                  </div>
+                                                  <div class="col-12 col-md-9">
+                                                      <p id="qcontent"></p>
+                                                  </div>
+                                              </div>
+
+                                              <div class="row form-group">
+                                                  <div class="col col-md-3">
+                                                      <label for="selectSm" class=" form-control-label">첨부 파일</label>
+                                                  </div>
+                                                  <div class="col-12 col-md-9">
+                                                      <div id="qimagediv"></div>
+                                                  </div>
+                                              </div>
+                                                <hr>
+                                              <div class="row form-group">
+                                                  <div class="col col-md-3">
+                                                      <label for="selectSm" class=" form-control-label">답글</label>
+                                                  </div>
+                                                  <div class="col-12 col-md-9">
+                                                      <textarea name="textarea-input" id="qreplycontent" rows="9" class="form-control"></textarea>
+                                                  </div>
+                                              </div>
+
+                                              <div id="qdatediv"></div>
+                                              <div class="card-footer">
+                                                  <button class="btn btn-primary btn-sm" onclick = "modify();">
+                                                      <i class="fa fa-dot-circle-o"></i> 수정하기
+                                                  </button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
                            </div>
                         </div>
                             </div>
@@ -842,7 +756,7 @@
 		            <div class="modal-body">
 		                <div class="card-body card-block">
 		                    <div class="row form-group">
-		                        해당 회원을 탈퇴시키겠습니까?
+		                        해당 게시글을 삭제하시겠습니까?
 		                    </div>
 		                </div>
 		                <div class="card-footer">

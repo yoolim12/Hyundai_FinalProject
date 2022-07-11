@@ -30,4 +30,12 @@
 		select count(*) count from qna where memail=#{memail}
 	</select>
 
+	<select id="getAllQna"
+			resultType="com.hyundai.project.dto.QnaDTO">
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna order by qdate desc
+	</select>
+
+	<update id="updateQnaReply">
+		update qna set qreplycontent=#{qreplycontent}, qreplydate=sysdate, qstatus=1 where qid=#{qid}
+	</update>
 </mapper>

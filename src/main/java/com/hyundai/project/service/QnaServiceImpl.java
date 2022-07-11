@@ -47,4 +47,14 @@ public class QnaServiceImpl implements QnaService {
 	public int getQnaCount(String memail) throws Exception {
 		return qnaDAO.getQnaCount(memail);
 	}
+
+	@Override
+	public List<QnaDTO> getAllQna() throws Exception {
+		return qnaDAO.getAllQna();
+	}
+
+	@Override
+	public void updateQnaReply(QnaDTO qna) throws Exception {
+		qnaDAO.updateQnaReply(qna);
+	}
 }

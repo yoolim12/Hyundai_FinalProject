@@ -2,6 +2,7 @@ package com.hyundai.project.controller;
 
 import java.util.Map;
 
+import com.hyundai.project.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,9 @@ import lombok.extern.log4j.Log4j2;
 public class BackController {
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
+
+	@Setter(onMethod_ = @Autowired)
+	private QnaService qservice;
 	
 	@Autowired
 	private MailService mail;
@@ -110,6 +114,18 @@ public class BackController {
 	public String sendEmail() {
 		log.info("이메일 페이지 요청");
 		return "back/sendMail";
+	}
+
+	// QNA BO 페이지 이동
+	// 회원관리 페이지 이동
+	@GetMapping("/qnaBO")
+	public void qnaBO(Model model) throws Exception {
+		//System.out.println(service.showAllMember());
+		model.addAttribute("qnaList", qservice.getAllQna());
+//		model.addAttribute("userTotal", service.getTotalMember());
+//		model.addAttribute("amountTotal", service.getTotalAmount());
+//		model.addAttribute("amountWeek", service.getOrderAmountOfWeek());
+//		model.addAttribute("revenueTotal", service.getTotalRevenue());
 	}
 		
 }
