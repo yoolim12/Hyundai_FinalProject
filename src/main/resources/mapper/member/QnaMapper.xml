@@ -38,4 +38,8 @@
 	<update id="updateQnaReply">
 		update qna set qreplycontent=#{qreplycontent}, qreplydate=sysdate, qstatus=1 where qid=#{qid}
 	</update>
+
+	<select id="getQnaInfo" resultType="com.hyundai.project.dto.QnaDTO">
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where memail LIKE '%'||#{memail}||'%' order by qdate desc
+	</select>
 </mapper>

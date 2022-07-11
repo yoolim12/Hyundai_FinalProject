@@ -57,4 +57,9 @@ public class QnaServiceImpl implements QnaService {
 	public void updateQnaReply(QnaDTO qna) throws Exception {
 		qnaDAO.updateQnaReply(qna);
 	}
+
+	@Override
+	public List<QnaDTO> getQnaInfo(String memail) throws Exception {
+		return qnaDAO.getQnaInfo(memail);
+	}
 }

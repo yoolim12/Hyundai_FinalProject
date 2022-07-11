@@ -24,4 +24,6 @@ public interface QnaService {
 
 	public void updateQnaReply(QnaDTO qna) throws Exception;
 
+	public List<QnaDTO> getQnaInfo(String memail) throws Exception;
+
 }

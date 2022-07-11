@@ -84,7 +84,7 @@
                  email:$("#inputEmail").val()
              };
              $.ajax({
-                 url: "/back/view",
+                 url: "/back/qnaView",
                  type: "POST",
                  data: emailBean,
                  beforeSend: function(xhr) {
@@ -92,7 +92,7 @@
                     },
              })
              .done(function (fragment) {
-                 $('#memberInfo').replaceWith(fragment);
+                 $('#qnaInfo').replaceWith(fragment);
              });
       }
 
@@ -283,7 +283,7 @@
        // ga tag
        function search(){
    	    gtag('event', '검색', {
-   	        'event_label': '멤버',
+   	        'event_label': '문의',
    	        'event_category': 'backoffice',
    	    });
    	}
@@ -431,6 +431,10 @@
                   </a></li>
                   <li><a href="streamingBO"> <i class="fas fa-tv"></i>스트리밍 관리
                   </a></li>
+                        <li>
+                            <a href="qnaBO">
+                                <i class="fas fa-chart-bar"></i>문의 관리</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -508,44 +512,6 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-                       <div class="row">
-                            <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item">
-                                    <h2 class="number" id="userTotal"></h2>
-                                    <span class="desc">총 회원 수</span>
-                                    <div class="icon">
-                                        <i class="zmdi zmdi-account-o"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item">
-                                    <h2 class="number" id="amountTotal"></h2>
-                                    <span class="desc">총 판매량</span>
-                                    <div class="icon">
-                                        <i class="zmdi zmdi-shopping-cart"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item">
-                                    <h2 class="number" id="amountWeek"></h2>
-                                    <span class="desc">이번주 주문건수</span>
-                                    <div class="icon">
-                                        <i class="zmdi zmdi-calendar-note"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item">
-                                    <h2 class="number" id="revenueTotal"></h2>
-                                    <span class="desc">총 매출액</span>
-                                    <div class="icon">
-                                        <i class="zmdi zmdi-money"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-lg-12">
                                 
@@ -569,7 +535,7 @@
                               
                               <div class="tab-content pl-3 p-1" id="myTabContent">
                                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <div class="table-responsive table-responsive-data2" id = "memberInfo">
+                                    <div class="table-responsive table-responsive-data2" id = "qnaInfo">
                                                 <table class="table table-data2">
                                                     <thead>
                                                        <tr align = "right">

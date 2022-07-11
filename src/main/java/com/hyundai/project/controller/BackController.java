@@ -120,12 +120,17 @@ public class BackController {
 	// 회원관리 페이지 이동
 	@GetMapping("/qnaBO")
 	public void qnaBO(Model model) throws Exception {
-		//System.out.println(service.showAllMember());
 		model.addAttribute("qnaList", qservice.getAllQna());
-//		model.addAttribute("userTotal", service.getTotalMember());
-//		model.addAttribute("amountTotal", service.getTotalAmount());
-//		model.addAttribute("amountWeek", service.getOrderAmountOfWeek());
-//		model.addAttribute("revenueTotal", service.getTotalRevenue());
+	}
+
+	// QNA 조회 ajax + thymleaf
+	@PostMapping("/qnaView")
+	public String qnaView(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
+		String memail = paramMap.get("email");
+		log.info(memail);
+		model.addAttribute("qnaList", qservice.getQnaInfo(memail));
+
+		return "back/qnaBO :: #qnaInfo";
 	}
 		
 }
