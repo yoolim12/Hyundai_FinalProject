@@ -260,15 +260,13 @@
                 async : false,
                 cache: false,
              success: function(res){
-            	
-                //$("#staticModal").modal();
-                
-                //alert("탈퇴 성공");
+            
                 console.log(res);
                 $("#mname").val('');
                 $("#birth").val('');
                 $("#telnum").val('');
                 $("#maddress").val('');
+                location.reload();
              },
              error: function(){
                 alert("error")
@@ -293,15 +291,12 @@
                 async : false,
                 cache: false,
              success: function(res){
-            	 
-            	 //$("#staticModal").modal();
-                
-                //alert("탈퇴 성공");
                 console.log(res);
                 $("#mname").val('');
                 $("#birth").val('');
                 $("#telnum").val('');
                 $("#maddress").val('');
+                location.reload();
              },
              error: function(){
                 alert("error")
@@ -623,7 +618,7 @@
                               
                               <ul class="nav nav-tabs" id="myTab" role="tablist">
                                  <li class="nav-item">
-                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" >멤버 조회</a>
+                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" onclick = "findUser();">멤버 조회</a>
                                  </li>
                                  <li class="nav-item">
                                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" onclick = "findEmployee();">임직원 관리</a>
