@@ -189,22 +189,22 @@
                 console.log("sessionID : " + sessionId);
                 console.log("cur_session : " + cur_session);
             if (arr[1] == " 님이 입장하셨습니다." || arr[1] == " 님이 방을 나가셨습니다.") {
-                var str = "<div class='col-11'>";
-                str += "<li class='alert alert-secondary' id='welcome'>";
+                var str = "<div class='col-12'>";
+                str += "<li id='welcome'>";
                 str += "<b>" + sessionId + message + "</b>";
                 str += "</li</div>";
                 $("#msgArea").append(str);
             } else {
                 //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
                 if (sessionId == cur_session) {
-                    var str = "<div class='col-11'>";
-                    str += "<li class='alert alert-secondary' id='chatUI'>";
+                    var str = "<div class='col-12'>";
+                    str += "<li class='alert' id='chatUI' style='margin-bottom: 0rem !important;'>";
                     str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
                     str += "</li></div>";
                         $("#msgArea").append(str);
                     } else {
-                        var str = "<div class='col-11'>";
-                        str += "<li class='alert alert-warning' id='tachatUI'>";
+                        var str = "<div class='col-12'>";
+                        str += "<li class='alert' id='tachatUI' style='margin-bottom: 0rem !important;'>";
                         str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
                         str += "</li></div>";
                         $("#msgArea").append(str);
@@ -214,33 +214,7 @@
             }
 
         </script>
-        <div class="description">
-            * 본 영상은 공식 계약을 맺은 뒤 협의하에 제작되었습니다.<br>
-            * 영상의 2차 가공을 금합니다<br>
-            <br>
-            #유미의세포들 #유미의세포들시즌2 #티빙<br>
-            <br>
-            #유미2 #유미1 #유미의세포들몰아보기 #유미의세포들요약<br>
-            #유미의세포들2요약  #박진영 #김고은<br>
-            <br>
-            제작도움 : 티빙 TVING
-            <br>
-            🎬챕터안내<br>
-            5화 0:00<br>
-            6화 10:40<br>
-            <br>
-            사용된 BGM<br>
-            -  사월 - 그대와 함께 춤을.mp3<br>
-            <br>
-            ▶ 자취방남자 후원하기 : http://twip.kr/imalone1234<br>
-            ▶ 자취방남자의 무비코멘트 : https://url.kr/yuadCG<br>
-            ▶ 문의 주소 : honzanam2017@naver.com<br>
-            <br>
-            ––––––––––––––––––––––––––––––––––––––––––––––––––<br>
-            [Video Source Support]<br>
-            Youtube channel "freeticon" : https://www.youtube.com/c/Freeticon<br>
-            ––––––––––––––––––––––––––––––––––––––––––––––––––
-        </div>
+
         <p id="againtit"> 다시보기 </p>
         <div class="watchagain" id="slist" style="display: block !important;">
         </div>
@@ -273,19 +247,19 @@
                         html += `
                        	<div class="again">
                             <!-- <div class="againvideo">다시보기1</div> -->
-                            <a class="thumbnail" href="/streaming">
+                            <a class="thumbnail" href="/streamingReplay/${res[i].sno}">
                                 <img id="img" alt=""
                                 src="${res[i].simg}"/>
                             </a>
                             <div class="againdetail">
                                 <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
                                 <div class="titleNname">
-                                    <p class="againtitle">
-                                        <a class="againtitlelink" href="/streaming">
+                                    <p class="againtitle" style="margin:0; ">
+                                        <a class="againtitlelink" href="/streamingReplay/${res[i].sno}">
                                             ${res[i].sname}
                                         </a>
                                     </p>
-                                    <p class="againprofilename">더한섬닷컴</p>
+                                    <p class="againprofilename">더한섬라이브</p>
                                 </div>                    
                             </div>
                         </div>

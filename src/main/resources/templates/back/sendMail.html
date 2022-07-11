@@ -52,40 +52,90 @@
 </head>
 
 <body class="animsition">
+	<form id="CSRFForm" method="post">
+    <div>
+        <input type="hidden" name="CSRFHeadername"
+               th:value="${_csrf.headerName}" /> 
+               <input type="hidden"
+                name="CSRFToken" th:value="${_csrf.token}" /> <input type="hidden"
+                name="CSRFParameterName" th:value="${ _csrf.parameterName }" />
+    </div>
+</form>
 	<script type="text/javascript">
+	
 	function logoutClick() {
 		$('#logoutForm').submit();
   	}
+	
+	function getCsrfHeaderName() {
+        return $("#CSRFForm [name='CSRFHeadername']").val();
+    }
+
+    function getYCsrfToken() {
+        return $("#CSRFForm [name='CSRFToken']").val();
+    }
+
+    function getCsrfParameterName() {
+        return $("#CSRFForm [name='CSRFParameterName']").val();
+    }
 	var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    	
-		function send_mail(){
-			var title = $("#text-input").val();
-			var cont = $("#textarea-input").val();
-			
-			alert(cont);
-	          
-	          $.ajax({
-	             url : '/back/sendEmail',
-	             type: 'POST',
-	             data: JSON.stringify({
-	                'title' : title,
-	                'cont' : cont
-	             }),
-	             contentType: "application/json",
-	             beforeSend: function(xhr) {
-	                    xhr.setRequestHeader(header, token);
-	             },
-	             async : false,
-	             cache : false,
-	             success: function(res){
-	            	alert(res);
-	             },
-	             error: function(){
-	                alert("error")
+		
+	function send_mail() {
+		var title = $("#text-input").val();
+		var cont = $("#textarea-input").val();
+		
+		var data = {
+	         title: title,
+	         cont: cont
+	    }
+		
+		if(!document.getElementById("text-input").value){
+	        alert("제목을 입력해 주세요");
+	        return;
+	    }
+		if(!document.getElementById("textarea-input").value){
+	        alert("내용을 첨부해 주세요");
+	        return;
+	    }
+	    if(!document.getElementById("cimage").value){
+	        alert("파일을 첨부해 주세요");
+	        return;
+	    }
+	    
+	        
+	    var formData = new FormData();
+	    var fileInput = $('#cimage');
+	    // fileInput 개수를 구한다.
+	    for (var i = 0; i < fileInput.length; i++) {
+	         if (fileInput[i].files.length > 0) {
+	             for (var j = 0; j < fileInput[i].files.length; j++) {
+	                 console.log(" fileInput[i].files[j] :::"+ fileInput[i].files[j]);
+	                 // formData에 'file'이라는 키값으로 fileInput 값을 append 시킨다.
+	                 formData.append('cimage', $('#cimage')[i].files[j]);
 	             }
-	          });
-		}
+	         }
+	    }
+	    formData.append('key', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
+	    $.ajax({
+	        url: "/back/sendAllEmail",
+	        method: "post",
+	        data: formData,
+	        contentType: false,               // * 중요 *
+	        processData: false,               // * 중요 *
+	        enctype : 'multipart/form-data',
+	        beforeSend: function (xhr) {
+	            xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+	        },
+	        cache: false,
+	        success: function (data) {
+	            alert("메일 보내기 성공");
+	        },
+	        error: function (request, status, error) {
+	            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+	}
 	</script>
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
@@ -215,20 +265,31 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        
                         <li>
                             <a href="chart">
                                 <i class="fas fa-chart-bar"></i>차트</a>
                         </li>
                         <li><a href="memberBO"> <i
-                        class="far fa-check-square"></i>회원 관리
-                  </a></li>
-                  <li><a href="productBO"> <i class="fas fa-table"></i>매장 관리
-                  </a></li>
-                  <li class="active"><a href="sendMail"> <i class="zmdi zmdi-email"></i>메일 보내기
-                  </a></li>
-                  <li><a href="streamingBO"> <i class="fas fa-tv"></i>스트리밍 관리
-                  </a></li>
+                                class="far fa-check-square"></i>회원 관리
+                        </a></li>
+                        <li><a href="productBO"> <i class="fas fa-table"></i>매장 관리
+                        </a></li>
+                        <li>
+                            <a href="qnaBO" style="bottom : 0">
+                                <svg style="margin-right: 15px; margin-top: 5px;" xmlns="http://www.w3.org/2000/svg"
+                                     width="16" height="15" fill="currentColor" class="bi bi-pencil-square"
+                                     viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd"
+                                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                </svg>
+                                <div style="display: inline-block; margin-bottom: 10px">문의 관리</div>
+                            </a>
+                        </li>
+                        <li class="active"><a href="sendMail"> <i class="zmdi zmdi-email"></i>메일 보내기
+                        </a></li>
+                        <li><a href="streamingBO"> <i class="fas fa-tv"></i>스트리밍 관리
+                        </a></li>
                     </ul>
                 </nav>
             </div>
@@ -333,15 +394,7 @@
                                                     <label for="file-input" class=" form-control-label">File input</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="file" id="file-input" name="file-input" class="form-control-file">
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="file-multiple-input" class=" form-control-label">Multiple File input</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="file" id="file-multiple-input" name="file-multiple-input" multiple="" class="form-control-file">
+                                                    <input type="file" id="cimage" name="file-input" multiple class="form-control-file">
                                                 </div>
                                             </div>
                                         </form>

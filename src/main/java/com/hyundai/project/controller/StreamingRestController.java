@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -94,7 +95,7 @@ public class StreamingRestController {
                 .build();
         
         try {
-        ListObjectsV2Result result = s3Client.listObjectsV2(bucketName);
+        ListObjectsV2Result result = s3Client.listObjectsV2(bucketName,folderPath);
         List<S3ObjectSummary> objects = result.getObjectSummaries();
 //        String id = objects.get(0).getKey();
         String surl = "";
@@ -105,6 +106,7 @@ public class StreamingRestController {
         	} else if(os.getKey().endsWith("thumb0.jpg")) {
         		simg = os.getKey();
         	}
+        	log.info(os.getKey());
         }
         dto.setSurl(cdn+surl);
         dto.setSimg(cdn+simg);
@@ -118,12 +120,25 @@ public class StreamingRestController {
     }
 	
 	@DeleteMapping("/delete")
-	public String deleteStreaming(@RequestParam int sno) {
+	public String deleteStreaming(@RequestBody StreamingDTO dto) {
 		try {
-			service.deleteStreaming(sno);
+			service.deleteStreaming(dto.getSno());
         } catch (Exception e) {
             e.printStackTrace();
         } // end try
         return "streaming delete success";
+	}
+	
+	@GetMapping("/replay/{sno}")
+	public ResponseEntity<StreamingDTO> getReplay(@PathVariable("sno") int sno) {
+		ResponseEntity<StreamingDTO> entry = null;
+		try {
+            entry = new ResponseEntity<StreamingDTO>(service.getReplay(sno), HttpStatus.OK);
+            //log.info(entry);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entry = new ResponseEntity<StreamingDTO>(HttpStatus.BAD_REQUEST);
+        } // end try
+        return entry;
 	}
 }

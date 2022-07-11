@@ -11,7 +11,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
 <link rel="stylesheet" type="text/css"
-	href="/resources/_ui/desktop/common/css/mobile.css">
+	href="/resources/_ui/desktop/common/css/streamChat.css">
 
 <link rel="stylesheet" type="text/css"
 	href="/resources/_ui/desktop/common/css/jquery-ui.min.css" media="all" />
@@ -58,24 +58,19 @@
 </head>
 <body>
    <div id="main">
-      <!-- 스트리밍 -->
-      <div id="streaming" style="visibility:hidden">
-           <video id="amazon-ivs-videojs" class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay playsinline></video>
-       </div>
 
       <!-- 채팅방 -->
       <div id="chating">
-            <div id="msgArea" class="col">
+            <div id="msgArea" class="col" style="width:250px;height:500px;">
             
             </div>
-            <div class="col-11">
-               <div class="input-group mb-3" id="fixInput">
+<!--             <div class="col-3" style="width:250px; font-size:10px;"> -->
+               <div class="input-group mb-3" id="fixInput" style="width:250px;">
                   <input type="text"
                      id="msg" class="form-control" aria-label="Recipient's username"
                      aria-describedby="button-addon2"
-                     onkeyup="if(window.event.keyCode==13){send()}" />
-                  <button class="custom-btn btn-2" type="button"
-                     id="submitBtn" onclick="send(); ">&#128172;</button>
+                     onkeyup="if(window.event.keyCode==13){send()}" 
+                     />
                </div>
             </div>
       </div>
@@ -109,7 +104,7 @@
 
 		<script>
             const username = "[[${member.getMemail()}]]";
-            const websocket = new WebSocket("ws://localhost/ws/chat");
+            const websocket = new WebSocket("ws://3.34.216.148:8080/ws/chat");
 
             websocket.onmessage = onMessage;
             websocket.onopen = onOpen;
@@ -159,23 +154,23 @@
                 console.log("sessionID : " + sessionId);
                 console.log("cur_session : " + cur_session);
             if (arr[1] == " 님이 입장하셨습니다." || arr[1] == " 님이 방을 나가셨습니다.") {
-                var str = "<div class='col-11'>";
-                str += "<li class='alert alert-secondary' id='welcome'>";
+                var str = "<div class='col-3'>";
+                str += `<li id='welcome' style="width:240px; font-size:10px;">`;
                 str += "<b>" + sessionId + message + "</b>";
                 str += "</li</div>";
                 $("#msgArea").append(str);
             } else {
                 //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
                 if (sessionId == cur_session) {
-                    var str = "<div class='col-11'>";
-                    str += "<li class='alert alert-secondary' id='chatUI'>";
-                    str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
+                    var str = "<div class='col-3'>";
+                    str += `<li id='chatUI' style="width:250px; font-size:12px;">`;
+                    str += "<span><span style='color: orange;'>" + sessionId + "</span> : " + message + "</span>";
                     str += "</li></div>";
                         $("#msgArea").append(str);
                     } else {
-                        var str = "<div class='col-11'>";
-                        str += "<li class='alert alert-warning' id='tachatUI'>";
-                        str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
+                        var str = "<div class='col-3'>";
+                        str += `<li id='tachatUI' style="width:250px; font-size:12px;">`;
+                        str += "<span><span style='color: mediumspringgreen;'>" + sessionId + "</span> : " + message + "</span>";
                         str += "</li></div>";
                         $("#msgArea").append(str);
                     }

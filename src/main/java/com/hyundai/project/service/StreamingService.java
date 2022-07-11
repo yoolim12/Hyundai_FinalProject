@@ -11,4 +11,6 @@ public interface StreamingService {
 	public void uploadStreaming(StreamingDTO dto) throws Exception;
 	
 	public void deleteStreaming(int sno) throws Exception;
+	
+	public StreamingDTO getReplay(int sno) throws Exception;
 }

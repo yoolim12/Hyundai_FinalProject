@@ -34,8 +34,27 @@ input {
 }
 </style>
 	<script type="text/javascript">
+	
         $(document).ready(function () {
-            var todayDate = new Date();
+/*             const url = "[[${video.surl}]]";
+    	    $("#replay").attr("src",url);
+ */        	
+ 			/* let v_play = `
+ 				<a href="javascript:void(0);"> 
+				  <video id="amazon-ivs-videojs"
+					class="video-js vjs-default-skin"  controls preload="auto" data-setup="{}">
+					<source
+					id="replay"
+	                src="[[${video.surl}]]"
+	                type="application/x-mpegURL"
+    	          />
+				 </video>
+				</a>
+ 			`;
+ 			$("#videoDiv1903").html(v_play); */
+ 
+ 
+            let todayDate = new Date();
 
             var getUrlParameter = function getUrlParameter(sParam) {//URL에 포함된 파라미터 이용하기
                 var sPageURL = window.location.search.substring(1),
@@ -85,14 +104,14 @@ input {
 					<spring:theme code="main.video.title" />
 				</h4>
 				<div style="height: auto">
-					<div class="video_area1903" id="videoDiv1903"
-						style="float: left; width: 68%; margin-left: 2%;">
-						<a href="javascript:void(0);"> <!-- <div class="video_main" style="display: block;">
-                                <span class="play_btn"></span>
-                                <img src="/resources/medias/220610-D-awesome-03.jpg?context=bWFzdGVyfGltYWdlc3w4NjUzM3xpbWFnZS9qcGVnfGltYWdlcy9oMWUvaGRjLzkzMDQ4OTk3ODA2MzguanBnfDRjODEzNTQ3NDgxYzhmNDZhNGY2ZWRjMWY4OWVjOTNhOTY4NWFkMTM5ZDViMzQyYjgzOWFiMjdhZmI4YzY1NzY" alt="poster">
-                            </div> --> <video id="amazon-ivs-videojs"
-								class="video-js vjs-4-3 vjs-big-play-centered" controls autoplay
-								playsinline>
+					<div class="video_area1903" id="videoDiv1903">
+						<a href="javascript:void(0);"> 
+							 <video id="amazon-ivs-videojs"
+								class="video-js vjs-4-3 vjs-big-play-centered"  controls preload="auto" data-setup="{}">
+								<source
+								th:src="@{{surl}(surl=${video.surl})}"
+				                type="application/x-mpegURL"
+				            />
 							</video>
 						</a>
 					</div>
@@ -100,418 +119,17 @@ input {
 			</div>
 			<div class="txt">
 				<p class="tit">
-					aweSOME life 7.<br>HANESOME-E
+					[[${video.sname}]]<br>GKMCC
 				</p>
 				<p class="s_t">
-					변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택
+					[[${video.scontent}]]
 				</p>
 			</div>
-			<p id="againtit"> 다시보기 </p>
-        <div class="watchagain" style="display: block !important;">
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=mJJ2wolDEMU">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/mJJ2wolDEMU/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&amp;rs=AOn4CLDdnOLqhcoHycWnPcw3QrSRf42JTQ">
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=mJJ2wolDEMU">
-                                눈이 4개면 먹지도 않고 소고기 부위 구분 가능? 강호동 초능력 멀티버스 대방출 ☄️
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=_c4cKLYD28o">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/_c4cKLYD28o/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLALTA0AXSvC0uOfkb3hfjtHXyYLAg"/>
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=_c4cKLYD28o">
-                                NAYEON “POP!” Choreography Video
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=iU1tU8hTlsc">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/iU1tU8hTlsc/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC-i_u88eFrnfVbG30f44nVhmg2dg" />
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=iU1tU8hTlsc">
-                                [#유미의세포들] 내 친구 결혼식에는 머리도 안 감고 온 남자친구가 지(?) 친구 결혼식에는 쫙 빼입고 왔다. 못 하는 게 아니라 안 한 거였어? | #티전드+ #ㅌㅂㅌㅂ
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=xdui61Kc5Ok">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/xdui61Kc5Ok/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA1nFKVI8DxzMBxDLq9qtj1EkgEsQ" />
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=xdui61Kc5Ok">
-                                🍯단 거를 먹으면 행복해집니다 | 단맛 챌린지, 코하쿠토, 지구젤리, 누텔라, 랜디스 도넛, 바클라바, 벌집꿀
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=8cgSPjPHdN4">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/8cgSPjPHdN4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDWKAuqHILctuo62AY8pcJ0adt0LQ" />
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=8cgSPjPHdN4">
-                                뱀을 무서워하지 않는 개구리
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=DzVbKwmMbo8">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/DzVbKwmMbo8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD9YHPNHQxEY9GThTnoMHQ9G5gCQQ">
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=DzVbKwmMbo8">
-                                [#티전드] (감동파괴) 구구절절 단점 고백했더니 왜 게임 버저가 되는 거죠?^^ 나PD에겐 무조건 단답하는 게 답 | #신서유기8 #Diggle | CJ ENM 201113 방송
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=qMwzWk81tVM">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/qMwzWk81tVM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAXGs9frK8ne87AX0AFcYyts8jYwQ">
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=qMwzWk81tVM">
-                                [inflaylist] 공부/작업 할 때 집중해서 듣기 좋은 음악✍ | 4 hour playlist | lofi, piano | 직장인 | 대학생 | 프리랜서 | 취준생
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=f4xOsAIRnOY">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/f4xOsAIRnOY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCqCKZCtUPLuPi-dW4ghk_veKmUyQ" />
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=f4xOsAIRnOY">
-                                생일인데도 무시당하고 타박 받았지만 문희는 행복해요♡ ★불금특집 십분순삭★ | 거침킥⏱오분순삭 MBC070511 방송
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=f4xOsAIRnOY">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/f4xOsAIRnOY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCqCKZCtUPLuPi-dW4ghk_veKmUyQ" />
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=f4xOsAIRnOY">
-                                생일인데도 무시당하고 타박 받았지만 문희는 행복해요♡ ★불금특집 십분순삭★ | 거침킥⏱오분순삭 MBC070511 방송
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=f4xOsAIRnOY">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/f4xOsAIRnOY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCqCKZCtUPLuPi-dW4ghk_veKmUyQ" />
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=f4xOsAIRnOY">
-                                생일인데도 무시당하고 타박 받았지만 문희는 행복해요♡ ★불금특집 십분순삭★ | 거침킥⏱오분순삭 MBC070511 방송
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=f4xOsAIRnOY">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/f4xOsAIRnOY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCqCKZCtUPLuPi-dW4ghk_veKmUyQ" />
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=f4xOsAIRnOY">
-                                생일인데도 무시당하고 타박 받았지만 문희는 행복해요♡ ★불금특집 십분순삭★ | 거침킥⏱오분순삭 MBC070511 방송
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            <div class="again">
-                <!-- <div class="againvideo">다시보기1</div> -->
-                <a class="thumbnail" href="https://www.youtube.com/watch?v=f4xOsAIRnOY">
-                    <img id="img" alt=""
-                    src="https://i.ytimg.com/vi/f4xOsAIRnOY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCqCKZCtUPLuPi-dW4ghk_veKmUyQ" />
-                </a>
-                <div class="againdetail">
-                    <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                    <div class="titleNname">
-                        <p class="againtitle">
-                            <a class="againtitlelink" href="https://www.youtube.com/watch?v=f4xOsAIRnOY">
-                                생일인데도 무시당하고 타박 받았지만 문희는 행복해요♡ ★불금특집 십분순삭★ | 거침킥⏱오분순삭 MBC070511 방송
-                            </a>
-                        </p>
-                        <p class="againprofilename">더한섬닷컴</p>
-                    </div>                    
-                </div>
-            </div>
-            
+        <div class="watchagain" id="slist" style="display: block !important;">
         </div>
 		</div>
 	</div>
 	<script>
-        const DEFAULT_STREAM = "https://65cd6d00bb9f.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.293546108023.channel.lt4D0GzSMPEs.m3u8";
-        (function () {
-            registerIVSTech(videojs);
-            registerIVSQualityPlugin(videojs);
-
-            const videoJSPlayer = videojs("amazon-ivs-videojs", {
-                techOrder: ["AmazonIVS"],
-                controlBar: {
-                    playToggle: {
-                        replay: false
-                    },
-                    pictureInPictureToggle: false
-                }
-            });
-
-            const readyCallback = function () {
-                window.videoJSPlayer = videoJSPlayer;
-
-                const ivsPlayer = videoJSPlayer.getIVSPlayer();
-
-                const videoContainerEl = document.querySelector("#amazon-ivs-videojs");
-                videoContainerEl.addEventListener("click", () => {
-                    if (videoJSPlayer.paused()) {
-                        videoContainerEl.classList.remove("vjs-has-started");
-                    } else {
-                        videoContainerEl.classList.add("vjs-has-started");
-                    }
-                });
-
-                const PlayerState = videoJSPlayer.getIVSEvents().PlayerState;
-                ivsPlayer.addEventListener(PlayerState.PLAYING, () => {
-                    console.log("Player State - PLAYING");
-                    setTimeout(() => {
-                        console.log(
-                            `This stream is ${
-                                ivsPlayer.isLiveLowLatency() ? "" : "not "
-                            }playing in ultra low latency mode`
-                        );
-                        console.log(`Stream Latency: ${ivsPlayer.getLiveLatency()}s`);
-                    }, 3000);
-                });
-
-                // Log errors
-                const PlayerEventType = videoJSPlayer.getIVSEvents().PlayerEventType;
-                ivsPlayer.addEventListener(PlayerEventType.ERROR, (type, source) => {
-                    console.warn("Player Event - ERROR: ", type, source);
-                });
-
-                ivsPlayer.addEventListener(PlayerEventType.TEXT_METADATA_CUE, (cue) => {
-                    const metadataText = cue.text;
-                    const position = ivsPlayer.getPosition().toFixed(2);
-                    console.log(
-                        `Player Event - TEXT_METADATA_CUE: "${metadataText}". Observed ${position}s after playback started.`
-                    );
-                });
-
-                videoJSPlayer.enableIVSQualityPlugin();
-
-                videoJSPlayer.volume(0.5);
-                videoJSPlayer.src(DEFAULT_STREAM);
-            };
-
-            videoJSPlayer.ready(readyCallback);
-        })();
-
-        /*
-        (function () {
-            const containerEl = document.querySelector(".video-container");
-            const directSrcFormEl = containerEl.querySelector(".src-container-direct");
-            const directSrcInputEl = containerEl.querySelector(".src-input");
-            directSrcFormEl.addEventListener("submit", (e) => {
-                e.preventDefault();
-                videoJSPlayer.src(directSrcInputEl.value);
-            });
-        })(); */
-        const username = "[[${member.getMemail()}]]";
-        console.log(username);
-        /* const websocket = new WebSocket("ws://43.200.81.238/ws/chat"); */
-        const websocket = new WebSocket("ws://localhost/ws/chat");
-
-        websocket.onmessage = onMessage;
-        websocket.onopen = onOpen;
-        websocket.onclose = onClose;
-
-        function send() {
-            if ($("#msg").val() == "") return;
-            console.log("SEND");
-            let msg = document.getElementById("msg");
-
-            console.log(username + ":" + msg.value);
-            websocket.send(username + ":" + msg.value);
-            msg.value = "";
-        }
-
-        //채팅창에 들어왔을 때
-        function onOpen(evt) {
-            var str = username + ": 님이 입장하셨습니다.";
-            websocket.send(str);
-        }
-
-        //채팅창에서 나갔을 때
-        function onClose(evt) {
-            var str = username + ": 님이 방을 나가셨습니다.";
-            websocket.send(str);
-        }
-
-        function onMessage(msg) {
-            //console.log(msg);
-            var data = msg.data;
-            var sessionId = null;
-            //데이터를 보낸 사람
-            var message = null;
-            var arr = data.split(":");
-
-            for (var i = 0; i < arr.length; i++) {
-                console.log("arr[" + i + "]: " + arr[i]);
-            }
-
-            var cur_session = username;
-
-            //현재 세션에 로그인 한 사람
-            console.log("cur_session : " + cur_session);
-
-            sessionId = arr[0];
-            message = arr[1];
-
-            console.log("sessionID : " + sessionId);
-            console.log("cur_session : " + cur_session);
-
-            if (arr[1] == " 님이 입장하셨습니다." || arr[1] == " 님이 방을 나가셨습니다.") {
-                var str = "<div class='col-11'>";
-                str += "<li class='alert alert-secondary' id='welcome'>";
-                str += "<b style='color: #3f729b'>" + sessionId + message + "</b>";
-                str += "</li</div>";
-                $("#msgArea").append(str);
-            } else {
-                //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-                if (sessionId == cur_session) {
-                    var str = "<div class='col-11'>";
-                    str += "<li class='alert alert-secondary' id='chatUI'>";
-                    str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
-                    str += "</li></div>";
-                        $("#msgArea").append(str);
-                    } else {
-                        var str = "<div class='col-11'>";
-                        str += "<li class='alert alert-warning' id='tachatUI'>";
-                        str += "<span><span style='color: #574a95;'>" + sessionId + "</span> : " + message + "</span>";
-                        str += "</li></div>";
-                        $("#msgArea").append(str);
-                    }
-            }
-        }
-        
-        /* const slider = document.querySelector('.again');
-        let isMouseDown = false;
-        let startX, scrollLeft;
-        
-        slider.addEventListener('mousedown', (e) => {
-        	isMouseDown = true;
-        	slider.classList.add('active');
-        	
-        	startX = e.pageX - slider.offsetLeft;
-        	scrollLeft = slider.scrollLeft;
-        });
-        
-        slider.addEventListener('mouseleave', () => {
-        	isMouseDown = false;
-        	slider.classList.remove('active');
-        });
-        
-        slider.addEventListener('mouseup', () => {
-        	isMouseDown = false;
-        	slider.classList.remove('active');
-        });
-        
-        slider.addEventListener('mousemove', (e) => {
-        	if(!isMouseDown) return;
-        	
-        	e.preventDefault();
-        	const x = e.pageX - slider.offsetLeft;
-        	const walk = (x - startX) * 1;
-        	slider.scrollLeft = scrollLeft - walk;
-        }); */
         
         const list = document.querySelector('.watchagain');
         const listScrollWidth = list.scrollWidth;
@@ -522,6 +140,48 @@ input {
         let endX = 0;
         let listX = 0;
         
+     // 다시보기 목록 출력 
+   		$(document).ready(function () {
+            $.ajax({
+                url: "/back/streaming/list",
+                type: "GET",
+                dataType: "json",
+                async: false,
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+                success: function (res) {
+                    let html = ``;
+                    for (let i = 0; i < res.length; i++) {
+                    	if([[${video.sno}]] != res[i].sno)
+                        html += `
+                       	<div class="again">
+                            <!-- <div class="againvideo">다시보기1</div> -->
+                            <a class="thumbnail" href="/streamingReplay/${res[i].sno}">
+                                <img class="img" alt=""
+                                src="${res[i].simg}"/>
+                            </a>
+                            <div class="againdetail">
+                                <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
+                                <div class="titleNname" style="text-align:left;">
+                                    <p class="againtitle" style="font-size:14px">
+                                        <a class="againtitlelink" href="/streamingReplay/${res[i].sno}">
+                                            ${res[i].sname}
+                                        </a>
+                                    </p>
+                                    <p class="againprofilename"><strong>더현대라이브</strong></p>
+                                    <p>${res[i].sdate}</p>
+                                </div>                    
+                            </div>
+                        </div>
+                        `;
+                    }
+                    $("#slist").html(html);
+                }
+            })
+            
+
+   		})
         
     </script>
 </div>

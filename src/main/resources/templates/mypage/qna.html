@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/common}">
+<head>
+	<title>마이페이지 | 주문조회</title>
+</head>
+<div layout:fragment="content">
+<script>
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).on("click", '.btn', function () {
+	    var prodid = $(this).prop('id').split("_");
+
+	    if (prodid[0] == 'optCancelLayer') {
+	        $(this).parents('.basket_info').slideUp('fast');
+	    }
+	});
+    var obj, arr;
+    $(document).ready(function () {
+            $.ajax({ // 해당 사용자가 작성한 QNA 리스트 불러오는 ajax 호출
+                url: "/mypage/QNAList",
+                type: "get", //GET 방식으로 전달
+                async: false,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.length < 1) { // 게시물 없을 경우
+                        var listTag = "";
+                        listTag += "<tr>";
+                        listTag += "<td colspan='4' class='no_data'>";
+                        listTag += "등록된 게시글이 없습니다.";
+                        listTag += "</td>";
+                        listTag += "</tr>";
+                        document.getElementById("listBody").innerHTML = listTag;
+                    } else { // 게시물 있는 경우
+                        arr = new Array(data.length);
+                        obj = data;
+                        var listTag = "";
+                        for (var i = 0; i < data.length; i++) {
+                            var date = data[i].qdate.substr(0, 10);
+                            arr[i] = false;
+                            listTag += '<tr class="al_middle" cdlist="[]" pk="8919204155322" onClick="showContent(' + i + ')" >';
+                            listTag += "<td class='frt'>" + date + "</td><td>"+data[i].qkind+"</td><td class='al_left'><a href='javascript:void(0);'>" + data[i].qtitle + "</a></td>";
+
+                            if(data[i].qstatus == 0) listTag += "<td>[답변대기]</td>";
+                            else listTag += "<td style='color: #c69c6c'>[답변완료]</td>";
+
+                            listTag += '</tr><tr id="qna' + i + '"></tr>';
+                        }
+                        document.getElementById("listBody").innerHTML = listTag;
+                        document.getElementById("qnaCount").innerText = data.length + ' 건';
+                    }
+                },
+                error: function () {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            });
+        let rank = [[${membergno}]];
+        let grade = '', rate;
+        if (rank === 1) grade = 'FRIEND', rate = 5;
+        else if (rank === 2) grade = 'CREW', rate = 6;
+        else if (rank === 3) grade = 'MANIA', rate = 7;
+        else if (rank === 4) grade = 'STAR', rate = 8;
+        else grade = 'THESTAR', rate = 5;
+        $("#mrank").html(grade);
+
+        const hpoint = numWithComma([[${memberpoint}]]);
+        var hhtml = `<br><a class="count" href="javascript:void(0)" onclick="GA_Event('마이페이지','회원정보','H.POINT');"><span>` + hpoint + `P</span></a>`;
+        document.getElementById("hpoint").innerHTML += hhtml;
+        const memail = "[[${member.memail}]]";
+    })
+	
+   // 리스트에서 제목 클릭 시 내용이 펼쳐지도록
+    function showContent(i) {
+        var listTag = "";
+        if (arr[i] == false) {
+           var qcontent = obj[i].qcontent;
+           if(obj[i].qcontent == null) qcontent = "";
+           console.log(qcontent);
+            listTag += '<tr><td class="qna_wrap" colspan="4"><div class="qna_box ch"><p></p><div class="qt"><span class="ico">quest</span>';
+            if(obj[i].qimage == null) {
+                listTag += '<div class="txt"><p style="font-weight: 900; font-size:15px; word-wrap:break-word; margin-top:7px">' + obj[i].qtitle + '</p><br><br><br>';
+                listTag += '<p style="word-wrap:break-word">' + qcontent + '</p><br><br>';
+            }
+            else {
+                listTag += '<div class="txt"><p style="font-weight: 900; font-size:15px; word-wrap:break-word; margin-top:7px">' + obj[i].qtitle + '</p><br><br><br>';
+                listTag += '<p style="word-wrap:break-word">' + qcontent + '</p><br><br><img id="imgsrc2" src="'+obj[i].qimage+'" alt="thumimg" style="width:300px" class="tlt"/><br><br>';
+            }
+            listTag +=
+                '<p class="date" style="color:#999;">등록일 : ' +
+                obj[i].qdate +
+                '</p><a onclick="deleteContent(' +
+                obj[i].qid +
+                ')" style="float:right" class="btn add_ss mr0">삭제</a><a href="/mypage/updateQna?qid=' +
+                obj[i].qid +
+                '" style="float:right" class="btn add_ss mr0">수정</a></div></div>';
+            if(obj[i].qstatus == 1)  listTag += `<div class="an"><span class="ico">answer</span><div class="txt"><p style="word-wrap: break-word">안녕하세요, 고객님. 더한섬닷컴입니다.<br>오늘도 더한섬닷컴을 찾아주신 고객님께 진심으로 감사 인사드립니다.<br></br>${obj[i].qreplycontent}<br><br>오늘도 감사합니다. 더한섬닷컴과 함께 즐거운 하루 되시길 바랍니다.</p><p class="date">답변일 : ${obj[i].qreplydate}</p></div></div></div></td></tr>`;
+            arr[i] = true;
+        } else {
+            listTag = "";
+            arr[i] = false;
+        }
+        document.getElementById("qna" + i).innerHTML = listTag;
+    }
+
+   // 게시물 삭제하는 ajax 호출
+    function deleteContent(qid) {
+        var url = "/mypage/deleteQNA?qid=" + qid;
+        var lc = new layerConfirm('해당 게시물을 삭제하시겠습니까?');
+        lc.confirmAction = function () {
+            $.ajax({
+                url: url,
+                method: "delete",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+                },
+                success: function (data) {
+                    var la = new layerAlert('완료되었습니다.');
+                    location.href='/mypage/qna';
+                },
+                error : function( request, status, error ){
+                    console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
+                }
+            });
+        }
+    }
+</script>
+<div id="bodyWrap">
+    <h3 class="cnts_title">
+        <span id="menuTitle">마이페이지</span>
+    </h3>
+    <div class="" style="position: relative; width: 834px; height: 0; display: block; left: 50%; margin-left: -338px;">
+        <div class="delch_box tooltip1907" id="store_delbox" style="display: none;">
+            <span class="arr">위치아이콘</span> 작성 가능한 상품평 확인하시고,<br />
+            상품평 작성해서 추가 마일리지 적립하세요.
+        </div>
+    </div>
+    <div class="sub_container">
+        <!-- lnb -->
+        <div class="lnb_wrap">
+            <h4>
+                <a href="/mypage">마이페이지<!-- 마이페이지 --></a>
+            </h4>
+            <div class="lnb">
+                <dl>
+                    <dt>주문조회</dt>
+                    <dd>
+                        <a href="javascript:void(0)" onclick="GA_Event('마이페이지','LNB','주문/배송/취소');">주문/배송/취소</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>혜택관리</dt>
+                    <dd>
+                        <a href="/mypage/grade" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
+                    </dd>
+                    <dd>
+                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 H-POINT');">나의 H.POINT</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>나의 정보관리</dt>
+                    <dd>
+                        <a href="/mypage/personInformationChange" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>나의 활동관리</dt>
+                    <!-- <dd><a href="#">회원등급</a></dd> -->
+                    <dd>
+                        <a href="javacript:void(0)" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a>
+                    </dd>
+                    <!-- <dd><a href="#">이벤트 참여현황</a></dd> -->
+                </dl>
+            </div>
+            <!-- ph_guide -->
+            <div class="ph_guide">
+                <p class="tlt">고객센터 운영 안내</p>
+                <p class="phone" style="font-size:18px;">1800-5700<span style="color: #c69c6d;" class="txt"><br>(유료)</span></p>
+                <p class="txt">
+                    평일(월~금)<br />
+                    am 09:00 ~ pm 18:00<span>토/일, 공휴일 휴무</span>
+                </p>
+                <a href="mailto:shophelp@GKMCC.com" onclick="GA_Event('마이페이지','LNB','이메일 문의');">
+                    shophelp<br />
+                    @thehandsome.com
+                </a>
+            </div>
+            <!-- //ph_guide -->
+        </div>
+        <!-- //lnb -->
+        <!-- cnts -->
+        <div class="sub_cnts">
+            <div class="profile_info1 clearfix review_betterment1905">
+                <div class="name">
+                    <span th:text="${membername}+ 님" class="ico_grade"><span style="margin-left: 10px;"></span></span> <span class="grade_txt" id="grade_txt"></span>
+                </div>
+                <div class="pointbox_cover">
+                    <div class="point_wrap">
+                        <!-- <div class="point" style="border-left: 0; padding-left: 0;">
+                            <p class="title">한섬마일리지</p>
+                            <a class="count" href="/ko/mypage/mypoint" onclick="GA_Event('마이페이지','회원정보','한섬마일리지');">0&nbsp;<span>M</span></a>
+                        </div> -->
+                        <div class="point">
+                            <p class="title" id="hpoint">H.POINT</p>
+                        </div>
+                        <div class="point">
+                            <p class="title">회원 등급</p>
+                            <a class="count" href="/mypage/grade" onclick="GA_Event('마이페이지','회원정보','RANK');" id="mrank"></a>
+                        </div>
+                        <div class="point review">
+                            <p class="title">총 문의</p>
+                            <a href="javascript:void(0)" class="count" id="qnaCount" style="float: right" onclick="GA_Event('마이페이지','회원정보','총 주문조회');"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 회원정보 -->
+            <div class="title_wrap mt50">
+                <h4 class="float_left">나의 1:1 문의&nbsp;</h4>
+                <p class="txt_line">고객님의 문의를 등록하시면 빠른 시일 내 답변 드리겠습니다.</p>
+                <div class="btn_wrap">
+                    <a href="/mypage/insertQna" class="btn add_ss mr0">문의하기</a>
+                </div>
+            </div>
+            <!-- Table -->
+            <div class="tblwrap">
+                <table class="tbl_ltype">
+                    <caption>
+                        >나의 1:1 문의 목록
+                    </caption>
+                    <colgroup>
+                        <col style="width: 100px;" />
+                        <col style="width: 140px;" />
+                        <col />
+                        <col style="width: 100px;" />
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th scope="col">등록일</th>
+                        <th scope="col">상담유형</th>
+                        <th scope="col">내용</th>
+                        <th scope="col">처리상태</th>
+                    </tr>
+                    </thead>
+                    <tbody id="listBody"></tbody>
+                </table>
+            </div>
+            <!-- //Table -->
+            <!--paging-->
+            <div class="paging mt30" id = "paging"></div>
+            <!--//paging-->
+        <!-- //cnts -->
+    </div>
+</div>
+</body>
+</div>
+</html>

@@ -116,7 +116,7 @@ input {
                                         <!-- <img src="/_ui/desktop/common/images/popup/ico_close.png" alt=""> -->
                                         <img class="upArrow" src="/resources/_ui/desktop/common/images/uparrow.png" alt="">
                                     </a>
-                                    <p class="foldMsg">접기</p>
+                                    <p class="foldMsg upArrow">접기</p>
                                 </div>
                                 <div class="productInfo">
                                     <p class="tit" style="display: block;">상품 바로 보러가기</p>
@@ -166,7 +166,7 @@ input {
 					변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택
 				</p>
 			</div>
-			<p id="againtit"> 다시보기 </p>
+			<br><br>
         <div class="watchagain" id="slist" style="display: block !important;">
         </div>
       </div>
@@ -302,7 +302,7 @@ input {
 
             if (arr[1] == " 님이 입장하셨습니다." || arr[1] == " 님이 방을 나가셨습니다.") {
                 var str = "<div class='col-11'>";
-                str += "<li class='alert alert-secondary' id='welcome'>";
+                str += "<li class='alert alert-secondary' id='welcome' style='margin-bottom: 3px;'>";
                 str += "<b style='color: #3f729b'>" + sessionId + message + "</b>";
                 str += "</li></div>";
                 $("#msgArea").append(str);
@@ -381,19 +381,19 @@ input {
                         html += `
                        	<div class="again">
                             <!-- <div class="againvideo">다시보기1</div> -->
-                            <a class="thumbnail" href="/streaming">
+                            <a class="thumbnail" href="/streamingReplay/${res[i].sno}">
                                 <img class="img" alt=""
                                 src="${res[i].simg}"/>
                             </a>
                             <div class="againdetail">
                                 <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                                <div class="titleNname">
-                                    <p class="againtitle">
-                                        <a class="againtitlelink" href="/streaming">
+                                <div class="titleNname" style="text-align:left;">
+                                    <p class="againtitle" style="font-size:14px">
+                                        <a class="againtitlelink" href="/streamingReplay/${res[i].sno}">
                                             ${res[i].sname}
                                         </a>
                                     </p>
-                                    <p class="againprofilename">더한섬닷컴</p>
+                                    <p class="againprofilename"><strong>더현대라이브</strong></p>
                                 </div>                    
                             </div>
                         </div>

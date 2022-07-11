@@ -2,6 +2,7 @@ package com.hyundai.project.controller;
 
 import java.util.Map;
 
+import com.hyundai.project.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,9 @@ import lombok.extern.log4j.Log4j2;
 public class BackController {
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
+
+	@Setter(onMethod_ = @Autowired)
+	private QnaService qservice;
 	
 	@Autowired
 	private MailService mail;
@@ -105,11 +109,28 @@ public class BackController {
 		return "back/streamingBO";
 	}
 	
-	// 스트리밍 페이지 이동
+	// 이메일 보내기 페이지 이동
 	@GetMapping("/sendMail")
 	public String sendEmail() {
 		log.info("이메일 페이지 요청");
 		return "back/sendMail";
+	}
+
+	// QNA BO 페이지 이동
+	// 회원관리 페이지 이동
+	@GetMapping("/qnaBO")
+	public void qnaBO(Model model) throws Exception {
+		model.addAttribute("qnaList", qservice.getAllQna());
+	}
+
+	// QNA 조회 ajax + thymleaf
+	@PostMapping("/qnaView")
+	public String qnaView(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
+		String memail = paramMap.get("email");
+		log.info(memail);
+		model.addAttribute("qnaList", qservice.getQnaInfo(memail));
+
+		return "back/qnaBO :: #qnaInfo";
 	}
 		
 }

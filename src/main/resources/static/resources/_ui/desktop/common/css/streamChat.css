@@ -1,0 +1,89 @@
+.blsmflw1 {
+	animation: target_image 1.5s;
+	animation-iteration-count: 2;
+	transform-origin: 50% 50%;
+}
+
+div, span {
+	line-height: unset;
+}
+
+video::-webkit-media-controls-time-remaining-display {
+	display: none;
+}
+
+body {
+	margin: 0;
+}
+
+.cnts_title {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#msgArea {
+	padding-top: 2%;
+	overflow: scroll;
+	height: 50rem;
+	border-radius: 7px;
+    background-color: rgba(0,0,0,0.46);
+}
+
+#msg {
+	width: 91%;
+	background-color: white;
+	padding: 1%
+}
+
+#chating {
+	margin-right: 10px;
+	margin-height: 730px;
+	border-radius: 10px;
+	padding-bottom: 8px;
+	margin-left: 0px;
+	max-height: 1120px;
+	overflow: scroll;
+	margin-left: 10%;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+li#welcome {
+	padding: revert;
+	padding: 1%;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.1);
+	list-style: none;
+	border-radius: 5px;
+	margin-bottom: 3px;
+	margin-left: 5px;
+}
+
+li#chatUI {
+	list-style: none;
+	padding: revert;
+	padding: 1%;
+	border-radius: 10px;
+	text-align: left;
+	padding-left: 10px;
+	margin-bottom: 1.5px;
+	margin-top: 1.5px;
+	color: white;
+}
+
+li#tachatUI {
+	list-style: none;
+	padding: revert;
+	padding: 1%;
+	text-align: left;
+	padding-left: 10px;
+	margin-bottom: 1.5px;
+	margin-top: 1.5px;
+	color: white;
+}
+
+#fixInput {
+	margin-top: 7px;
+}

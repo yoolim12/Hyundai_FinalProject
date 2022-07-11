@@ -10,7 +10,25 @@
 	function numWithComma(num) {
 	  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
-	function getProductColor(pid,colorcode){
+
+	function changeImage(i, pid, colorcode) {
+		$.ajax({
+			url: "/detail/" + pid + "/" + colorcode,
+			type: "GET",
+			dataType: "json",
+			async: false,
+			error: function (request, status, error) {
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			},
+			success: function (result) {
+				console.log(result);
+				console.log(document.getElementById("T01_IMG_"+i).src);
+				document.getElementById("T01_IMG_"+i).src = result.cimage1;
+				document.getElementById("T02_IMG_"+i).src = result.cimage2;
+			}
+		});
+	}
+	function getProductColor(idx, pid, colorcode){
 		var chtml = '<div class="color_more_wrap">';
 		$.ajax({
 			type: "get",
@@ -25,8 +43,7 @@
 				if (result.length > 0) {
 					for (var i = 0; i < result.length; i++) {
  						chtml += `
- 						<a class="beige" style="background:url(${result[i].ccolorimage})" onclick="GA_Event('상품목록','색상변경','${pid}')"></a>
- 						<span>&nbsp;</span>
+ 						<a class="beige" style="background:url(${result[i].ccolorimage})" onclick="GA_Event('상품목록','색상변경','${pid}'); changeImage(${idx}, '${pid}', '${result[i].ccolorcode}');"></a>
  						`;
 					}
 				}
@@ -81,14 +98,14 @@
 				var html = "";
 				if (result.length > 0) {
 					for (var i = 0; i < result.length; i++) {
-						var c = getProductColor(result[i].pid,result[i].ccolorcode);
+						var c = getProductColor(i, result[i].pid,result[i].ccolorcode);
 						var s = getProductSize(result[i].pid,result[i].ccolorcode);
 						if (i==3 || i==7 || i==11){
 							html += '<li class="mr1m">'
 						} else {
 							html += '<li>'
 						}
-						html += '<div class="item_box">';
+						html += '<div class="item_box" id="div'+i+'">';
 						html += `   <a href="/detail/${result[i].pid}_${result[i].ccolorcode}" class="item_info1" onclick="GA_Event('상품목록','상세보기','${result[i].pid}')">`;
 						html += '      <span class="item_img">';
 						html += '         <img src=' + result[i].cimage1 + ' id="T01_IMG_' +i+'" alt="' + result[i].pname + '" targetcode=' + result[i].pid + '_' + result[i].ccolorcode +' class="respon_image" onerror="this.src=' + '"http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg">';

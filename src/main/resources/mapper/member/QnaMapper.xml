@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.memberDAO.QnaDAO">
+
+	<select id="getQna"
+		resultType="com.hyundai.project.dto.QnaDTO">
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where memail=#{memail} order by qdate desc
+	</select>
+
+	<select id="getQnaDetail"
+			resultType="com.hyundai.project.dto.QnaDTO">
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where qid=#{qid}
+	</select>
+
+	<insert id="insertQna">
+		insert into qna(memail, qtitle, qkind, qcontent, qdate, qimage)  values(#{memail}, #{qtitle}, #{qkind}, #{qcontent}, sysdate, #{qimage})
+	</insert>
+
+	<delete id="deleteQna">
+		delete qna where qid = #{qid}
+	</delete>
+
+	<update id="updateQna">
+		update qna set qtitle=#{qtitle}, qcontent=#{qcontent}, qimage=#{qimage} where qid = #{qid}
+	</update>
+
+	<select id="getQnaCount" resultType="int">
+		select count(*) count from qna where memail=#{memail}
+	</select>
+
+	<select id="getAllQna"
+			resultType="com.hyundai.project.dto.QnaDTO">
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna order by qdate desc
+	</select>
+
+	<update id="updateQnaReply">
+		update qna set qreplycontent=#{qreplycontent}, qreplydate=sysdate, qstatus=1 where qid=#{qid}
+	</update>
+
+	<select id="getQnaInfo" resultType="com.hyundai.project.dto.QnaDTO">
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where memail LIKE '%'||#{memail}||'%' order by qdate desc
+	</select>
+</mapper>

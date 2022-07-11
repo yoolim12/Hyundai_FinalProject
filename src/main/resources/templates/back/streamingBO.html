@@ -252,20 +252,31 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        
                         <li>
                             <a href="chart">
                                 <i class="fas fa-chart-bar"></i>차트</a>
                         </li>
                         <li><a href="memberBO"> <i
-                        class="far fa-check-square"></i>회원 관리
-                  </a></li>
-                  <li><a href="productBO"> <i class="fas fa-table"></i>매장 관리
-                  </a></li>
-                  <li><a href="sendMail"> <i class="zmdi zmdi-email"></i>메일 보내기
-                  </a></li>
-                  <li class="active"><a href="streamingBO"> <i class="fas fa-tv"></i>스트리밍 관리
-                  </a></li>
+                                class="far fa-check-square"></i>회원 관리
+                        </a></li>
+                        <li><a href="productBO"> <i class="fas fa-table"></i>매장 관리
+                        </a></li>
+                        <li>
+                            <a href="qnaBO" style="bottom : 0">
+                                <svg style="margin-right: 15px; margin-top: 5px;" xmlns="http://www.w3.org/2000/svg"
+                                     width="16" height="15" fill="currentColor" class="bi bi-pencil-square"
+                                     viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd"
+                                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                </svg>
+                                <div style="display: inline-block; margin-bottom: 10px">문의 관리</div>
+                            </a>
+                        </li>
+                        <li><a href="sendMail"> <i class="zmdi zmdi-email"></i>메일 보내기
+                        </a></li>
+                        <li class="active"><a href="streamingBO"> <i class="fas fa-tv"></i>스트리밍 관리
+                        </a></li>
                     </ul>
                 </nav>
             </div>
@@ -497,55 +508,37 @@
     }
 
     function showList(){
-        var pname = document.getElementById("sname");
+        /* var pname = document.getElementById("sname");
         if(pname.value.length < 2){
         	alert("방송명을 2글자 이상 입력해주세요.");
         	return;
-        }
+        } */
 
         $.ajax({
-            type: "POST",
-            url: "/back/streaming/search",
-            dataType: "JSON",
-            contentType: "application/json",
-            data: JSON.stringify({
-                sno: pname.value,
-                "CSRFToken": getYCsrfToken()
-            }),
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-            },
+            url: "/back/streaming/list",
+            type: "GET",
+            dataType: "json",
+            async: false,
             error: function (request, status, error) {
                 console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
             },
             success: function(result){
                 let html = '';
                 if(result.length>0){
-
                     for(let i=0;i<result.length;i++){
-                        let price = numWithComma(result[i].pprice);
                         html += `
-                           <tr class="tr-shadow" data-id="${result[i].pid}" id="view_${result[i].pid}">
-                           <td>${result[i].pid}</td>
-                           <td>${result[i].category}</td>
-                           <td class="desc">${result[i].bname}</td>
-                           <td>${result[i].pname}</td>`
-
-                        if(result[i].pstatus === 1){
-                            html += `<td><span class="text-success" style="font-weight:bold">신상품</span></td>`
-                        }else if(result[i].pstatus === 2){
-                            html += `<td><span class="text-warning" style="font-weight:bold">베스트</span></td>`
-                        }else{
-                            html += `<td><span class="text-secondary">기본</span></td>`
-                        }
-
-                        html += `<td>₩${price}</td>
+                           <tr class="tr-shadow" data-id="${result[i].sno}" id="view_${result[i].sno}">
+                           <td>${result[i].sno}</td>
+                           <td>${result[i].sname}</td>
+                           <td class="desc">${result[i].scontent}</td>
+                           <td>${result[i].smanager}</td>
+						   <td>${result[i].sdate}</td>
                            <td>
                               <div class="table-data-feature">
-                                 <button class="item modiBtn" type="button" data-toggle="modal" data-target="#scrollmodal" data-placement="top" title="" data-original-title="Edit">
-                                     <i class="zmdi zmdi-edit"></i>
-                                  </button>
-                                 <button class="item" id="btn-modal" type="button" onclick="openModal('${result[i].pid}')" data-placement="top" title="" data-original-title="Delete" >
+	                             <button class="item modiBtn" type="button" data-toggle="modal" data-target="#scrollmodal" data-placement="top" title="" data-original-title="Edit" style="visibility:hidden;">
+	                             	<i class="zmdi zmdi-edit"></i>
+	                          	 </button>
+                                 <button class="item" id="btn-modal" type="button" onclick="openModal(${result[i].sno})" data-placement="top" title="" data-original-title="Delete" >
                                     <i class="zmdi zmdi-delete"></i>
                                  </button>
                                  <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
@@ -554,123 +547,30 @@
                               </div>
                            </td>
                         </tr>
-
-
-
-                        <tr class="tr-shadow" data-id="${result[i].pid}" id="mview_${result[i].pid}" style="display: none;">
-                           <td>${result[i].pid}</td>
-                           <td>${result[i].category}</td>
-                           <td class="desc">${result[i].bname}</td>
-                           <td>${result[i].pname}</td>`
-
-                        if(result[i].pstatus === 1){
-                            html += `<td><input type="text" name="pstatus" id="pstatus${result[i].pid}" value="신상품" style="color: indianred; font-weight: 600; background: aliceblue; border-radius: 20px; padding: 7px;"></td>`
-                        }else if(result[i].pstatus === 2){
-                            html += `<td><input type="text" name="pstatus" id="pstatus${result[i].pid}" value="베스트" style="color: indianred; font-weight: 600; background: aliceblue; border-radius: 20px; padding: 7px;"></td>`
-                        }else{
-                            html += `<td><input type="text" name="pstatus" id="pstatus${result[i].pid}" value="기본" style="color: indianred; font-weight: 600; background: aliceblue; border-radius: 20px; padding: 7px;"></td>`
-                        }
-                        html += `<td><input type="text" name="pprice" id="pprice${result[i].pid}" value="${result[i].pprice}" style="color: indianred; font-weight: 600; background: aliceblue; border-radius: 20px; padding: 7px;"></td>
-                           <td>
-                              <div class="table-data-feature">
-                                 <button class="item modifyBtn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" style="background: lightsteelblue;">
-                                     <i class="zmdi zmdi-edit"></i>
-                                  </button>
-                                 <button class="item" id="btn-modal" type="button" onclick="openModal('${result[i].pid}')" data-placement="top" title="" data-original-title="Delete" >
-                                    <i class="zmdi zmdi-delete"></i>
-                                 </button>
-                                 <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
-                                    <i class="zmdi zmdi-more"></i>
-                                 </button>
-                              </div>
-                           </td>
-                        </tr>
-
                         <tr class="spacer"></tr>
                       `;
                     }
                 } else {
                     html += `
                          <div class="alert alert-warning" role="alert">
-                         <h4 class="alert-heading">해당 상품이 존재하지 않습니다!</h4>
+                         <h4 class="alert-heading">스트리밍 목록이 존재하지 않습니다!</h4>
                          <hr>
-                         <p>상품을 다시 검색하세요.</p>
+                         <p>목록을 등록해주세요.</p>
                          </div>
                       `;
                 }
                 $("#searchRes").html(html);
             }
-
         })
-    }
+    } // end showList
 
-    var productBtn = document.getElementById("productSearch");
-    productBtn.addEventListener("click", function(event){
+    $(document).ready(function () {
         showList();
     })
 
-    function enterkey(){
-        if(window.event.keyCode == 13){
-            showList();
-        }
-    }
-
-    $(document).on("click", ".modiBtn", function() {
-        let pid = $(this).parents("tr").attr("data-id");
-        $("#view_" + pid).css("display", "none");
-        $("#mview_" + pid).css("display", "");
-    });
-
-    $(document).on("click", ".modifyBtn", function() {
-        let pid = $(this).parents("tr").attr("data-id");
-        let pprice = $("#pprice" + pid).val();
-        let pstatus = 0;
-
-        if($("#pstatus" + pid).val() == '신상품'){
-            pstatus = 1;
-        }else if($("#pstatus" + pid).val() == '베스트'){
-            pstatus = 2;
-        }else{
-            pstatus = 0;
-        }
-
-        let modifyinfo = JSON.stringify({
-            pid : pid,
-            pprice : pprice,
-            pstatus : pstatus,
-            "CSRFToken": getYCsrfToken()
-        });
-        $.ajax({
-            url:'/back/product',
-            method:'PUT',
-            contentType:'application/json;charset=utf-8',
-            data: modifyinfo,
-            datatype: 'json',
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-            },
-            success:function() {
-                showList();
-            },
-            error: function (request, status, error) {
-                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            },
-        });
-    });
-
-    $(document).ready(function () {
-        $("#searchRes").html('<div class="alert alert-light">'
-            + '<h4 class="alert-heading"><a href="https://us-east-1.console.aws.amazon.com/s3/buckets/handsomeday?prefix=ivs/v1/293546108023/lt4D0GzSMPEs/&region=ap-northeast-2" target="_blank">스트리밍 내역 찾기</a></h4>'
-            + '<hr>'
-            + '<p>상단바에 있는 검색창에 상품명을 검색하세요.</p>'
-            + '<p class="mb-0">상품 및 매장 관리를 하실 수 있습니다.</p>'
-            + '</div>');
-
-    })
-
-    function openModal(pid){
+    function openModal(sno){
         $("#deletemodal").modal("toggle");
-        document.getElementById("confirm").setAttribute("onclick","deleteStreaming('"+sno+"')");
+        document.getElementById("confirm").setAttribute("onclick","deleteStreaming("+sno+")");
     }
 
     function openInsertModal() {
@@ -684,7 +584,7 @@
             url: url,
             method: "delete",
             data: JSON.stringify({
-                sno: pid,
+                "sno": sno,
                 "CSRFToken": getYCsrfToken()
             }),
             contentType: "application/json",
