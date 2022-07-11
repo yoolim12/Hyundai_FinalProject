@@ -95,7 +95,7 @@ public class StreamingRestController {
                 .build();
         
         try {
-        ListObjectsV2Result result = s3Client.listObjectsV2(bucketName);
+        ListObjectsV2Result result = s3Client.listObjectsV2(bucketName,folderPath);
         List<S3ObjectSummary> objects = result.getObjectSummaries();
 //        String id = objects.get(0).getKey();
         String surl = "";
@@ -106,6 +106,7 @@ public class StreamingRestController {
         	} else if(os.getKey().endsWith("thumb0.jpg")) {
         		simg = os.getKey();
         	}
+        	log.info(os.getKey());
         }
         dto.setSurl(cdn+surl);
         dto.setSimg(cdn+simg);
