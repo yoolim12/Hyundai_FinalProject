@@ -45,7 +45,7 @@ public class MypageController {
 		else {
       		model.addAttribute("member", oauthMemberDTO);
 			model.addAttribute("memberemail", oauthMemberDTO.getMemail());
-			model.addAttribute("membername", oauthMemberDTO.getName());
+			model.addAttribute("membername", oauthMemberDTO.getMname());
 			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getMemail()));
 			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getGno());
 		}

@@ -708,12 +708,12 @@
                                                 </div>   
                                                           </tr>
                                                            <tr>
-                                                               <th>name</th>
-                                                               <th>email</th>
-                                                               <th>description</th>
-                                                               <th>date</th>
-                                                               <th>status</th>
-                                                               <th>grade</th>
+                                                               <th>이름</th>
+	                                                           <th>이메일</th>
+	                                                           <th>권한</th>
+	                                                           <th>가입일</th>
+	                                                           <th>상태</th>
+	                                                           <th>등급</th>
                                                                
                                                                <th></th>
                                                            </tr>
@@ -742,9 +742,6 @@
                                                                <td th:text = "${user.gname}"></td>
                                                                <td>
                                                                    <div class="table-data-feature">
-                                                                       <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                                           <i class="zmdi zmdi-mail-send"></i>
-                                                                       </button>
                                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit" th:onclick = "go_edit([[${user.memail}]]);">
                                                                            <i class="zmdi zmdi-edit"></i>
                                                                        </button>
