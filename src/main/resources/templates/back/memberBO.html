@@ -41,13 +41,13 @@
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-D99PM3RKWZ"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-PGSJCSLKXZ"></script>
 	<script>
 	  window.dataLayer = window.dataLayer || [];
 	  function gtag(){dataLayer.push(arguments);}
 	  gtag('js', new Date());
 	
-	  gtag('config', 'G-D99PM3RKWZ');
+	  gtag('config', 'G-PGSJCSLKXZ');
 	</script>
 </head>
 
@@ -329,7 +329,7 @@
     	  	}
        
        $(document).ready(function () {
-    	   const mem = numWithComma([[${userTotal}]]);
+			const mem = numWithComma([[${userTotal}]]);
     	   const totAmount = numWithComma([[${amountTotal}]]);
     	   const wAmount = numWithComma([[${amountWeek}]]);
     	   const revenue = numWithComma([[${revenueTotal}]]);
@@ -679,9 +679,7 @@
                                                             <td th:text = "${user.gname}"></td>
                                                             <td>
                                                                 <div class="table-data-feature">
-                                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                                        <i class="zmdi zmdi-mail-send"></i>
-                                                                    </button>
+                                                                    
                                                                     <button class="item" id="editMember" data-toggle="tooltip" data-placement="top" title="Edit" th:onclick = "go_edit([[${user.memail}]]);">
                                                                         <i class="zmdi zmdi-edit"></i>
                                                                     </button>
@@ -861,7 +859,6 @@
                             </div>
                                 <!-- END USER DATA-->
                             </div>
-   <input class="btn btn-success" type="submit" value="임직원 등록">
                             <div class="col-md-12">
                                 <div class="copyright">
                                     <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>

@@ -18,5 +18,6 @@ ProductDTO {
 	private String pname;
 	private String pprice;
 	private String pdetail;
+	private String cmatchpid;
 
 }

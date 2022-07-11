@@ -14,6 +14,7 @@
                c.cimage3                    cimage3,
                c.ccolorcode
                                             ccolorcode,
+               c.cmatchpid                  cmatchpid,
                clarge,
                cmedium,
                csmall,

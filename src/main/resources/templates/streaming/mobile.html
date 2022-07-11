@@ -35,7 +35,7 @@
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async
-	src="https://www.googletagmanager.com/gtag/js?id=G-D99PM3RKWZ"></script>
+	src="https://www.googletagmanager.com/gtag/js?id=G-PGSJCSLKXZ"></script>
 <script>
   
    
@@ -43,7 +43,7 @@
      function gtag(){dataLayer.push(arguments);}
      gtag('js', new Date());
    
-     gtag('config', 'G-D99PM3RKWZ');
+     gtag('config', 'G-PGSJCSLKXZ');
    </script>
 
 <script>
@@ -247,19 +247,19 @@
                         html += `
                        	<div class="again">
                             <!-- <div class="againvideo">다시보기1</div> -->
-                            <a class="thumbnail" href="/streaming">
+                            <a class="thumbnail" href="/streamingReplay/${res[i].sno}">
                                 <img id="img" alt=""
                                 src="${res[i].simg}"/>
                             </a>
                             <div class="againdetail">
                                 <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
                                 <div class="titleNname">
-                                    <p class="againtitle">
-                                        <a class="againtitlelink" href="/streaming">
+                                    <p class="againtitle" style="margin:0; ">
+                                        <a class="againtitlelink" href="/streamingReplay/${res[i].sno}">
                                             ${res[i].sname}
                                         </a>
                                     </p>
-                                    <p class="againprofilename">더한섬닷컴</p>
+                                    <p class="againprofilename">더한섬라이브</p>
                                 </div>                    
                             </div>
                         </div>

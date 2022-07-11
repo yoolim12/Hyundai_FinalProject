@@ -71,8 +71,12 @@
                 return;
             }
         }
+        var check = 0
+        
         if($("#emailReceiveYn").is(':checked')){
-        	var check = 1;
+        	check = 1;
+        }else{
+        	check = 0
         }
         
         // $("#cancleBtn").attr("disabled", true);
@@ -115,6 +119,7 @@
                 "telnum": $('[name="telnum1"]').val() + '-' 
                     + $('[name="telnum2"]').val() + '-' 
                     + $('[name="telnum3"]').val(),
+                "mail_check" : check,
                 "CSRFToken": getYCsrfToken()
             }),
             beforeSend: function(xhr){
@@ -165,48 +170,6 @@ $(document).ready(function(){
             $('#uidDomain').hide();
         }
 	});
-    
-    // var dclick = $('#idDubChkBtn').click(function(){
-	// 	var emailDomain = '';
-	// 	if($('[name="memail2"]').val() === ""){
-	// 		console.log($('#uidDomain').val());
-	// 		emailDomain += $('#uidDomain').val();
-	// 	}
-	// 	else{
-	// 		emailDomain += $('[name="memail2"]').val();
-	// 	}
-		
-	// 	$.ajax({
-	// 		type: 'POST',
-	// 		url:'/member/duplicateCheck',
-	// 		dataType: 'JSON',
-	// 		contentType: "application/json",
-	// 		data: JSON.stringify({
-	// 			'memail': $('[name="memail1"]').val() + '@' + emailDomain,
-	// 			"CSRFToken": getYCsrfToken()
-	// 		}),
-	// 		beforeSend: function(xhr){
-	// 			xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
-	// 		},
-	// 		success: function(response){
-	// 			if(response.memail === '0'){
-	// 				console.log('yes');
-	// 				$('#idDubMsg').text('사용 가능한 이메일입니다.');
-	// 				//$("#emailMsg").text('사용 가능한 이메일입니다.');
-	// 				$("#memailDuplChk").val('Y');
-	// 			}
-	// 			else{
-	// 				console.log('no');
-	// 				$('#idDubMsg').text('이미 사용 중인 이메일입니다.');
-	// 				//$("#emailMsg").text('이미 사용 중인 이메일입니다.');
-	// 			}
-	// 		},
-	// 		error:function(e){
-	// 			console.log('err');
-	// 			console.log(e);
-	// 		}
-	// 	});
-	// });
 	
 	$('#emailDubChkBtn').click(function(){
 		var emailDomain = '';
