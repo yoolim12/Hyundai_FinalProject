@@ -75,4 +75,29 @@ public class QnaRestController {
 
     }
 
+    @PutMapping("/qna")
+    public void updateProduct(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, @RequestPart(value = "key") QnaDTO qna, @RequestPart(value = "qimage", required = false) MultipartFile qimage) throws Exception {
+        log.info("UPDATE PRODUCT : " + qna);
+        String memail;
+        if (oauthMemberDTO == null) {
+            memail = authMemberDTO.getMemail();
+        }
+        else {
+            memail = oauthMemberDTO.getMemail();
+        }
+        log.info(qimage);
+        if(qimage != null) {
+            // S3 이미지 업로드 (Ccolorimage)
+            List<MultipartFile> temp = new ArrayList<>();
+            temp.add(qimage);
+            List<String> q = awsS3Service.uploadFile(temp);
+            log.info("S3" + q.get(0));
+            qna.setQimage(q.get(0));
+        } else qna.setQimage(qna.getQimage());
+        qna.setMemail(memail);
+        log.info(qna);
+
+        service.updateQna(qna);
+    }
+
 } // end class

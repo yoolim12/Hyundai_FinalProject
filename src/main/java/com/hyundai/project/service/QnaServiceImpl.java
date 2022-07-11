@@ -32,4 +32,14 @@ public class QnaServiceImpl implements QnaService {
 	public void deleteQna(int qid) throws Exception {
 		qnaDAO.deleteQna(qid);
 	}
+
+	@Override
+	public QnaDTO getQnaDetail(int qid) throws Exception {
+		return qnaDAO.getQnaDetail(qid);
+	}
+
+	@Override
+	public void updateQna(QnaDTO qna) throws Exception {
+		qnaDAO.updateQna(qna);
+	}
 }

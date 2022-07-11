@@ -1,5 +1,8 @@
 package com.hyundai.project.controller;
 
+import com.hyundai.project.service.ProductService;
+import com.hyundai.project.service.QnaService;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import com.hyundai.project.dto.ClubAuthMemberDTO;
 import com.hyundai.project.memberDAO.MemberDAO;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Log4j2
@@ -20,6 +24,9 @@ public class MypageController {
 	
 	@Autowired
 	private MemberDAO memberDAO;
+
+	@Setter(onMethod_ = @Autowired)
+	private QnaService service;
 	
 	@RequestMapping
 	public String mypage(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) throws Exception {
@@ -127,5 +134,13 @@ public class MypageController {
 	@GetMapping("/insertQna")
 	public void insertqna() {
 		log.info("Qna 작성페이지 진입");
+	}
+
+	// QNA 수정 뷰로 이동
+	@GetMapping("/updateQna")
+	public void qnaModify(@RequestParam int qid, Model model) throws Exception {
+		model.addAttribute("qnaAttribute", service.getQnaDetail(qid));
+		log.info(service.getQnaDetail(qid));
+		log.info("QNA 수정화면 진입");
 	}
 }

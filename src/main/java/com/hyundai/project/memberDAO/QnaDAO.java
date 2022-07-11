@@ -16,4 +16,7 @@ public interface QnaDAO {
 
 	public void deleteQna(int qid) throws Exception;
 
+	public QnaDTO getQnaDetail(int qid) throws Exception;
+
+	public void updateQna(QnaDTO qna) throws Exception;
 }

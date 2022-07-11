@@ -6,7 +6,12 @@
 
 	<select id="getQna"
 		resultType="com.hyundai.project.dto.QnaDTO">
-		select qid, qtitle, qcontent, qdate, qimage, qkind, memail from qna where memail=#{memail}
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail from qna where memail=#{memail} order by qdate desc
+	</select>
+
+	<select id="getQnaDetail"
+			resultType="com.hyundai.project.dto.QnaDTO">
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail from qna where qid=#{qid}
 	</select>
 
 	<insert id="insertQna">
@@ -17,16 +22,8 @@
 		delete qna where qid = #{qid}
 	</delete>
 
-<!--	<delete id="deleteAllCart">-->
-<!--		delete cart where memail=#{memail}-->
-<!--	</delete>-->
-
-<!--	<update id="updateCart">-->
-<!--		update cart set ccolorcode=#{param2.newcolorcode}, ssize=#{param2.newsize}, qty=#{param2.newqty} where memail=#{memail} and pid=#{param2.pid} and ccolorcode=#{param2.ccolorcode} and ssize=#{param2.ssize}-->
-<!--	</update>-->
-
-<!--	<select id="getCartTotal" resultType="int">-->
-<!--		select count(pid) from cart where memail = #{memail}-->
-<!--	</select>-->
+	<update id="updateQna">
+		update qna set qtitle=#{qtitle}, qcontent=#{qcontent}, qimage=#{qimage} where qid = #{qid}
+	</update>
 
 </mapper>
