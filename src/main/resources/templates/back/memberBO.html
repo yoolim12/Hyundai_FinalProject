@@ -260,15 +260,13 @@
                 async : false,
                 cache: false,
              success: function(res){
-            	
-                //$("#staticModal").modal();
-                
-                //alert("탈퇴 성공");
+            
                 console.log(res);
                 $("#mname").val('');
                 $("#birth").val('');
                 $("#telnum").val('');
                 $("#maddress").val('');
+                location.reload();
              },
              error: function(){
                 alert("error")
@@ -293,15 +291,12 @@
                 async : false,
                 cache: false,
              success: function(res){
-            	 
-            	 //$("#staticModal").modal();
-                
-                //alert("탈퇴 성공");
                 console.log(res);
                 $("#mname").val('');
                 $("#birth").val('');
                 $("#telnum").val('');
                 $("#maddress").val('');
+                location.reload();
              },
              error: function(){
                 alert("error")
