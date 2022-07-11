@@ -26,6 +26,7 @@ body {
 	overflow: scroll;
 	height: 50rem;
 	border-radius: 7px;
+    background-color: rgba(0,0,0,0.46);
 }
 
 #msg {
@@ -57,6 +58,7 @@ li#welcome {
 	list-style: none;
 	border-radius: 5px;
 	margin-bottom: 3px;
+	margin-left: 5px;
 }
 
 li#chatUI {
@@ -66,8 +68,9 @@ li#chatUI {
 	border-radius: 10px;
 	text-align: left;
 	padding-left: 10px;
-	margin-bottom: 3px;
-	margin-top: 3px;
+	margin-bottom: 1.5px;
+	margin-top: 1.5px;
+	color: white;
 }
 
 li#tachatUI {
@@ -76,8 +79,9 @@ li#tachatUI {
 	padding: 1%;
 	text-align: left;
 	padding-left: 10px;
-	margin-bottom: 3px;
-	margin-top: 3px;
+	margin-bottom: 1.5px;
+	margin-top: 1.5px;
+	color: white;
 }
 
 #fixInput {
