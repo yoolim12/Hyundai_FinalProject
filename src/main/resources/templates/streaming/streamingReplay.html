@@ -21,7 +21,7 @@
 		th:src="@{https://player.live-video.net/1.10.0/amazon-ivs-quality-plugin.min.js}"></script>
 </th:block>
 <div layout:fragment="content">
-	<style>
+<style>
 input {
 	width: 500px;
 	height: 32px;
@@ -31,6 +31,22 @@ input {
 	outline: none;
 	padding-left: 10px;
 	background-color: rgb(233, 233, 233);
+}
+.video_main_wrap .txt .tit {
+    float: none;
+    color: #0b0b0b;
+    font-size: 34px;
+    width: 884px;
+    line-height: 34px;
+    margin-left: 0;
+}
+.video_main_wrap .txt .s_t {
+    float: none;
+    width: 884%;
+    font-size: 20px;
+    color: #494949;
+    line-height: 27px;
+    margin:5px 0 5px 0;
 }
 </style>
 	<script type="text/javascript">
@@ -97,7 +113,7 @@ input {
 	<div id="bodyWrap" style="padding-bottom: 0;">
 		<div class="video_main_wrap" style="line-height: 0;">
 			<h3 class="cnts_title ou1804">
-				<span> H-DAY STREAMING </span>
+				<span style="font-size: 30px;"><strong> H-DAY STREAMING </strong></span>
 			</h3>
 			<div>
 				<h4 class="tit">
@@ -119,10 +135,13 @@ input {
 			</div>
 			<div class="txt">
 				<p class="tit">
-					[[${video.sname}]]<br>GKMCC
+					[[${video.sname}]]
 				</p>
 				<p class="s_t">
 					[[${video.scontent}]]
+				</p>
+				<p style="font-size: 18px;">
+					&nbsp;[[${video.sdate}]]
 				</p>
 			</div>
         <div class="watchagain" id="slist" style="display: block !important;">
@@ -166,7 +185,7 @@ input {
                                 <div class="titleNname" style="text-align:left;">
                                     <p class="againtitle" style="font-size:14px">
                                         <a class="againtitlelink" href="/streamingReplay/${res[i].sno}">
-                                            ${res[i].sname}
+                                            <strong>${res[i].sname}</strong>
                                         </a>
                                     </p>
                                     <p class="againprofilename"><strong>더현대라이브</strong></p>
