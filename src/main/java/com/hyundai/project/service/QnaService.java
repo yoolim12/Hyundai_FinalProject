@@ -20,4 +20,10 @@ public interface QnaService {
 
 	public int getQnaCount(String memail) throws Exception;
 
+	public List<QnaDTO> getAllQna() throws Exception;
+
+	public void updateQnaReply(QnaDTO qna) throws Exception;
+
+	public List<QnaDTO> getQnaInfo(String memail) throws Exception;
+
 }

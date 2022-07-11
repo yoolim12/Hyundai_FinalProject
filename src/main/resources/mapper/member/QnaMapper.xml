@@ -6,12 +6,12 @@
 
 	<select id="getQna"
 		resultType="com.hyundai.project.dto.QnaDTO">
-		select qid, qtitle, qcontent, qdate, qimage, qkind, memail from qna where memail=#{memail} order by qdate desc
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where memail=#{memail} order by qdate desc
 	</select>
 
 	<select id="getQnaDetail"
 			resultType="com.hyundai.project.dto.QnaDTO">
-		select qid, qtitle, qcontent, qdate, qimage, qkind, memail from qna where qid=#{qid}
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where qid=#{qid}
 	</select>
 
 	<insert id="insertQna">
@@ -30,4 +30,16 @@
 		select count(*) count from qna where memail=#{memail}
 	</select>
 
+	<select id="getAllQna"
+			resultType="com.hyundai.project.dto.QnaDTO">
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna order by qdate desc
+	</select>
+
+	<update id="updateQnaReply">
+		update qna set qreplycontent=#{qreplycontent}, qreplydate=sysdate, qstatus=1 where qid=#{qid}
+	</update>
+
+	<select id="getQnaInfo" resultType="com.hyundai.project.dto.QnaDTO">
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where memail LIKE '%'||#{memail}||'%' order by qdate desc
+	</select>
 </mapper>

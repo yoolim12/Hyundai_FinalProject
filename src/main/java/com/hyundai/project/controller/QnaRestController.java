@@ -100,4 +100,21 @@ public class QnaRestController {
         service.updateQna(qna);
     }
 
+    @GetMapping("/qnaDetail")
+    @ResponseBody
+    public QnaDTO qnaGetDetail(@RequestParam int qid) throws Exception {
+        log.info("QNA 디테일 ");
+        QnaDTO qna = service.getQnaDetail(qid); // 로그인된 사용자와 현재 페이지, 페이지에 보여질 게시물 개수를 전달
+        log.info(qna);
+        return qna;
+    }
+
+    @PutMapping("/qnaReply")
+    @ResponseBody
+    public void updateQnaReply(@RequestBody QnaDTO qna) throws Exception {
+        log.info("QNA 답글");
+        service.updateQnaReply(qna);
+        log.info("QNA 답글 끝");
+    }
+
 } // end class
