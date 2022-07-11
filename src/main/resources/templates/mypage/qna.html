@@ -142,7 +142,7 @@
                     xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
                 },
                 success: function (data) {
-                    alert("완료되었습니다.");
+                    var la = new layerAlert('완료되었습니다.');
                     location.href='/mypage/qna';
                 },
                 error : function( request, status, error ){
