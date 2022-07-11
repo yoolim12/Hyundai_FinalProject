@@ -6,16 +6,16 @@
 
 	<select id="getQna"
 		resultType="com.hyundai.project.dto.QnaDTO">
-		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where memail=#{memail} order by qdate desc
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus, qemail from qna where memail=#{memail} order by qdate desc
 	</select>
 
 	<select id="getQnaDetail"
 			resultType="com.hyundai.project.dto.QnaDTO">
-		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna where qid=#{qid}
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus, qemail from qna where qid=#{qid}
 	</select>
 
 	<insert id="insertQna">
-		insert into qna(memail, qtitle, qkind, qcontent, qdate, qimage)  values(#{memail}, #{qtitle}, #{qkind}, #{qcontent}, sysdate, #{qimage})
+		insert into qna(memail, qtitle, qkind, qcontent, qdate, qimage, qemail)  values(#{memail}, #{qtitle}, #{qkind}, #{qcontent}, sysdate, #{qimage}, #{qemail})
 	</insert>
 
 	<delete id="deleteQna">
@@ -32,7 +32,7 @@
 
 	<select id="getAllQna"
 			resultType="com.hyundai.project.dto.QnaDTO">
-		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus from qna order by qdate desc
+		select qid, qtitle, qcontent, qdate, qimage, qkind, memail, qreplydate, qreplycontent, qstatus, qemail from qna order by qdate desc
 	</select>
 
 	<update id="updateQnaReply">
