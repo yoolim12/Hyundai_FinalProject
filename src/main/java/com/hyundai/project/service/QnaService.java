@@ -18,4 +18,6 @@ public interface QnaService {
 
 	public void updateQna(QnaDTO qna) throws Exception;
 
+	public int getQnaCount(String memail) throws Exception;
+
 }

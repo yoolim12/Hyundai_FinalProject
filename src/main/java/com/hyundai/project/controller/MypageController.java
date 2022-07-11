@@ -1,5 +1,6 @@
 package com.hyundai.project.controller;
 
+import com.hyundai.project.memberDAO.QnaDAO;
 import com.hyundai.project.service.ProductService;
 import com.hyundai.project.service.QnaService;
 import lombok.Setter;
@@ -24,6 +25,9 @@ public class MypageController {
 	
 	@Autowired
 	private MemberDAO memberDAO;
+
+	@Autowired
+	private QnaDAO qnaDAO;
 
 	@Setter(onMethod_ = @Autowired)
 	private QnaService service;

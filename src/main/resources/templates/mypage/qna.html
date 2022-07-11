@@ -20,16 +20,6 @@
 	});
     var obj, arr;
     $(document).ready(function () {
-        console.log("Ready");
-        // var page = [[${(param.pageNum == "" || param.pageNum == null)?1:param.pageNum}]];
-        // console.log(param);
-        // var startNum = page-(page-1)%10;
-        // var total = "${qnaCount}";
-        // console.log(total);
-        // var lastNum = Math.ceil(total/10);
-        // /* console.log(startNum); */
-        // if ("${sessionScope.member.mid }" == "") location.href = "/member/login";
-        // else
             $.ajax({ // 해당 사용자가 작성한 QNA 리스트 불러오는 ajax 호출
                 url: "/mypage/QNAList",
                 type: "get", //GET 방식으로 전달
@@ -58,6 +48,7 @@
                             listTag += '<tr id="qna' + i + '"></tr>';
                         }
                         document.getElementById("listBody").innerHTML = listTag;
+                        document.getElementById("qnaCount").innerText = data.length;
                     }
                     // var phtml = "";
                     //var prevPage = Math.floor([[${param.pageNum}]])-1;
@@ -235,8 +226,8 @@
                             <a class="count" href="/mypage/grade" onclick="GA_Event('마이페이지','회원정보','RANK');" id="mrank"></a>
                         </div>
                         <div class="point review">
-                            <p class="title">총 주문</p>
-                            <a href="javascript:void(0)" class="count" id="ocount" onclick="GA_Event('마이페이지','회원정보','총 주문조회');"></a>
+                            <p class="title">총 문의</p>
+                            <a href="javascript:void(0)" class="count" id="qnaCount" style="float: right" onclick="GA_Event('마이페이지','회원정보','총 주문조회');"></a>
                         </div>
                     </div>
                 </div>

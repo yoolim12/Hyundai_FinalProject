@@ -19,4 +19,7 @@ public interface QnaDAO {
 	public QnaDTO getQnaDetail(int qid) throws Exception;
 
 	public void updateQna(QnaDTO qna) throws Exception;
+
+	public int getQnaCount(String memail) throws Exception;
+
 }
