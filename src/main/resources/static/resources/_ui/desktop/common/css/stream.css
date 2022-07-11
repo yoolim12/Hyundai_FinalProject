@@ -96,22 +96,32 @@
  #img1 {
      width: 33.5%;
      float: left;
-     padding-left: 7%;
+     /* padding-left: 7%; */
+     padding-left: 24.6328px;
  }
  
  .respon_image {
-     width: 100%;
+     width: 117.9px;
+     height: 177.8px;
      float: left;
-     /* margin-left: 20px; */
  }
  
  .info {
-     display: block;
+     /* display: block;
      font-size: 0.8rem;
      width: 56.50%;
-     float: right;
-     margin-right: 3%;
-     margin-top: 5%;
+     float: right; */
+     /* margin-right: 3%; */
+     /* margin-top: 5%; */
+     /* margin-top: 20px;
+     margin-left: 1px; */
+    display: block;
+    font-size: 0.8rem;
+    width: 150px;
+    height: 109.88px;
+    float: left;
+    margin-top: 30px;
+    margin-left: 30px;
  }
  
  .pprice {
@@ -120,7 +130,7 @@
  
  .pbtn{
      display:block;
-     width:83%;
+     width:90px;
      line-height:30px;
      text-align:center;
      background-color:#222;
