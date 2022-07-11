@@ -210,6 +210,8 @@ button#submitBtn {
 	white-space: nowrap;
 	overflow-x: scroll;
 	height: 55%;
+	margin-top: 100px;
+	margin-left: 40px;
 }
 
 .again {
@@ -273,4 +275,9 @@ button#submitBtn {
 
 .img {
 	width: 100%
+}
+.profile {
+    float: left;
+    margin-top: 30px;
+    margin-left: 30px;
 }
