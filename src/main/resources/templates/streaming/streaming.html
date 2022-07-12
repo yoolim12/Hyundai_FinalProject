@@ -32,6 +32,19 @@ input {
    padding-left: 10px;
    background-color: rgb(233, 233, 233);
 }
+.profileimg {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: 2%;
+}
+.profilename {
+    font-weight: bold;
+    display: inline-block;
+}
 </style>
    <script type="text/javascript">
         $(document).ready(function () {
@@ -87,7 +100,7 @@ input {
    <div id="bodyWrap" style="padding-bottom: 0;">
       <div class="video_main_wrap" style="line-height: 0;">
          <h3 class="cnts_title ou1804">
-            <span> H-DAY STREAMING </span>
+			<span style="font-size: 30px;"><strong> H-DAY STREAMING </strong></span>
          </h3>
          <div>
             <h4 class="tit">
@@ -116,7 +129,7 @@ input {
                                         <!-- <img src="/_ui/desktop/common/images/popup/ico_close.png" alt=""> -->
                                         <img class="upArrow" src="/resources/_ui/desktop/common/images/uparrow.png" alt="">
                                     </a>
-                                    <p class="foldMsg upArrow">접기</p>
+                                    <p class="foldMsg" id="fold">접기</p>
                                 </div>
                                 <div class="productInfo">
                                     <p class="tit" style="display: block;">상품 바로 보러가기</p>
@@ -141,7 +154,7 @@ input {
                                         <!-- <img src="/_ui/desktop/common/images/popup/ico_close.png" alt=""> -->
                                         <img class="upArrow" id="upArrow" src="/resources/_ui/desktop/common/images/dropdown.png" alt="">
                                     </a>
-                                    <p class="foldMsg">펼치기</p>
+                                    <p class="foldMsg" id="fold">펼치기</p>
                                 </div>
                             </div>
                         </div>
@@ -158,15 +171,20 @@ input {
 					</div>
 				</div>
 			</div>
-			<div class="txt">
-				<p class="tit">
+			<div class="txt" style="border-bottom: 1px solid lightgray;">
+				<!-- <p class="tit">
 					aweSOME life 7.<br>HANESOME-E
 				</p>
 				<p class="s_t">
 					변함없는 지구를 그리며<br>GKMCC와 함께한 지속 가능한 선택
-				</p>
+				</p> -->
 			</div>
+			<div class="profile">
+		        <img class="profileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
+		        <p class="profilename">더한섬닷컴</p>
+		    </div>
 			<br><br>
+			<p id="againtit" style="text-align:center; font-size:20px;"><strong>다시보기</strong></p>
         <div class="watchagain" id="slist" style="display: block !important;">
         </div>
       </div>
@@ -386,16 +404,17 @@ input {
                                 src="${res[i].simg}"/>
                             </a>
                             <div class="againdetail">
-                                <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
-                                <div class="titleNname" style="text-align:left;">
-                                    <p class="againtitle" style="font-size:14px">
-                                        <a class="againtitlelink" href="/streamingReplay/${res[i].sno}">
-                                            ${res[i].sname}
-                                        </a>
-                                    </p>
-                                    <p class="againprofilename"><strong>더현대라이브</strong></p>
-                                </div>                    
-                            </div>
+                            <img class="againprofileimg" src="/resources/_ui/desktop/common/images/thehandsome3.jpeg" />
+	                            <div class="titleNname" style="text-align:left;">
+	                                <p class="againtitle" style="font-size:14px">
+	                                    <a class="againtitlelink" href="/streamingReplay/${res[i].sno}">
+	                                        <strong>${res[i].sname}</strong>
+	                                    </a>
+	                                </p>
+	                                <p class="againprofilename"><strong>더현대라이브</strong></p>
+	                                <p>${res[i].sdate}</p>
+	                            </div>                    
+                       		</div>
                         </div>
                         `;
                     }

@@ -26,10 +26,14 @@
         });
         function insertQna() {
             console.log($("#largeClassificationCode").val());
+            var qemail;
+            if($("#email").val() == "" && $("#emailDomain").val() == "") qemail = "";
+            else qemail = $("#email").val() +'@'+ $("#emailDomain").val();
             var data = {
                 qtitle : $("#qtitle").val(),
                 qcontent : $("#qcontent").val(),
-                qkind : $("#largeClassificationCode").val()
+                qkind : $("#largeClassificationCode").val(),
+                qemail : qemail
             }
             if(data.qtitle == "") {
                 var la = new layerAlert('제목을 입력해주세요.');
@@ -66,7 +70,11 @@
             });
         }
         $( document ).ready(function() {
-
+            //이메일변경
+            $("#uidDomainSel").change(function(){
+                //$("#email").val('');
+                $("#emailDomain").val($("#uidDomainSel").val());
+            });
         });
     </script>
     <!-- bodyWrap -->

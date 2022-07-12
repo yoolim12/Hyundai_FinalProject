@@ -109,12 +109,4 @@ public class QnaRestController {
         return qna;
     }
 
-    @PutMapping("/qnaReply")
-    @ResponseBody
-    public void updateQnaReply(@RequestBody QnaDTO qna) throws Exception {
-        log.info("QNA 답글");
-        service.updateQnaReply(qna);
-        log.info("QNA 답글 끝");
-    }
-
 } // end class
