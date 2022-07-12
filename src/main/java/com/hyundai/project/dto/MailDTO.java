@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class MailDTO {
-	private String title;
-	private String cont;
+    private String title;
+    private String cont;
 }

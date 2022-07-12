@@ -42,7 +42,6 @@ public class CartRestController {
                 memail = oauthMemberDTO.getMemail();
             }
             entry = new ResponseEntity<List<CartDTO>>(service.getCart(memail), HttpStatus.OK);
-            log.info(entry);
         } catch (Exception e) {
             e.printStackTrace();
             entry = new ResponseEntity<List<CartDTO>>(HttpStatus.BAD_REQUEST);
@@ -77,7 +76,6 @@ public class CartRestController {
             else {
                 memail = oauthMemberDTO.getMemail();
             }
-            log.info(memail, cart);
             service.deleteCart(memail, cart);
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,7 +110,6 @@ public class CartRestController {
             else {
                 memail = oauthMemberDTO.getMemail();
             }
-            log.info(cart);
             service.updateCart(memail, cart);
         } catch (Exception e) {
             e.printStackTrace();

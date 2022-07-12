@@ -14,9 +14,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class AuthMemberDTO extends User {
-	private static final long serialVersionUID = 1L;
-	
-	private String memail;
+    private static final long serialVersionUID = 1L;
+
+    private String memail;
     private String mname;
     private Date birth;
     private String telnum;
@@ -30,12 +30,12 @@ public class AuthMemberDTO extends User {
     private int fromSocial;
     private int gno;
     private int msleep;
- 
+
     // 구성자 설정
     public AuthMemberDTO(String username,
-            String password, int fromSocial
+                         String password, int fromSocial
             , List<GrantedAuthority> authorities, String mname, Date birth, String telnum,
-            String maddress, String mgender, String memail_info, Date moddate, Date regdate, int mpoint, int gno, int msleep) {
+                         String maddress, String mgender, String memail_info, Date moddate, Date regdate, int mpoint, int gno, int msleep) {
         // password는 부모클래스 사용
         super(username, password, authorities);
         this.memail = username;

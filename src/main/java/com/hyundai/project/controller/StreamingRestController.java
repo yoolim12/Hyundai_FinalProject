@@ -41,104 +41,101 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @RequestMapping("/back/streaming")
 public class StreamingRestController {
-	
-	@Value("${cloud.aws.credentials.accessKey2}")
+
+    @Value("${cloud.aws.credentials.accessKey2}")
     private String accessKey;
-	
-	@Value("${cloud.aws.credentials.secretKey2}")
+
+    @Value("${cloud.aws.credentials.secretKey2}")
     private String secretKey;
-	
+
     @Value("${cloud.aws.s3.bucket2}")
     private String bucketName;
-    
+
     @Value("${cloud.aws.s3.path}")
     private String folderName;
-    
+
     @Value("${cloud.aws.cdn}")
     private String cdn;
-    
+
     @Autowired
     private StreamingService service;
-    
+
     @GetMapping("/list")
-	public ResponseEntity<List<StreamingDTO>> getStreaming() {
+    public ResponseEntity<List<StreamingDTO>> getStreaming() {
         ResponseEntity<List<StreamingDTO>> entry = null;
-        
+
         try {
             entry = new ResponseEntity<List<StreamingDTO>>(service.getList(), HttpStatus.OK);
-            //log.info(entry);
         } catch (Exception e) {
             e.printStackTrace();
             entry = new ResponseEntity<List<StreamingDTO>>(HttpStatus.BAD_REQUEST);
         } // end try
         return entry;
-	}
-    
-    
-    @PostMapping("/upload")
-	public String uploadStreaming(@RequestBody StreamingDTO dto) {
-		Instant ins = Instant.now();
+    }
 
-		OffsetDateTime odt = ins.atOffset(ZoneOffset.UTC);
-		ZonedDateTime zdt = ins.atZone(ZoneId.of("UTC"));
-		
-		Date utc = Date.from(ins);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
-		
-		String folderPath = folderName + "/" + sdf.format(utc).replace('-','/');
-		
+
+    @PostMapping("/upload")
+    public String uploadStreaming(@RequestBody StreamingDTO dto) {
+        Instant ins = Instant.now();
+
+        OffsetDateTime odt = ins.atOffset(ZoneOffset.UTC);
+        ZonedDateTime zdt = ins.atZone(ZoneId.of("UTC"));
+
+        Date utc = Date.from(ins);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
+
+        String folderPath = folderName + "/" + sdf.format(utc).replace('-', '/');
+
         AWSCredentials crd = new BasicAWSCredentials(accessKey, secretKey);
         AmazonS3 s3Client = AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(crd))
                 .withRegion(Regions.AP_NORTHEAST_2)
                 .build();
-        
+
         try {
-        ListObjectsV2Result result = s3Client.listObjectsV2(bucketName,folderPath);
-        List<S3ObjectSummary> objects = result.getObjectSummaries();
-//        String id = objects.get(0).getKey();
-        String surl = "";
-        String simg = "";
-        for (S3ObjectSummary os : objects) {
-        	if(os.getKey().endsWith("master.m3u8")) {
-        		surl = os.getKey();
-        	} else if(os.getKey().endsWith("thumb0.jpg")) {
-        		simg = os.getKey();
-        	}
-        	log.info(os.getKey());
+            ListObjectsV2Result result = s3Client.listObjectsV2(bucketName, folderPath);
+            List<S3ObjectSummary> objects = result.getObjectSummaries();
+            String surl = "";
+            String simg = "";
+            for (S3ObjectSummary os : objects) {
+                if (os.getKey().endsWith("master.m3u8")) {
+                    surl = os.getKey();
+                } else if (os.getKey().endsWith("thumb0.jpg")) {
+                    simg = os.getKey();
+                }
+                log.info(os.getKey());
+            }
+            dto.setSurl(cdn + surl);
+            dto.setSimg(cdn + simg);
+            service.uploadStreaming(dto);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        dto.setSurl(cdn+surl);
-        dto.setSimg(cdn+simg);
-		service.uploadStreaming(dto);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        	
+
         return "streaming upload success";
     }
-	
-	@DeleteMapping("/delete")
-	public String deleteStreaming(@RequestBody StreamingDTO dto) {
-		try {
-			service.deleteStreaming(dto.getSno());
+
+    @DeleteMapping("/delete")
+    public String deleteStreaming(@RequestBody StreamingDTO dto) {
+        try {
+            service.deleteStreaming(dto.getSno());
         } catch (Exception e) {
             e.printStackTrace();
         } // end try
         return "streaming delete success";
-	}
-	
-	@GetMapping("/replay/{sno}")
-	public ResponseEntity<StreamingDTO> getReplay(@PathVariable("sno") int sno) {
-		ResponseEntity<StreamingDTO> entry = null;
-		try {
+    }
+
+    @GetMapping("/replay/{sno}")
+    public ResponseEntity<StreamingDTO> getReplay(@PathVariable("sno") int sno) {
+        ResponseEntity<StreamingDTO> entry = null;
+        try {
             entry = new ResponseEntity<StreamingDTO>(service.getReplay(sno), HttpStatus.OK);
-            //log.info(entry);
         } catch (Exception e) {
             e.printStackTrace();
             entry = new ResponseEntity<StreamingDTO>(HttpStatus.BAD_REQUEST);
         } // end try
         return entry;
-	}
+    }
 }

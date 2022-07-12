@@ -29,16 +29,15 @@ public class OrderRestController {
 
     @PostMapping
     public String insertOrderList(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, @RequestBody OrderListDTO olist) {
-        log.info(olist);
         String memail;
         try {
             if (oauthMemberDTO == null) {
                 memail = authMemberDTO.getMemail();
-            }
-            else {
+            } else {
                 memail = oauthMemberDTO.getMemail();
             }
             olist.setMemail(memail);
+            log.info(olist);
             service.insertOrder(olist);
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +67,6 @@ public class OrderRestController {
                 memail = oauthMemberDTO.getMemail();
             }
             entry = new ResponseEntity<List<OrderResDTO>>(service.getOrder(memail), HttpStatus.OK);
-            //log.info(entry);
         } catch (Exception e) {
             e.printStackTrace();
             entry = new ResponseEntity<List<OrderResDTO>>(HttpStatus.BAD_REQUEST);

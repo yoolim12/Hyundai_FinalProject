@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberJoinDTO {
-	private String memail;
+    private String memail;
     private String mname;
     private Date birth;
     private String telnum;
@@ -29,7 +29,6 @@ public class MemberJoinDTO {
     private int gno;
     private int msleep;
     private int mail_check;
-    
     private String gname;
     private String role_set;
 }

@@ -40,7 +40,6 @@ public class BackProductRestController {
 		try {
 			List<ProductBackDTO> list = productService.productSearch(pname);
 			mem = new ResponseEntity<List<ProductBackDTO>>(list, HttpStatus.OK);
-			//log.info(mem);
 		} catch (Exception e) {
 			e.printStackTrace();
 			mem = new ResponseEntity<List<ProductBackDTO>>(HttpStatus.BAD_REQUEST);

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class MemberDTO {
-	private String memail;
+    private String memail;
     private String mname;
     private Date birth;
     private String telnum;

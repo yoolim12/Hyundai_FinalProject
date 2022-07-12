@@ -28,16 +28,15 @@ public class QnaRestController {
 
     @PostMapping("/qna")
     public void insertProduct(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, @RequestPart(value = "key") QnaDTO qna, @RequestPart(value = "qimage", required = false) MultipartFile qimage) throws Exception {
-        log.info("INSERT PRODUCT : " + qna);
+        log.info("INSERT QNA : " + qna);
         String memail;
         if (oauthMemberDTO == null) {
             memail = authMemberDTO.getMemail();
-        }
-        else {
+        } else {
             memail = oauthMemberDTO.getMemail();
         }
         log.info(qimage);
-        if(qimage != null) {
+        if (qimage != null) {
             // S3 이미지 업로드 (Ccolorimage)
             List<MultipartFile> temp = new ArrayList<>();
             temp.add(qimage);
@@ -57,8 +56,7 @@ public class QnaRestController {
         String memail;
         if (oauthMemberDTO == null) {
             memail = authMemberDTO.getMemail();
-        }
-        else {
+        } else {
             memail = oauthMemberDTO.getMemail();
         }
         log.info("QNA 리스트 ");
@@ -68,25 +66,23 @@ public class QnaRestController {
     }
 
     // QNA 삭제 기능
-    @DeleteMapping ("/deleteQNA")
+    @DeleteMapping("/deleteQNA")
     public void qnaDelete(@RequestParam int qid) throws Exception {
         log.info("QNA 삭제" + qid);
         service.deleteQna(qid); // qid를 받아와 해당 게시물 삭제
-
     }
 
     @PutMapping("/qna")
     public void updateProduct(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, @RequestPart(value = "key") QnaDTO qna, @RequestPart(value = "qimage", required = false) MultipartFile qimage) throws Exception {
-        log.info("UPDATE PRODUCT : " + qna);
+        log.info("UPDATE QNA : " + qna);
         String memail;
         if (oauthMemberDTO == null) {
             memail = authMemberDTO.getMemail();
-        }
-        else {
+        } else {
             memail = oauthMemberDTO.getMemail();
         }
         log.info(qimage);
-        if(qimage != null) {
+        if (qimage != null) {
             // S3 이미지 업로드 (Ccolorimage)
             List<MultipartFile> temp = new ArrayList<>();
             temp.add(qimage);

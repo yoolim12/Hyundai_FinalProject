@@ -1,5 +1,5 @@
 package com.hyundai.project.dto;
 
 public enum ClubMemberRole {
-	USER, MANAGER, ADMIN
+    USER, MANAGER, ADMIN
 }
