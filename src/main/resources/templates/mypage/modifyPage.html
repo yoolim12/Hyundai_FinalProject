@@ -164,7 +164,11 @@
             var birth = $("#selYear").val() + "-" + $("#selMonth").val() + "-" + $("#selDay").val();
             var memail_info = $("#email").val()+"@"+emailDomain;
             var mname = $("#name").val();
-
+            var mail_check = 0;
+            
+            if ($('input[name="emailReceiveYN"]:radio:input[value="true"]').is(':checked')){
+            	mail_check = 1;
+            }
 
             if($("#emailDuplChk").val() == 'N'){
                 console.log('hi')
@@ -193,6 +197,7 @@
                         'mname' : mname,
                         'birth' : birth,
                         'memail_info' : memail_info,
+                        'mail_check' : mail_check,
                         "CSRFToken": getYCsrfToken()
                     }),
                     beforeSend: function(xhr){

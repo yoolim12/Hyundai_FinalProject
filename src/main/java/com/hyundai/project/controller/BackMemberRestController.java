@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.hyundai.project.dto.QnaDTO;
+import com.hyundai.project.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,9 @@ public class BackMemberRestController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
+
+	@Setter(onMethod_ = @Autowired)
+	private QnaService qservice;
 	
 	@Autowired
 	private AwsS3Service awsS3Service;
@@ -148,4 +153,19 @@ public class BackMemberRestController {
         log.info("메일 send 완료.");
         
     }
+
+	@PutMapping("/qnaReply")
+	@ResponseBody
+	public void updateQnaReply(@RequestBody QnaDTO qna) throws Exception {
+		log.info("QNA 답글");
+		log.info(qna);
+		qservice.updateQnaReply(qna);
+		log.info("MAIL SEND");
+		log.info(qna.getQemail());
+		if(!qna.getQemail().equals("")) {
+			mailService.replyMailSend(qna.getQemail());
+		}
+		log.info("MAIL SEND END");
+		log.info("QNA 답글 끝");
+	}
 }

@@ -93,7 +93,7 @@ public class MypageController {
         	model.addAttribute("memail", oauthMemberDTO.getMemail());
     		model.addAttribute("mname", oauthMemberDTO.getName());
     		model.addAttribute("birth", oauthMemberDTO.getBirth());
-    		grade = memberDAO.findByEmail(oauthMemberDTO.getMemail(), 0).getGno();
+    		grade = memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getGno();
         }
 		
 		

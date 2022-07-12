@@ -107,6 +107,7 @@ public class MypageRestController {
 		authMemberDTO.setMemail_info(map.get("memail_info"));
 		authMemberDTO.setMname(map.get("mname"));
 		authMemberDTO.setBirth(Date.valueOf(map.get("birth")));
+		authMemberDTO.setMail_check(Integer.parseInt(map.get("mail_check")));
 		
 		System.out.println("##############AUTHMEMBER###############"+authMemberDTO);
 		
