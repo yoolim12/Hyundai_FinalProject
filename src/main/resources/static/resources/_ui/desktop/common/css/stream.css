@@ -1,55 +1,55 @@
 .blsmflw1 {
-   animation: target_image 1.5s;
-   animation-iteration-count: 2;
-   transform-origin: 50% 50%;
+	animation: target_image 1.5s;
+	animation-iteration-count: 2;
+	transform-origin: 50% 50%;
 }
 
 div, span {
-   line-height: unset;
+	line-height: unset;
 }
 
 video::-webkit-media-controls-time-remaining-display {
-   display: none;
+	display: none;
 }
 
 body {
-   margin: 0;
+	margin: 0;
 }
 
 .video-js.vjs-4-3 {
-   padding-top: 60%;
+	padding-top: 60%;
 }
 
 .video_main_wrap {
-   padding-top: unset;
+	padding-top: unset;
 }
 
 .cnts_title {
-   padding-top: 10px;
-   padding-bottom: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 #msgArea {
-   padding-top: 3%;
-   overflow: scroll;
-   height: 35rem;
-   background: lightgray;
-    padding: 3%;
-    border-radius: 7px;
+	padding-top: 3%;
+	overflow: scroll;
+	height: 35rem;
+	background: lightgray;
+	padding: 3%;
+	border-radius: 7px;
 }
 
 .productPopup {
-    position: sticky;
-    width: 100%;
-    height: 260px;
-    top: 0;
-    background-color: rgb(178, 239, 234);
-    opacity: 0.8;
-    border-radius: 10px;
+	position: sticky;
+	width: 100%;
+	height: 260px;
+	top: 0;
+	background-color: rgb(178, 239, 234);
+	opacity: 0.8;
+	border-radius: 10px;
 }
 
 .fold {
-    /* position: absolute;
+	/* position: absolute;
     top: 5px;
     right: 5px;
     padding: 5px;
@@ -61,212 +61,223 @@ body {
     cursor: pointer;
     overflow: hidden;
     text-indent: -100px; */
-
-    display: block;
-    width: 25px;
-    height: 25px;
-    float: right;
+	display: block;
+	width: 25px;
+	height: 25px;
+	float: right;
 }
 
 .upArrow {
-    width: 100%;
-    /* height: 38px; */
+	width: 100%;
+	/* height: 38px; */
 }
 
 .foldMsg {
-    width: 36px;
-    float: right;
-    margin-top: 4px;
+	width: 36px;
+	float: right;
+	margin-top: 4px;
 }
 
 .productInfo {
-    width: 100%; 
-    height: 170px;
+	width: 100%;
+	height: 170px;
 }
 
 .tit {
-    font-size: 1rem;
-    font-weight: bold;
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 .content {
-    width: 100%;
-    padding-top: 10px;
+	width: 100%;
+	padding-top: 10px;
 }
 
 #img1 {
-    width: 33.5%;
-    float: left;
-    padding-left: 7%;
+	width: 33.5%;
+	float: left;
+	padding-left: 24.6328px;
 }
 
 .respon_image {
-    width: 100%;
-    float: left;
-    /* margin-left: 20px; */
+	width: 117.9px;
+	height: 177.8px;
+	border-radius: 10px;
+	margin-left: 30px;
 }
 
 .info {
-    display: block;
-    font-size: 0.8rem;
-    width: 56.50%;
-    float: right;
-    margin-right: 3%;
-    margin-top: 5%;
+	display: block;
+	font-size: 0.8rem;
+	width: 150px;
+	height: 109.88px;
+	float: left;
+	margin-left: 30px;
+	margin-top: 30px;
 }
 
 .pprice {
-    margin-bottom: 10%;
+	margin-bottom: 10%;
 }
 
-.pbtn{
-    display:block;
-    width:83%;
-    line-height:30px;
-    text-align:center;
-    background-color:#222;
-    color:#fff;
-
-    /* margin-top: 10px; */
-    /* bottom: 0; */
-    margin: auto;
+.pbtn {
+	display: block;
+	width: 90px;
+	line-height: 30px;
+	text-align: center;
+	background-color: #222;
+	color: #fff;
+	/* margin-top: 10px; */
+	/* bottom: 0; */
+	margin: auto;
 }
 
 .productFold {
-    position: sticky;
-    width: 100%;
-    height: 30px;
-    top: 0;
-    background-color: rgb(178, 239, 234);
-    opacity: 0.8;
+	position: sticky;
+	width: 100%;
+	height: 30px;
+	top: 0;
+	background-color: rgb(178, 239, 234);
+	opacity: 0.8;
 }
 
-#msg{
-   width: 91%; 
-   background-color: white;
-   padding : 1%
+#msg {
+	width: 91%;
+	background-color: white;
+	padding: 1%
 }
+
 #chating {
-   margin-right: 10px;
-   margin-height: 730px; 
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    padding-bottom: 8px;
-    margin-left: 0px;
-    max-height: 1120px;
-    overflow: scroll;
+	margin-right: 10px;
+	margin-height: 730px;
+	background-color: #f5f5f5;
+	border-radius: 10px;
+	padding-bottom: 8px;
+	margin-left: 0px;
+	max-height: 1120px;
+	overflow: scroll;
 }
+
 ::-webkit-scrollbar {
-display: none;
+	display: none;
 }
 
 li#welcome {
-   padding: revert;
-    padding: 1%;
-      text-align: center;
-    background-color: lavender;
-    list-style: none;
-    border-radius: 5px;
-    margin-bottom: 3px;
+	padding: revert;
+	padding: 1%;
+	text-align: center;
+	background-color: lavender;
+	list-style: none;
+	border-radius: 5px;
+	margin-bottom: 3px;
 }
 
 li#chatUI {
-    list-style: none;
-    padding: revert;
-    padding: 1%;
-    border: 2px solid lemonchiffon;
-    background-color: antiquewhite;
-    border-radius: 10px;
-    text-align: left;
-    padding-left: 10px;
-    margin-bottom: 3px;
-    margin-top: 3px;
+	list-style: none;
+	padding: revert;
+	padding: 1%;
+	border: 2px solid lemonchiffon;
+	background-color: antiquewhite;
+	border-radius: 10px;
+	text-align: left;
+	padding-left: 10px;
+	margin-bottom: 3px;
+	margin-top: 3px;
 }
 
 li#tachatUI {
-    list-style: none;
-    padding: revert;
-    padding: 1%;
-    text-align: left;
-    padding-left: 10px;
-    margin-bottom: 3px;
-    margin-top: 3px;
+	list-style: none;
+	padding: revert;
+	padding: 1%;
+	text-align: left;
+	padding-left: 10px;
+	margin-bottom: 3px;
+	margin-top: 3px;
 }
+
 button#submitBtn {
-    background: darkgrey;
-    border-radius: 8px;
-    padding: 1.5%;
-    border: none;
+	background: darkgrey;
+	border-radius: 8px;
+	padding: 1.5%;
+	border: none;
 }
+
 #fixInput {
-    margin-top: 7px;
+	margin-top: 7px;
 }
 
 .watchagain {
-   white-space: nowrap;
-   overflow-x: scroll;
-   height: 55%;
+	white-space: nowrap;
+	overflow-x: scroll;
+	height: 55%;
+	margin-top: 100px;
+	margin-left: 40px;
 }
 
 .again {
-   display: inline-block;
-   margin-right: 3%;
-   width: 30%;
+	display: inline-block;
+	margin-right: 3%;
+	width: 30%;
 }
 
 .againdetail {
-   position: relative;
-   cursor: pointer;
-   margin-left: 0;
-   margin-top: 5%;
-   flex: auto;
-   display: flex;
-   flex-direction: row;
-   width: 100%;
+	position: relative;
+	cursor: pointer;
+	margin-left: 0;
+	margin-top: 5%;
+	flex: auto;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
 }
 
 .againprofileimg {
-   /* display: inline-block; */
-   width: 50px;
-   height: 50px;
-   object-fit: cover;
-   border-radius: 100%;
-   overflow: hidden;
-   /* margin-right: 20px; */
+	/* display: inline-block; */
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	border-radius: 100%;
+	overflow: hidden;
+	/* margin-right: 20px; */
 }
 
 .titleNname {
-   overflow-x: hidden;
-   padding-left: 5%;
-   width: 100%;
+	overflow-x: hidden;
+	padding-left: 5%;
+	width: 100%;
 }
 
 .againtitle {
-   display: block;
-   font-size: 0.88em;
-   font-weight: bold;
+	display: block;
+	font-size: 0.88em;
+	font-weight: bold;
 }
 
 .againtitlelink {
-   display: inline-block;
-   cursor: pointer;
-   text-decoration: none;
-   color: black;
-   font-family: "Roboto", "Arial", sans-serif;
-   /* font-size: 1.4rem;
+	display: inline-block;
+	cursor: pointer;
+	text-decoration: none;
+	color: black;
+	font-family: "Roboto", "Arial", sans-serif;
+	/* font-size: 1.4rem;
         line-height: 2rem; */
-   font-weight: 500;
-   max-height: 4rem;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: normal;
-   word-wrap: break-word;
+	font-weight: 500;
+	max-height: 4rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	word-wrap: break-word;
 }
 
 .againprofilename {
-   font-size: 0.8em;
+	font-size: 0.8em;
 }
 
 .img {
-   width: 100%
+	width: 100%
+}
+.profile {
+    float: left;
+    margin-top: 30px;
+    margin-left: 30px;
 }

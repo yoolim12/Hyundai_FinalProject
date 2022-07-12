@@ -34,101 +34,109 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequestMapping("/mypage")
 public class MypageRestController {
+   
+   @Autowired
+   private PasswordEncoder passwordEncoder;
+   
+   @Autowired
+   private MemberDAO memberDAO;
+   
+   @Autowired
+   private MemberService service;
+   
+   @Autowired
+   private OrderService oservice;
+   
+   @RequestMapping(value="/passwordCheck", method=RequestMethod.POST)
+   public void passwordCheck(@RequestBody HashMap<String, String> map, 
+         @AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) throws IOException {
+      String mpassword = map.get("mpassword");
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private MemberDAO memberDAO;
-
-    @Autowired
-    private MemberService service;
-
-    @Autowired
-    private OrderService oservice;
-
-    @RequestMapping(value = "/passwordCheck", method = RequestMethod.POST)
-    public void passwordCheck(@RequestBody HashMap<String, String> map,
-                              @AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) throws IOException {
-        String mpassword = map.get("mpassword");
-
-        if (passwordEncoder.matches(mpassword, memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getMpassword())) {
-            Gson gson = new Gson();
-            response.setContentType("application/json; charset=utf-8");
-            response.getWriter().print(gson.toJson(map));
-            log.info("success!!");
-        } else {
-            response.getWriter().print(false);
-            log.info("fail!!");
-        }
-    }
-
-    @RequestMapping(value = "/passwordCompare")
-    public void passwordCompare(@RequestBody HashMap<String, String> map,
-                                @AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) throws IOException {
-        String oldpasswordinput = map.get("oldpassword");
-        if (passwordEncoder.matches(oldpasswordinput, memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getMpassword())) {
-            Gson gson = new Gson();
-            response.setContentType("application/json; charset=utf-8");
-            response.getWriter().print(gson.toJson(map));
-            log.info("success!!");
-        } else {
-            response.getWriter().print(false);
-            log.info("fail!!");
-        }
-    }
-
-    @RequestMapping(value = "/modifyPassword")
-    public void modifyPassword(@RequestBody HashMap<String, String> map,
-                               @AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) {
-
-        String mpassword = passwordEncoder.encode(map.get("mpassword"));
-        authMemberDTO.setMpassword(mpassword);
-
-        try {
-            service.modifyMember(authMemberDTO);
-
-            Gson gson = new Gson();
-            response.setContentType("application/json; charset=utf-8");
-            response.getWriter().print(gson.toJson(map));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @RequestMapping(value = "/updatecomplete")
-    public void updatecomplete(@RequestBody HashMap<String, String> map,
-                               @AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) {
-
-        authMemberDTO.setMemail_info(map.get("memail_info"));
-        authMemberDTO.setMname(map.get("mname"));
-        authMemberDTO.setBirth(Date.valueOf(map.get("birth")));
-
-        try {
-            service.modifyMember(authMemberDTO);
-
-            Gson gson = new Gson();
-            response.setContentType("application/json; charset=utf-8");
-            response.getWriter().print(gson.toJson(map));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @GetMapping("/{memail}")
-    public ResponseEntity<List<OrderResDTO>> getCart(@PathVariable("memail") String memail) {
+      if(passwordEncoder.matches(mpassword, memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getMpassword())) {
+         Gson gson = new Gson();
+          response.setContentType("application/json; charset=utf-8");
+          response.getWriter().print(gson.toJson(map));
+         System.out.println("success!!");
+      }
+      else {
+         response.getWriter().print(false);
+         System.out.println("fail!!");
+      }
+   }
+   
+   @RequestMapping(value="/passwordCompare")
+   public void passwordCompare(@RequestBody HashMap<String, String> map, 
+         @AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) throws IOException {
+      String oldpasswordinput = map.get("oldpassword");
+      if(passwordEncoder.matches(oldpasswordinput, memberDAO.findByEmail(authMemberDTO.getMemail(), 0).getMpassword())) {
+         Gson gson = new Gson();
+          response.setContentType("application/json; charset=utf-8");
+          response.getWriter().print(gson.toJson(map));
+         System.out.println("success!!");
+      }
+      else {
+         response.getWriter().print(false);
+         System.out.println("fail!!");
+      }
+   }
+   
+   @RequestMapping(value="/modifyPassword")
+   public void modifyPassword(@RequestBody HashMap<String, String> map, 
+         @AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) {
+      
+      String mpassword = passwordEncoder.encode(map.get("mpassword"));
+      authMemberDTO.setMpassword(mpassword);
+      
+      System.out.println("##############AUTHMEMBER###############"+authMemberDTO);
+      
+      try {
+          service.modifyMember(authMemberDTO);
+          
+           Gson gson = new Gson();
+          response.setContentType("application/json; charset=utf-8");
+          response.getWriter().print(gson.toJson(map)); 
+       }catch(Exception e){
+          e.printStackTrace();
+       }
+   }
+   
+   @RequestMapping(value="/updatecomplete")
+   public void updatecomplete(@RequestBody HashMap<String, String> map, 
+         @AuthenticationPrincipal AuthMemberDTO authMemberDTO, HttpServletResponse response) {
+      
+      authMemberDTO.setMemail_info(map.get("memail_info"));
+      authMemberDTO.setMname(map.get("mname"));
+      authMemberDTO.setBirth(Date.valueOf(map.get("birth")));
+      authMemberDTO.setMail_check(Integer.parseInt(map.get("mail_check")));
+      
+      System.out.println("##############AUTHMEMBER###############"+authMemberDTO);
+      
+      try {
+          service.modifyMember(authMemberDTO);
+          
+           Gson gson = new Gson();
+          response.setContentType("application/json; charset=utf-8");
+          response.getWriter().print(gson.toJson(map)); 
+       }catch(Exception e){
+          e.printStackTrace();
+       }
+   }
+   
+   @GetMapping("/{memail}")
+   public ResponseEntity<List<OrderResDTO>> getCart(@PathVariable("memail") String memail) {
         ResponseEntity<List<OrderResDTO>> entry = null;
-
+        
         try {
             entry = new ResponseEntity<List<OrderResDTO>>(oservice.getOrder(memail), HttpStatus.OK);
+            //log.info(entry);
         } catch (Exception e) {
             e.printStackTrace();
             entry = new ResponseEntity<List<OrderResDTO>>(HttpStatus.BAD_REQUEST);
         } // end try
         return entry;
-    }
-
-    @PutMapping("/cancel/{oid}")
+   }
+   
+   @PutMapping("/cancel/{oid}")
     public String updateCart(@PathVariable("oid") int oid) throws Exception {
         try {
             log.info(oid);
