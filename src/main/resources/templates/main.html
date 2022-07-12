@@ -23,9 +23,28 @@
         var rate_zh = "";
         var symbol_zh = "";
         
+        var sleep = 1;
+        
+        function easyMemJoin() {
+            var lc = new layerConfirm("<span style='color:red;'>휴면계정 입니다.</span><br> 휴면 계정을 푸시겠습니까?", "휴면 풀기");
+            lc.confirmAction = function(){
+            	sleep = 0;
+            	
+                location.href = "/member/logout";
+            };
+            return;
+        }
+        
         $(document).ready(function(){
             var todayDate = new Date();
-
+            alert($("#hiddenSleep").val())
+            var check_msleep = [[${#authentication.principal.mname}]];
+            if( check_msleep ==  1){
+            	easyMemJoin();
+            }
+            if (sleep == 1){
+            	location.href = "/member/logout";
+            }
             if(horiz > 0) {
                 $("#mainNoticeWrap").css("top","230px");
                 $(".popWrap1901").css("top", "78px");

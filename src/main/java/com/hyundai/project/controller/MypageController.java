@@ -75,7 +75,7 @@ public class MypageController {
         }
         else {
         	model.addAttribute("memail", oauthMemberDTO.getMemail());
-    		model.addAttribute("mname", oauthMemberDTO.getName());
+    		model.addAttribute("mname", oauthMemberDTO.getMname());
     		model.addAttribute("birth", oauthMemberDTO.getBirth());
         }
 	}
@@ -93,7 +93,7 @@ public class MypageController {
         }
         else {
         	model.addAttribute("memail", oauthMemberDTO.getMemail());
-    		model.addAttribute("mname", oauthMemberDTO.getName());
+    		model.addAttribute("mname", oauthMemberDTO.getMname());
     		model.addAttribute("birth", oauthMemberDTO.getBirth());
     		grade = memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getGno();
         }
@@ -129,7 +129,7 @@ public class MypageController {
 		else {
 			model.addAttribute("member", oauthMemberDTO);
 			model.addAttribute("memberemail", oauthMemberDTO.getMemail());
-			model.addAttribute("membername", oauthMemberDTO.getName());
+			model.addAttribute("membername", oauthMemberDTO.getMname());
 			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getMemail()));
 			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getGno());
 		}
