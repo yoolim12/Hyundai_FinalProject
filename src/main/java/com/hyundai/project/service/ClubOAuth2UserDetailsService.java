@@ -53,7 +53,7 @@ extends DefaultOAuth2UserService {
 				e.printStackTrace();
 			}
             log.info("기존 회원");
-            return  result;
+            return  normal_result;
         }
         
         // 기본 회원이면 정보 반환
