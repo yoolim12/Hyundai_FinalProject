@@ -16,24 +16,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class OrderController {
 
-	@Autowired
-	private MemberService service;
+    @Autowired
+    private MemberService service;
 
-	@GetMapping("/order")
-	public String orderView(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) throws Exception {
-		//log.info(authMemberDTO);
-		//log.info(oauthMemberDTO);
-		//int mpoint = service.getPoint(authMemberDTO.getMemail());
-		
-		if (oauthMemberDTO == null) {
-			model.addAttribute("member", authMemberDTO);
-			model.addAttribute("mpoint", service.getPoint(authMemberDTO.getMemail()));
-		}
-		else {
-			model.addAttribute("member", oauthMemberDTO);
-			model.addAttribute("mpoint", service.getPoint(oauthMemberDTO.getMemail()));
-		}
-		return "member/ordersheet";
-	}
+    @GetMapping("/order")
+    public String orderView(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) throws Exception {
+
+        if (oauthMemberDTO == null) {
+            model.addAttribute("member", authMemberDTO);
+            model.addAttribute("mpoint", service.getPoint(authMemberDTO.getMemail()));
+        } else {
+            model.addAttribute("member", oauthMemberDTO);
+            model.addAttribute("mpoint", service.getPoint(oauthMemberDTO.getMemail()));
+        }
+        return "member/ordersheet";
+    }
 
 }

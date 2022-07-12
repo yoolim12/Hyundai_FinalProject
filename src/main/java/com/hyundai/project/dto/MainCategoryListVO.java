@@ -9,12 +9,12 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class MainCategoryListVO {
-	// displayTypeYn은 메인에 보여줄 카테고리인지 체크
-	// displayType이 true이면 신상품, false이면 베스트
+    // displayTypeYn은 메인에 보여줄 카테고리인지 체크
+    // displayType이 true이면 신상품, false이면 베스트
 
-	private Boolean displayTypeYn;
-	private Boolean displayType;
-	private String categoryName;
-	private String categoryCode;
-	
+    private Boolean displayTypeYn;
+    private Boolean displayType;
+    private String categoryName;
+    private String categoryCode;
+
 }//end class

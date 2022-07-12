@@ -42,10 +42,10 @@ public class AwsS3Service {
             objectMetadata.setContentLength(file.getSize());
             objectMetadata.setContentType(file.getContentType());
 
-            try(InputStream inputStream = file.getInputStream()) {
+            try (InputStream inputStream = file.getInputStream()) {
                 amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
-            } catch(IOException e) {
+            } catch (IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
             }
 
@@ -74,8 +74,8 @@ public class AwsS3Service {
     public List<String> getUrl(List<String> fileNameList) {
         log.info(fileNameList);
         List<String> result = new ArrayList<>();
-        for (int i=0; i<fileNameList.size(); i++) {
-            String temp = "https://"+bucket+".s3."+region+".amazonaws.com/"+fileNameList.get(i);
+        for (int i = 0; i < fileNameList.size(); i++) {
+            String temp = "https://" + bucket + ".s3." + region + ".amazonaws.com/" + fileNameList.get(i);
             result.add(temp);
         }
         return result;

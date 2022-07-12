@@ -44,7 +44,7 @@
                             var date = data[i].qdate.substr(0, 10);
                             arr[i] = false;
                             listTag += '<tr class="al_middle" cdlist="[]" pk="8919204155322" onClick="showContent(' + i + ')" >';
-                            listTag += "<td class='frt'>" + date + "</td><td>"+data[i].qkind+"</td><td class='al_left'><a href='javascript:void(0);'>" + data[i].qtitle + "</a></td>";
+                            listTag += "<td class='frt' style='width: 110px;'>" + date + "</td><td>"+data[i].qkind+"</td><td class='al_left'><a href='javascript:void(0);'>" + data[i].qtitle + "</a></td>";
 
                             if(data[i].qstatus == 0) listTag += "<td>[답변대기]</td>";
                             else listTag += "<td style='color: #c69c6c'>[답변완료]</td>";
@@ -91,7 +91,7 @@
                 listTag += '<p style="word-wrap:break-word">' + qcontent + '</p><br><br><img id="imgsrc2" src="'+obj[i].qimage+'" alt="thumimg" style="width:300px" class="tlt"/><br><br>';
             }
             listTag +=
-                '<p class="date" style="color:#999;">등록일 : ' +
+                '<p class="date" style="color:#999; font-size: 11px">등록일 : ' +
                 obj[i].qdate +
                 '</p><a onclick="deleteContent(' +
                 obj[i].qid +
@@ -157,9 +157,6 @@
                     <dd>
                         <a href="/mypage/grade" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
                     </dd>
-                    <dd>
-                        <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 H-POINT');">나의 H.POINT</a>
-                    </dd>
                 </dl>
                 <dl>
                     <dt>나의 정보관리</dt>
@@ -171,7 +168,7 @@
                     <dt>나의 활동관리</dt>
                     <!-- <dd><a href="#">회원등급</a></dd> -->
                     <dd>
-                        <a href="javacript:void(0)" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a>
+                        <a href="/mypage/qna" onclick="GA_Event('마이페이지','LNB','1:1 문의');">1:1 문의</a>
                     </dd>
                     <!-- <dd><a href="#">이벤트 참여현황</a></dd> -->
                 </dl>
@@ -179,13 +176,14 @@
             <!-- ph_guide -->
             <div class="ph_guide">
                 <p class="tlt">고객센터 운영 안내</p>
-                <p class="phone" style="font-size:18px;">1800-5700<span style="color: #c69c6d;" class="txt"><br>(유료)</span></p>
+                <p class="phone" style="font-size:18px;">1800-5700<span style="color: #c69c6d;" class="txt"><br>(유료)</span>
+                </p>
                 <p class="txt">
-                    평일(월~금)<br />
+                    평일(월~금)<br/>
                     am 09:00 ~ pm 18:00<span>토/일, 공휴일 휴무</span>
                 </p>
-                <a href="mailto:shophelp@GKMCC.com" onclick="GA_Event('마이페이지','LNB','이메일 문의');">
-                    shophelp<br />
+                <a href="mailto:shophelp@thehandsome.com">
+                    shophelp<br/>
                     @thehandsome.com
                 </a>
             </div>
@@ -230,7 +228,7 @@
             <div class="tblwrap">
                 <table class="tbl_ltype">
                     <caption>
-                        >나의 1:1 문의 목록
+                        나의 1:1 문의 목록
                     </caption>
                     <colgroup>
                         <col style="width: 100px;" />
@@ -242,7 +240,7 @@
                     <tr>
                         <th scope="col">등록일</th>
                         <th scope="col">상담유형</th>
-                        <th scope="col">내용</th>
+                        <th scope="col">제목</th>
                         <th scope="col">처리상태</th>
                     </tr>
                     </thead>

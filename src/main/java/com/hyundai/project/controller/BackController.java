@@ -33,7 +33,6 @@ public class BackController {
 	// 회원관리 페이지 이동
 	@GetMapping("/memberBO")
 	public void memberBO(Model model) throws Exception {
-		//System.out.println(service.showAllMember());
 		model.addAttribute("userList", service.showAllMember());
 		model.addAttribute("userTotal", service.getTotalMember());
 		model.addAttribute("amountTotal", service.getTotalAmount());
@@ -45,8 +44,7 @@ public class BackController {
 	@PostMapping("/view")
 	public String view(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
 		String memail = paramMap.get("email");
-		System.out.println(memail);
-		System.out.println(service.getMemberInfo(memail));
+		log.info(service.getMemberInfo(memail));
 		model.addAttribute("userList", service.getMemberInfo(memail));
 		
 		return "back/memberBO :: #memberInfo";
@@ -56,8 +54,7 @@ public class BackController {
 	@PostMapping("/viewEmployee")
 	public String viewEmployee(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
 		String memail = paramMap.get("email");
-		System.out.println(memail);
-		System.out.println(service.getEmployeeInfo(memail));
+		log.info(service.getEmployeeInfo(memail));
 		model.addAttribute("userList", service.getEmployeeInfo(memail));
 		
 		return "back/memberBO :: #employeeInfo";
@@ -67,8 +64,7 @@ public class BackController {
 	@PostMapping("/SfindEmployee")
 	public String SfindEmployee(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
 		String memail = paramMap.get("email");
-		System.out.println(memail);
-		System.out.println(service.SfindEmployee(memail));
+		log.info(service.SfindEmployee(memail));
 		model.addAttribute("userList", service.SfindEmployee(memail));
 			
 		return "back/memberBO :: #employeeInfo";
@@ -117,7 +113,6 @@ public class BackController {
 	}
 
 	// QNA BO 페이지 이동
-	// 회원관리 페이지 이동
 	@GetMapping("/qnaBO")
 	public void qnaBO(Model model) throws Exception {
 		model.addAttribute("qnaList", qservice.getAllQna());

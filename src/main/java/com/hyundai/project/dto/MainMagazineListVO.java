@@ -10,12 +10,12 @@ import lombok.Data;
 @AllArgsConstructor
 public class MainMagazineListVO {
 
-	private String mobileSubTitle;
-	private String desktopSubTitle;
-	private String mobileTitle;
-	private String imageUrl;
-	private String pk;
-	private String category;
-	private String desktopTitle;
-	
+    private String mobileSubTitle;
+    private String desktopSubTitle;
+    private String mobileTitle;
+    private String imageUrl;
+    private String pk;
+    private String category;
+    private String desktopTitle;
+
 }//end class
