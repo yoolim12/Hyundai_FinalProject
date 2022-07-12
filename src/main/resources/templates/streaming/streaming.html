@@ -269,7 +269,7 @@ input {
         console.log(username);
         const websocket = new WebSocket("ws://112.221.225.165:40400/ws/chat");
 
-        websocket.onmessage = onMessage;s
+        websocket.onmessage = onMessage;
         websocket.onopen = onOpen;
         websocket.onclose = onClose;
 
