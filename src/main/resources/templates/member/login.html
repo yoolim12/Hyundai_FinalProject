@@ -203,7 +203,7 @@ function layerPopup(division) {
 }
 
 function easyMemJoin() {
-    var lc = new layerConfirm("<span style='color:red;'>간편회원으로 가입</span>하실 경우,<br> <span style='color:red;'>한섬마일리지 및 H.Point 적립이 불가</span>하며,<br><span style='color:red;'>한섬 온라인 멤버십 서비스 ‘THE 클럽’의 혜택을 받으실 수 없습니다.<br></span> 간편회원 가입을 진행하시겠습니까?", "간편회원 가입");
+    var lc = new layerConfirm("간편회원 가입을 진행하시겠습니까?", "간편회원 가입");
     lc.confirmAction = function(){
         location.href = "/member/simpleRegisterEmail";
     };
