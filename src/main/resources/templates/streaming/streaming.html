@@ -267,7 +267,7 @@ input {
         })(); */
         const username = "[[${member.getMemail()}]]";
         console.log(username);
-        const websocket = new WebSocket("ws://3.34.216.148:8080/ws/chat");
+        const websocket = new WebSocket("ws://112.221.225.165:40400/ws/chat");
 
         websocket.onmessage = onMessage;
         websocket.onopen = onOpen;

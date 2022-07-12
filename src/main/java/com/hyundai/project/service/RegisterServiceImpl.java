@@ -13,18 +13,18 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class RegisterServiceImpl implements RegisterService {
 
-	@Autowired
-	private MemberDAO memberDAO;
-	
-	@Override
-	public void simpleRegister(MemberDTO memberdto) {
-		memberDAO.simpleRegister(memberdto);
-	
-	}
+    @Autowired
+    private MemberDAO memberDAO;
 
-	@Override
-	public void registerRole(MemberRoleDTO member_role){
-		memberDAO.registerRole(member_role);
+    @Override
+    public void simpleRegister(MemberDTO memberdto) {
+        memberDAO.simpleRegister(memberdto);
 
-	}
+    }
+
+    @Override
+    public void registerRole(MemberRoleDTO member_role) {
+        memberDAO.registerRole(member_role);
+
+    }
 }

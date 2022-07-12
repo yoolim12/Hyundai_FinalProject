@@ -49,7 +49,7 @@ public class LoginRestController {
 	public String sendEmail(@RequestBody HashMap<String, String> map) {
 		String memail = map.get("memail");
 		mail.welcomeMailSend(memail);
-		System.out.println("send email");
+		log.info("send email");
 		return "success";
 	}
 	
@@ -57,7 +57,7 @@ public class LoginRestController {
 	public void registerPost(@RequestBody HashMap<String, String> map, 
 			@ModelAttribute MemberDTO memberdto, @ModelAttribute MemberRoleDTO memberRoleDTO,
 			HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("Enter registerPost!!");
+		log.info("Enter registerPost!!");
 		String memail = map.get("memail"); // js로 null인 것들 걸러내
 		String mpassword = passwordEncoder.encode(map.get("mpassword"));
 		String memail_info = map.get("memail_info");
@@ -87,19 +87,18 @@ public class LoginRestController {
 		try {
     		service.simpleRegister(memberdto);
     		service.registerRole(memberRoleDTO);
-    		System.out.println("register success!!");
+    		log.info("register success!!");
     		
         	Gson gson = new Gson();
     		response.setContentType("application/json; charset=utf-8");
     		response.getWriter().print(gson.toJson(map)); 
     	}catch(Exception e){
-    		System.out.println("register fail.......");
+    		log.info("register fail.......");
     		e.printStackTrace();
     	}
 	}
 	
 	@RequestMapping("/duplicateCheck")
-//	@ResponseBody
 	public ResponseEntity<MemberJoinDTO> duplicateCheck(@RequestBody HashMap<String, String> map, HttpServletResponse response) throws IOException {
 		String memail = map.get("memail");
 		MemberJoinDTO memberJoinDTO = new MemberJoinDTO();
@@ -114,7 +113,6 @@ public class LoginRestController {
 				mem = new ResponseEntity<MemberJoinDTO>(memberDAO.findByEmail(memail, 0), HttpStatus.OK);
 				
 			}
-			log.info(mem);
 		} catch (Exception e) {
 			e.printStackTrace();
 			mem = new ResponseEntity<MemberJoinDTO>(HttpStatus.BAD_REQUEST);
@@ -128,7 +126,7 @@ public class LoginRestController {
 		ResponseEntity<String> mem = null;
 		try {
 			String a = memberDAO.findEmailInfo(memailinfo);
-			System.out.println(a);
+			log.info(a);
 			if(a == null) {
 				mem = new ResponseEntity<String>("ok", HttpStatus.OK);
 			}

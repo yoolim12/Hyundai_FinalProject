@@ -19,4 +19,5 @@
 	<select id="getReplay" resultType="com.hyundai.project.dto.StreamingDTO">
 		select * from streaming where sno = #{sno}
 	</select>
+
 </mapper>

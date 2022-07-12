@@ -48,8 +48,8 @@ public class MypageController {
 			model.addAttribute("memberemail", oauthMemberDTO.getMemail());
 			model.addAttribute("membername", oauthMemberDTO.getMname());
 			model.addAttribute("memberpoint", memberDAO.getPoint(oauthMemberDTO.getMemail()));
-			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getGno());
-			model.addAttribute("from_social", memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getFrom_social());
+//			model.addAttribute("membergno", memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getGno());
+//			model.addAttribute("from_social", memberDAO.findByEmail(oauthMemberDTO.getMemail(), 1).getFrom_social());
 		}
 		return "mypage/mypage";
 	}
