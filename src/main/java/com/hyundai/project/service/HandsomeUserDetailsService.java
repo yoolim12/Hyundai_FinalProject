@@ -56,7 +56,7 @@ public class HandsomeUserDetailsService implements UserDetailsService {
         		memberJoinDTO.getFrom_social(), authorities, memberJoinDTO.getMname(), memberJoinDTO.getBirth()
         		,memberJoinDTO.getTelnum(), memberJoinDTO.getMaddress(), memberJoinDTO.getMgender(),
         		memberJoinDTO.getMemail_info(), memberJoinDTO.getModdate(), memberJoinDTO.getRegdate(), memberJoinDTO.getMpoint(),
-				memberJoinDTO.getGno(), memberJoinDTO.getMsleep());
+				memberJoinDTO.getGno(), memberJoinDTO.getMsleep(), memberJoinDTO.getMail_check());
         
         //log.info(authMemberDTO);
         //log.info(authMemberDTO.getAuthorities().toString());

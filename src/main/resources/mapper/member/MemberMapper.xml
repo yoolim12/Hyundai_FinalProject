@@ -48,7 +48,7 @@
 	</select>
 	
 	<select id="modifyMember" parameterType="com.hyundai.project.dto.AuthMemberDTO">
-		update member set memail_info=#{memail_info}, mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress}, msleep = #{msleep}, moddate = sysdate where memail = #{memail}
+		update member set memail_info=#{memail_info}, mpassword=#{mpassword}, mname = #{mname}, birth = #{birth}, telnum = #{telnum}, maddress = #{maddress}, msleep = #{msleep}, moddate = sysdate, mail_check = #{mail_check} where memail = #{memail}
 	</select>
 	
 	<update id="admodifyMember">

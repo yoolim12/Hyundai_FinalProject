@@ -43,8 +43,10 @@ extends DefaultOAuth2UserService {
         // 기본에 동일한 이메일로 가입한 회원인지 확인
         MemberJoinDTO result = clubMemberDAO.findByEmail(email, 1);
         
+        // 기본에 동일한 이메일로 가입한 회원인지 확인 (간편 회원가입)
         MemberJoinDTO normal_result = clubMemberDAO.findByEmail(email, 0);
         
+        // 기본 회원가입이면 정보 반환 (간편 회원가입)
         if (!(normal_result == null)) {
         	try {
 				clubMemberDAO.insertLoginLog(email);
@@ -56,7 +58,7 @@ extends DefaultOAuth2UserService {
             return  normal_result;
         }
         
-        // 기본 회원이면 정보 반환
+        // 기본 회원이면 정보 반환 (소셜 로그인)
         if (!(result == null)) {
         	try {
 				clubMemberDAO.insertLoginLog(email);
@@ -74,7 +76,7 @@ extends DefaultOAuth2UserService {
         clubMember.setMname(name);
         clubMember.setMpassword(passwordEncoder.encode("dfdzvxcbsdgsd"));
         
-        String now = "2009-03-20"; // 형식을 지켜야 함
+        String now = "2000-03-20"; // 형식을 지켜야 함
         java.sql.Date d = java.sql.Date.valueOf(now);
         
         clubMember.setBirth(d);
@@ -186,9 +188,6 @@ extends DefaultOAuth2UserService {
                log.info(clubAuthMemberDTO.getMname());
                
                int sleep = clubMember2.getMsleep();
-               if (sleep == 1) {
-            	   System.out.println("휴면 계정이다.");
-               }
                
                //clubAuthMemberDTO --> UserDetails 반환
                log.info("OAuth2User 를 clubAuthMemberDTO");
