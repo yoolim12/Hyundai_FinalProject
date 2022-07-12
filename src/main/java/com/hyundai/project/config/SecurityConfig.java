@@ -55,8 +55,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                .antMatchers("/back/memberBO").hasRole("ADMIN")
                .antMatchers("/back/productBO").hasRole("ADMIN")
                .antMatchers("/back/streamingBO").hasRole("ADMIN")
+               .antMatchers("/back/qnaBO").hasRole("ADMIN")
+               .antMatchers("/back/chart").hasRole("ADMIN")
+               .antMatchers("/back/sendMail").hasRole("ADMIN")
                .antMatchers("/mypage/personInformationChange").hasRole("USER")
                .antMatchers("/mypage/grade").hasRole("USER")
+               .antMatchers("/mypage/qna").hasRole("USER")
+               .antMatchers("/mypage/insertQna").hasRole("USER")
+               .antMatchers("/mypage/modifyPage").hasRole("USER")
                ;
 
        //인가 인증 문제시 로그인 화면

@@ -9,12 +9,12 @@ import com.hyundai.project.dto.StreamingDTO;
 @Mapper
 public interface StreamingDAO {
 
-	public List<StreamingDTO> getList() throws Exception;
+    public List<StreamingDTO> getList() throws Exception;
 
-	public void insertStreaming(StreamingDTO dto) throws Exception;
-	
-	public void deleteStreaming(int sno) throws Exception;
+    public void insertStreaming(StreamingDTO dto) throws Exception;
 
-	public StreamingDTO getReplay(int sno);
-	
+    public void deleteStreaming(int sno) throws Exception;
+
+    public StreamingDTO getReplay(int sno);
+
 }

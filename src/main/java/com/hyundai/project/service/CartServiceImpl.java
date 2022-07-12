@@ -15,46 +15,39 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class CartServiceImpl implements CartService {
 
-	@Autowired
-	private CartDAO cartDAO;
+    @Autowired
+    private CartDAO cartDAO;
 
-	@Override
-	public List<CartDTO> getCart(String memail) throws Exception {
-		return cartDAO.getCart(memail);
-	}
+    @Override
+    public List<CartDTO> getCart(String memail) throws Exception {
+        return cartDAO.getCart(memail);
+    }
 
-	@Override
-	public void insertCart(String memail, CartDTO cart) throws Exception {
-		cartDAO.insertCart(memail, cart);
-	}
+    @Override
+    public void insertCart(String memail, CartDTO cart) throws Exception {
+        cartDAO.insertCart(memail, cart);
+    }
 
-//	@Override
-//	public void deleteCart(String memail, String pid, String ccolorcode, String ssize) throws Exception {
-//		cartDAO.deleteCart(memail, pid, ccolorcode, ssize);
-//	}
-	
-	@Override
-	public void deleteCart(String memail, CartDTO cart) throws Exception {
-		log.info("================================================");
-		log.info(memail);
-		log.info(cart);
-		cartDAO.deleteCart(memail, cart);
-		log.info("delete 완.");
-	}
-	
-	@Override
-	public void deleteAllCart(String memail) throws Exception {
-		cartDAO.deleteAllCart(memail);
-	}
-	
-	@Override
-	public void updateCart(String memail, CartUpdateDTO cart) throws Exception {
-		cartDAO.updateCart(memail, cart);
-	}
+    @Override
+    public void deleteCart(String memail, CartDTO cart) throws Exception {
+        log.info(memail);
+        log.info(cart);
+        cartDAO.deleteCart(memail, cart);
+    }
 
-	@Override
-	public int getCartTotal(String memail) throws Exception {
-		return cartDAO.getCartTotal(memail);
-	}
+    @Override
+    public void deleteAllCart(String memail) throws Exception {
+        cartDAO.deleteAllCart(memail);
+    }
+
+    @Override
+    public void updateCart(String memail, CartUpdateDTO cart) throws Exception {
+        cartDAO.updateCart(memail, cart);
+    }
+
+    @Override
+    public int getCartTotal(String memail) throws Exception {
+        return cartDAO.getCartTotal(memail);
+    }
 
 }

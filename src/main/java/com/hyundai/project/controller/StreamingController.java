@@ -16,52 +16,47 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Controller
 public class StreamingController {
-	
-	@Autowired
-	private StreamingService service;
-	
-	@GetMapping("/streaming")
-	public String stream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
 
-		log.info(authMemberDTO);
-		log.info(oauthMemberDTO);
-		if (oauthMemberDTO == null)
-			model.addAttribute("member", authMemberDTO);
-		else
-			model.addAttribute("member", oauthMemberDTO);
-		return "streaming/streaming";
-	}
-	
-	@GetMapping("/mobile")
-	public String mobileStream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
-		if (oauthMemberDTO == null) {
-        	model.addAttribute("member", authMemberDTO);
-        }
-        else {
-        	model.addAttribute("member", oauthMemberDTO);
-        }
-		return "streaming/mobile";
-	}
-	
-	@GetMapping("/streamingReplay/{sno}")
-	public String replayStream(@PathVariable("sno") int sno, Model model){
-		try {
-			model.addAttribute("video", service.getReplay(sno));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "streaming/streamingReplay";
-	}
-	
-	@GetMapping("/streamingChat")
-	public void streamChat(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,@AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model){
+    @Autowired
+    private StreamingService service;
 
-		log.info("@StreamingController, GET()");
-		log.info(authMemberDTO);
-		log.info(oauthMemberDTO);
-		if (oauthMemberDTO == null)
-			model.addAttribute("member", authMemberDTO);
-		else
-			model.addAttribute("member", oauthMemberDTO);
-	}
+    @GetMapping("/streaming")
+    public String stream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) {
+
+        if (oauthMemberDTO == null)
+            model.addAttribute("member", authMemberDTO);
+        else
+            model.addAttribute("member", oauthMemberDTO);
+        return "streaming/streaming";
+    }
+
+    @GetMapping("/mobile")
+    public String mobileStream(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) {
+        if (oauthMemberDTO == null) {
+            model.addAttribute("member", authMemberDTO);
+        } else {
+            model.addAttribute("member", oauthMemberDTO);
+        }
+        return "streaming/mobile";
+    }
+
+    @GetMapping("/streamingReplay/{sno}")
+    public String replayStream(@PathVariable("sno") int sno, Model model) {
+        try {
+            model.addAttribute("video", service.getReplay(sno));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "streaming/streamingReplay";
+    }
+
+    @GetMapping("/streamingChat")
+    public void streamChat(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, @AuthenticationPrincipal ClubAuthMemberDTO oauthMemberDTO, Model model) {
+
+        log.info("@StreamingController, GET()");
+        if (oauthMemberDTO == null)
+            model.addAttribute("member", authMemberDTO);
+        else
+            model.addAttribute("member", oauthMemberDTO);
+    }
 }
