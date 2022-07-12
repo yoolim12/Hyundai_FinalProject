@@ -44,7 +44,7 @@
                             var date = data[i].qdate.substr(0, 10);
                             arr[i] = false;
                             listTag += '<tr class="al_middle" cdlist="[]" pk="8919204155322" onClick="showContent(' + i + ')" >';
-                            listTag += "<td class='frt'>" + date + "</td><td>"+data[i].qkind+"</td><td class='al_left'><a href='javascript:void(0);'>" + data[i].qtitle + "</a></td>";
+                            listTag += "<td class='frt' style='width: 110px;'>" + date + "</td><td>"+data[i].qkind+"</td><td class='al_left'><a href='javascript:void(0);'>" + data[i].qtitle + "</a></td>";
 
                             if(data[i].qstatus == 0) listTag += "<td>[답변대기]</td>";
                             else listTag += "<td style='color: #c69c6c'>[답변완료]</td>";
@@ -91,7 +91,7 @@
                 listTag += '<p style="word-wrap:break-word">' + qcontent + '</p><br><br><img id="imgsrc2" src="'+obj[i].qimage+'" alt="thumimg" style="width:300px" class="tlt"/><br><br>';
             }
             listTag +=
-                '<p class="date" style="color:#999;">등록일 : ' +
+                '<p class="date" style="color:#999; font-size: 11px">등록일 : ' +
                 obj[i].qdate +
                 '</p><a onclick="deleteContent(' +
                 obj[i].qid +
@@ -240,7 +240,7 @@
                     <tr>
                         <th scope="col">등록일</th>
                         <th scope="col">상담유형</th>
-                        <th scope="col">내용</th>
+                        <th scope="col">제목</th>
                         <th scope="col">처리상태</th>
                     </tr>
                     </thead>
