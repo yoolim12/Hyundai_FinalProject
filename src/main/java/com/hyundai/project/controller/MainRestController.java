@@ -5,16 +5,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hyundai.project.dto.AuthMemberDTO;
+import com.hyundai.project.dto.ClubAuthMemberDTO;
 import com.hyundai.project.dto.MainCategoryListVO;
 import com.hyundai.project.dto.MainListVO;
 import com.hyundai.project.dto.MainMagazineListVO;
+import com.hyundai.project.memberDAO.MemberDAO;
 import com.hyundai.project.service.MainService;
 
 import lombok.extern.log4j.Log4j2;
@@ -25,6 +29,9 @@ public class MainRestController {
 	
 	@Autowired
 	private MainService service;
+	
+	@Autowired
+	private MemberDAO memberDAO;
 	
 	// 메인페이지 내 신상품 리스트 조회.
 	// REST - get 방식을 사용하여 쿼리스트링으로 전달받은 categoryCode를 이용하여 상품 목록 조회
@@ -124,6 +131,5 @@ public class MainRestController {
 
 		return entry;
 	}//end mainCategoryList
-	
 	
 }//end class
