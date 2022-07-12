@@ -785,7 +785,8 @@
                                             </li>
                                             <li>
                                                 <a href="/member/login" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="!isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
-                                                <a href="/mypageCheck" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
+                                                <a th:if="${#authentication.principal.fromSocial} == 1" href="/mypage/modifyPage" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
+                                                <a th:unless="${#authentication.principal.fromSocial} == 1" href="/mypage/personInformationChange" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -1005,6 +1006,7 @@
                                     <span class="ico cart">장바구니</span> <span class="count"><span id="cartCount"></span> </span>
                                 </a>
                             </li>
+                            
                         </ul>
                     </div>
                 </div>
