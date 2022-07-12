@@ -42,8 +42,23 @@ public class ClubOAuth2UserDetailsService
         log.info("saveSocialMember  시작");
         // 기본에 동일한 이메일로 가입한 회원인지 확인
         MemberJoinDTO result = clubMemberDAO.findByEmail(email, 1);
-
-        // 기본 회원이면 정보 반환
+        
+        // 기본에 동일한 이메일로 가입한 회원인지 확인 (간편 회원가입)
+        MemberJoinDTO normal_result = clubMemberDAO.findByEmail(email, 0);
+        
+        // 기본 회원가입이면 정보 반환 (간편 회원가입)
+        if (!(normal_result == null)) {
+        	try {
+				clubMemberDAO.insertLoginLog(email);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            log.info("기존 회원");
+            return  normal_result;
+        }
+        
+        // 기본 회원이면 정보 반환 (소셜 로그인)
         if (!(result == null)) {
             try {
                 clubMemberDAO.insertLoginLog(email);
@@ -54,14 +69,14 @@ public class ClubOAuth2UserDetailsService
             log.info("기존 회원");
             return result;
         } // end if
-
-        // 가입한적이 없다면 추가 패스워드 1111 이름은 이메일주소
+ 
+        // 가입한적이 없다면 추가 패스워드 dfdzvxcbsdgsd 이름은 이메일주소
         MemberDTO clubMember = new MemberDTO();
         clubMember.setMemail(email);
         clubMember.setMname(name);
-        clubMember.setMpassword(passwordEncoder.encode("1111"));
-
-        String now = "2009-03-20"; // 형식을 지켜야 함
+        clubMember.setMpassword(passwordEncoder.encode("dfdzvxcbsdgsd"));
+        
+        String now = "2000-03-20"; // 형식을 지켜야 함
         java.sql.Date d = java.sql.Date.valueOf(now);
 
         clubMember.setBirth(d);
@@ -153,36 +168,33 @@ public class ClubOAuth2UserDetailsService
             log.info(clubMember2.getMpassword());
             //OAuth2User 를 clubAuthMemberDTO 로 변환
             ClubAuthMemberDTO clubAuthMemberDTO =
-                    new ClubAuthMemberDTO(
-                            clubMember2.getMemail(),
-                            clubMember2.getMpassword(),
-                            1,
-                            authorities,
-                            oAuth2User.getAttributes(),
-                            clubMember2.getMsleep(),
-                            clubMember2.getGno(),
-                            clubMember2.getBirth(),
-                            clubMember2.getMemail()
-                    );
-            clubAuthMemberDTO.setMemail(clubMember2.getMemail());
-            clubAuthMemberDTO.setMname(clubMember2.getMname());
-            clubAuthMemberDTO.setPassword(clubMember2.getMpassword());
-            clubAuthMemberDTO.setMsleep(clubMember2.getMsleep());
-            clubAuthMemberDTO.setTelnum(clubMember2.getTelnum());
-
-            log.info(clubAuthMemberDTO.getMname());
-
-            int sleep = clubMember2.getMsleep();
-            if (sleep == 1) {
-                log.info("휴면 계정이다.");
-            }
-
-            //clubAuthMemberDTO --> UserDetails 반환
-            log.info("OAuth2User 를 clubAuthMemberDTO");
-            log.info(clubAuthMemberDTO);
-            return clubAuthMemberDTO;
-
-
+                       new ClubAuthMemberDTO(
+                       clubMember2.getMemail() ,
+                       clubMember2.getMpassword() ,
+                       1,
+                       authorities,
+                       oAuth2User.getAttributes(),
+                       clubMember2.getMsleep(),
+                       clubMember2.getGno(),
+                       clubMember2.getBirth(),
+                       clubMember2.getMemail()
+               );
+            	clubAuthMemberDTO.setMemail(clubMember2.getMemail());
+               clubAuthMemberDTO.setMname(clubMember2.getMname());
+               clubAuthMemberDTO.setPassword(clubMember2.getMpassword());
+               clubAuthMemberDTO.setMsleep(clubMember2.getMsleep());
+               clubAuthMemberDTO.setTelnum(clubMember2.getTelnum());
+               
+               log.info(clubAuthMemberDTO.getMname());
+               
+               int sleep = clubMember2.getMsleep();
+               
+               //clubAuthMemberDTO --> UserDetails 반환
+               log.info("OAuth2User 를 clubAuthMemberDTO");
+               log.info(clubAuthMemberDTO);
+               return clubAuthMemberDTO;
+ 
+ 
         } catch (SQLException e) {
             log.info("saveSocialMember error");
             log.info("에러 ");
