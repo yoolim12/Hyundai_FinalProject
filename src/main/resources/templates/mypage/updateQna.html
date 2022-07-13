@@ -106,10 +106,13 @@
                             </dd>
                         </dl>
                         <dl>
-                            <dt>나의 정보관리</dt>
-                            <dd>
-                                <a href="/mypage/personInformationChange" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
-                            </dd>
+		                    <dt>나의 정보관리</dt>
+		                    <dd th:if="${#authentication.principal.fromSocial} == 1">
+		                        <a href="/mypage/modifyPage" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
+		                    </dd>
+		                    <dd th:unless="${#authentication.principal.fromSocial} == 1">
+		                        <a href="/mypage/personInformationChange" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
+		                    </dd>
                         </dl>
                         <dl>
                             <dt>나의 활동관리</dt>
