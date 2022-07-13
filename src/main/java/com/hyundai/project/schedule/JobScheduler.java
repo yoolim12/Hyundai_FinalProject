@@ -38,8 +38,8 @@ public class JobScheduler {
     @Autowired
     private MemberService service;
 
-    //@Scheduled(cron = "0 15 10 1 * ?")
-    @Scheduled(fixedDelay = 50000)
+    @Scheduled(cron = "0 15 10 1 * ?")
+    //@Scheduled(fixedDelay = 50000)
     public void jobScheduled() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         
     	log.info("[등급 갱신] 배치 프로그램 실행");
