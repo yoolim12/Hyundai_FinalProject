@@ -318,7 +318,7 @@ public class MailService {
                     + "        <tr>\r\n"
                     + "            <td style=\"color:#222;font-size:12px;line-height:20px;font-family:Dotum,sans-serif;font-weight:normal;text-align:center;border:0;padding:30px 0 0\">\r\n"
                     + content + "\r\n"
-                    + "            <img src=\" " + url + " \" width=\"1000\" height=\"500\" alt=\"THEHANDSOME.COM\" border=\"0\" class=\"CToWUd\">\r\n"
+                    + "            <img src=\" " + url + " \" width=\"600\" height=\"600\" alt=\"THEHANDSOME.COM\" border=\"0\" class=\"CToWUd\">\r\n"
                     + "            </td>\r\n"
                     + "        </tr>\r\n"
                     + "        <tr>\r\n"
