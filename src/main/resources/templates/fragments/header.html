@@ -45,6 +45,13 @@
 					function getCsrfParameterName() {
 						return $("#CSRFForm [name='CSRFParameterName']").val();
 					}
+					
+					function alertSocial(){
+			var la = new layerAlert('소셜로그인 사용자는 회원 정보 수정이 불가능합니다.');
+	                la.confirmAction = function(){
+						location.href = "/";	                	
+	                }
+		}
 				</script>
 			<!-- yoolim script for logout end -->
                 <script type="text/javascript" src="/resources/_ui/desktop/common/js/SsoAjax.js"></script>
@@ -785,8 +792,8 @@
                                             </li>
                                             <li>
                                                 <a href="/member/login" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="!isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
-                                                <a th:if="${#authentication.principal.fromSocial} == 1" href="/mypage/modifyPage" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
-                                                <a th:unless="${#authentication.principal.fromSocial} == 1" href="/mypage/personInformationChange" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
+                                                <a th:if="${#authentication.principal.fromSocial} == 0" href="/mypage/personInformationChange" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
+                                                <a th:if="${#authentication.principal.fromSocial} == 1" href="javascript:void(0)" onclick="alertSocial();GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경');" sec:authorize="isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
                                             </li>
                                         </ul>
                                     </div>
