@@ -154,6 +154,7 @@ public class BackMemberRestController {
 		if(!qna.getQemail().equals("")) {
 			mailService.replyMailSend(qna.getQemail());
 		}
+		qservice.updateQnaReply(qna);
 		log.info("MAIL SEND END");
 	}
 }
