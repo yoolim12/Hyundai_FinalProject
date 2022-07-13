@@ -39,25 +39,26 @@ public class JobScheduler {
     private MemberService service;
 
     @Scheduled(cron = "0 15 10 1 * ?")
+    //@Scheduled(fixedDelay = 50000)
     public void jobScheduled() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         
-    	log.info("[등급 갱신] 스케줄러 실행");
+    	log.info("[등급 갱신] 배치 프로그램 실행");
 		
 		try {
 			int res = service.updateMemberGrade();
 			
 			log.info("[등급 갱신] "+ res +"건 업데이트 되었습니다.");
 		} catch (Exception e) {
-			log.error("[등급 갱신] 스케줄러 실행중 오류가 발생 하였습니다.",e);
+			log.error("[등급 갱신] 배치 프로그램 실행중 오류가 발생 하였습니다.",e);
 		}
     	
 		
-		log.info("[휴면 계정] 스케줄러 실행");
+		log.info("[휴면 계정] 배치 프로그램 실행");
 		try { 
 			int res = service.updateMemberSleep();
 			log.info("[휴면 계정] "+ res +"건 업데이트 되었습니다."); 
 		} catch (Exception e) {
-			log.error("[휴면 계정] 스케줄러 실행중 오류가 발생 하였습니다.",e); 
+			log.error("[휴면 계정] 배치 프로그램 실행중 오류가 발생 하였습니다.",e); 
 		}
 		 
         Map<String, JobParameter> jobParameterMap = new HashMap<>();

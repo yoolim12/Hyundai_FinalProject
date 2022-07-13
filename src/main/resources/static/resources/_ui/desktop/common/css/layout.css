@@ -167,7 +167,7 @@ iframe.lnb{width:100%;height:100%}
 #headerWrap .gnbwarp.com .logo{float:left;width:305px}
 #headerWrap .gnbwarp.com .main_logo{float:left;width:305px}
 #headerWrap .gnbwarp.com .logo_gif{float:left;width:305px}
-#headerWrap .gnbwarp.com .logo a{margin:21px 0 18px}
+#headerWrap .gnbwarp.com .logo a{margin-top: 10px;}
 
 /* gnb - menu align 20150929*/
 #headerWrap .gnbwarp .sub_menu .al_frt1{margin-left: 330px;}/* 한섬*/
@@ -608,7 +608,7 @@ iframe.lnb{width:100%;height:100%}
 .header_dropmemu.lang_switch .btn{background-position:-59px 19px;}
 .header_dropmemu.lang_switch .btn:hover, .header_dropmemu.lang_switch .btn.on{background-position:-59px -58px;}
 #headerWrap .gnbwarp.com .logo1903{float:left;width:260px;}
-#headerWrap .gnbwarp .gnb_nav1903{float:left;margin-top:17px;width:67%;}
+#headerWrap .gnbwarp .gnb_nav1903{float:left;margin-top:17px;width:37%;}
 #headerWrap .gnbwarp .gnb_nav1903 > ul > li > a{position:relative;display: block;margin:12px 17px 30px;color:#363636}
 #headerWrap .gnbwarp .gnb_nav1903 > ul.gnbul1 > li > a{font-weight:bold;}
 #headerWrap .gnbwarp .gnb_nav1903 > ul.gnbul2 > li > a:after{content:"";display:inline-block;position:absolute;background:#e5e5e5;width:1px;height:11px;top:6px;right:-20px;}
@@ -760,7 +760,7 @@ p.amc_morebtn a::before{ content:''; position:absolute; top:-15px; left:-25px; w
 #headerWrap .gnbwarp .gnb_nav1903 > ul.gnbul2 > li:last-child > a.on:after{background:#000;}
 
 .honey_talk_service1905.remove1907{top:56px; right:-65px;}
-#headerWrap .gnbwarp .logo a{background: url(/resources/_ui/desktop/common/images/thehyundailivelogo.png) 0 7px no-repeat; width:195px;}
+#headerWrap .gnbwarp .logo a{background: url(/resources/_ui/desktop/common/images/handsomelogo2.png) 0 7px no-repeat; width:195px;}
 
 #headerWrap .gnbwarp .gnb_nav > ul.gnbul2 > li > a{margin:0;}
 #headerWrap .gnbwarp .gnb_nav1803 > ul.gnbul2 > li > a:after{display:none;}
