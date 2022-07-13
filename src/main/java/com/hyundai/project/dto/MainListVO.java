@@ -7,10 +7,10 @@ import lombok.Data;
  */
 @Data
 public class MainListVO {
-	private String productCode;
-	private String T01imageUrl;
-	private String productName;
-	private String brandName;
-	private String price;
-	
+    private String productCode;
+    private String T01imageUrl;
+    private String productName;
+    private String brandName;
+    private String price;
+
 }//end class

@@ -35,18 +35,18 @@ public class LoginController {
 
 	@RequestMapping("/login")
 	public void loginpage() {
-		System.out.println("Login page return");
+		log.info("Login page return");
 	}
 
 	@RequestMapping("/loginfail")
 	public String loginfail() {
-		System.out.println("Login Fail");
+		log.info("Login Fail");
 		return "member/login";
 	}
 	
 	@RequestMapping("/simpleRegisterEmail")
 	public void simpleRegisterEmail() {
-		System.out.println("simpleRegisterEmail return");
+		log.info("simpleRegisterEmail return");
 	}
 	
 
@@ -68,6 +68,6 @@ public class LoginController {
 	
 	@RequestMapping("/simpleRegister3")
 	public void simpleRegister3() {
-		System.out.println("simpleRegister3 return");
+		log.info("simpleRegister3 return");
 	}
 }//end class

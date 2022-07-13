@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.hyundai.project.dto.QnaDTO;
+import com.hyundai.project.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,9 @@ public class BackMemberRestController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
+
+	@Setter(onMethod_ = @Autowired)
+	private QnaService qservice;
 	
 	@Autowired
 	private AwsS3Service awsS3Service;
@@ -49,12 +54,11 @@ public class BackMemberRestController {
 	@ResponseBody
     public ResponseEntity<List<MemberJoinDTO>> findId(HttpServletResponse response, @RequestParam Map<String, String> map) throws Exception {
 		String email = map.get("email");
-		System.out.println(email);
+		log.info(email);
 		
 		ResponseEntity<List<MemberJoinDTO>> mem = null;
 		try {
 			mem = new ResponseEntity<List<MemberJoinDTO>>(service.getMemberInfo(email), HttpStatus.OK);
-			//log.info(mem);
 		} catch (Exception e) {
 			e.printStackTrace();
 			mem = new ResponseEntity<List<MemberJoinDTO>>(HttpStatus.BAD_REQUEST);
@@ -66,10 +70,8 @@ public class BackMemberRestController {
     @PutMapping("/member")
     @ResponseBody
     public String update(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
-    	System.out.println("modify rr");
     	String email = map.get("memail");
     	String name = map.get("mname");
-//    	String birth = map.get("birth");
     	Date birth = Date.valueOf(map.get("birth"));
     	String telnum = map.get("telnum");
     	String address = map.get("maddress");
@@ -77,7 +79,7 @@ public class BackMemberRestController {
     	int auth = Integer.parseInt(map.get("auth"));
     	int msleep = Integer.parseInt(map.get("msleep"));
     	
-    	System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address + ' ' + msleep);
+    	log.info(name + ' '+ birth + ' ' + telnum + ' ' + address + ' ' + msleep);
     	
     	try {
     		service.admodifyMember(email, name, birth, telnum, address, gno, msleep);
@@ -99,9 +101,7 @@ public class BackMemberRestController {
     @ResponseBody
     public String delMember(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
     	String email = map.get("email");
-    	
-    	System.out.println(email+"test");
-    	
+
     	try {
             log.info(email);
             service.delMember(email);
@@ -115,18 +115,15 @@ public class BackMemberRestController {
     @PutMapping("/grade")
     @ResponseBody
     public String updateGrade(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
-    	System.out.println("modify rr");
     	String email = map.get("memail");
     	String name = map.get("mname");
-//    	String birth = map.get("birth");
     	Date birth = Date.valueOf(map.get("birth"));
     	String telnum = map.get("telnum");
     	String address = map.get("maddress");
     	int gno = Integer.parseInt(map.get("gno"));
-//    	int auth = Integer.parseInt(map.get("auth"));
     	int msleep = Integer.parseInt(map.get("msleep"));
     	
-    	System.out.println(name + ' '+ birth + ' ' + telnum + ' ' + address);
+    	log.info(name + ' '+ birth + ' ' + telnum + ' ' + address);
     	
     	try {
     		service.admodifyMember(email, name, birth, telnum, address, gno, msleep);
@@ -142,10 +139,21 @@ public class BackMemberRestController {
     public void sendAllEmail(@RequestPart(value = "key") MailDTO mail, @RequestPart(value = "cimage", required = false) List<MultipartFile> cimage) 
     		throws Exception {
         // S3 이미지 업로드 (Cimage1)
-    	System.out.println("mail send");
+    	log.info("mail send");
         List<String> url = awsS3Service.uploadFile(cimage);
         mailService.noticeMailSend(mail.getTitle(), mail.getCont(), url.get(0));
         log.info("메일 send 완료.");
         
     }
+
+	@PutMapping("/qnaReply")
+	@ResponseBody
+	public void updateQnaReply(@RequestBody QnaDTO qna) throws Exception {
+		log.info("QNA 답글");
+		log.info("MAIL SEND");
+		if(!qna.getQemail().equals("")) {
+			mailService.replyMailSend(qna.getQemail());
+		}
+		log.info("MAIL SEND END");
+	}
 }

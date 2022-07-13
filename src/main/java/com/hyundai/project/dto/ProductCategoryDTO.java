@@ -6,8 +6,8 @@ import lombok.Data;
 public class
 ProductCategoryDTO {
 
-	private String clarge;
-	private String cmedium;
-	private String csmall;
+    private String clarge;
+    private String cmedium;
+    private String csmall;
 
 }

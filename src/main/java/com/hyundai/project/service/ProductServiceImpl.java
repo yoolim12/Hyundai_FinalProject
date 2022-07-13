@@ -37,18 +37,18 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductSizeDTO> getProductSize(String pid, String ccolorcode) throws Exception {
         return productDAO.getProductSize(pid, ccolorcode);
     }
-    
+
     @Transactional(value = "productTxManager")
     @Override
     public void delProduct(String pid) {
-    	productDAO.delStock(pid);
-    	log.info("stock 테이블 삭제");
-    	productDAO.delColor(pid);
-    	log.info("color 테이블 삭제");
+        productDAO.delStock(pid);
+        log.info("stock 테이블 삭제");
+        productDAO.delColor(pid);
+        log.info("color 테이블 삭제");
         productDAO.delProduct(pid);
         log.info("product 테이블 삭제");
     }
-    
+
     @Override
     public List<ProductBackDTO> productSearch(String pname) {
         return productDAO.productSearch(pname);
@@ -71,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
         // product 테이블에서 pid 검색 후 없으면 product에도 입력, 있으면 product 생략
         log.info(pi);
         int cnt = productDAO.getProductExist(pi.getPid());
-        if(cnt < 1) {
+        if (cnt < 1) {
             ProductDTO product = new ProductDTO();
             product.setPid(pi.getPid());
             product.setClarge(pi.getClarge());
@@ -96,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
         pcolor.setCmatchpid(pi.getCmatchpid());
         productDAO.insertProductColor(pcolor);
         log.info(pcolor);
-        for(int i=0; i<pi.getSsize().size(); i++) {
+        for (int i = 0; i < pi.getSsize().size(); i++) {
             ProductSizeDTO psize = new ProductSizeDTO();
             psize.setPid(pi.getPid());
             psize.setSamount(pi.getSsize().get(i).getSamount());
@@ -112,13 +112,13 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.getCategory();
     }
 
-	@Override
-	public List<ProductBackDTO> backProductList(String pid) throws Exception {
-		return productDAO.backProductList(pid);
-	}
+    @Override
+    public List<ProductBackDTO> backProductList(String pid) throws Exception {
+        return productDAO.backProductList(pid);
+    }
 
-	@Override
-	public int productModify(ProductBackDTO productBackDTO) {
-		return productDAO.productModify(productBackDTO);
-	}
+    @Override
+    public int productModify(ProductBackDTO productBackDTO) {
+        return productDAO.productModify(productBackDTO);
+    }
 }

@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class TotalInfoDTO {
-	private int members;
-	private int items;
-	private int thisweek;
-	private int total;
+    private int members;
+    private int items;
+    private int thisweek;
+    private int total;
 }

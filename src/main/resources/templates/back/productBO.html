@@ -734,9 +734,9 @@
                         let price = numWithComma(result[i].pprice);
                         html += `
                            <tr class="tr-shadow" data-id="${result[i].pid}" id="view_${result[i].pid}">
-                           <td>${result[i].pid}</td>
+                           <td><strong>${result[i].pid}</strong></td>
                            <td>${result[i].category}</td>
-                           <td class="desc">${result[i].bname}</td>
+                           <td style="color: green">${result[i].bname}</td>
                            <td>${result[i].pname}</td>`
 
                         if(result[i].pstatus === 1){
@@ -744,7 +744,7 @@
                         }else if(result[i].pstatus === 2){
                             html += `<td><span class="text-warning" style="font-weight:bold">베스트</span></td>`
                         }else{
-                            html += `<td><span class="text-secondary">기본</span></td>`
+                            html += `<td><span class="text-info">기본</span></td>`
                         }
 
                         html += `<td>₩${price}</td>
@@ -756,9 +756,6 @@
                                  <button class="item" id="btn-modal" type="button" onclick="openModal('${result[i].pid}')" data-placement="top" title="" data-original-title="Delete" >
                                     <i class="zmdi zmdi-delete"></i>
                                  </button>
-                                 <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
-                                    <i class="zmdi zmdi-more"></i>
-                                 </button>
                               </div>
                            </td>
                         </tr>
@@ -768,7 +765,7 @@
                         <tr class="tr-shadow" data-id="${result[i].pid}" id="mview_${result[i].pid}" style="display: none;">
                            <td>${result[i].pid}</td>
                            <td>${result[i].category}</td>
-                           <td class="desc">${result[i].bname}</td>
+                           <td style="color: ">${result[i].bname}</td>
                            <td>${result[i].pname}</td>`
 
                         if(result[i].pstatus === 1){

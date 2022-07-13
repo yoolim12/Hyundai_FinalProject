@@ -82,21 +82,13 @@
 	</select>
 
     <select id="getTotal" resultType="int">
-		 select count(*) from product p
-         join v_color1 c on p.pid = c.pid
- 			where clarge = #{param1}
-            and cmedium = #{param2}
-	        and csmall = #{param3}
+        select count(*)
+        from product p
+                 join v_color1 c on p.pid = c.pid
+        where clarge = #{param1}
+          and cmedium = #{param2}
+          and csmall = #{param3}
     </select>
-
-    <!-- yoolim start -->
-    <!-- <select id="productSearch" resultType="com.hyundai.project.dto.ProductDTO">
-        select p1.pid as pid, p1.pname as pname, p2.cimage1 as cimage1
-        from product p1
-                 join color p2
-                      on p1.pid = p2.pid
-        where p1.pname = #{pname}
-    </select> -->
 
     <delete id="delStock">
         delete
@@ -117,48 +109,65 @@
     </delete>
     <!-- yoolim end -->
     <update id="updateProduct">
-        update product set pid=#{pid}, clage=#{clarge}, cmedium=#{cmedium},
-        csmall=#{csmall}, bname=#{bname}, pname=#{pname}, pprice=#{pprice}, pdatail=#{pdetail}
+        update product
+        set pid=#{pid},
+            clage=#{clarge},
+            cmedium=#{cmedium},
+            csmall=#{csmall},
+            bname=#{bname},
+            pname=#{pname},
+            pprice=#{pprice},
+            pdatail=#{pdetail}
         where pid = #{pid}
     </update>
 
     <!-- 정민 -->
     <insert id="insertProduct">
         insert into product(pid, clarge, cmedium, csmall, bname, pname, pprice, pdetail, pstatus)
-        values(#{pid}, #{clarge}, #{cmedium}, #{csmall}, #{bname}, #{pname}, #{pprice}, #{pdetail}, 1)
+        values (#{pid}, #{clarge}, #{cmedium}, #{csmall}, #{bname}, #{pname}, #{pprice}, #{pdetail}, 1)
     </insert>
 
     <insert id="insertProductColor" parameterType="com.hyundai.project.dto.ProductColorDTO">
         insert into color(pid, ccolorcode, cimage1, cimage2, cimage3, ccolorimage, cmatchpid)
-        values(#{pid}, #{ccolorcode}, #{cimage1}, #{cimage2}, #{cimage3}, #{ccolorimage}, #{cmatchpid})
+        values (#{pid}, #{ccolorcode}, #{cimage1}, #{cimage2}, #{cimage3}, #{ccolorimage}, #{cmatchpid})
     </insert>
 
     <insert id="insertProductSize" parameterType="com.hyundai.project.dto.ProductSizeDTO">
         insert into stock(pid, ccolorcode, ssize, samount)
-        values(#{pid}, #{ccolorcode}, #{ssize}, #{samount})
+        values (#{pid}, #{ccolorcode}, #{ssize}, #{samount})
     </insert>
 
     <update id="updateMain">
-        UPDATE PRODUCT SET PSTATUS = #{pstatus} WHERE PID = #{pid}
+        UPDATE PRODUCT
+        SET PSTATUS = #{pstatus}
+        WHERE PID = #{pid}
     </update>
-    
+
     <select id="productSearch" resultType="com.hyundai.project.dto.ProductBackDTO">
-        select pid, clarge||'-'||cmedium||'-'||csmall category, bname, pname, pprice, pdetail, pstatus
-		from product
-        where pname like '%'||#{pname}||'%'
+        select pid, clarge || '-' || cmedium || '-' || csmall category, bname, pname, pprice, pdetail, pstatus
+        from product
+        where pname like '%' || #{pname} || '%'
         order by pupdatedate desc
     </select>
-    
+
     <update id="productModify">
-        update product set pprice = #{pprice}, pstatus = #{pstatus}, pupdatedate = sysdate WHERE pid = #{pid}
+        update product
+        set pprice      = #{pprice},
+            pstatus     = #{pstatus},
+            pupdatedate = sysdate
+        WHERE pid = #{pid}
     </update>
 
     <select id="getCategory" resultType="com.hyundai.project.dto.ProductCategoryDTO">
-        select clarge, cmedium, csmall from category order by clarge desc
+        select clarge, cmedium, csmall
+        from category
+        order by clarge desc
     </select>
 
     <select id="getProductExist" resultType="int">
-        select nvl(count(*), 0) cnt from product where pid=#{pid}
+        select nvl(count(*), 0) cnt
+        from product
+        where pid = #{pid}
     </select>
 
 </mapper>

@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class ProductSizeDTO {
 
-	private String pid;
-	private String ccolorcode;
-	private String ssize;
-	private String samount;
+    private String pid;
+    private String ccolorcode;
+    private String ssize;
+    private String samount;
 
 }

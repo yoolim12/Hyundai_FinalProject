@@ -26,10 +26,14 @@
         });
         function insertQna() {
             console.log($("#largeClassificationCode").val());
+            var qemail;
+            if($("#email").val() == "" && $("#emailDomain").val() == "") qemail = "";
+            else qemail = $("#email").val() +'@'+ $("#emailDomain").val();
             var data = {
                 qtitle : $("#qtitle").val(),
                 qcontent : $("#qcontent").val(),
-                qkind : $("#largeClassificationCode").val()
+                qkind : $("#largeClassificationCode").val(),
+                qemail : qemail
             }
             if(data.qtitle == "") {
                 var la = new layerAlert('제목을 입력해주세요.');
@@ -66,7 +70,11 @@
             });
         }
         $( document ).ready(function() {
-
+            //이메일변경
+            $("#uidDomainSel").change(function(){
+                //$("#email").val('');
+                $("#emailDomain").val($("#uidDomainSel").val());
+            });
         });
     </script>
     <!-- bodyWrap -->
@@ -78,7 +86,7 @@
             <!-- lnbWrap -->
             <div class="iframe_lnb">
                 <div class="lnb_wrap">
-                    <h4><a href="/svcenter/submain">1 : 1 문의</a></h4>
+                    <h4><a href="/mypage/qna">1 : 1 문의</a></h4>
                     <div class="lnb">
                         <dl>
                             <dt>주문조회</dt>
@@ -91,21 +99,21 @@
                             <dd>
                                 <a href="/mypage/grade" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
                             </dd>
-                            <dd>
-                                <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 H-POINT');">나의 H.POINT</a>
-                            </dd>
                         </dl>
                         <dl>
-                            <dt>나의 정보관리</dt>
-                            <dd>
-                                <a href="/mypage/personInformationChange" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
-                            </dd>
+		                    <dt>나의 정보관리</dt>
+		                    <dd th:if="${#authentication.principal.fromSocial} == 1">
+		                        <a href="/mypage/modifyPage" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
+		                    </dd>
+		                    <dd th:unless="${#authentication.principal.fromSocial} == 1">
+		                        <a href="/mypage/personInformationChange" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
+		                    </dd>
                         </dl>
                         <dl>
                             <dt>나의 활동관리</dt>
                             <!-- <dd><a href="#">회원등급</a></dd> -->
                             <dd>
-                                <a href="/mypage/qna" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a>
+                                <a href="/mypage/qna" onclick="GA_Event('마이페이지','LNB','1:1 문의');">1:1 문의</a>
                             </dd>
                             <!-- <dd><a href="#">이벤트 참여현황</a></dd> -->
                         </dl>
@@ -113,13 +121,14 @@
                     <!-- ph_guide -->
                     <div class="ph_guide">
                         <p class="tlt">고객센터 운영 안내</p>
-                        <p class="phone" style="font-size:18px;">1800-5700<span style="color: #c69c6d;" class="txt"><br>(유료)</span></p>
+                        <p class="phone" style="font-size:18px;">1800-5700<span style="color: #c69c6d;" class="txt"><br>(유료)</span>
+                        </p>
                         <p class="txt">
-                            평일(월~금)<br />
+                            평일(월~금)<br/>
                             am 09:00 ~ pm 18:00<span>토/일, 공휴일 휴무</span>
                         </p>
-                        <a href="mailto:shophelp@GKMCC.com" onclick="GA_Event('마이페이지','LNB','이메일 문의');">
-                            shophelp<br />
+                        <a href="mailto:shophelp@thehandsome.com">
+                            shophelp<br/>
                             @thehandsome.com
                         </a>
                     </div>

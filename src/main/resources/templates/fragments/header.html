@@ -607,155 +607,6 @@
                         }
                     }
 
-                    //START OF 메인 검색창////////////////////////
-                    // #1067 - 201803 메인 개편
-                    $(function () {
-                        getNotLoginMyKeyWord($("#query").val(), 10);
-
-                        /* 
-        // 내가 찾은 검색어(로그인 상태) : set, get in cookie
-        getLoginMyKeyWord($("#query").val());
-     */
-
-                        if (navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
-                            $("#searchBox").on("keypress", function (event) {
-                                var keyCode = event.which || event.keyCode;
-                            });
-                        }
-
-                        $("#query").click(function () {
-                            // 스타일 서치 아이템
-                            doStyleItem();
-                            $(".search_box_wrap").click(function () {
-                                if (!$(".search_box_wrap").hasClass("on")) {
-                                    var dataHeight = $(".data_react").height();
-                                    $("#transparent_mask").show();
-
-                                    GA_Event("공통", "유틸_메뉴", "검색");
-                                    $(".search_box_wrap").stop().animate({ width: "406px", height: '+= dataHeight +"px"', "max-height": "430px", opacity: 1 }, "fast");
-
-                                    $(".search_box_wrap").addClass("on");
-                                    $(".btn_search_tab").stop().show();
-
-                                    $(".data_react").stop().show();
-
-                                    $("#styleSearchSlider").hide();
-                                    $(".search_box .search").stop().fadeIn("fast");
-
-                                    //검색창 텝 >> style search slider
-                                    $(document)
-                                        .find("#styleSearchSlider")
-                                        .flexslider({
-                                            animation: "slide",
-                                            slideshow: false,
-                                            directionNav: true,
-                                            after: function (slider) {
-                                                $("#styleSearchSlider .slides li")
-                                                    .not(".clone")
-                                                    .each(function (idx) {
-                                                        if ($(this).hasClass("flex-active-slide")) {
-                                                            $(".ss_txt_list li a").removeClass("on");
-                                                            $(".ss_txt_list li:eq(" + idx + ") a").addClass("on");
-                                                        }
-                                                    });
-                                            },
-                                        });
-                                    var styleTotal = $("#styleSearchSlider .slides li").size();
-                                    if (styleTotal <= 1) {
-                                        $("#styleSearchSlider .flex-direction-nav").hide();
-                                    }
-
-                                    //keyup 자동완성 리스트
-                                    $("#query").keyup(function (e) {
-                                        if (!$("#query").val() == "") {
-                                            $(".search_tab").hide();
-
-                                            $(".search_box_wrap")
-                                                .stop()
-                                                .animate({ width: "477px" }, "fast", function () {
-                                                    $(".search_autocomplete").show();
-                                                });
-                                            $('.search_box_wrap.on .search_box input[type="search"]').stop().animate({ width: "461px" }, "fast");
-                                            /*  var atcRightHeight = $(".autocomplete_right").height();//자동완성리스트 높이 조절
-                    var atctxtHeight = $(".autocomplete_txt").height();
-                    if(atcRightHeight < atctxtHeight){
-                        $(".autocomplete_right").height(atctxtHeight);
-                    } */
-                                        } else {
-                                            $(".search_autocomplete").hide();
-                                            $(".search_tab").show();
-
-                                            $(".search_box_wrap").stop().animate({ width: "406px" });
-                                            $('.search_box_wrap.on .search_box input[type="search"]').stop().animate({ width: "390px" });
-                                        }
-                                        $(".autocomplete_txt li a").each(function () {
-                                            if (!$(this).hasClass("brand_main")) {
-                                                $(this).html($(this).html().replace("<strong>", ""));
-                                                $(this).html($(this).html().replace("</strong>", ""));
-
-                                                if ($(this).html().indexOf($("#searchBox").val()) > -1) {
-                                                    $(this).html(
-                                                        $(this)
-                                                            .html()
-                                                            .replace($("#searchBox").val(), "<strong>" + $("#searchBox").val() + "</strong>")
-                                                    );
-                                                }
-                                            }
-                                        });
-                                    });
-
-                                    //검색창 click시 이미 value 값이 있을 때
-                                    if (!$("#query").val() == "") {
-                                        $(".search_box_wrap").stop().animate({ width: "477px", opacity: 1 }, "fast");
-                                        $('.search_box_wrap.on .search_box input[type="search"]').stop().animate({ width: "461px" }, "fast");
-                                    } else {
-                                        $('.search_box_wrap.on .search_box input[type="search"]').stop().animate({ width: "390px" }, "fast");
-                                    }
-                                }
-
-                                $("#styleSearchSlider").fadeIn();
-
-                                //close button
-                                $(".search_box a span.btn_close").on("click", function () {
-                                    $(".search_box_wrap").stop().animate({ width: "30px", height: '-= dataHeight +"px"', opacity: 0 });
-
-                                    $(".data_react").stop().hide();
-                                    $(".btn_search_tab").stop().hide();
-                                    $(".search_box_wrap").removeClass("on");
-                                    $("#transparent_mask").hide();
-                                    $(".search_box .search").stop().fadeOut("fast");
-                                    if (!$("#query").val() == "") {
-                                        $("#query").val("");
-                                        $(".search_autocomplete").hide();
-                                        $(".search_tab").show();
-                                    }
-                                    return false;
-                                });
-                            });
-                            $("#transparent_mask").click(function () {
-                                if ($(".search_box_wrap").hasClass("on")) {
-                                    $(".search_box_wrap").stop().animate({ width: "30px", height: '-= dataHeight +"px"', opacity: 0 });
-
-                                    $(".data_react").stop().hide();
-                                    $(".btn_search_tab").stop().hide();
-                                    $(".search_box_wrap").removeClass("on");
-                                    $("#transparent_mask").hide();
-                                    $(".search_box .search").stop().fadeOut("fast");
-                                }
-                            });
-                            //검색창 텝
-                            $(document).on("click", ".btn_search_tab a", function () {
-                                $(this).addClass("on");
-                                $(this).siblings().removeClass("on");
-                                $(".data_react .s_tab").stop().hide();
-                                var activeTab = $(this).attr("rel");
-                                $("." + activeTab)
-                                    .stop()
-                                    .show();
-                            });
-                        });
-                    });
-
                     //##1141 - 카테고리 개편
                     function outletGnbNav() {
                         //아울렛 gnb
@@ -788,16 +639,7 @@
                         });
                     }
 
-                    function GA_search() {
-                        var searchForm = document.search;
-                        var searchwords = escape(searchForm.query.value);
-
-                        GA_Event("검색", "직접입력", searchwords);
-                    }
-
                     //]]>
-                    
-            		
                 </script>
                 <form id="autologinForm" name="autologinForm" action="/ko/hp/autologin" method="get">
                     <input type="hidden" name="hcid" id="hcid" value="e2gaf@naver.com" />
@@ -814,65 +656,8 @@
                                    	<p class="brand_menu_guide_text" sec:authorize="isAuthenticated()">아래 '브랜드' 메뉴에서 좋아하는 브랜드를 <span style="margin-top:-1px; display:inline-block;">♥</span>해주세요</p>
                             </ul>
                         </div>
-                        <div class="gnb_sh_wrap" style="display: none;">
-                            <!-- search box -->
-                            <div class="gnb_sh_box">
-                                <input type="text" class="input" id="gnbsearchwords" title="검색어 입력" value="" onkeypress="if(event.keyCode==13) {EnterSearchHeader(); return false;}" />
-                                <a href="javascript:void(0);" id="gnbsearch">검색</a>
-                            </div>
-                            <!-- //search box -->
-                            <!-- search result -->
-                            <div class="gnb_sh_result">
-                                <div class="tab">
-                                    <a href="javascript:void(0);" class="menu on">최근검색어</a>
-                                    <div class="result_list on">
-                                        <div class="searchWord1" style="display: none;">
-                                            <a href="javascript:void(0);" class="ml newlyBtn" id="searchWord1"></a><a href="javascript:void(0);" class="close" onclick="deletecookie('HS_Seachwords1')">닫기</a>
-                                        </div>
-                                        <div class="searchWord2" style="display: none;">
-                                            <a href="javascript:void(0);" class="ml newlyBtn" id="searchWord2"></a><a href="javascript:void(0);" class="close" onclick="deletecookie('HS_Seachwords2')">닫기</a>
-                                        </div>
-                                        <div class="searchWord3" style="display: none;">
-                                            <a href="javascript:void(0);" class="ml newlyBtn" id="searchWord3"></a><a href="javascript:void(0);" class="close" onclick="deletecookie('HS_Seachwords3')">닫기</a>
-                                        </div>
-                                        <div class="searchWord4" style="display: none;">
-                                            <a href="javascript:void(0);" class="ml newlyBtn" id="searchWord4"></a><a href="javascript:void(0);" class="close" onclick="deletecookie('HS_Seachwords4')">닫기</a>
-                                        </div>
-                                        <div class="searchWord5" style="display: none;">
-                                            <a href="javascript:void(0);" class="ml newlyBtn" id="searchWord5"></a><a href="javascript:void(0);" class="close" onclick="deletecookie('HS_Seachwords5')">닫기</a>
-                                        </div>
-                                        <a href="javascript:void(0);" class="btn_svclose">검색어 <span id="searchSaveYN" save="on">끄기</span></a> <a href="javascript:void(0);" class="btn_allclose on" onclick="searchOff()">닫기</a>
-                                    </div>
-                                    <a href="javascript:void(0);" class="menu">인기검색어</a>
-                                    <div class="result_list">
-                                        <div>
-                                            <a href="javascript:void(0);" class="ml favBtn">jacket</a>
-                                            <!-- <a href="javascript:void(0);" class="close">닫기</a> -->
-                                        </div>
-                                        <div>
-                                            <a href="javascript:void(0);" class="ml favBtn">blouse</a>
-                                            <!-- <a href="javascript:void(0);" class="close">닫기</a> -->
-                                        </div>
-                                        <div>
-                                            <a href="javascript:void(0);" class="ml favBtn">stripe</a>
-                                            <!-- <a href="javascript:void(0);" class="close">닫기</a> -->
-                                        </div>
-                                        <div>
-                                            <a href="javascript:void(0);" class="ml favBtn">ribbon</a>
-                                            <!-- <a href="javascript:void(0);" class="close">닫기</a> -->
-                                        </div>
-                                        <div>
-                                            <a href="javascript:void(0);" class="ml favBtn">blouson</a>
-                                            <!-- <a href="javascript:void(0);" class="close">닫기</a> -->
-                                        </div>
-                                        <a href="javascript:void(0);" class="btn_svclose">검색어 <span id="searchSaveYNfame" save="on">끄기</span></a> <a href="javascript:void(0);" class="btn_allclose" onclick="searchOff()">닫기</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- //search result -->
-                        </div>
                         <!-- 201705 search_box_wrap -->
-                        <div class="search_box_wrap sbw1803" id="searchBox">
+                        <div class="search_box_wrap sbw1803" id="searchBox" style="visibility:hidden">
                             <form name="search" id="search" action="/ko/hssearch/searchCount" method="post" onsubmit="return false;">
                                 <input type="hidden" name="CSRFToken" value="d1c91672-2a5d-4cd7-bde9-7dfb55a667bc" /> <input type="hidden" name="searchwords" value="" /> <input type="hidden" name="startCount" value="" />
                                 <input type="hidden" name="mode" value="" /> <input type="hidden" name="sort" value="" /> <input type="hidden" name="collection" value="" /> <input type="hidden" name="range" value="" />
@@ -1000,7 +785,8 @@
                                             </li>
                                             <li>
                                                 <a href="/member/login" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="!isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
-                                                <a href="/mypage/personInformationChange" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
+                                                <a th:if="${#authentication.principal.fromSocial} == 1" href="/mypage/modifyPage" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
+                                                <a th:unless="${#authentication.principal.fromSocial} == 1" href="/mypage/personInformationChange" onclick="GA_Event('공통','헤더_메뉴','마이페이지_회원정보변경')" sec:authorize="isAuthenticated()">회원정보변경<!-- 회원정보변경 --></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -1220,6 +1006,7 @@
                                     <span class="ico cart">장바구니</span> <span class="count"><span id="cartCount"></span> </span>
                                 </a>
                             </li>
+                            
                         </ul>
                     </div>
                 </div>

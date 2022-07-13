@@ -62,8 +62,8 @@ public class OrderServiceImpl implements OrderService {
             log.info("point : " + olist.getOusedpoint());
             memberDAO.pointApply(olist.getMemail(), olist.getOusedpoint());
             log.info("포인트 차감");
-            int savingpoint = (int) Math.ceil((double)(olist.getOprice()-olist.getOusedpoint()-olist.getOdiscounted())*0.05);
-            if(olist.getOusedpoint() != olist.getOprice()) {
+            int savingpoint = (int) Math.ceil((double) (olist.getOprice() - olist.getOusedpoint() - olist.getOdiscounted()) * 0.05);
+            if (olist.getOusedpoint() != olist.getOprice()) {
                 log.info("포인트 적립 : " + savingpoint);
                 memberDAO.pointSaving(olist.getMemail(), savingpoint);
             }
@@ -81,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderResDTO> getOrder(String memail) throws Exception {
-    	log.info("마이페이지 주문 조회");
+        log.info("마이페이지 주문 조회");
         return orderDAO.getOrder(memail);
     }
 
@@ -94,9 +94,9 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(value = "memberTxManager")
     @Override
     public void updateOrderList(int oid) throws Exception {
-    	orderDAO.updateOrderList(oid);
+        orderDAO.updateOrderList(oid);
         OrderListDTO order = orderDAO.getOrderDetail(oid);
-        int savingpoint = (int) Math.ceil((double)(order.getOprice()-order.getOusedpoint()-order.getOdiscounted())*0.05);
+        int savingpoint = (int) Math.ceil((double) (order.getOprice() - order.getOusedpoint() - order.getOdiscounted()) * 0.05);
         memberDAO.pointApply(order.getMemail(), savingpoint);
         memberDAO.pointSaving(order.getMemail(), order.getOusedpoint());
         log.info(savingpoint);

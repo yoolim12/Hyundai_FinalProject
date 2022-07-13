@@ -70,12 +70,14 @@
         }
 
         $(document).ready(function () {
+            console.log("[[${qnaAttribute}]]");
             $("#qtitle").val("[[${qnaAttribute.qtitle}]]");
             $("#qcontent").val("[[${qnaAttribute.qcontent}]]");
             $("#qtitle").val("[[${qnaAttribute.qtitle}]]");
             console.log("[[${qnaAttribute.qkind}]]");
             document.getElementById("largeClassificationCode").value = "[[${qnaAttribute.qkind}]]";
             $("#qimageold").val("[[${qnaAttribute.qimage}]]");
+            $("#qemail").text("[[${qnaAttribute.qemail}]]");
         });
     </script>
     <!-- bodyWrap -->
@@ -102,26 +104,26 @@
                             <dd>
                                 <a href="/mypage/grade" onclick="GA_Event('마이페이지','LNB','나의 회원 등급');">나의 회원 등급</a>
                             </dd>
-                            <dd>
-                                <a href="/mypage" onclick="GA_Event('마이페이지','LNB','나의 H-POINT');">나의 H.POINT</a>
-                            </dd>
                         </dl>
                         <dl>
-                            <dt>나의 정보관리</dt>
-                            <dd>
-                                <a href="/mypage/personInformationChange"
-                                   onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
-                            </dd>
+		                    <dt>나의 정보관리</dt>
+		                    <dd th:if="${#authentication.principal.fromSocial} == 1">
+		                        <a href="/mypage/modifyPage" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
+		                    </dd>
+		                    <dd th:unless="${#authentication.principal.fromSocial} == 1">
+		                        <a href="/mypage/personInformationChange" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
+		                    </dd>
                         </dl>
                         <dl>
                             <dt>나의 활동관리</dt>
                             <!-- <dd><a href="#">회원등급</a></dd> -->
                             <dd>
-                                <a href="/mypage/qna" onclick="GA_Event('마이페이지','LNB','상품 Q&A');">상품 Q&A</a>
+                                <a href="/mypage/qna" onclick="GA_Event('마이페이지','LNB','1:1 문의');">1:1 문의</a>
                             </dd>
                             <!-- <dd><a href="#">이벤트 참여현황</a></dd> -->
                         </dl>
                     </div>
+                    <!-- ph_guide -->
                     <div class="ph_guide">
                         <p class="tlt">고객센터 운영 안내</p>
                         <p class="phone" style="font-size:18px;">1800-5700<span style="color: #c69c6d;" class="txt"><br>(유료)</span>
@@ -130,7 +132,7 @@
                             평일(월~금)<br/>
                             am 09:00 ~ pm 18:00<span>토/일, 공휴일 휴무</span>
                         </p>
-                        <a href="mailto:shophelp@GKMCC.com" onclick="GA_Event('마이페이지','LNB','이메일 문의');">
+                        <a href="mailto:shophelp@thehandsome.com">
                             shophelp<br/>
                             @thehandsome.com
                         </a>
@@ -244,63 +246,9 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row" class="th_space">SMS 알림받기</th>
+                                <th scope="row">이메일 답변받기</th>
                                 <td>
-                                    <!-- hp -->
-                                    <select id="hp1" name="hp1" title="휴대폰 번호 앞자리" class="hp_num1">
-                                        <option value="">선택</option>
-                                        <option value="010">010</option>
-                                        <option value="011">011</option>
-                                        <option value="016">016</option>
-                                        <option value="017">017</option>
-                                        <option value="018">018</option>
-                                        <option value="019">019</option>
-                                    </select>
-                                    <div class="form_hyphen">-</div>
-                                    <input type="text" id="hp2" name="hp2" value="" title="휴대폰 번호 가운데자리"
-                                           class="hp_num2" numberonly="true" maxlength="4"/>
-                                    <div class="form_hyphen">-</div>
-                                    <input type="text" id="hp3" name="hp3" value="" title="휴대폰 번호 뒷자리"
-                                           class="hp_num2" numberonly="true" maxlength="4"/>
-                                    <!-- //hp -->
-                                    <!-- check -->
-                                    <span class="wtype_comment pt10"> <input type="checkbox" id="smsAlarmReceiveYN"
-                                                                             name="smsAlarmReceiveYN"
-                                                                             class="mr5"/><label
-                                            for="ck1">SMS 알람고지</label> </span>
-                                    <!-- //check -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><strong class="reqd">*</strong>이메일 답변받기</th>
-                                <td>
-                                    <!-- email -->
-                                    <input type="text" id="email" name="email" value="" title="이메일 아이디"
-                                           class="em_form"/>
-                                    <span class="andmail">@</span>
-                                    <input type="text" id="emailDomain" name="emailDomain" value=""
-                                           title="이메일 도메인" class="em_form"/>
-                                    <select id="uidDomainSel" name="uidDomainSel" class="em_select">
-                                        <option value="">직접입력</option>
-                                        <option value="naver.com">naver.com</option>
-                                        <option value="daum.net">daum.net</option>
-                                        <option value="yahoo.co.kr">yahoo.co.kr</option>
-                                        <option value="lycos.co.kr">lycos.co.kr</option>
-                                        <option value="nate.com">nate.com</option>
-                                        <option value="empas.com">empas.com</option>
-                                        <option value="hotmail.com">hotmail.com</option>
-                                        <option value="msn.com">msn.com</option>
-                                        <option value="gmail.com">gmail.com</option>
-                                        <option value="hanmir.com">hanmir.com</option>
-                                        <option value="chol.net">chol.net</option>
-                                        <option value="korea.com">korea.com</option>
-                                        <option value="netsgo.com">netsgo.com</option>
-                                        <option value="dreamwiz.com">dreamwiz.com</option>
-                                        <option value="hanafos.com">hanafos.com</option>
-                                        <option value="freechal.com">freechal.com</option>
-                                        <option value="hitel.net">hitel.net</option>
-                                    </select>
-                                    <!-- //email -->
+                                    <span id="qemail"></span>
                                 </td>
                             </tr>
                             </tbody>

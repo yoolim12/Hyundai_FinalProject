@@ -15,10 +15,9 @@ import com.hyundai.project.service.ProductListService;
 public class ProductListController {
 	@Autowired
 	private ProductListService service;
-	
+
 	@GetMapping("/list/{clarge}/{cmedium}/{csmall}")
 	public String productList(Criteria cri, Model model, @PathVariable("clarge") String clarge, @PathVariable("cmedium") String cmedium, @PathVariable("csmall") String csmall) throws Exception {
-//		log.info("상품 리스트 페이지 요청");
 		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal(clarge, cmedium, csmall)));
 		return "product/list";
 	}

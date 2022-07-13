@@ -50,7 +50,7 @@ public class ProductListRestController {
             Criteria cri, @PathVariable("clarge") String clarge, @PathVariable("cmedium") String cmedium, @PathVariable("csmall") String csmall) {
         ResponseEntity<List<ProductListDTO>> entry = null;
         try {
-            System.out.println(cri);
+            log.info(cri);
             entry = new ResponseEntity<List<ProductListDTO>>(
                     service.getListWithPaging(cri, clarge, cmedium, csmall), HttpStatus.OK);
             log.info(entry);
