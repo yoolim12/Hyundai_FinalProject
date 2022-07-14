@@ -11,14 +11,50 @@
 <script>
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	
+    var memail='[[${#authentication.principal.memail}]]';
+
+    // if([[${#authentication.principal.fromSocial}]] == 1) {
+    //     memail = '[[${#authentication.principal.memail}]]';
+    // }
+
 	function alertSocial(){
 			var la = new layerAlert('소셜로그인 사용자는 회원 정보 수정이 불가능합니다.');
 	                la.confirmAction = function(){
 						location.href = "/mypage";	                	
 	                }
 		}
+
+        function alertDel(){
+		var lc = new layerConfirm('회원탈퇴를 진행하시겠습니까?<br>탈퇴하시면 90일간 재가입하실 수 없습니다.', '확인', '취소');
+	    lc.confirmAction = function(){
+            
+                $.ajax({
+                    type: "DELETE",
+                    url: "../back/member",
+                    contentType: "application/json",
+                    async: false,
+                    data: JSON.stringify({
+                        'email': memail,
+                        "CSRFToken": getYCsrfToken()
+                    }),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(getCsrfHeaderName(), getYCsrfToken());
+                    },
+                    error: function (request, status, error) {
+                        layerAlert("예상치 못한 오류가 발생하였습니다.</br>" + "다시 시도해 주시기 바랍니다.");
+                        console.log("code:" + request.status + "\n\n\n\n" + "message:" + request.responseText + "\n\n\n\n" + "error:" + error);
+                    },
+                    success: function (result) {
+                        layerAlert("성공적으로 탈퇴되었습니다. 그동안 저희 서비스를 이용해주셔서 감사합니다");
+                        logoutClick();	                        
+                    }
+                });
+            
+		}
+	}
 	
+		
+		
 	$(document).on("click", '.btn', function () {
 	    var prodid = $(this).prop('id').split("_");
 
@@ -40,10 +76,7 @@
             return;
         }
 	});
-	$(document).ready(function () {
-		
-		
-		
+	$(document).ready(function () {		
 		let rank = [[${#authentication.principal.gno}]];
 		let grade = '', rate;
 		if (rank === 1) grade ='FRIEND', rate = 5;
@@ -291,7 +324,10 @@
                         <a href="/mypage/personInformationChange" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a>
                     </dd>
                     <dd th:if="${#authentication.principal.fromSocial} == 1">
-                        <a href="javascript:void(0)" onclick="alertSocial()">개인정보 변경/탈퇴</a>
+                        <a href="javascript:void(0)" onclick="alertSocial()">개인정보 변경</a>
+                    </dd>
+                    <dd th:if="${#authentication.principal.fromSocial} == 1">
+                        <a href="javascript:void(0)" onclick="alertDel()">회원 탈퇴</a>
                     </dd>
                 </dl>
                 <dl>
