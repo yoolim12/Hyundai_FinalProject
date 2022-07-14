@@ -1,10 +1,8 @@
 package com.hyundai.project.service;
 
-import com.hyundai.project.dto.CartDTO;
-import com.hyundai.project.dto.CartUpdateDTO;
-import com.hyundai.project.dto.QnaDTO;
-
 import java.util.List;
+
+import com.hyundai.project.dto.QnaDTO;
 
 public interface QnaService {
 
