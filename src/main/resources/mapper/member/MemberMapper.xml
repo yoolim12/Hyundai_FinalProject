@@ -10,7 +10,7 @@
 	
 	<select id="showAllMember"
 		resultType="com.hyundai.project.dto.MemberJoinDTO">
-		select memail, mname, role_set, msleep, regdate, gname from (select memail, mname, role_set, msleep, regdate, gno from member natural join memberrole) natural join grade
+		select memail, mname, role_set, msleep, regdate, gname from (select memail, mname, role_set, msleep, regdate, gno from member natural join memberrole) natural join grade order by regdate
 	</select>
 	
 	<select id="getMemberInfo"
@@ -22,7 +22,7 @@
 		member c1 join memberrole c2
 		on c1.memail = c2.memail
 		where c1.memail LIKE '%'||#{memail}||'%'
-		) natural join grade
+		) natural join grade order by regdate
 		]]>
 	</select>
 	

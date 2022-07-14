@@ -64,7 +64,7 @@ iframe.lnb{width:100%;height:100%}
 .brand_menu .etc_brand .list{width:135px}
 
 /* util menu */
-.util_menu > ul > li{float:left;}
+.util_menu > ul > li{float:left; padding-right:8px;}
 .util_menu > ul > li:first-child{padding-right:8px;}
 .util_menu > ul > li > a{display:block;height:40px;line-height:40px;font-size: 10px;color:#363636}
 #headerWrap .gnbwarp .util_menu > ul > li{min-width:32px;max-width:42px;text-align:right;}

@@ -765,7 +765,7 @@
                         <div class="util_menu" style="display: block;">
                             <ul class="clearfix">
                             	<li><a href="/back/chart" onclick="" sec:authorize="hasRole('ADMIN')">ADMIN PAGE</a></li>
-                            	<li><a href="#" onclick="" sec:authorize="hasRole('EMPLOYEE')">임직원 입니다. </a></li>
+                            	<li><a href="javascript:void(0)" onclick="" sec:authorize="hasRole('EMPLOYEE')">임직원 입니다.</a></li>
                                 <li><a href="/member/login" onclick="GA_Event('공통','헤더_메뉴','로그인')" sec:authorize="!isAuthenticated()">로그인</a></li>
                                 <li>
                                 	<form id="logoutForm" action="/member/logout" method="post">
