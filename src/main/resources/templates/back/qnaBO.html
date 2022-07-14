@@ -129,8 +129,9 @@
                                               </div>`);
                       $("#qreplydate").text(res.qreplydate);
                   }
-                  $("#qemail").text(res.qemail);
                   $("#qemail").val(res.qemail);
+                  var temp = $("#qemail").val();
+                  console.log(temp);
               },
               error: function(res){
                   console.log(res)
@@ -413,7 +414,7 @@
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
+                <a href="/">
                     <img src="/resources/_ui/desktop/common/images/handsomelogo2.png" alt="Cool Admin" />
                 </a>
             </div>
