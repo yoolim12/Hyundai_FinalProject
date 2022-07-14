@@ -31,7 +31,7 @@ html, body {
 	height: 40px;
 	/* margin: 21px 0 18px 21px; */
 	background:
-		url(/resources/_ui/desktop/common/images/main/top-header-handsome-logo.png)
+		url(/resources/_ui/desktop/common/images/thehyundailivelogo.png)
 		0 7px no-repeat;
 	width: 190px;
 }
@@ -119,7 +119,7 @@ video#amazon-ivs-videojs {
 	object-fit: cover;
 	border-radius: 70%;
 	overflow: hidden;
-	margin-right: 20px;
+	margin-right: 3%;
 }
 
 .profilename {
@@ -519,7 +519,7 @@ input:focus {outline:none;}
 	.profilename {
 		font-weight: bold;
 		display: inline-block;
-		font-size: 0.4rem;
+		font-size: 14px;
 		line-height: 0.6rem;
 	}
 	.description {
@@ -551,6 +551,7 @@ input:focus {outline:none;}
 		display: block;
 		white-space: nowrap;
 		/* overflow-x:scroll; */
+		height: 255px;
 	}
 	.again {
 		width: 80%;
@@ -585,7 +586,7 @@ input:focus {outline:none;}
 		padding-left: 5%;
 		width: 100%;
 		font-size: 0.4rem;
-		line-height: 0.6rem;
+		line-height: 1rem;
 		text-align: left;
 	}
 	.againtitle {
@@ -610,7 +611,7 @@ input:focus {outline:none;}
 		word-wrap: break-word;
 	}
 	.againprofilename {
-		font-size: 0.8em;
+		font-size: 0.6rem;
 	}
 	li#welcome {
 		font-size: 13px;
