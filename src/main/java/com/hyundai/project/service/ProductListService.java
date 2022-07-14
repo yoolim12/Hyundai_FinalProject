@@ -2,8 +2,6 @@ package com.hyundai.project.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.hyundai.project.dto.Criteria;
 import com.hyundai.project.dto.ProductListDTO;
 
