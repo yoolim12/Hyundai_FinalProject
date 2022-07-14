@@ -156,4 +156,19 @@ public class BackMemberRestController {
 		}
 		log.info("MAIL SEND END");
 	}
+	
+	// 휴면 수정
+    @PutMapping("/sleep")
+    @ResponseBody
+    public String updateSleep(HttpServletResponse response, @RequestBody HashMap<String, String> map) throws Exception {
+    	String memail = map.get("memail");
+    	int msleep = Integer.parseInt(map.get("msleep"));
+    	
+    	try {
+    		service.modifySleep(memail, msleep);
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	return "success";
+    } // end modify
 }

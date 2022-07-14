@@ -59,4 +59,7 @@ public interface MemberService {
 
     // 총 매출
     public long getTotalRevenue() throws Exception;
+
+    // 회원 휴면 해제
+	public int modifySleep(String memail, int msleep);
 }

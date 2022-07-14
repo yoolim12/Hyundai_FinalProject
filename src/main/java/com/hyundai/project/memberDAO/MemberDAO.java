@@ -74,4 +74,6 @@ public interface MemberDAO {
     public long getOrderAmountOfWeek();
 
     public long getTotalRevenue();
+
+	public int modifySleep(String memail, int msleep);
 }
