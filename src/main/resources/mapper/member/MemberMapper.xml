@@ -67,6 +67,11 @@
 		insert into loginLog values (#{memail}, sysdate, logno_seq.nextval)
 	</insert>
 	
+	<!-- 휴면 해제 -->
+	<update id="modifySleep">
+		update member set msleep = #{msleep} where memail = #{memail}
+	</update>
+	
 	<!-- 휴면 계정 갱신 -->
 	<update id = "updateMemberSleep">
 		<![CDATA[
@@ -113,7 +118,7 @@
 	
 	<select id="findByEmail" resultType="com.hyundai.project.dto.MemberJoinDTO">
 		select
-		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth, c1.telnum, c1.maddress, c1.mpoint, c1.mgender, c1.memail_info
+		c1.memail, c1.moddate, c1.regdate, c1.from_social, c1.mname, c1.mpassword, c2.role_set, c1.gno, c1.birth, c1.telnum, c1.maddress, c1.mpoint, c1.mgender, c1.memail_info, c1.msleep
 		from
 		member c1 join memberrole c2
 		on c1.memail = c2.memail

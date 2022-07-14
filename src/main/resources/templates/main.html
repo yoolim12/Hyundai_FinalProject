@@ -25,12 +25,57 @@
         
         var sleep = 1;
         
-       
+        function modifySleep(){
+        	var memail = $("#memail").val();
+        	var msleep = 0;
+        	
+        	$.ajax({
+                url : '/back/sleep',
+                type: 'PUT',
+                contentType : "application/json",
+                data : JSON.stringify({
+                   'memail' : memail,
+                   'msleep' : msleep
+                }),
+                beforeSend: function(xhr) {
+                       xhr.setRequestHeader(header, token);
+                   },
+                   async: false,
+                   cache: false,
+                success: function(res){
+                	logoutClick();
+                },
+                error: function(res){
+                   alert("수정 실패");
+                }
+             });
+        }
+        
+        function logoutClick() {
+			$('#logoutForm').submit();
+		}
         
         $(document).ready(function(){
             var todayDate = new Date();
             
-           
+           	if ($("#msleep").val() == 1){
+           		var lc = new layerConfirm('휴면 상태 입니다. 휴면을 해제 하시겠습니까? 10초후 자동 로그아웃 됩니다.', '확인', '취소');
+                lc.confirmAction = function(){
+                	sleep = 0;
+                	modifySleep();
+                };
+           	}else{
+           		sleep = 0;
+           	}
+           	
+           	
+           	setTimeout(function() {
+           		if (sleep == 1){
+               		logoutClick();
+               	}
+           	}, 10000);
+           	
+           	
             if(horiz > 0) {
                 $("#mainNoticeWrap").css("top","230px");
                 $(".popWrap1901").css("top", "78px");
@@ -774,6 +819,16 @@
             <div class="swiper-button-next bigb"></div>
         </div>
         <div class="main_container">
+        	<form id="logoutForm" action="/member/logout" method="post">
+                   <input type="hidden" th:name="${ _csrf.parameterName }" th:value="${ _csrf.token }">
+                   <a href="javascript:void(0);" class="logoutBtn" id="logoutBtn" onclick="logoutClick();" sec:authorize="isAuthenticated()"
+                      style="display:block; height: 40px; line-height: 40px; font-size: 10px; color: #363636;">
+                      로그아웃
+                   </a>
+             </form>
+        	<input type="hidden" id="msleep" th:value="${#authentication.principal.msleep}"  sec:authorize="isAuthenticated()"></input>
+        	<input type="hidden" id="memail" th:value="${#authentication.principal.memail}"  sec:authorize="isAuthenticated()"></input>
+        	
             <!-- new & best -->
             <!-- ajax 이용해서 ul안에 여성, 남성, 포인트ACC, 셀렉티드  카테고리의 상품들 나오도록함 -->
             <div class="product_list1903">

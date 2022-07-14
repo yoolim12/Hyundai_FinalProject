@@ -84,7 +84,9 @@
 	function send_mail() {
 		var title = $("#text-input").val();
 		var cont = $("#textarea-input").val();
-		
+		if (cont == null){
+			cont = ' ';
+		}
 		var data = {
 	         title: title,
 	         cont: cont
@@ -94,10 +96,10 @@
 	        alert("제목을 입력해 주세요");
 	        return;
 	    }
-		if(!document.getElementById("textarea-input").value){
+		/* if(!document.getElementById("textarea-input").value){
 	        alert("내용을 첨부해 주세요");
 	        return;
-	    }
+	    } */
 	    if(!document.getElementById("cimage").value){
 	        alert("파일을 첨부해 주세요");
 	        return;

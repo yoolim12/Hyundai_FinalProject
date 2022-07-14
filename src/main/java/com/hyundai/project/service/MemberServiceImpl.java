@@ -123,5 +123,10 @@ public class MemberServiceImpl implements MemberService {
         return mapper.getTotalRevenue();
     }
 
+	@Override
+	public int modifySleep(String memail, int msleep) {
+		return mapper.modifySleep(memail, msleep);
+	}
+
 
 }

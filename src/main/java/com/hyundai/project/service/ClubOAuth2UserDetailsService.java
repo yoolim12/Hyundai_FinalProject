@@ -188,6 +188,7 @@ public class ClubOAuth2UserDetailsService
                log.info(clubAuthMemberDTO.getMname());
                
                int sleep = clubMember2.getMsleep();
+               log.info(sleep);
                
                //clubAuthMemberDTO --> UserDetails 반환
                log.info("OAuth2User 를 clubAuthMemberDTO");
