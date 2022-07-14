@@ -86,6 +86,7 @@ public class ClubOAuth2UserDetailsService
         clubMember.setMgender("m");
         clubMember.setModdate(d);
         clubMember.setRegdate(d);
+        clubMember.setMail_check(1);
         clubMember.setFrom_social(1);
         clubMember.setGno(1);
         // 디비에 ClubMember 행저장
