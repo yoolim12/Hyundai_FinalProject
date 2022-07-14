@@ -56,6 +56,8 @@
 		}
         
         $(document).ready(function(){
+        	document.all.lgform.style.display="none";
+        	
             var todayDate = new Date();
             
            	if ($("#msleep").val() == 1){
@@ -819,13 +821,14 @@
             <div class="swiper-button-next bigb"></div>
         </div>
         <div class="main_container">
-        	<form id="logoutForm" action="/member/logout" method="post">
+        <div id = "lgform">
+        	<form id="logoutForm" action="/member/logout" method="post" hidden>
                    <input type="hidden" th:name="${ _csrf.parameterName }" th:value="${ _csrf.token }">
                    <a href="javascript:void(0);" class="logoutBtn" id="logoutBtn" onclick="logoutClick();" sec:authorize="isAuthenticated()"
                       style="display:block; height: 40px; line-height: 40px; font-size: 10px; color: #363636;">
-                      로그아웃
                    </a>
              </form>
+        </div>
         	<input type="hidden" id="msleep" th:value="${#authentication.principal.msleep}"  sec:authorize="isAuthenticated()"></input>
         	<input type="hidden" id="memail" th:value="${#authentication.principal.memail}"  sec:authorize="isAuthenticated()"></input>
         	
