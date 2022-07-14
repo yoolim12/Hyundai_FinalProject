@@ -96,17 +96,18 @@ $(document).ready(function(){
         	document.getElementById("pdetail").innerHTML = result.pdetail;
         	document.getElementById("totalprice").innerHTML = '₩' + (numWithComma(result.pprice*$("#txtqty").val()));
         	////// cmatchpid
-			var cmatchArr = cmatchpid.split('_');
-			$.ajax({
-				url: "/detail/" + cmatchArr[0] + "/" + cmatchArr[1],
-				type: "GET",
-				dataType: "json",
-				async: false,
-				error: function (request, status, error) {
-					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-				},
-				success: function (result1) {
-					var chtml = `<div class="together-codi-pic">
+			if(cmatchpid != null ) {
+				var cmatchArr = cmatchpid.split('_');
+				$.ajax({
+					url: "/detail/" + cmatchArr[0] + "/" + cmatchArr[1],
+					type: "GET",
+					dataType: "json",
+					async: false,
+					error: function (request, status, error) {
+						console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+					},
+					success: function (result1) {
+						var chtml = `<div class="together-codi-pic">
     <a href="/detail/${cmatchpid}" onclick="GA_Event('상품 상세','코디상품','${result1.pid}');" class="pic">
         <img src="${result1.cimage1}" alt="코디상품" class="respon_image" />
     </a>
@@ -114,17 +115,19 @@ $(document).ready(function(){
 <span class="info_wrap item_info2">
     <span class="brand BR07">${result1.bname}</span>
     <span class="title" style="width: 145px">${result1.pname}</span>
-    <span class="price"> ₩`+numWithComma(result1.pprice)+`</span>
+    <span class="price"> ₩` + numWithComma(result1.pprice) + `</span>
 </span>
 <div class="we-codi-colorchip">
     <ul class="color_chip clearfix" id="chipbtn">
 
     </ul>
 </div>
-`;				$("#cmatchpid").html(chtml);
-				$("#chipbtn").html(getProductColor(cmatchArr[0], cmatchArr[1]));
-				}
-			});
+`;
+						$("#cmatchpid").html(chtml);
+						$("#chipbtn").html(getProductColor(cmatchArr[0], cmatchArr[1]));
+					}
+				});
+			}
         	let rt = result.pprice*$("#txtqty").val();
         	$("#mile").html(numWithComma(rt*0.05)+' P (5%)');
         }
