@@ -1,7 +1,7 @@
 # **현대IT&E 채용확정형 교육과정 최종 프로젝트**
 
 👇 프로젝트 발표 자료 참고 👇<br />
-> [프로젝트 발표 자료](https://github.com/yoolim12/HyundaiMiniProject/files/10940636/Spring.Mini.Project.PPT.pptx)
+> [더현대라이브 발표용.pptx](https://github.com/yoolim12/Hyundai_FinalProject/files/10949993/default.pptx)
 <br />
 
 
@@ -148,13 +148,13 @@ SpringBoot를 활용하여 더한섬닷컴 홈페이지 구현하였습니다.<b
 
 ## **ERD**
 ### 회원
-<img width="80%" alt="image" src="https://user-images.githubusercontent.com/78739536/224468016-df91abfa-3d42-4939-935a-3e1969f2fa2e.png"><br>
+<img width="80%" alt="image" src="https://user-images.githubusercontent.com/78739536/224525308-238c13c1-8188-4c59-a890-c38e6dc4ef68.png"><br>
 
 ### 상품
-<img width="80%" alt="image" src="https://user-images.githubusercontent.com/78739536/224468068-9b1ffb3c-4243-491f-a39b-922cce268f01.png"><br>
+<img width="80%" alt="image" src="https://user-images.githubusercontent.com/78739536/224525321-63a9ac0d-80a2-41fd-923c-1ad645125bab.png"><br>
 
-### 주문
-<img width="80%" alt="image" src="https://user-images.githubusercontent.com/78739536/224468100-767703fd-d4d6-42bb-a101-ff0e23d24748.png"><br>
+### 배치로그
+<img width="80%" alt="image" src="https://user-images.githubusercontent.com/78739536/224525332-dfa05a7d-6dc0-40e5-9476-84f91439510e.png"><br>
 <br>
 <br>
 
